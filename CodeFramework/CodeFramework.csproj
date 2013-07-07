@@ -110,6 +110,7 @@
     <Compile Include="Controllers\ListController.cs" />
     <Compile Include="Controllers\Composer.cs" />
     <Compile Include="Controllers\WebViewController.cs" />
+    <Compile Include="Controllers\FileSourceController.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

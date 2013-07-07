@@ -4,7 +4,7 @@ using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using CodeFramework.Cells;
 
-namespace Elements
+namespace CodeFramework.Elements
 {
     public class IssueElement : Element, IElementSizing, IColorizeBackground
     {       
