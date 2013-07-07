@@ -40,9 +40,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
     <Folder Include="Markup\" />
     <Folder Include="DiffPlex\" />
+    <Folder Include="Data\" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -77,6 +78,38 @@
     <Compile Include="DiffPlex\Model\DiffResult.cs" />
     <Compile Include="DiffPlex\Model\EditLengthResult.cs" />
     <Compile Include="DiffPlex\Model\ModificationData.cs" />
+    <Compile Include="Elements\CustomElement.cs" />
+    <Compile Include="Elements\InputElement.cs" />
+    <Compile Include="Elements\MultilinedElement.cs" />
+    <Compile Include="Elements\NameTimeStringElement.cs" />
+    <Compile Include="Elements\NewsFeedElement.cs" />
+    <Compile Include="Elements\NoItemsElement.cs" />
+    <Compile Include="Elements\PaginateElement.cs" />
+    <Compile Include="Elements\SplitElement.cs" />
+    <Compile Include="Elements\StyledElement.cs" />
+    <Compile Include="Elements\SubcaptionElement.cs" />
+    <Compile Include="Elements\TrueFalseElement.cs" />
+    <Compile Include="Elements\UserElement.cs" />
+    <Compile Include="Elements\RepositoryElement.cs" />
+    <Compile Include="Cells\IssueCellView.cs" />
+    <Compile Include="Cells\IssueCellView.designer.cs">
+      <DependentUpon>..\..\..\CodeBucket\Cells\IssueCellView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cells\RepositoryCellView.cs" />
+    <Compile Include="Cells\RepositoryCellView.designer.cs">
+      <DependentUpon>..\..\..\CodeBucket\Cells\RepositoryCellView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Elements\IssueElement.cs" />
+    <Compile Include="Data\SQLite.cs" />
+    <Compile Include="Controllers\BaseDialogViewController.cs" />
+    <Compile Include="Controllers\Controller.cs" />
+    <Compile Include="Controllers\FilterController.cs" />
+    <Compile Include="Controllers\RadioChoiceViewController.cs" />
+    <Compile Include="Controllers\MultipleChoiceViewController.cs" />
+    <Compile Include="Utils\ControllerExtensions.cs" />
+    <Compile Include="Controllers\ListController.cs" />
+    <Compile Include="Controllers\Composer.cs" />
+    <Compile Include="Controllers\WebViewController.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -104,5 +137,43 @@
       <Project>{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}</Project>
       <Name>MonoTouch.Dialog</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Include="Cells\IssueCellView.xib" />
+    <InterfaceDefinition Include="Cells\RepositoryCellView.xib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SourceBrowser\index.html" />
+    <Content Include="SourceBrowser\lang-apollo.js" />
+    <Content Include="SourceBrowser\lang-basic.js" />
+    <Content Include="SourceBrowser\lang-clj.js" />
+    <Content Include="SourceBrowser\lang-css.js" />
+    <Content Include="SourceBrowser\lang-dart.js" />
+    <Content Include="SourceBrowser\lang-erlang.js" />
+    <Content Include="SourceBrowser\lang-go.js" />
+    <Content Include="SourceBrowser\lang-hs.js" />
+    <Content Include="SourceBrowser\lang-lisp.js" />
+    <Content Include="SourceBrowser\lang-llvm.js" />
+    <Content Include="SourceBrowser\lang-lua.js" />
+    <Content Include="SourceBrowser\lang-matlab.js" />
+    <Content Include="SourceBrowser\lang-ml.js" />
+    <Content Include="SourceBrowser\lang-mumps.js" />
+    <Content Include="SourceBrowser\lang-n.js" />
+    <Content Include="SourceBrowser\lang-pascal.js" />
+    <Content Include="SourceBrowser\lang-proto.js" />
+    <Content Include="SourceBrowser\lang-r.js" />
+    <Content Include="SourceBrowser\lang-rd.js" />
+    <Content Include="SourceBrowser\lang-scala.js" />
+    <Content Include="SourceBrowser\lang-sql.js" />
+    <Content Include="SourceBrowser\lang-tcl.js" />
+    <Content Include="SourceBrowser\lang-tex.js" />
+    <Content Include="SourceBrowser\lang-vb.js" />
+    <Content Include="SourceBrowser\lang-vhdl.js" />
+    <Content Include="SourceBrowser\lang-wiki.js" />
+    <Content Include="SourceBrowser\lang-xq.js" />
+    <Content Include="SourceBrowser\lang-yaml.js" />
+    <Content Include="SourceBrowser\prettify.css" />
+    <Content Include="SourceBrowser\prettify.js" />
+    <Content Include="SourceBrowser\run_prettify.js" />
   </ItemGroup>
 </Project>
