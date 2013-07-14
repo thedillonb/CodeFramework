@@ -7,8 +7,6 @@ namespace CodeFramework.Controllers
 {
     public class BaseDialogViewController : DialogViewController
     {
-        protected bool IsSearching;
-
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
@@ -60,13 +58,9 @@ namespace CodeFramework.Controllers
 		public BaseDialogViewController(bool push, string backButtonText)
 			: base(new RootElement(""), push)
 		{
-			NavigationItem.BackBarButtonItem = new UIBarButtonItem(backButtonText, UIBarButtonItemStyle.Plain, null);
+            NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Back, () => NavigationController.PopViewControllerAnimated(true)));
 			SearchPlaceholder = "Search";
 			Autorotate = true;
-			
-			//            var tv = new TitleView();
-			//            tv.Text = "Hello";
-			//            NavigationItem.TitleView = tv;
 		}
         
         /// <summary>

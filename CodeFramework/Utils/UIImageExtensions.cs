@@ -7,11 +7,22 @@ namespace MonoTouch.UIKit
     {
         public static UIImage FromFileAuto(string filename, string extension = "png")
         {
-            var retina = (UIScreen.MainScreen.Scale > 1.0);
-            if (retina)
-                return UIImage.FromFile(filename + "@2x." + extension);
+            if (UIScreen.MainScreen.Scale > 1.0)
+            {
+                var file = filename + "@2x." + extension;
+                if (System.IO.File.Exists(file))
+                    return UIImage.FromFile(file);
+                else
+                    return UIImage.FromFile(filename + "." + extension);
+            }
             else
-                return UIImage.FromFile(filename + "." + extension);
+            {
+                var file = filename + "." + extension;
+                if (System.IO.File.Exists(file))
+                    return UIImage.FromFile(file);
+                else
+                    return UIImage.FromFile(filename + "@2x." + extension);
+            }
         }
     }
 }

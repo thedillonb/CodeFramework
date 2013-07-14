@@ -111,12 +111,18 @@
     <Compile Include="Controllers\Composer.cs" />
     <Compile Include="Controllers\WebViewController.cs" />
     <Compile Include="Controllers\FileSourceController.cs" />
+    <Compile Include="Controllers\MenuBaseController.cs" />
+    <Compile Include="Views\NavigationButton.cs" />
+    <Compile Include="Views\MenuSectionView.cs" />
+    <Compile Include="Controllers\SlideoutNavigationController.cs" />
+    <Compile Include="Views\ProfileButton.cs" />
+    <Compile Include="Images\Images.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
         <Policies>
-          <DotNetNamingPolicy DirectoryNamespaceAssociation="Hierarchical" ResourceNamePolicy="FileFormatDefault" />
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="FileFormatDefault" />
         </Policies>
       </Properties>
     </MonoDevelop>
@@ -176,5 +182,23 @@
     <Content Include="SourceBrowser\prettify.css" />
     <Content Include="SourceBrowser\prettify.js" />
     <Content Include="SourceBrowser\run_prettify.js" />
+    <Content Include="Images\Buttons\back%402x.png" />
+    <Content Include="Images\Buttons\back.png" />
+    <Content Include="Images\Buttons\three_lines%402x.png" />
+    <Content Include="Images\Buttons\three_lines.png" />
+    <Content Include="Images\Buttons\cancel.png" />
+    <Content Include="Images\Buttons\cancel%402x.png" />
+    <Content Include="Images\Buttons\save%402x.png" />
+    <Content Include="Images\Buttons\save.png" />
+    <Content Include="Images\Buttons\edit%402x.png" />
+    <Content Include="Images\Buttons\edit.png" />
+    <Content Include="Images\Components\menu_section_bg%402x.png" />
+    <Content Include="Images\Components\menu_section_bg.png" />
+    <Content Include="Images\Components\menu_navbar%402x.png" />
+    <Content Include="Images\Components\menu_navbar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\Buttons\add%402x.png" />
+    <BundleResource Include="Images\Buttons\add.png" />
   </ItemGroup>
 </Project>

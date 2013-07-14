@@ -9,7 +9,7 @@ namespace CodeFramework.Controllers
 {
     public abstract class FileSourceController : WebViewController
     {
-        protected static string TempDir = System.IO.Path.Combine(MonoTouch.Utilities.BaseDir, "tmp", "source");
+        protected static string TempDir = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "source");
 
         public FileSourceController()
             : base(false)
@@ -18,25 +18,22 @@ namespace CodeFramework.Controllers
             Title = "Source";
         }
 
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
+
+            //Create the temp directory if it does not exist!
+            if (System.IO.Directory.Exists(TempDir))
+                System.IO.Directory.Delete(TempDir, true);
+            System.IO.Directory.CreateDirectory(TempDir);
+        }
+
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
 
-            //Create the temp directory if it does not exist!
-            if (!System.IO.Directory.Exists(TempDir))
-                System.IO.Directory.CreateDirectory(TempDir);
-
             //Do the request
             this.DoWork(Request, ex => ErrorView.Show(this.View, ex.Message));
-        }
-
-        public override void ViewWillDisappear(bool animated)
-        {
-            base.ViewWillDisappear(animated);
-
-            //Remove all files within the temp directory
-            if (System.IO.Directory.Exists(TempDir))
-                System.IO.Directory.Delete(TempDir, true);
         }
 
         protected override void OnLoadError(object sender, UIWebErrorArgs e)

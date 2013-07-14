@@ -38,6 +38,8 @@ namespace CodeFramework.Controllers
 
         public WebViewController(bool navigationToolbar)
         {
+            NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Back, () => NavigationController.PopViewControllerAnimated(true)));
+
             Web = new UIWebView {ScalesPageToFit = true};
             Web.LoadFinished += OnLoadFinished;
             Web.LoadStarted += OnLoadStarted;

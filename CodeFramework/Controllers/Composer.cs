@@ -26,6 +26,7 @@ using System;
 using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using CodeFramework.Views;
 
 namespace CodeFramework.Controllers
 {
@@ -102,9 +103,10 @@ namespace CodeFramework.Controllers
 		    _navigationBar = new UINavigationBar(new RectangleF(0, 0, UIScreen.MainScreen.Bounds.Width, 44))
 		                         {AutoresizingMask = UIViewAutoresizing.FlexibleWidth, AutosizesSubviews = true};
 		    _navItem = new UINavigationItem ("");
-			var close = new UIBarButtonItem ("Close", UIBarButtonItemStyle.Plain, (s, e) => CloseComposer());
+
+			var close = new UIBarButtonItem (NavigationButton.Create(Images.Buttons.Cancel, CloseComposer));
 			_navItem.LeftBarButtonItem = close;
-			SendItem = new UIBarButtonItem ("Create", UIBarButtonItemStyle.Plain, PostCallback);
+            SendItem = new UIBarButtonItem (NavigationButton.Create(Images.Buttons.Save, PostCallback));
 			_navItem.RightBarButtonItem = SendItem;
 
 			_navigationBar.PushNavigationItem (_navItem, false);
@@ -112,9 +114,6 @@ namespace CodeFramework.Controllers
 			// Composer
 			_composerView = new ComposerView (ComputeComposerSize (RectangleF.Empty), this);
 			
-			// Add the views
-			NSNotificationCenter.DefaultCenter.AddObserver (new NSString("UIKeyboardWillShowNotification"), KeyboardWillShow);
-
 			View.AddSubview (_composerView);
 			View.AddSubview (_navigationBar);
 		}
@@ -137,10 +136,9 @@ namespace CodeFramework.Controllers
 			_previousController.DismissViewController(true, null);
         }
 
-		void PostCallback (object sender, EventArgs a)
+		void PostCallback ()
 		{
 			SendItem.Enabled = false;
-
             if (ReturnAction != null)
                 ReturnAction();
 		}
@@ -172,11 +170,18 @@ namespace CodeFramework.Controllers
             return true;
         }
 		
-		public override void ViewWillAppear (bool animated)
-		{
-			base.ViewWillAppear (animated);
-			_composerView.textView.BecomeFirstResponder ();
-		}
+        public override void ViewWillAppear (bool animated)
+        {
+            base.ViewWillAppear (animated);
+            NSNotificationCenter.DefaultCenter.AddObserver (new NSString("UIKeyboardWillShowNotification"), KeyboardWillShow);
+            _composerView.textView.BecomeFirstResponder ();
+        }
+
+        public override void ViewWillDisappear(bool animated)
+        {
+            base.ViewWillDisappear(animated);
+            NSNotificationCenter.DefaultCenter.RemoveObserver(this);
+        }
 		
 		public void NewComment (UIViewController parent, Action action)
 		{
