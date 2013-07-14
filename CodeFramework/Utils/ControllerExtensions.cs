@@ -8,10 +8,10 @@ namespace CodeFramework.Controllers
 {
     public static class ControllerExtensions
     {
-        public static void DoWork(this UIViewController controller, Action work, Action<Exception> error = null, Action final = null)
+        public static void DoWork(this UIViewController controller, string workTitle, Action work, Action<Exception> error = null, Action final = null)
         {
             MBProgressHUD hud = null;
-            hud = new MBProgressHUD(controller.View.Superview) {Mode = MBProgressHUDMode.Indeterminate, TitleText = "Loading..."};
+            hud = new MBProgressHUD(controller.View.Superview) {Mode = MBProgressHUDMode.Indeterminate, TitleText = workTitle};
             controller.View.Superview.AddSubview(hud);
             hud.Show(true);
 
@@ -41,6 +41,11 @@ namespace CodeFramework.Controllers
                     });
                 }
             });
+        }
+
+        public static void DoWork(this UIViewController controller, Action work, Action<Exception> error = null, Action final = null)
+        {
+            controller.DoWork("Loading...", work, error, final);
         }
 
         public static void DoWorkNoHud(this UIViewController controller, Action work, Action<Exception> error = null, Action final = null)
