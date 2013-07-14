@@ -141,6 +141,11 @@ namespace CodeFramework.Elements
         void IImageUpdated.UpdatedImage (Uri uri)
         {
             var img = ImageLoader.DefaultRequestImage(uri, this);
+            if (img == null)
+            {
+                Console.WriteLine("DefaultRequestImage returned a null image");
+                return;
+            }
             Image = img;
 
             if (uri == null)

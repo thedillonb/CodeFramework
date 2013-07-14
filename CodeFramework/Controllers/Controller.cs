@@ -68,13 +68,13 @@ namespace CodeFramework.Controllers
 
         private void ShowFilterController(FilterController filter)
         {
-            filter.NavigationItem.LeftBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Cancel, (s, a) => { 
+            filter.NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Cancel, () => { 
                 filter.DismissViewController(true, null);
-            });
-            filter.NavigationItem.RightBarButtonItem = new UIBarButtonItem("Apply", UIBarButtonItemStyle.Done, (s, a) => {
+            }));
+            filter.NavigationItem.RightBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Save, () => {
                 filter.DismissViewController(true, null); 
                 filter.ApplyFilter();
-            });
+            }));
 
             var nav = new UINavigationController(filter);
             PresentViewController(nav, true, null);

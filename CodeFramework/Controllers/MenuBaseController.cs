@@ -55,7 +55,7 @@ namespace CodeFramework.Controllers
 		/// <summary>
 		/// Invoked when it comes time to set the root so the child classes can create their own menus
 		/// </summary>
-		protected abstract void CreateMenu(RootElement root);
+		protected abstract void CreateMenuRoot();
 
         /// <summary>
         /// A silly helper to avoid writing out the pushview line
@@ -99,12 +99,9 @@ namespace CodeFramework.Controllers
         
         public override void ViewWillAppear(bool animated)
         {
-            base.ViewWillAppear(animated);
             UpdateProfilePicture();
-
-            var root = new RootElement(string.Empty);
-            CreateMenu(root);
-            Root = root;
+            CreateMenuRoot();
+            base.ViewWillAppear(animated);
         }
 
         public override void DidRotate(UIInterfaceOrientation fromInterfaceOrientation)
