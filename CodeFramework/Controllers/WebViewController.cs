@@ -102,7 +102,7 @@ namespace CodeFramework.Controllers
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            WatermarkView.AssureWatermark(this);
+            this.View.BackgroundColor = UIColor.FromPatternImage(Images.Views.Background);
             Add(Web);
         }
 

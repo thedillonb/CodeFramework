@@ -18,5 +18,11 @@ namespace CodeFramework.Images
         public static UIImage MenuSectionBackground = UIImageHelper.FromFileAuto("Images/Components/menu_section_bg");
         public static UIImage MenuNavbar = UIImageHelper.FromFileAuto("Images/Components/menu_navbar");
     }
+
+    public static class Views
+    {
+        public static UIImage Background;
+        public static UIImage Dropbar;
+    }
 }
 

@@ -90,7 +90,9 @@ namespace CodeFramework.Controllers
                 TableView.TableFooterView = new DropbarView(View.Bounds.Width) {Hidden = true};
             }
 
-            WatermarkView.AssureWatermark(this);
+            var backgroundView = new UIView { BackgroundColor = UIColor.FromPatternImage(Images.Views.Background) };
+            backgroundView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
+            this.TableView.BackgroundView = backgroundView;
             base.ViewDidLoad();
         }
 

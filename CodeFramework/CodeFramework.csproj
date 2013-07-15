@@ -50,7 +50,6 @@
     <Compile Include="Views\ErrorView.cs" />
     <Compile Include="Views\CellBackgroundView.cs" />
     <Compile Include="Views\DropbarView.cs" />
-    <Compile Include="Views\WatermarkView.cs" />
     <Compile Include="Views\HeaderView.cs" />
     <Compile Include="Views\SearchFilterView.cs" />
     <Compile Include="Views\TitleView.cs" />
