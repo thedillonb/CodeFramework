@@ -1,6 +1,7 @@
 using MonoTouch.UIKit;
 using System.Drawing;
 using MonoTouch.Dialog;
+using MonoTouch.CoreGraphics;
 
 namespace CodeFramework.Views
 {
@@ -10,7 +11,19 @@ namespace CodeFramework.Views
         private const float YPad = 10f;
         public static UIFont TitleFont = UIFont.BoldSystemFontOfSize(16);
         public static UIFont SubtitleFont = UIFont.SystemFontOfSize(13);
-        public static UIImage Gradient;
+
+        static readonly CGGradient Gradient;
+
+        static HeaderView ()
+        {
+            using (var rgb = CGColorSpace.CreateDeviceRGB()){
+                float [] colorsBottom = {
+                    1, 1, 1, 1f,
+                    0.96f, 0.97f, 0.98f, 1f
+                };
+                Gradient = new CGGradient (rgb, colorsBottom, null);
+            }
+        }
 
         public string Title { get; set; }
 
@@ -37,9 +50,11 @@ namespace CodeFramework.Views
             var context = UIGraphics.GetCurrentContext();
             float titleY = string.IsNullOrWhiteSpace(Subtitle) ? rect.Height / 2 - TitleFont.LineHeight / 2 : YPad;
             float contentWidth = rect.Width - XPad * 2;
+            var midx = rect.Width/2;
 
-            if (Gradient != null)
-                Gradient.Draw(rect);
+            UIColor.White.SetColor ();
+            context.FillRect (rect);
+            context.DrawLinearGradient (Gradient, new PointF (midx, 0), new PointF (midx, rect.Height), 0);
 
             if (Image != null)
             {

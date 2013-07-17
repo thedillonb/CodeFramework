@@ -5,24 +5,31 @@ namespace CodeFramework.Images
 {
     public static class Buttons
     {
-        public static UIImage Back = UIImageHelper.FromFileAuto("Images/Buttons/back");
-        public static UIImage ThreeLines = UIImageHelper.FromFileAuto("Images/Buttons/three_lines");
-        public static UIImage Cancel = UIImageHelper.FromFileAuto("Images/Buttons/cancel");
-        public static UIImage Edit = UIImageHelper.FromFileAuto("Images/Buttons/edit");
-        public static UIImage Save = UIImageHelper.FromFileAuto("Images/Buttons/save");
-        public static UIImage Add = UIImageHelper.FromFileAuto("Images/Buttons/add");
+        public static UIImage Back { get { return UIImageHelper.FromFileAuto("Images/Buttons/back"); } }
+        public static UIImage ThreeLines { get { return UIImageHelper.FromFileAuto("Images/Buttons/three_lines"); } }
+        public static UIImage Cancel { get { return UIImageHelper.FromFileAuto("Images/Buttons/cancel"); } }
+        public static UIImage Edit { get { return UIImageHelper.FromFileAuto("Images/Buttons/edit"); } }
+        public static UIImage Save { get { return UIImageHelper.FromFileAuto("Images/Buttons/save"); } }
+        public static UIImage Add { get { return UIImageHelper.FromFileAuto("Images/Buttons/add"); } }
     }
 
     public static class Components
     {
-        public static UIImage MenuSectionBackground = UIImageHelper.FromFileAuto("Images/Components/menu_section_bg");
-        public static UIImage MenuNavbar = UIImageHelper.FromFileAuto("Images/Components/menu_navbar");
+        public static UIImage MenuSectionBackground { get { return UIImageHelper.FromFileAuto("Images/Components/menu_section_bg"); } }
+        public static UIImage MenuNavbar { get { return UIImageHelper.FromFileAuto("Images/Components/menu_navbar"); } }
+        public static UIImage Warning { get { return UIImageHelper.FromFileAuto("Images/Components/warning"); } }
+        public static UIImage Dropbar { get { return UIImageHelper.FromFileAuto("Images/Components/dropbar"); } }
     }
 
     public static class Views
     {
         public static UIImage Background;
-        public static UIImage Dropbar;
+    }
+
+    public static class Web
+    {
+        public static UIImage Back { get { return UIImage.FromFile("Images/Web/back_button@2x.png"); } }
+        public static UIImage Forward { get { return UIImage.FromFile("Images/Web/forward_button@2x.png"); } }
     }
 }
 

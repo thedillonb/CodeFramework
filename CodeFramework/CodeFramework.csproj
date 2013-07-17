@@ -44,6 +44,7 @@
     <Folder Include="DiffPlex\" />
     <Folder Include="Data\" />
     <Folder Include="Controllers\" />
+    <Folder Include="Images\Web\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -195,6 +196,10 @@
     <Content Include="Images\Components\menu_section_bg.png" />
     <Content Include="Images\Components\menu_navbar%402x.png" />
     <Content Include="Images\Components\menu_navbar.png" />
+    <Content Include="Images\Web\back_button%402x.png" />
+    <Content Include="Images\Web\forward_button%402x.png" />
+    <Content Include="Images\Components\warning.png" />
+    <Content Include="Images\Components\dropbar.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Images\Buttons\add%402x.png" />

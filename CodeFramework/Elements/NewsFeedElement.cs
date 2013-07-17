@@ -11,9 +11,8 @@ namespace CodeFramework.Elements
     public class NewsFeedElement : NameTimeStringElement
     {
         public static UIImage DefaultImage;
-        public static UIColor LinkColor;
-        public static UIFont LinkFont;
-
+        public static UIColor LinkColor = UIColor.FromRGB(0, 64, 128);
+        public static UIFont LinkFont = UIFont.BoldSystemFontOfSize(12f);
 
         private TextBlock[] _blocks;
         private NSMutableAttributedString _string;

@@ -6,9 +6,6 @@ namespace CodeFramework.Controllers
 {
     public class WebViewController : UIViewController
     {
-        public static UIImage BackButtonImage;
-        public static UIImage ForwardButtonImage;
-
         protected UIBarButtonItem BackButton;
         protected UIBarButtonItem RefreshButton;
         protected UIBarButtonItem ForwardButton;
@@ -50,9 +47,9 @@ namespace CodeFramework.Controllers
             if (_navigationToolbar)
             {
                 ToolbarItems = new [] { 
-                    (BackButton = new UIBarButtonItem(BackButtonImage, UIBarButtonItemStyle.Plain, (s, e) => GoBack()) { Enabled = false }),
+                    (BackButton = new UIBarButtonItem(Images.Web.Back, UIBarButtonItemStyle.Plain, (s, e) => GoBack()) { Enabled = false }),
                     new UIBarButtonItem(UIBarButtonSystemItem.FixedSpace) { Width = 40f },
-                    (ForwardButton = new UIBarButtonItem(ForwardButtonImage, UIBarButtonItemStyle.Plain, (s, e) => GoForward()) { Enabled = false }),
+                    (ForwardButton = new UIBarButtonItem(Images.Web.Forward, UIBarButtonItemStyle.Plain, (s, e) => GoForward()) { Enabled = false }),
                     new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
                     (RefreshButton = new UIBarButtonItem(UIBarButtonSystemItem.Refresh, (s, e) => Refresh()))
                                       };

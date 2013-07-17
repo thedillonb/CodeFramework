@@ -5,7 +5,6 @@ namespace CodeFramework.Views
 {
     public class ErrorView : UIView
     {
-        public static UIImage AlertImage;
         public static UIFont TitleFont = UIFont.SystemFontOfSize(15f); 
 
         public string Title { get; set; }
@@ -27,7 +26,7 @@ namespace CodeFramework.Views
         public override void Draw(RectangleF rect)
         {
             base.Draw(rect);
-            var img = AlertImage;
+            var img = Images.Components.Warning;
             img.Draw(new RectangleF(rect.Width / 2 - img.Size.Width / 2,
                                          rect.Height / 2 - img.Size.Height - 2f,
                                          img.Size.Width,
