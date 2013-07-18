@@ -69,8 +69,8 @@ namespace CodeFramework.Controllers
         private void UpdateProfilePicture()
         {
             var size = new SizeF(32, 32);
-            if (UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeLeft ||
-                UIDevice.CurrentDevice.Orientation == UIDeviceOrientation.LandscapeRight)
+            if (UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.LandscapeLeft ||
+                UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.LandscapeRight)
             {
                 size = new SizeF(24, 24);
             }

@@ -11,8 +11,16 @@ namespace CodeFramework.Controllers
         public static void DoWork(this UIViewController controller, string workTitle, Action work, Action<Exception> error = null, Action final = null)
         {
             MBProgressHUD hud = null;
-            hud = new MBProgressHUD(controller.View.Superview) {Mode = MBProgressHUDMode.Indeterminate, TitleText = workTitle};
-            controller.View.Superview.AddSubview(hud);
+            UIView parent = null;
+
+            //Don't attach it to the UI window. It doesn't work well with orientation
+            if (controller.View.Superview is UIWindow)
+                parent = controller.View;
+            else
+                parent = controller.View.Superview;
+
+            hud = new MBProgressHUD(parent) {Mode = MBProgressHUDMode.Indeterminate, TitleText = workTitle};
+            parent.AddSubview(hud);
             hud.Show(true);
 
             ThreadPool.QueueUserWorkItem(delegate {
