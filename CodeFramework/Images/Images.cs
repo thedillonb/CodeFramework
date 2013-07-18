@@ -11,6 +11,7 @@ namespace CodeFramework.Images
         public static UIImage Edit { get { return UIImageHelper.FromFileAuto("Images/Buttons/edit"); } }
         public static UIImage Save { get { return UIImageHelper.FromFileAuto("Images/Buttons/save"); } }
         public static UIImage Add { get { return UIImageHelper.FromFileAuto("Images/Buttons/add"); } }
+        public static UIImage Filter { get { return UIImageHelper.FromFileAuto("Images/Buttons/filter"); } }
     }
 
     public static class Components

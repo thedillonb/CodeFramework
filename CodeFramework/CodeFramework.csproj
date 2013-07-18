@@ -204,5 +204,7 @@
   <ItemGroup>
     <BundleResource Include="Images\Buttons\add%402x.png" />
     <BundleResource Include="Images\Buttons\add.png" />
+    <BundleResource Include="Images\Buttons\filter%402x.png" />
+    <BundleResource Include="Images\Buttons\filter.png" />
   </ItemGroup>
 </Project>

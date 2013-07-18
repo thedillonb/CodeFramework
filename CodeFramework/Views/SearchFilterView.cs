@@ -6,7 +6,6 @@ namespace CodeFramework.Views
     public class SearchFilterBar : UISearchBar
     {
         public static UIImage ButtonBackground;
-        public static UIImage FilterImage;
         private readonly UIButton _button;
 
         public UIButton FilterButton { get { return _button; } }
@@ -35,7 +34,7 @@ namespace CodeFramework.Views
                 _button.SetBackgroundImage(ButtonBackground, UIControlState.Highlighted);
             }
 
-            _button.SetImage(FilterImage, UIControlState.Normal);
+            _button.SetImage(Images.Buttons.Filter, UIControlState.Normal);
             _button.SizeToFit();
             this.AddSubview(_button);
         }
