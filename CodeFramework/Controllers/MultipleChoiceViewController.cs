@@ -4,9 +4,9 @@ using MonoTouch.UIKit;
 
 namespace CodeFramework.Controllers
 {
-    public class MultipleChoiceViewController<T> : BaseDialogViewController
+    public class MultipleChoiceViewController : BaseDialogViewController
     {
-        private T _obj;
+        private object _obj;
         
         protected void OnValueSelected(System.Reflection.FieldInfo field)
         {
@@ -20,7 +20,7 @@ namespace CodeFramework.Controllers
             Root.Reload(e, UITableViewRowAnimation.None);
         }
         
-        public MultipleChoiceViewController(string title, T obj)
+        public MultipleChoiceViewController(string title, object obj)
             : base (true)
         {
             _obj = obj;

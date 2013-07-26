@@ -32,5 +32,10 @@ namespace CodeFramework.Images
         public static UIImage Back { get { return UIImage.FromFile("Images/Web/back_button@2x.png"); } }
         public static UIImage Forward { get { return UIImage.FromFile("Images/Web/forward_button@2x.png"); } }
     }
+
+	public static class Misc
+	{
+		public static UIImage Anonymous { get { return UIImageHelper.FromFileAuto("Images/Misc/anonymous"); } }
+	}
 }
 

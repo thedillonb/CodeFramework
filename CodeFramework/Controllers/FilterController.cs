@@ -94,7 +94,7 @@ namespace CodeFramework.Controllers
             var element = new MultipleChoiceElement<T>(title, o);
             element.Tapped += () =>
             {
-                var en = new MultipleChoiceViewController<T>(element.Caption, o);
+                var en = new MultipleChoiceViewController(element.Caption, o);
                 en.ViewDisappearing += (sender, e) => {
                     element.Value = CreateCaptionForMultipleChoice(o);
                 };
