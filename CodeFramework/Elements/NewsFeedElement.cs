@@ -10,7 +10,6 @@ namespace CodeFramework.Elements
 {
     public class NewsFeedElement : NameTimeStringElement
     {
-        public static UIImage DefaultImage;
         public static UIColor LinkColor = UIColor.FromRGB(0, 64, 128);
         public static UIFont LinkFont = UIFont.BoldSystemFontOfSize(12f);
 
@@ -68,7 +67,7 @@ namespace CodeFramework.Elements
             Time = time;
             Name = name ?? "Unknown";
 
-            Image = DefaultImage;
+            Image = Images.Misc.Anonymous;
             if (imageUrl != null)
                 ImageUri = new Uri(imageUrl);
 

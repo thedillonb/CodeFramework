@@ -5,8 +5,6 @@ namespace CodeFramework.Elements
 {
     public class UserElement : SubcaptionElement
     {
-        public static UIImage Default;
-
         public UserElement(string username, string firstName, string lastName, string avatar)
             : base (username)
         {
@@ -14,8 +12,7 @@ namespace CodeFramework.Elements
              if (!string.IsNullOrWhiteSpace(realName))
                 Value = realName;
             Accessory = UITableViewCellAccessory.DisclosureIndicator;
-            if (Default != null)
-                Image = Default;
+            Image = CodeFramework.Images.Misc.Anonymous;
             if (avatar != null)
                 ImageUri = new Uri(avatar);
         }
