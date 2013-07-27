@@ -32,7 +32,11 @@ namespace CodeFramework.Elements
             try
             {
                 if (tableView.Style == UITableViewStyle.Grouped)
-                    return Height(new RectangleF(tableView.Bounds.Location, new SizeF(tableView.Bounds.Width - 20, tableView.Bounds.Height)));
+                {
+                    float margin = UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone ? 20f : 110f;
+                    SizeF size = new SizeF (tableView.Bounds.Width - margin, float.MaxValue);
+                    return Height(new RectangleF(tableView.Bounds.Location, size));
+                }
                 return Height(tableView.Bounds);
             }
             catch (Exception e)

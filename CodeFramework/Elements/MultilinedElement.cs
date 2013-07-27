@@ -6,7 +6,7 @@ namespace CodeFramework.Elements
 {
     public class MultilinedElement : CustomElement
     {
-        private const float Padding = 12f;
+        private const float PaddingY = 12f;
         private const float PaddingX = 8f;
 
         public string Value { get; set; }
@@ -34,32 +34,34 @@ namespace CodeFramework.Elements
         public override void Draw(RectangleF bounds, MonoTouch.CoreGraphics.CGContext context, UIView view)
         {
             CaptionColor.SetColor();
-            var textHeight = Caption.MonoStringHeight(CaptionFont, bounds.Width - PaddingX * 2);
-            view.DrawString(Caption, new RectangleF(PaddingX, Padding, bounds.Width - Padding * 2, bounds.Height - Padding * 2), CaptionFont, UILineBreakMode.WordWrap);
+            var width = bounds.Width - PaddingX * 2;
+            var textHeight = Caption.MonoStringHeight(CaptionFont, width);
+            view.DrawString(Caption, new RectangleF(PaddingX, PaddingY, width, bounds.Height - PaddingY * 2), CaptionFont, UILineBreakMode.WordWrap);
 
             if (Value != null)
             {
                 ValueColor.SetColor();
-                var valueHeight = Value.MonoStringHeight(ValueFont, bounds.Width - PaddingX * 2);
-                view.DrawString(Value, new RectangleF(PaddingX, Padding + textHeight + 6f, bounds.Width - Padding * 2, valueHeight), ValueFont, UILineBreakMode.WordWrap);
+                var valueOrigin = new PointF(PaddingX, PaddingY + textHeight + 6f);
+                var valueSize = new SizeF(width, bounds.Height - valueOrigin.Y);
+                view.DrawString(Value, new RectangleF(valueOrigin, valueSize), ValueFont, UILineBreakMode.WordWrap);
             }
         }
 
         public override float Height(System.Drawing.RectangleF bounds)
         {
-            var width = bounds.Width;
+            var width = bounds.Width - PaddingX * 2;
             if (IsTappedAssigned)
                 width -= 20f;
-             
-            var textHeight = Caption.MonoStringHeight(CaptionFont, width - PaddingX * 2);
+
+            var textHeight = Caption.MonoStringHeight(CaptionFont, width);
 
             if (Value != null)
             {
                 textHeight += 6f;
-                textHeight += Value.MonoStringHeight(ValueFont, width - PaddingX * 2);
+                textHeight += Value.MonoStringHeight(ValueFont, width);
             }
 
-            return textHeight + Padding * 2;
+            return textHeight + PaddingY * 2;
         }
     }
 }
