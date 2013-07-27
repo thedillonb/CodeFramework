@@ -123,6 +123,7 @@
     <Compile Include="Controllers\StartupController.cs" />
     <Compile Include="Utils\Transitions.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Data\WebCacheProvider.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

@@ -38,7 +38,39 @@ namespace CodeFramework.Controllers
 			Populate();
 		}
 
-		protected abstract void Populate();
+		private void Populate()
+        {
+            var accountSection = new Section();
+            foreach (var account in _accounts)
+            {
+                var thisAccount = account;
+                var t = new AccountElement(thisAccount);
+                t.Tapped += () => { 
+                    AccountSelected(thisAccount);
+                };
+
+                //Check to see if this account is the active account. Application.Account could be null 
+                //so make it the target of the equals, not the source.
+                if (thisAccount.Equals(_accounts.ActiveAccount))
+                    t.Accessory = UITableViewCellAccessory.Checkmark;
+                accountSection.Add(t);
+            }
+
+            var addAccountSection = new Section();
+            var addAccount = new StyledElement("Add Account", () => {
+                var ctrl = AddAccount();
+                NavigationController.PushViewController(ctrl, true);
+            });
+            //addAccount.Image = Images.CommentAdd;
+            addAccountSection.Add(addAccount);
+
+
+            Root = new RootElement(Title) { accountSection, addAccountSection };
+        }
+
+        protected abstract UIViewController AddAccount();
+
+        protected abstract void AccountSelected(T account); 
 
         public override Source CreateSizingSource(bool unevenRows)
         {
