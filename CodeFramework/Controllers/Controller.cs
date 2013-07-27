@@ -10,9 +10,9 @@ using MonoTouch;
 
 namespace CodeFramework.Controllers
 {
-    public abstract class Controller<T> : BaseDialogViewController where T : class
+    public abstract class Controller : BaseDialogViewController
     {
-        public T Model { get; set; }
+        public object Model { get; set; }
         public bool Loaded { get; private set; }
         public bool EnableFilter { get; set; }
         protected ErrorView CurrentError;
@@ -34,7 +34,7 @@ namespace CodeFramework.Controllers
         protected abstract void OnRefresh();
 
         //Called when the controller needs to request the model from the server
-        protected abstract T OnUpdate(bool forced);
+        protected abstract object OnUpdate(bool forced);
 
         protected override UISearchBar CreateHeaderView()
         {
@@ -155,7 +155,7 @@ namespace CodeFramework.Controllers
         
         class CustomSearchDelegate : UISearchBarDelegate
         {
-            readonly Controller<T> _container;
+            readonly Controller _container;
             DialogViewController _searchController;
             List<ElementContainer> _searchElements;
             
@@ -167,7 +167,7 @@ namespace CodeFramework.Controllers
                 public Element Parent;
             }
             
-            public CustomSearchDelegate (Controller<T> container)
+            public CustomSearchDelegate (Controller container)
             {
                 _container = container;
             }

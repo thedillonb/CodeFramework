@@ -118,11 +118,8 @@
     <Compile Include="Controllers\SlideoutNavigationController.cs" />
     <Compile Include="Views\ProfileButton.cs" />
     <Compile Include="Images\Images.cs" />
-    <Compile Include="Data\Accounts.cs" />
-    <Compile Include="Data\Account.cs" />
     <Compile Include="Controllers\StartupController.cs" />
     <Compile Include="Utils\Transitions.cs" />
-    <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Data\WebCacheProvider.cs" />
   </ItemGroup>
   <ProjectExtensions>

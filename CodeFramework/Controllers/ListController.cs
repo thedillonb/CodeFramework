@@ -4,10 +4,11 @@ using MonoTouch.Dialog;
 using MonoTouch;
 using System.Collections.Generic;
 using MonoTouch.UIKit;
+using System.Collections;
 
 namespace CodeFramework.Controllers
 {
-    public abstract class ListController<T> : Controller<List<T>>
+    public abstract class ListController : Controller
     {
         protected int _nextPage = 1;
         private LoadMoreElement _loadMore;
@@ -28,7 +29,7 @@ namespace CodeFramework.Controllers
             AppendStrategy = true;
         }
 
-        protected override List<T> OnUpdate(bool forced)
+        protected override object OnUpdate(bool forced)
         {
             _nextPage = 1;
             return GetData(forced, _nextPage, out _nextPage);
@@ -37,10 +38,19 @@ namespace CodeFramework.Controllers
         protected override void OnRefresh()
         {
             var sec = new Section();
-            if (Model.Count == 0)
+            var l = Model as IList;
+
+
+
+            if (l.Count == 0)
                 sec.Add(new NoItemsElement());
             else
-                Model.ForEach(x => sec.Add(CreateElement(x)));
+            {
+                foreach (var e in l)
+                {
+                    sec.Add(CreateElement(e));
+                }
+            }
 
             Section loadSec = null;
             if (_nextPage >= 0)
@@ -58,22 +68,28 @@ namespace CodeFramework.Controllers
             });
         }
 
-        protected abstract List<T> GetData(bool force, int currentPage, out int nextPage);
+        protected abstract object GetData(bool force, int currentPage, out int nextPage);
 
-        protected abstract Element CreateElement(T obj);
+        protected abstract Element CreateElement(object obj);
 
         private void LoadWork()
         {
-            var data = GetData(true, _nextPage, out _nextPage);
+            var data = GetData(true, _nextPage, out _nextPage) as IList;
+
             if (Model == null)
                 Model = data;
             else
-                Model.AddRange(data);
+            {
+                var l = Model as IList;
+                foreach (var e in data)
+                    l.Add(e);
+            }
 
             if (AppendStrategy)
             {
                 var sec = new Section();
-                data.ForEach(x => sec.Add(CreateElement(x)));
+                foreach (var d in data)
+                    sec.Add(CreateElement(d));
                 InvokeOnMainThread(() => {
                     Root.Insert(Root.Count - 1, sec);
                 });
