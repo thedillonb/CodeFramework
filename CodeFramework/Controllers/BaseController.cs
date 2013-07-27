@@ -158,9 +158,9 @@ namespace CodeFramework.Controllers
             ReloadComplete();
         }
 
-        public override async void ViewDidAppear(bool animated)
+        public override async void ViewWillAppear(bool animated)
         {
-            base.ViewDidAppear(animated);
+            base.ViewWillAppear(animated);
             if (!Loaded)
             {
                 await Refresh();
