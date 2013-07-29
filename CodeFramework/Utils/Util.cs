@@ -167,12 +167,15 @@ namespace MonoTouch
         }
 
 
-        public static void ShowAlert(string title, string message)
+        public static void ShowAlert(string title, string message, Action dismissed = null)
         {
             var alert = new UIAlertView {Title = title, Message = message};
             alert.DismissWithClickedButtonIndex(alert.AddButton("Ok"), true);
+            if (dismissed != null)
+                alert.Dismissed += (sender, e) => dismissed();
             alert.Show();
         }
+
 
         public static bool IsTall
         {

@@ -8,12 +8,12 @@ namespace CodeFramework.Utils
     /// </summary>
     public static class Transitions
     {
-        public static void TransitionToController(UIViewController controller)
+        public static void TransitionToController(UIViewController controller, Action doneCallback = null)
         {
-            Transition(controller, UIViewAnimationOptions.TransitionCrossDissolve, 1.0);
+            Transition(controller, UIViewAnimationOptions.TransitionCrossDissolve, 1.0, doneCallback);
         }
 
-        public static void Transition(UIViewController controller, UIViewAnimationOptions options, double duration = 0.6)
+        public static void Transition(UIViewController controller, UIViewAnimationOptions options, double duration = 0.6, Action doneCallback = null)
         {
             var window = UIApplication.SharedApplication.KeyWindow;
             UIView.Transition(window, duration, options, () => {
@@ -21,7 +21,10 @@ namespace CodeFramework.Utils
                 UIView.AnimationsEnabled = false;
                 window.RootViewController = controller;
                 UIView.AnimationsEnabled = oldState;
-            }, null);
+            }, () => {
+                if (doneCallback != null)
+                    doneCallback();
+            });
         }
     }
 }
