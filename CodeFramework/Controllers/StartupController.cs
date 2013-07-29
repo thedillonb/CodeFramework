@@ -75,6 +75,7 @@ namespace CodeFramework.Controllers
             return UIInterfaceOrientationMask.All;
         }
 
+        [Obsolete]
         public override bool ShouldAutorotateToInterfaceOrientation(UIInterfaceOrientation toInterfaceOrientation)
         {
             if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone)

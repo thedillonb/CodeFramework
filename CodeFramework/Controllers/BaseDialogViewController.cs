@@ -14,7 +14,11 @@ namespace CodeFramework.Controllers
                 NavigationController.SetNavigationBarHidden(true, true);
             if (IsSearching)
             {
-                TableView.ScrollRectToVisible(new RectangleF(0, 0, 1, 1), false);
+                //This needs to be in the begin invoke because there's logic in the base class that
+                //moves the scroll around. So by doing this we move this logic to execute after it.
+                BeginInvokeOnMainThread(() => {
+                    TableView.ScrollRectToVisible(new RectangleF(0, 0, 1, 1), false);
+                });
             }
         }
         
@@ -61,6 +65,7 @@ namespace CodeFramework.Controllers
             NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Back, () => NavigationController.PopViewControllerAnimated(true)));
 			SearchPlaceholder = "Search";
 			Autorotate = true;
+            AutoHideSearch = true;
 		}
         
         /// <summary>

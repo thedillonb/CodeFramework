@@ -121,7 +121,7 @@
     <Compile Include="Controllers\StartupController.cs" />
     <Compile Include="Utils\Transitions.cs" />
     <Compile Include="Data\WebCacheProvider.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ModelDrivenController.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

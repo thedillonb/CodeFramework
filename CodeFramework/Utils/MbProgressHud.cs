@@ -225,7 +225,7 @@ namespace RedPlum
 			this.BeginInvokeOnMainThread (() => action());
 		}
 
-		public void Dispose ()
+		public new void Dispose ()
 		{
 			this.Indicator = null;
 			Label.Dispose ();

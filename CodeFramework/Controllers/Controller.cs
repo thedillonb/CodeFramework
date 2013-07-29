@@ -12,7 +12,9 @@ namespace CodeFramework.Controllers
 {
     public abstract class Controller : BaseDialogViewController
     {
+        // This must be a generic type because I can't template this controller
         public object Model { get; set; }
+
         public bool Loaded { get; private set; }
         public bool EnableFilter { get; set; }
         protected ErrorView CurrentError;
@@ -129,9 +131,9 @@ namespace CodeFramework.Controllers
                 Refresh();
         }
 
-        public override void ViewDidAppear(bool animated)
+        public override void ViewWillAppear(bool animated)
         {
-            base.ViewDidAppear(animated);
+            base.ViewWillAppear(animated);
             if (!Loaded)
             {
                 Refresh();

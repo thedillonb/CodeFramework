@@ -165,6 +165,7 @@ namespace CodeFramework.Controllers
             _navigationBar.Frame = new RectangleF (0, 0, View.Bounds.Width, 44);
         }
 
+        [Obsolete]
         public override bool ShouldAutorotateToInterfaceOrientation(UIInterfaceOrientation toInterfaceOrientation)
         {
             return true;

@@ -25,7 +25,6 @@ namespace CodeFramework.Controllers
         {
             Style = UITableViewStyle.Plain;
             EnableSearch = true;
-            AutoHideSearch = true;
             AppendStrategy = true;
         }
 
