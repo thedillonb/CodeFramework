@@ -65,18 +65,6 @@ namespace CodeFramework.Cells
             RepoName.Hidden = repoOwner == null;
             UserImage.Hidden = RepoName.Hidden;
             RepoName.Text = repoOwner != null ? repoOwner : string.Empty;
-
-            //RepoName.SizeToFit();
-//
-//            if (!string.IsNullOrEmpty(Description.Text))
-//            {
-//                var height = Description.Text.MonoStringHeight(Description.Font, Description.Frame.Width);
-//                if (height < Description.Font.LineHeight + 3)
-//                {
-//                    Caption.Frame = new RectangleF(Caption.Frame.X, Caption.Frame.Y + 8f, Caption.Frame.Width, Caption.Frame.Height);
-//                    RepoName.Frame = new RectangleF(RepoName.Frame.X, RepoName.Frame.Y + 8f, RepoName.Frame.Width, RepoName.Frame.Height);
-//                }
-//            }
         }
     }
 }

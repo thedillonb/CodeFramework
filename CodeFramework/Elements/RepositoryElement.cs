@@ -41,7 +41,7 @@ namespace CodeFramework.Elements
 		{
             var descriptionHeight = 0f;
             if (!string.IsNullOrEmpty(_description))
-                descriptionHeight = _description.MonoStringHeight(UIFont.SystemFontOfSize(12f), tableView.Bounds.Width - 56f - 28f) + 9f;
+                descriptionHeight = _description.MonoStringHeight(UIFont.SystemFontOfSize(13f), tableView.Bounds.Width - 56f - 28f) + 9f;
             return 52f + descriptionHeight;
 		}
 		
@@ -80,11 +80,7 @@ namespace CodeFramework.Elements
 			var c = cell as RepositoryCellView;
 			if (c != null)
             {
-                if (_logo == null)
-                    _image = ImageLoader.DefaultRequestImage(new Uri("https://d3oaxc4q5k2d6q.cloudfront.net/m/c208b19f4374/img/language-avatars/default_64.png"), this);
-                else
-                    _image = ImageLoader.DefaultRequestImage(_logo, this);
-
+                _image = _logo == null ? null : ImageLoader.DefaultRequestImage(_logo, this);
 				c.Bind(_name, _followers.ToString(), _forks.ToString(), _description, ShowOwner ? _owner : null, _image);
             }
 		}
