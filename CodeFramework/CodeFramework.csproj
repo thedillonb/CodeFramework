@@ -103,12 +103,10 @@
     <Compile Include="Elements\IssueElement.cs" />
     <Compile Include="Data\SQLite.cs" />
     <Compile Include="Controllers\BaseDialogViewController.cs" />
-    <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Controllers\FilterController.cs" />
     <Compile Include="Controllers\RadioChoiceViewController.cs" />
     <Compile Include="Controllers\MultipleChoiceViewController.cs" />
     <Compile Include="Utils\ControllerExtensions.cs" />
-    <Compile Include="Controllers\ListController.cs" />
     <Compile Include="Controllers\Composer.cs" />
     <Compile Include="Controllers\WebViewController.cs" />
     <Compile Include="Controllers\FileSourceController.cs" />
@@ -121,7 +119,8 @@
     <Compile Include="Controllers\StartupController.cs" />
     <Compile Include="Utils\Transitions.cs" />
     <Compile Include="Data\WebCacheProvider.cs" />
-    <Compile Include="Controllers\ModelDrivenController.cs" />
+    <Compile Include="Controllers\BaseModelDrivenController.cs" />
+    <Compile Include="Controllers\BaseListModelController.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
