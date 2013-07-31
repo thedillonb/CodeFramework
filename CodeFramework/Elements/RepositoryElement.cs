@@ -3,39 +3,46 @@ using MonoTouch.UIKit;
 using MonoTouch.Dialog;
 using MonoTouch.Foundation;
 using CodeFramework.Cells;
+using MonoTouch.Dialog.Utilities;
 
 namespace CodeFramework.Elements
 {
 	
-	public class RepositoryElement : Element, IElementSizing, IColorizeBackground
+	public class RepositoryElement : Element, IElementSizing, IColorizeBackground, IImageUpdated
 	{       
 		private string _name;
-		private string _scm;
 		private int _followers;
 		private int _forks;
 		private string _description;
 		private string _owner;
+        private UIImage _image;
+        private Uri _logo;
 		
 		public UITableViewCellStyle Style { get; set;}
 		public UIColor BackgroundColor { get; set; }
 		public bool ShowOwner { get; set; }
 		
-		public RepositoryElement(string name, string scm, int followers, int forks, string description, string owner)
+
+		public RepositoryElement(string name, int followers, int forks, string description, string owner, Uri logo)
 			: base(null)
 		{
 			_name = name;
-			_scm = scm;
 			_followers = followers;
 			_forks = forks;
 			_description = description;
 			_owner = owner;
+            _logo = logo;
 			this.Style = UITableViewCellStyle.Default;
 			ShowOwner = true;
+
 		}
 		
 		public float GetHeight (UITableView tableView, NSIndexPath indexPath)
 		{
-			return 67f;
+            var descriptionHeight = 0f;
+            if (!string.IsNullOrEmpty(_description))
+                descriptionHeight = _description.MonoStringHeight(UIFont.SystemFontOfSize(12f), tableView.Bounds.Width - 56f - 28f) + 9f;
+            return 52f + descriptionHeight;
 		}
 		
 		protected override NSString CellKey {
@@ -72,8 +79,37 @@ namespace CodeFramework.Elements
 		{
 			var c = cell as RepositoryCellView;
 			if (c != null)
-				c.Bind(_name, _scm, _followers.ToString(), _forks.ToString(), _description, ShowOwner ? _owner : null);
+            {
+                if (_logo == null)
+                    _image = ImageLoader.DefaultRequestImage(new Uri("https://d3oaxc4q5k2d6q.cloudfront.net/m/c208b19f4374/img/language-avatars/default_64.png"), this);
+                else
+                    _image = ImageLoader.DefaultRequestImage(_logo, this);
+
+				c.Bind(_name, _followers.ToString(), _forks.ToString(), _description, ShowOwner ? _owner : null, _image);
+            }
 		}
+
+        #region IImageUpdated implementation
+
+        public void UpdatedImage(Uri uri)
+        {
+            var img = ImageLoader.DefaultRequestImage(uri, this);
+            if (img == null)
+            {
+                Console.WriteLine("DefaultRequestImage returned a null image");
+                return;
+            }
+            _image = img;
+
+            if (uri == null)
+                return;
+            var root = GetImmediateRootElement ();
+            if (root == null || root.TableView == null)
+                return;
+            root.TableView.ReloadRows (new NSIndexPath [] { IndexPath }, UITableViewRowAnimation.None);
+        }
+
+        #endregion
 	}
 }
 

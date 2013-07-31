@@ -55,7 +55,7 @@ namespace CodeFramework.Controllers
         {
             _modelType = modelType;
             if (refresh)
-                RefreshRequested += (sender, e) => UpdateAndRender();
+                RefreshRequested += (sender, e) => UpdateAndRender(false);
         }
 
         //Called when the UI needs to be updated with the model data            
@@ -82,18 +82,13 @@ namespace CodeFramework.Controllers
                 TableView.TableFooterView.Hidden = Root.Count == 0;
         }
 
-        public void UpdateAndRender()
-        {
-            UpdateAndRender(true);
-        }
-
-        private void UpdateAndRender(bool calledFromRefreshPullDown)
+        public void UpdateAndRender(bool showLoading = true)
         {
             if (CurrentError != null)
                 CurrentError.RemoveFromSuperview();
             CurrentError = null;
 
-            if (calledFromRefreshPullDown)
+            if (!showLoading)
             {
                 this.DoWorkNoHud(() => {
                     Model = OnUpdateModel(true);
@@ -126,7 +121,7 @@ namespace CodeFramework.Controllers
                 }
                 else
                 {
-                    UpdateAndRender(false);
+                    UpdateAndRender();
                 }
 
                 _firstSeen = true;

@@ -1,5 +1,7 @@
 using System;
 using MonoTouch.UIKit;
+using System.Drawing;
+using MonoTouch.CoreGraphics;
 
 namespace MonoTouch.UIKit
 {
@@ -44,6 +46,17 @@ namespace MonoTouch.UIKit
                     return UIImage.FromFile(file);
                 else
                     return UIImage.FromFile(filename + "@2x." + extension);
+            }
+        }
+
+        public static UIImage ConvertToGrayScale (UIImage image)
+        {
+            RectangleF imageRect = new RectangleF (PointF.Empty, image.Size);
+            using (var colorSpace = CGColorSpace.CreateDeviceGray ())
+                using (var context = new CGBitmapContext (IntPtr.Zero, (int) imageRect.Width, (int) imageRect.Height, 8, 0, colorSpace, CGImageAlphaInfo.None)) {
+                context.DrawImage (imageRect, image.CGImage);
+                using (var imageRef = context.ToImage ())
+                    return new UIImage (imageRef);
             }
         }
     }

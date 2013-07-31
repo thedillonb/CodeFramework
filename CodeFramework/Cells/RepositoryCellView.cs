@@ -10,7 +10,7 @@ namespace CodeFramework.Cells
 
     public partial class RepositoryCellView : UITableViewCell
     {
-        public static UIImage Commit;
+        public static UIImage User;
         public static UIImage Heart;
         public static UIImage Fork;
 
@@ -26,9 +26,10 @@ namespace CodeFramework.Cells
             }
             else
             {
-                cell.Image1.Image = Commit;
-                cell.Image2.Image = Heart;
+                cell.Image1.Image = Heart;
                 cell.Image3.Image = Fork;
+                cell.UserImage.Image = User;
+                cell.BigImage.Layer.MasksToBounds = true;
                 cell.BackgroundView = new CellBackgroundView();
             }
 
@@ -46,36 +47,36 @@ namespace CodeFramework.Cells
         {
         }
 
-        public void Bind(string name, string name1, string name2, string name3, string description, string repoOwner)
+        public void Bind(string name, string name2, string name3, string description, string repoOwner, UIImage logoImage)
         {
             Caption.Text = name;
-            Label1.Text = name1;
-            Label2.Text = name2;
+            Label1.Text = name2;
             Label3.Text = name3;
-            Description.Text = description ?? "";
+            BigImage.Image = logoImage;
+            BigImage.Layer.CornerRadius = BigImage.Bounds.Height / 2f;
+            Description.Hidden = description == null;
+            Description.Text = description ?? string.Empty;
 
-            RepoName.Frame = new RectangleF(8, 6, 71, 21);
-            Caption.Frame = new RectangleF(72, 4, 179, 21);
+            var frame = Description.Frame;
+            frame.Y = 52f;
+            frame.Height = this.Bounds.Height - frame.Y - 8f;
+            Description.Frame = frame;
 
-            RepoName.Text = repoOwner != null ? repoOwner + "/" : string.Empty;
-            RepoName.SizeToFit();
+            RepoName.Hidden = repoOwner == null;
+            UserImage.Hidden = RepoName.Hidden;
+            RepoName.Text = repoOwner != null ? repoOwner : string.Empty;
 
-            Caption.Frame = new RectangleF(RepoName.Frame.Right, Caption.Frame.Y, this.Description.Frame.Width - RepoName.Frame.Right + RepoName.Frame.Left, Caption.Frame.Height);
-
-            if (string.IsNullOrEmpty(Description.Text))
-            {
-                Caption.Frame = new RectangleF(Caption.Frame.X, this.Frame.Height / 2 - Caption.Font.LineHeight / 2 - 2, Caption.Frame.Width, Caption.Frame.Height);
-                RepoName.Frame = new RectangleF(RepoName.Frame.X, this.Frame.Height / 2 - RepoName.Font.LineHeight / 2, RepoName.Frame.Width, RepoName.Frame.Height);
-            }
-            else
-            {
-                var height = Description.Text.MonoStringHeight(Description.Font, Description.Frame.Width);
-                if (height < Description.Font.LineHeight + 3)
-                {
-                    Caption.Frame = new RectangleF(Caption.Frame.X, Caption.Frame.Y + 8f, Caption.Frame.Width, Caption.Frame.Height);
-                    RepoName.Frame = new RectangleF(RepoName.Frame.X, RepoName.Frame.Y + 8f, RepoName.Frame.Width, RepoName.Frame.Height);
-                }
-            }
+            //RepoName.SizeToFit();
+//
+//            if (!string.IsNullOrEmpty(Description.Text))
+//            {
+//                var height = Description.Text.MonoStringHeight(Description.Font, Description.Frame.Width);
+//                if (height < Description.Font.LineHeight + 3)
+//                {
+//                    Caption.Frame = new RectangleF(Caption.Frame.X, Caption.Frame.Y + 8f, Caption.Frame.Width, Caption.Frame.Height);
+//                    RepoName.Frame = new RectangleF(RepoName.Frame.X, RepoName.Frame.Y + 8f, RepoName.Frame.Width, RepoName.Frame.Height);
+//                }
+//            }
         }
     }
 }
