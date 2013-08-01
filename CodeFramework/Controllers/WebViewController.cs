@@ -1,6 +1,7 @@
 using System;
 using CodeFramework.Views;
 using MonoTouch.UIKit;
+using CodeFramework.Utils;
 
 namespace CodeFramework.Controllers
 {
@@ -118,6 +119,8 @@ namespace CodeFramework.Controllers
             if (_navigationToolbar)
                 bounds.Height -= NavigationController.Toolbar.Frame.Height;
             Web.Frame = bounds;
+
+            Analytics.Tracker.TrackView(this.GetType().Name);
         }
         
         public override void DidRotate(UIInterfaceOrientation fromInterfaceOrientation)

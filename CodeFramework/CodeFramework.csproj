@@ -38,6 +38,9 @@
     <Reference Include="Textile">
       <HintPath>Markup\Textile.dll</HintPath>
     </Reference>
+    <Reference Include="GoogleAnalytics">
+      <HintPath>lib\GoogleAnalytics.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Markup\" />
@@ -121,6 +124,7 @@
     <Compile Include="Data\WebCacheProvider.cs" />
     <Compile Include="Controllers\BaseModelDrivenController.cs" />
     <Compile Include="Controllers\BaseListModelController.cs" />
+    <Compile Include="Utils\Analytics.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

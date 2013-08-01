@@ -87,6 +87,12 @@ namespace CodeFramework.Controllers
             }
         }
 
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+            GoogleAnalytics.GAI.SharedInstance.DefaultTracker.TrackView(this.GetType().Name);
+        }
+
         /// <summary>
         /// Makes the refresh table header view.
         /// </summary>

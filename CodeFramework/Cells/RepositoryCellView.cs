@@ -30,6 +30,7 @@ namespace CodeFramework.Cells
                 cell.Image3.Image = Fork;
                 cell.UserImage.Image = User;
                 cell.BigImage.Layer.MasksToBounds = true;
+                cell.BigImage.Layer.CornerRadius = cell.BigImage.Bounds.Height / 2f;
                 cell.BackgroundView = new CellBackgroundView();
             }
 
@@ -53,13 +54,12 @@ namespace CodeFramework.Cells
             Label1.Text = name2;
             Label3.Text = name3;
             BigImage.Image = logoImage;
-            BigImage.Layer.CornerRadius = BigImage.Bounds.Height / 2f;
             Description.Hidden = description == null;
             Description.Text = description ?? string.Empty;
 
             var frame = Description.Frame;
-            frame.Y = 52f;
-            frame.Height = this.Bounds.Height - frame.Y - 8f;
+            frame.Y = 50f;
+            frame.Height = this.Bounds.Height - frame.Y - 10f;
             Description.Frame = frame;
 
             RepoName.Hidden = repoOwner == null;

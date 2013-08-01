@@ -2,6 +2,7 @@ using System;
 using MonoTouch.UIKit;
 using System.Linq;
 using CodeFramework.Controllers;
+using CodeFramework.Utils;
 
 namespace CodeFramework.Controllers
 {
@@ -20,28 +21,36 @@ namespace CodeFramework.Controllers
         {
             base.ViewWillLayoutSubviews();
 
-            if (_imgView != null)
-                _imgView.Frame = this.View.Bounds;
-
-            if (_img != null)
-                _img.Dispose();
-            _img = null;
-
-            //Load the background image
-            if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone)
+            try
             {
-                _img = UIImageHelper.FromFileAuto(MonoTouch.Utilities.IsTall ? "Default-568h" : "Default");
-            }
-            else
-            {
-                if (UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.Portrait || UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.PortraitUpsideDown)
-                    _img = UIImageHelper.FromFileAuto("Default-Portrait");
+                if (_imgView != null)
+                    _imgView.Frame = this.View.Bounds;
+
+                if (_img != null)
+                    _img.Dispose();
+                _img = null;
+
+                //Load the background image
+                if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone)
+                {
+                    _img = UIImageHelper.FromFileAuto(MonoTouch.Utilities.IsTall ? "Default-568h" : "Default");
+                }
                 else
-                    _img = UIImageHelper.FromFileAuto("Default-Landscape");
-            }
+                {
+                    if (UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.Portrait || UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.PortraitUpsideDown)
+                        _img = UIImageHelper.FromFileAuto("Default-Portrait");
+                    else
+                        _img = UIImageHelper.FromFileAuto("Default-Landscape");
+                }
 
-            if (_img != null)
-                _imgView.Image = _img;
+                if (_img != null)
+                    _imgView.Image = _img;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Unable to show StartupController: " + e.Message);
+                GoogleAnalytics.GAI.SharedInstance.DefaultTracker.TrackException(false, e.Message);
+            }
         }
 
         public override void ViewDidLoad()
@@ -56,6 +65,8 @@ namespace CodeFramework.Controllers
         public override void ViewDidAppear(bool animated)
         {
             base.ViewDidAppear(animated);
+
+            Analytics.Tracker.TrackView(this.GetType().Name);
 
             //Start the login
             ProcessAccounts();
