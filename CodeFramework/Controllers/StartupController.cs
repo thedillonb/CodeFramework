@@ -3,6 +3,7 @@ using MonoTouch.UIKit;
 using System.Linq;
 using CodeFramework.Controllers;
 using CodeFramework.Utils;
+using MonoTouch;
 
 namespace CodeFramework.Controllers
 {
@@ -48,8 +49,7 @@ namespace CodeFramework.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine("Unable to show StartupController: " + e.Message);
-                GoogleAnalytics.GAI.SharedInstance.DefaultTracker.TrackException(false, e.Message);
+                Utilities.LogException("Unable to show StartupController", e);
             }
         }
 
@@ -66,7 +66,7 @@ namespace CodeFramework.Controllers
         {
             base.ViewDidAppear(animated);
 
-            Analytics.Tracker.TrackView(this.GetType().Name);
+            Utilities.Analytics.TrackView(this.GetType().Name);
 
             //Start the login
             ProcessAccounts();

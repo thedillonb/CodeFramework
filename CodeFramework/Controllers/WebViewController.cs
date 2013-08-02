@@ -120,7 +120,8 @@ namespace CodeFramework.Controllers
                 bounds.Height -= NavigationController.Toolbar.Frame.Height;
             Web.Frame = bounds;
 
-            Analytics.Tracker.TrackView(this.GetType().Name);
+
+            MonoTouch.Utilities.Analytics.TrackView(this.GetType().Name);
         }
         
         public override void DidRotate(UIInterfaceOrientation fromInterfaceOrientation)

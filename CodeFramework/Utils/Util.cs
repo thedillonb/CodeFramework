@@ -7,6 +7,7 @@ using System.IO;
 using System.Text;
 using System.Diagnostics;
 using System.Globalization;
+using GoogleAnalytics;
 
 namespace MonoTouch
 {
@@ -67,66 +68,11 @@ namespace MonoTouch
             Defaults.SetString (key, DateTime.UtcNow.Ticks.ToString ());
         }
 
-
         public static NSUserDefaults Defaults = NSUserDefaults.StandardUserDefaults;
 
-        public static string StripHtml (string str)
+        public static GAITracker Analytics
         {
-            if (str.IndexOf ('<') == -1)
-                return str;
-            var sb = new StringBuilder ();
-            for (int i = 0; i < str.Length; i++){
-                char c = str [i];
-                if (c != '<'){
-                    sb.Append (c);
-                    continue;
-                }
-
-                for (i++; i < str.Length; i++){
-                    c =  str [i];
-                    if (c == '"' || c == '\''){
-                        var last = c;
-                        for (i++; i < str.Length; i++){
-                            c = str [i];
-                            if (c == last)
-                                break;
-                            if (c == '\\')
-                                i++;
-                        }
-                    } else if (c == '>')
-                        break;
-                }
-            }
-            return sb.ToString ();
-        }
-
-        public static string CleanName (string name)
-        {
-            if (name.Length == 0)
-                return "";
-
-            bool clean = name.All(c => Char.IsLetterOrDigit(c) || c == '_');
-            if (clean)
-                return name;
-
-            var sb = new StringBuilder ();
-            foreach (char c in name){
-                if (!Char.IsLetterOrDigit (c))
-                    break;
-
-                sb.Append (c);
-            }
-            return sb.ToString ();
-        }
-
-        public static RootElement MakeProgressRoot (string caption)
-        {
-            return new RootElement (caption){
-                new Section
-                    {
-                    new ActivityElement ()
-                }
-            };
+            get { return GoogleAnalytics.GAI.SharedInstance.DefaultTracker; }
         }
 
         static long _lastTime;
@@ -147,11 +93,8 @@ namespace MonoTouch
 
         public static void LogException (string text, Exception e)
         {
-            using (var s = File.AppendText (BaseDir + "/Documents/crash.log")){
-                var msg = String.Format ("On {0}, message: {1}\nException:\n{2}", DateTime.Now, text, e);
-                s.WriteLine (msg);
-                Console.WriteLine (msg);
-            }
+            Console.WriteLine (String.Format ("On {0}, message: {1}\nException:\n{2}", DateTime.Now, text, e));
+            Analytics.TrackException(false, e.Message);
         }
 
         static UIActionSheet _sheet;

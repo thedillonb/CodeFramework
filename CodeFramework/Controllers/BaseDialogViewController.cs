@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CodeFramework.Elements;
 using System;
+using MonoTouch.CoreGraphics;
 
 namespace CodeFramework.Controllers
 {
@@ -128,12 +129,49 @@ namespace CodeFramework.Controllers
 
         sealed class RefreshView : RefreshTableHeaderView
         {
+            static readonly CGGradient BottomGradient;
+
+            static RefreshView ()
+            {
+                using (var rgb = CGColorSpace.CreateDeviceRGB()){
+                    float [] colorsBottom = {
+                        1, 1, 1, 0f,
+                        0.75f, 0.79f, 0.81f, .8f
+                    };
+                    BottomGradient = new CGGradient (rgb, colorsBottom, null);
+                }
+            }
+
             public RefreshView(RectangleF rect)
                 : base(rect)
             {
                 BackgroundColor = UIColor.Clear;
                 StatusLabel.BackgroundColor = UIColor.Clear;
+                StatusLabel.ShadowColor = UIColor.Clear;
+                //StatusLabel.TextColor = UIColor.FromRGB(70, 70, 70);
+
                 LastUpdateLabel.BackgroundColor = UIColor.Clear;
+                LastUpdateLabel.ShadowColor = UIColor.Clear;
+                //LastUpdateLabel.TextColor = UIColor.FromRGB(90, 90, 90);
+            }
+
+            public override void LayoutSubviews()
+            {
+                base.LayoutSubviews();
+                ArrowView.Frame = new RectangleF (20, Bounds.Height - 55, 20, 45);
+            }
+
+            public override void Draw(RectangleF rect)
+            {
+                var context = UIGraphics.GetCurrentContext();
+                var bounds = Bounds;
+                var midx = bounds.Width/2;
+
+                //UIColor.FromRGB(232, 237, 240).SetColor ();
+                //context.FillRect (bounds);
+                context.DrawLinearGradient (BottomGradient, new PointF (midx, bounds.Height-100), new PointF (midx, bounds.Height), 0);
+
+                base.Draw(rect);
             }
         }
 

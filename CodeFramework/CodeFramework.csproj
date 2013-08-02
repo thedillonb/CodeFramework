@@ -124,7 +124,6 @@
     <Compile Include="Data\WebCacheProvider.cs" />
     <Compile Include="Controllers\BaseModelDrivenController.cs" />
     <Compile Include="Controllers\BaseListModelController.cs" />
-    <Compile Include="Utils\Analytics.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
