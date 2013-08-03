@@ -91,9 +91,9 @@ namespace CodeFramework.Elements
 
 
                 textColor.SetColor();
-                view.DrawString(String,
-                    new RectangleF(LeftRightPadding, top, bounds.Width - LeftRightPadding*2, bounds.Height - TopBottomPadding - top), DescFont, UILineBreakMode.TailTruncation
-                );
+                var stringRect = Image != null ? new RectangleF(leftMargin, top, bounds.Width - LeftRightPadding*2, bounds.Height - TopBottomPadding - top) :
+                                                 new RectangleF(LeftRightPadding, top, bounds.Width - LeftRightPadding*2, bounds.Height - TopBottomPadding - top);
+                view.DrawString(String, stringRect, DescFont, UILineBreakMode.TailTruncation);
             }
         }
 
@@ -102,6 +102,8 @@ namespace CodeFramework.Elements
             var contentWidth = bounds.Width - LeftRightPadding * 2; //Account for the Accessory
             if (IsTappedAssigned)
                 contentWidth -= 20f;
+            if (Image != null)
+                contentWidth -= (LeftRightPadding + 32f + 3f);
 
             var desc = String;
             var descHeight = desc.MonoStringHeight(DescFont, contentWidth);

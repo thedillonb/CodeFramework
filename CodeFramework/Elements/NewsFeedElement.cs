@@ -137,7 +137,14 @@ namespace CodeFramework.Elements
             {
                 var a = (NSUrl)MonoTouch.ObjCRuntime.Runtime.GetNSObject (MonoTouch.ObjCRuntime.Messaging.IntPtr_objc_msgSend(linkInfo.Handle, MonoTouch.ObjCRuntime.Selector.GetHandle ("URL")));
                 var id = Int32.Parse(a.AbsoluteString);
-                Parent._listToLinks[id].Callback();
+                try
+                {
+                    Parent._listToLinks[id].Callback();
+                }
+                catch (Exception e)
+                {
+                    MonoTouch.Utilities.LogException("Unable to callback on OHAttributedLabel", e);
+                }
                 return false;
             }
         }
@@ -178,12 +185,13 @@ namespace CodeFramework.Elements
                 var width = bounds.Width;
                 if (IsTappedAssigned)
                     width -= 20f;
+                var frameX = LeftRightPadding * 2 + 32f + 3f;
 
-                var newFrame = new RectangleF(LeftRightPadding, 45f, width - LeftRightPadding * 2, 0);
+                var newFrame = new RectangleF(frameX, 45f, width - LeftRightPadding * 2, 0);
                 CreateOrUpdate(newFrame);
                 _label.SizeToFit();
                 if (_label.Frame.Height > 60f)
-                    CreateOrUpdate(new RectangleF(LeftRightPadding, 45f, width - LeftRightPadding * 2, 60));
+                    CreateOrUpdate(new RectangleF(frameX, 45f, width - LeftRightPadding * 2, 60));
 
                 _label.SetNeedsDisplay();
                 _lastHeight = bounds.Width;
@@ -196,7 +204,7 @@ namespace CodeFramework.Elements
         {
             base.Draw(bounds, context, view);
             if (LittleImage != null)
-                LittleImage.Draw(new RectangleF(26, 26, 16f, 16f));
+                LittleImage.Draw(new RectangleF(LeftRightPadding + 16f, TopBottomPadding + 32f + 5f, 16f, 16f));
         }
     }
 }
