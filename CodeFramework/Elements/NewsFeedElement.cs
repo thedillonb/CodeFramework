@@ -46,14 +46,16 @@ namespace CodeFramework.Elements
             }
 
             public TextBlock(string value, NSAction tapped = null)
+                : this (value)
             {
-                Value = value;
                 Tapped = tapped;
             }
 
             public TextBlock(string value, UIFont font = null, UIColor color = null, NSAction tapped = null)
+                : this(value, tapped)
             {
-                Value = value; Font = font; Color = color; Tapped = tapped;
+                Font = font; 
+                Color = color;
             }
         }
 
@@ -187,11 +189,11 @@ namespace CodeFramework.Elements
                     width -= 20f;
                 var frameX = LeftRightPadding * 2 + 32f + 3f;
 
-                var newFrame = new RectangleF(frameX, 45f, width - LeftRightPadding * 2, 0);
+                var newFrame = new RectangleF(frameX, 45f, width - frameX - LeftRightPadding, 0);
                 CreateOrUpdate(newFrame);
                 _label.SizeToFit();
                 if (_label.Frame.Height > 60f)
-                    CreateOrUpdate(new RectangleF(frameX, 45f, width - LeftRightPadding * 2, 60));
+                    CreateOrUpdate(new RectangleF(frameX, 45f, width - frameX - LeftRightPadding, 60));
 
                 _label.SetNeedsDisplay();
                 _lastHeight = bounds.Width;
