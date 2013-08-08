@@ -110,7 +110,7 @@ namespace CodeFramework.Controllers
             UpdateProfilePicture();
         }
 
-        protected class MenuElement : StyledElement
+        protected class MenuElement : MonoTouch.Dialog.StyledStringElement
         {
             public MenuElement(string title, NSAction tapped, UIImage image)
                 : base(title, tapped)

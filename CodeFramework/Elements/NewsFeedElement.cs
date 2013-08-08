@@ -5,6 +5,7 @@ using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using System.Collections.Generic;
 using System.Linq;
+using MonoTouch.Dialog;
 
 namespace CodeFramework.Elements
 {
@@ -66,7 +67,7 @@ namespace CodeFramework.Elements
             _kitty = new Kitty { Parent = this };
 
             LittleImage = littleImage;
-            Time = time;
+            Time = time.ToDaysAgo();
             Name = name ?? "Unknown";
 
             Image = Images.Misc.Anonymous;

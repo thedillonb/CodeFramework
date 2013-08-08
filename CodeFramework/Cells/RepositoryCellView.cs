@@ -31,7 +31,7 @@ namespace CodeFramework.Cells
                 cell.UserImage.Image = User;
                 cell.BigImage.Layer.MasksToBounds = true;
                 cell.BigImage.Layer.CornerRadius = cell.BigImage.Bounds.Height / 2f;
-                cell.BackgroundView = new CellBackgroundView();
+                cell.BackgroundView = new MonoTouch.Dialog.CellBackgroundView();
             }
 
             //Create the icons

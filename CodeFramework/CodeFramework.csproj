@@ -53,7 +53,6 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="Views\ErrorView.cs" />
-    <Compile Include="Views\CellBackgroundView.cs" />
     <Compile Include="Views\DropbarView.cs" />
     <Compile Include="Views\HeaderView.cs" />
     <Compile Include="Views\SearchFilterView.cs" />
@@ -61,7 +60,6 @@
     <Compile Include="Views\TableViewSectionView.cs" />
     <Compile Include="Utils\DateTimeExtensions.cs" />
     <Compile Include="Utils\MbProgressHud.cs" />
-    <Compile Include="Utils\StringExtensions.cs" />
     <Compile Include="Utils\UIImageExtensions.cs" />
     <Compile Include="Utils\Util.cs" />
     <Compile Include="Utils\EnumExtensions.cs" />
@@ -82,17 +80,7 @@
     <Compile Include="DiffPlex\Model\DiffResult.cs" />
     <Compile Include="DiffPlex\Model\EditLengthResult.cs" />
     <Compile Include="DiffPlex\Model\ModificationData.cs" />
-    <Compile Include="Elements\CustomElement.cs" />
-    <Compile Include="Elements\InputElement.cs" />
-    <Compile Include="Elements\MultilinedElement.cs" />
-    <Compile Include="Elements\NameTimeStringElement.cs" />
     <Compile Include="Elements\NewsFeedElement.cs" />
-    <Compile Include="Elements\NoItemsElement.cs" />
-    <Compile Include="Elements\PaginateElement.cs" />
-    <Compile Include="Elements\SplitElement.cs" />
-    <Compile Include="Elements\StyledElement.cs" />
-    <Compile Include="Elements\SubcaptionElement.cs" />
-    <Compile Include="Elements\TrueFalseElement.cs" />
     <Compile Include="Elements\UserElement.cs" />
     <Compile Include="Elements\RepositoryElement.cs" />
     <Compile Include="Cells\IssueCellView.cs" />

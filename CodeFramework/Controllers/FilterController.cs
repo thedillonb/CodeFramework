@@ -20,7 +20,7 @@ namespace CodeFramework.Controllers
 
         public abstract void ApplyFilter();
 
-        public class EnumChoiceElement : StyledElement
+        public class EnumChoiceElement : MonoTouch.Dialog.StyledStringElement
         {
             public int Obj;
             public EnumChoiceElement(string title, string defaultVal, IEnumerable<string> values)
@@ -78,7 +78,7 @@ namespace CodeFramework.Controllers
             return CreateEnumElement(title, values[defaultVal], values);
         }
 
-        public class MultipleChoiceElement<T> : StyledElement
+        public class MultipleChoiceElement<T> : MonoTouch.Dialog.StyledStringElement
         {
             public T Obj;
             public MultipleChoiceElement(string title, T obj)

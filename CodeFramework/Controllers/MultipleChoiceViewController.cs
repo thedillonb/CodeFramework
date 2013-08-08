@@ -13,7 +13,7 @@ namespace CodeFramework.Controllers
             var r = Root[0].Elements.Find(x => x.Caption.Equals(field.Name));
             if (r == null)
                 return;
-            var e = (StyledElement)r;
+            var e = (StyledStringElement)r;
             var value = (bool)field.GetValue(_obj);
             field.SetValue(_obj, !value);
             e.Accessory = !value ? MonoTouch.UIKit.UITableViewCellAccessory.Checkmark : MonoTouch.UIKit.UITableViewCellAccessory.None;
@@ -32,7 +32,7 @@ namespace CodeFramework.Controllers
             foreach (var s in fields)
             {
                 var copy = s;
-                sec.Add(new StyledElement(s.Name, () => OnValueSelected(copy)) { 
+                sec.Add(new StyledStringElement(s.Name, () => OnValueSelected(copy)) { 
                     Accessory = (bool)s.GetValue(_obj) ? MonoTouch.UIKit.UITableViewCellAccessory.Checkmark : MonoTouch.UIKit.UITableViewCellAccessory.None 
                 });
             }
