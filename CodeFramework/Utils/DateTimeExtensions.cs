@@ -6,12 +6,12 @@ namespace System
         {
             var dt = DateTime.Now.Subtract(d.ToLocalTime());
             if (dt.TotalDays > 1)
-                return Convert.ToInt32(dt.TotalDays) + " days ago";
+                return Convert.ToInt32(dt.TotalDays) + " days ago".t();
             if (dt.TotalHours > 1)
-                return Convert.ToInt32(dt.TotalHours) + " hours ago";
+                return Convert.ToInt32(dt.TotalHours) + " hours ago".t();
             if (dt.TotalMinutes > 1)
-                return Convert.ToInt32(dt.TotalMinutes) + " minutes ago";
-            return "moments ago";
+                return Convert.ToInt32(dt.TotalMinutes) + " minutes ago".t();
+            return "moments ago".t();
         }
 
         public static int TotalDaysAgo(this DateTime d)

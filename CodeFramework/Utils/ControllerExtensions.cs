@@ -53,7 +53,7 @@ namespace CodeFramework.Controllers
 
         public static void DoWork(this UIViewController controller, Action work, Action<Exception> error = null, Action final = null)
         {
-            controller.DoWork("Loading...", work, error, final);
+            controller.DoWork("Loading...".t(), work, error, final);
         }
 
         public static void DoWorkNoHud(this UIViewController controller, Action work, Action<Exception> error = null, Action final = null)

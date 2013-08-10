@@ -97,7 +97,7 @@ namespace CodeFramework.Controllers
 		
 		public Composer () : base (null, null)
 		{
-            Title = "New Comment";
+            Title = "New Comment".t();
 
 			// Navigation Bar
 		    _navigationBar = new UINavigationBar(new RectangleF(0, 0, UIScreen.MainScreen.Bounds.Width, 44))

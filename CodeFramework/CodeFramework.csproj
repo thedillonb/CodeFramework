@@ -112,6 +112,9 @@
     <Compile Include="Data\WebCacheProvider.cs" />
     <Compile Include="Controllers\BaseModelDrivenController.cs" />
     <Compile Include="Controllers\BaseListModelController.cs" />
+    <Compile Include="Controllers\BaseAccountsController.cs" />
+    <Compile Include="Data\IAccount.cs" />
+    <Compile Include="Utils\Translate.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

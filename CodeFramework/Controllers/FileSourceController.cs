@@ -15,7 +15,7 @@ namespace CodeFramework.Controllers
             : base(false)
         {
             Web.DataDetectorTypes = UIDataDetectorType.None;
-            Title = "Source";
+            Title = "Source".t();
         }
 
         public override void ViewDidLoad()
@@ -41,7 +41,7 @@ namespace CodeFramework.Controllers
             base.OnLoadError(sender, e);
 
             //Can't load this!
-            ErrorView.Show(this.View, "Unable to display this type of file.");
+            ErrorView.Show(this.View, "Unable to display this type of file.".t());
         }
 
         protected abstract void Request();

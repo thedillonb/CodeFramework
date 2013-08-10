@@ -48,7 +48,7 @@ namespace CodeFramework.Controllers
             Section loadSec = null;
             if (_nextPage > 0)
             {
-                _loadMore = new PaginateElement("Load More", "Loading...", e => this.DoWorkNoHud(LoadWork, LoadException, LoadFinished));
+                _loadMore = new PaginateElement("Load More".t(), "Loading...".t(), e => this.DoWorkNoHud(LoadWork, LoadException, LoadFinished));
                 loadSec = new Section() { _loadMore };
             }
 
@@ -82,7 +82,7 @@ namespace CodeFramework.Controllers
 
         private void LoadException(Exception ex)
         {
-            Utilities.ShowAlert("Failure to load!", "Unable to load additional enries because the following error: " + ex.Message);
+            Utilities.ShowAlert("Failure to load!".t(), "Unable to load additional enries because the following error: ".t() + ex.Message);
         }
 
         private void LoadFinished()

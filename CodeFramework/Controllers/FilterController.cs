@@ -14,7 +14,7 @@ namespace CodeFramework.Controllers
         public FilterController()
             : base(true)
         {
-            Title = "Filter & Sort";
+            Title = "Filter & Sort".t();
             Style = MonoTouch.UIKit.UITableViewStyle.Grouped;
         }
 
@@ -122,11 +122,11 @@ namespace CodeFramework.Controllers
             if (str.EndsWith(", "))
             {
                 if (trueCounter == fields.Length)
-                    return "Any";
+                    return "Any".t();
                 else
                     return str.Substring(0, str.Length - 2);
             }
-            return "None";
+            return "None".t();
         }
     }
 }

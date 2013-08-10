@@ -44,7 +44,7 @@ namespace CodeFramework.Controllers
             : base(new RootElement(""), push)
         {
             NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Back, () => NavigationController.PopViewControllerAnimated(true)));
-            SearchPlaceholder = "Search";
+            SearchPlaceholder = "Search".t();
             Autorotate = true;
             AutoHideSearch = true;
             Style = UITableViewStyle.Grouped;

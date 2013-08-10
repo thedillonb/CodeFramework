@@ -93,7 +93,7 @@ namespace CodeFramework.Controllers
                 this.DoWorkNoHud(() => {
                     Model = OnUpdateModel(true);
                     InvokeOnMainThread(Render);
-                }, ex => Utilities.ShowAlert("Unable to refresh!", "There was an issue while attempting to refresh. " + ex.Message), ReloadComplete);
+                }, ex => Utilities.ShowAlert("Unable to refresh!".t(), "There was an issue while attempting to refresh. ".t() + ex.Message), ReloadComplete);
             }
             else
             {
