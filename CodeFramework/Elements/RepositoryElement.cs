@@ -16,14 +16,13 @@ namespace CodeFramework.Elements
 		private string _description;
 		private string _owner;
         private UIImage _image;
-        private Uri _logo;
-		
-		public UITableViewCellStyle Style { get; set;}
-		public UIColor BackgroundColor { get; set; }
-		public bool ShowOwner { get; set; }
-		
+        private Uri _imageUri;
 
-		public RepositoryElement(string name, int followers, int forks, string description, string owner, Uri logo)
+		public UIColor BackgroundColor { get; set; }
+
+		public bool ShowOwner { get; set; }
+
+		public RepositoryElement(string name, int followers, int forks, string description, string owner, Uri imageUri = null, UIImage image = null)
 			: base(null)
 		{
 			_name = name;
@@ -31,12 +30,11 @@ namespace CodeFramework.Elements
 			_forks = forks;
 			_description = description;
 			_owner = owner;
-            _logo = logo;
-			this.Style = UITableViewCellStyle.Default;
+            _imageUri = imageUri;
+            _image = image;
 			ShowOwner = true;
-
 		}
-		
+
 		public float GetHeight (UITableView tableView, NSIndexPath indexPath)
 		{
             var descriptionHeight = 0f;
@@ -78,11 +76,12 @@ namespace CodeFramework.Elements
 		void IColorizeBackground.WillDisplay(UITableView tableView, UITableViewCell cell, NSIndexPath indexPath)
 		{
 			var c = cell as RepositoryCellView;
-			if (c != null)
-            {
-                _image = _logo == null ? null : ImageLoader.DefaultRequestImage(_logo, this);
-				c.Bind(_name, _followers.ToString(), _forks.ToString(), _description, ShowOwner ? _owner : null, _image);
-            }
+            if (c == null)
+                return;
+
+            if (_image == null && _imageUri != null)
+                _image = ImageLoader.DefaultRequestImage(_imageUri, this);
+			c.Bind(_name, _followers.ToString(), _forks.ToString(), _description, ShowOwner ? _owner : null, _image);
 		}
 
         #region IImageUpdated implementation

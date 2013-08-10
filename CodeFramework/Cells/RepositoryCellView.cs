@@ -20,11 +20,7 @@ namespace CodeFramework.Cells
             var views = NSBundle.MainBundle.LoadNib("RepositoryCellView", cell, null);
             cell = Runtime.GetNSObject( views.ValueAt(0) ) as RepositoryCellView;
 
-            if (cell == null)
-            {
-                MonoTouch.Utilities.Log("Null Repository Cell");
-            }
-            else
+            if (cell != null)
             {
                 cell.Image1.Image = Heart;
                 cell.Image3.Image = Fork;

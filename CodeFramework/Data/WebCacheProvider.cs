@@ -75,7 +75,7 @@ namespace CodeFramework.Data
                     foreach (var obj in sortedCached)
                     {
                         _cache.Remove(obj.Value);
-                        Utilities.Log("Removed cached item {0} -> {1}", obj.Value, obj.Key.GetType().ToString());
+                        //Utilities.Log("Removed cached item {0} -> {1}", obj.Value, obj.Key.GetType().ToString());
                         i++;
                         if (i >= MaxCachedItems / 2)
                             break;

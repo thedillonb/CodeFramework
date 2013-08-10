@@ -49,25 +49,6 @@ namespace MonoTouch
             }
         }
 
-        public static DateTime LastUpdate (string key)
-        {
-            var s = Defaults.StringForKey (key);
-            if (s == null)
-                return DateTime.MinValue;
-            long ticks;
-            return Int64.TryParse (s, out ticks) ? new DateTime (ticks, DateTimeKind.Utc) : DateTime.MinValue;
-        }
-
-        public static bool NeedsUpdate (string key, TimeSpan timeout)
-        {
-            return DateTime.UtcNow - LastUpdate (key) > timeout;
-        }
-
-        public static void RecordUpdate (string key)
-        {
-            Defaults.SetString (key, DateTime.UtcNow.Ticks.ToString ());
-        }
-
         public static NSUserDefaults Defaults = NSUserDefaults.StandardUserDefaults;
 
         public static void SetupAnalytics(string trackerId, string appName)
@@ -89,22 +70,6 @@ namespace MonoTouch
         public static GAITracker Analytics
         {
             get { return GoogleAnalytics.GAI.SharedInstance.DefaultTracker; }
-        }
-
-        static long _lastTime;
-        [Conditional ("TRACE")]
-        public static void ReportTime (string s)
-        {
-            long now = DateTime.UtcNow.Ticks;
-
-            Debug.WriteLine (string.Format ("[{0}] ticks since last invoke: {1}", s, now-_lastTime));
-            _lastTime = now;
-        }
-        
-        [Conditional ("TRACE")]
-        public static void Log (string format, params object [] args)
-        {
-            Debug.WriteLine (String.Format (format, args));
         }
 
         public static void LogException (string text, Exception e)
@@ -129,7 +94,7 @@ namespace MonoTouch
         public static void ShowAlert(string title, string message, Action dismissed = null)
         {
             var alert = new UIAlertView {Title = title, Message = message};
-            alert.DismissWithClickedButtonIndex(alert.AddButton("Ok"), true);
+            alert.DismissWithClickedButtonIndex(alert.AddButton("Ok".t()), true);
             if (dismissed != null)
                 alert.Dismissed += (sender, e) => dismissed();
             alert.Show();
@@ -160,7 +125,7 @@ namespace MonoTouch
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("When attempting to get version: " + e.Message);
+                    LogException("Unable to get iOS version", e);
                     return new Tuple<int, int>(5, 0);
                 }
             }
