@@ -49,8 +49,8 @@ namespace CodeFramework.Elements
             public override void LayoutSubviews()
             {
                 base.LayoutSubviews();
-                var addRemoveX = ContentView.Frame.Width - 83f;
-                AddRemoveView.Frame = new System.Drawing.RectangleF(addRemoveX, 12, 80f, 19f);
+                var addRemoveX = ContentView.Frame.Width - 90f;
+                AddRemoveView.Frame = new System.Drawing.RectangleF(addRemoveX, 12, 80f, 18f);
 
                 var textFrame = TextLabel.Frame;
                 textFrame.Width = addRemoveX - textFrame.X - 5f;
