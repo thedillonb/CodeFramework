@@ -115,6 +115,8 @@
     <Compile Include="Controllers\BaseAccountsController.cs" />
     <Compile Include="Data\IAccount.cs" />
     <Compile Include="Utils\Translate.cs" />
+    <Compile Include="Views\AddRemoveView.cs" />
+    <Compile Include="Elements\ChangesetElement.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
