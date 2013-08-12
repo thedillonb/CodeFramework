@@ -117,6 +117,7 @@
     <Compile Include="Utils\Translate.cs" />
     <Compile Include="Views\AddRemoveView.cs" />
     <Compile Include="Elements\ChangesetElement.cs" />
+    <Compile Include="Elements\CommentElement.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

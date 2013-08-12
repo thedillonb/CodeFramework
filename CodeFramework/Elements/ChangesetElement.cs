@@ -19,6 +19,11 @@ namespace CodeFramework.Elements
             _removed = removed;
         }
 
+        protected override string GetKey(int style)
+        {
+            return "changeset";
+        }
+
         protected override MonoTouch.UIKit.UITableViewCell CreateTableViewCell(MonoTouch.UIKit.UITableViewCellStyle style, string key)
         {
             return new ChangesetCell(key);

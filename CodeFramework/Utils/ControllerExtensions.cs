@@ -23,6 +23,13 @@ namespace CodeFramework.Controllers
             parent.AddSubview(hud);
             hud.Show(true);
 
+            //Make sure the Toolbar is disabled too
+            if (controller.ToolbarItems != null)
+            {
+                foreach (var t in controller.ToolbarItems)
+                    t.Enabled = false;
+            }
+
             ThreadPool.QueueUserWorkItem(delegate {
                 try
                 {
@@ -46,6 +53,13 @@ namespace CodeFramework.Controllers
                     controller.InvokeOnMainThread(delegate {
                         hud.Hide(true);
                         hud.RemoveFromSuperview();
+
+                        //Enable all the toolbar items
+                        if (controller.ToolbarItems != null)
+                        {
+                            foreach (var t in controller.ToolbarItems)
+                                t.Enabled = true;
+                        }
                     });
                 }
             });
