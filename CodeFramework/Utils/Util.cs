@@ -75,7 +75,7 @@ namespace MonoTouch
         public static void LogException (string text, Exception e)
         {
             Console.WriteLine (String.Format ("On {0}, message: {1}\nException:\n{2}", DateTime.Now, text, e));
-            Analytics.TrackException(false, e.Message);
+            Analytics.TrackException(false, e.Message + " - " + e.StackTrace);
         }
 
         static UIActionSheet _sheet;
