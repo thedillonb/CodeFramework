@@ -48,7 +48,7 @@ namespace CodeFramework.Controllers
             Section loadSec = null;
             if (_nextPage > 0)
             {
-                _loadMore = new PaginateElement("Load More".t(), "Loading...".t(), e => this.DoWorkNoHud(LoadWork, LoadException, LoadFinished));
+                _loadMore = new PaginateElement("Load More".t(), "Loading...".t(), e => this.DoWorkNoHud(LoadWork, LoadException, LoadFinished)) { AutoLoadOnVisible = true };
                 loadSec = new Section() { _loadMore };
             }
 
