@@ -3,13 +3,16 @@ using CodeFramework.Elements;
 using MonoTouch.UIKit;
 using System.Linq;
 using System;
+using CodeFramework.Controllers;
+using CodeFramework.Filters.Models;
 
-namespace CodeFramework.Controllers
+namespace CodeFramework.Filters.Controllers
 {
-
     public abstract class FilterController : BaseDialogViewController
     {
         public static int[] IntegerCeilings = new[] { 6, 11, 21, 31, 41, 51, 61, 71, 81, 91, 101, 251, 501, 1001, 2001, 4001, 8001, 16001, int.MaxValue };
+        private FilterModel _currentFilterModel;
+        public Action<FilterModel> SaveFilter;
 
         public FilterController()
             : base(true)
@@ -18,7 +21,26 @@ namespace CodeFramework.Controllers
             Style = MonoTouch.UIKit.UITableViewStyle.Grouped;
         }
 
-        public abstract void ApplyFilter();
+        public T GetCurrentFilterModel<T>() where T : FilterModel, new()
+        {
+            if (_currentFilterModel == null)
+                _currentFilterModel = default(T);
+            return (T)_currentFilterModel;
+        }
+
+        public void SetCurrentFilterModel(FilterModel model)
+        {
+            if (model != null)
+                _currentFilterModel = model;
+        }
+
+        public abstract FilterModel CreateFilterModel();
+
+        protected void SaveAsDefault()
+        {
+            if (SaveFilter != null)
+                SaveFilter(CreateFilterModel());
+        }
 
         public class EnumChoiceElement : MonoTouch.Dialog.StyledStringElement
         {

@@ -15,8 +15,8 @@ namespace CodeFramework.Controllers
 
         public string NoItemsText { get; set; }
 
-        protected BaseListModelController(Type modelType, bool push = false, bool refresh = true)
-            : base(modelType, push, refresh)
+        protected BaseListModelController(bool push = false, bool refresh = true)
+            : base(push, refresh)
         {
             Style = UITableViewStyle.Plain;
             EnableSearch = true;
@@ -31,11 +31,16 @@ namespace CodeFramework.Controllers
             _nextPage = 0;
             return OnUpdateListModel(forced, _nextPage, ref _nextPage);
         }
+
+        protected virtual IList OnRenderList()
+        {
+            return Model as IList;
+        }
         
         protected override void OnRender()
         {
             var sec = new Section();
-            var l = Model as IList;
+            var l = OnRenderList();
 
             if (l == null || l.Count == 0)
                 sec.Add(NoItemsText == null ? new NoItemsElement() : new NoItemsElement(NoItemsText));
@@ -72,12 +77,7 @@ namespace CodeFramework.Controllers
                     l.Add(e);
             }
 
-            var sec = new Section();
-            foreach (var d in data)
-                sec.Add(CreateElement(d));
-            InvokeOnMainThread(() => {
-                Root.Insert(Root.Count - 1, sec);
-            });
+            InvokeOnMainThread(Render);
         }
 
         private void LoadException(Exception ex)

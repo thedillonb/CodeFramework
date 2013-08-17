@@ -49,6 +49,9 @@
     <Folder Include="Controllers\" />
     <Folder Include="Images\Web\" />
     <Folder Include="Images\Misc\" />
+    <Folder Include="Filters\" />
+    <Folder Include="Filters\Controllers\" />
+    <Folder Include="Filters\Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -94,7 +97,6 @@
     <Compile Include="Elements\IssueElement.cs" />
     <Compile Include="Data\SQLite.cs" />
     <Compile Include="Controllers\BaseDialogViewController.cs" />
-    <Compile Include="Controllers\FilterController.cs" />
     <Compile Include="Controllers\RadioChoiceViewController.cs" />
     <Compile Include="Controllers\MultipleChoiceViewController.cs" />
     <Compile Include="Utils\ControllerExtensions.cs" />
@@ -118,6 +120,10 @@
     <Compile Include="Views\AddRemoveView.cs" />
     <Compile Include="Elements\ChangesetElement.cs" />
     <Compile Include="Elements\CommentElement.cs" />
+    <Compile Include="Filters\Controllers\FilterController.cs" />
+    <Compile Include="Filters\Models\FilterModel.cs" />
+    <Compile Include="Controllers\Controller.cs" />
+    <Compile Include="Controllers\ListView.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

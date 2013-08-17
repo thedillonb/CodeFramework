@@ -12,20 +12,6 @@ namespace CodeFramework.Controllers
 {
     public class BaseDialogViewController : DialogViewController
     {
-        private UISearchBar _searchBar;
-        private bool _enableFilter;
-
-        public bool EnableFilter
-        {
-            get { return _enableFilter; }
-            set 
-            {
-                if (value == true)
-                    EnableSearch = true;
-                _enableFilter = value;
-            }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseDialogViewController"/> class.
         /// </summary>
@@ -175,66 +161,41 @@ namespace CodeFramework.Controllers
             }
         }
 
+        /// <summary>
+        /// Called when the searching starts
+        /// </summary>
         protected virtual void SearchStart()
         {
-            var searchBar = _searchBar as SearchFilterBar;
-            if (searchBar != null)
-                searchBar.FilterButtonVisible = false;
         }
 
+        /// <summary>
+        /// Called when the searching ends
+        /// </summary>
         protected virtual void SearchEnd()
         {
-            var searchBar = _searchBar as SearchFilterBar;
-            if (searchBar != null)
-                searchBar.FilterButtonVisible = true;
         }
 
-        protected override UISearchBar CreateHeaderView()
+        /// <summary>
+        /// Creates the search bar.
+        /// </summary>
+        /// <returns>The search bar.</returns>
+        protected virtual UISearchBar CreateSearchBar()
         {
-            if (EnableFilter)
-            {
-                var searchBar = new SearchFilterBar {Delegate = new CustomSearchDelegate(this)};
-                searchBar.FilterButton.TouchUpInside += FilterButtonTouched;
-                _searchBar = searchBar;
-            }
-            //There was no filter!
-            else
-            {
-                _searchBar = new UISearchBar(new RectangleF(0f, 0f, 320f, 44f)) {Delegate = new CustomSearchDelegate(this)};
-            }
-
-            _searchBar.Placeholder = SearchPlaceholder;
-            return _searchBar;
+            return new UISearchBar(new RectangleF(0f, 0f, 320f, 44f)) { Delegate = new CustomSearchDelegate(this) };
         }
 
-        void FilterButtonTouched (object sender, EventArgs e)
+        /// <summary>
+        /// Creates the header view.
+        /// </summary>
+        /// <returns>The header view.</returns>
+        protected sealed override UISearchBar CreateHeaderView()
         {
-            var filter = CreateFilterController();
-            if (filter != null)
-                ShowFilterController(filter);
+            var searchBar = CreateSearchBar();
+            searchBar.Placeholder = SearchPlaceholder;
+            return searchBar;
         }
-
-        protected virtual FilterController CreateFilterController()
-        {
-            return null;
-        }
-
-        private void ShowFilterController(FilterController filter)
-        {
-            filter.NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Cancel, () => { 
-                filter.DismissViewController(true, null);
-            }));
-            filter.NavigationItem.RightBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Save, () => {
-                filter.DismissViewController(true, null); 
-                filter.ApplyFilter();
-            }));
-
-            var nav = new UINavigationController(filter);
-            PresentViewController(nav, true, null);
-
-        }
-        
-        private class CustomSearchDelegate : UISearchBarDelegate
+               
+        protected class CustomSearchDelegate : UISearchBarDelegate
         {
             readonly BaseDialogViewController _container;
             DialogViewController _searchController;
