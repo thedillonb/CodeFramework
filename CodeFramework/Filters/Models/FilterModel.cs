@@ -2,9 +2,9 @@ using System;
 
 namespace CodeFramework.Filters.Models
 {
-    public abstract class FilterModel
+    public abstract class FilterModel<F>
     {
-        public abstract FilterModel Clone();
+        public abstract F Clone();
     }
 }
 

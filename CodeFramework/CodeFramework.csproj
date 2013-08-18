@@ -112,18 +112,18 @@
     <Compile Include="Controllers\StartupController.cs" />
     <Compile Include="Utils\Transitions.cs" />
     <Compile Include="Data\WebCacheProvider.cs" />
-    <Compile Include="Controllers\BaseModelDrivenController.cs" />
-    <Compile Include="Controllers\BaseListModelController.cs" />
     <Compile Include="Controllers\BaseAccountsController.cs" />
     <Compile Include="Data\IAccount.cs" />
     <Compile Include="Utils\Translate.cs" />
     <Compile Include="Views\AddRemoveView.cs" />
     <Compile Include="Elements\ChangesetElement.cs" />
     <Compile Include="Elements\CommentElement.cs" />
-    <Compile Include="Filters\Controllers\FilterController.cs" />
     <Compile Include="Filters\Models\FilterModel.cs" />
     <Compile Include="Controllers\Controller.cs" />
-    <Compile Include="Controllers\ListView.cs" />
+    <Compile Include="Filters\Controllers\FilterViewController.cs" />
+    <Compile Include="Controllers\BaseControllerDrivenViewController.cs" />
+    <Compile Include="Controllers\BaseListControllerDrivenViewController.cs" />
+    <Compile Include="Filters\Models\FilterGroup.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

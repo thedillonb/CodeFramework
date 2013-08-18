@@ -10,6 +10,7 @@ namespace CodeFramework.Controllers
     {
         public BaseAccountsController() : base(true)
         {
+            Title = "Accounts";
         }
 
         /// <summary>
