@@ -39,6 +39,7 @@ namespace CodeFramework.Controllers
         {
             NoItemsText = "No Items".t();
             Style = UITableViewStyle.Plain;
+            EnableSearch = true;
         }
   
         protected void RenderList<T>(ListModel<T> items, Func<T, Element> select)

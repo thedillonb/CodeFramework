@@ -41,10 +41,10 @@
     <Reference Include="GoogleAnalytics">
       <HintPath>lib\GoogleAnalytics.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Services" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Markup\" />
-    <Folder Include="DiffPlex\" />
     <Folder Include="Data\" />
     <Folder Include="Controllers\" />
     <Folder Include="Images\Web\" />
@@ -52,6 +52,7 @@
     <Folder Include="Filters\" />
     <Folder Include="Filters\Controllers\" />
     <Folder Include="Filters\Models\" />
+    <Folder Include="Diff\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -69,20 +70,6 @@
     <Compile Include="Markup\CreoleParser.cs" />
     <Compile Include="Markup\MarkdownParser.cs" />
     <Compile Include="Markup\Textile.cs" />
-    <Compile Include="DiffPlex\Differ.cs" />
-    <Compile Include="DiffPlex\IDiffer.cs" />
-    <Compile Include="DiffPlex\Log.cs" />
-    <Compile Include="DiffPlex\DiffBuilder\IInlineDiffBuilder.cs" />
-    <Compile Include="DiffPlex\DiffBuilder\ISideBySideDiffBuilder.cs" />
-    <Compile Include="DiffPlex\DiffBuilder\InlineDiffBuilder.cs" />
-    <Compile Include="DiffPlex\DiffBuilder\SideBySideDiffBuilder.cs" />
-    <Compile Include="DiffPlex\DiffBuilder\Model\DiffPaneModel.cs" />
-    <Compile Include="DiffPlex\DiffBuilder\Model\DiffPiece.cs" />
-    <Compile Include="DiffPlex\DiffBuilder\Model\SideBySideDiffModel.cs" />
-    <Compile Include="DiffPlex\Model\DiffBlock.cs" />
-    <Compile Include="DiffPlex\Model\DiffResult.cs" />
-    <Compile Include="DiffPlex\Model\EditLengthResult.cs" />
-    <Compile Include="DiffPlex\Model\ModificationData.cs" />
     <Compile Include="Elements\NewsFeedElement.cs" />
     <Compile Include="Elements\UserElement.cs" />
     <Compile Include="Elements\RepositoryElement.cs" />
@@ -207,6 +194,11 @@
     <Content Include="Images\Web\forward_button%402x.png" />
     <Content Include="Images\Components\warning.png" />
     <Content Include="Images\Components\dropbar.png" />
+    <Content Include="Diff\difflib.js" />
+    <Content Include="Diff\diffview.css" />
+    <Content Include="Diff\diffview.js" />
+    <Content Include="Diff\diffindex.html" />
+    <Content Include="Diff\jquery.min.js" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Images\Buttons\add%402x.png" />
