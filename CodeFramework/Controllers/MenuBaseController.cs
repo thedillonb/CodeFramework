@@ -121,23 +121,62 @@ namespace CodeFramework.Controllers
                 Image = image;
             }
 
-            public override UITableViewCell GetCell(UITableView tv)
+            //We want everything to be the same size as far as images go.
+            //So, during layout, we'll resize the imageview and pin it to a specific size!
+            private class Cell : UITableViewCell
             {
-                var cell = base.GetCell(tv);
+                private static float _imageSize = 16f;
+
+                public Cell(UITableViewCellStyle style, string key)
+                    : base(style, key)
+                {
+                }
+
+                public override void LayoutSubviews()
+                {
+                    base.LayoutSubviews();
+                    if (ImageView != null)
+                    {
+                        var center = ImageView.Center;
+                        ImageView.Frame = new RectangleF(0, 0, _imageSize, _imageSize);
+                        ImageView.Center = new PointF(_imageSize, center.Y);
+
+                        if (TextLabel != null)
+                        {
+                            var frame = TextLabel.Frame;
+                            var right = frame.Right;
+                            frame.X = _imageSize * 2;
+                            frame.Width += (TextLabel.Frame.X - frame.X);
+                            TextLabel.Frame = frame;
+                        }
+                    }
+                }
+            }
+
+            protected override UITableViewCell CreateTableViewCell(UITableViewCellStyle style, string key)
+            {
+                var cell = new Cell(style, key);
+                var v = new UIView(new RectangleF(0, 0, cell.Frame.Width, 1)) { 
+                    BackgroundColor = UIColor.FromRGB(44, 44, 44)
+                };
+                cell.AddSubview(v);
                 cell.TextLabel.ShadowColor = UIColor.Black;
                 cell.TextLabel.ShadowOffset = new SizeF(0, -1); 
                 cell.SelectedBackgroundView = new UIView { BackgroundColor = UIColor.FromRGB(25, 25, 25) };
-
-                var f = cell.Subviews.Count(x => x.Tag == 1111);
-                if (f == 0)
-                {
-                    var v = new UIView(new RectangleF(0, 0, cell.Frame.Width, 1))
-                    { BackgroundColor = UIColor.FromRGB(44, 44, 44), Tag = 1111};
-                    cell.AddSubview(v);
-                }
-
                 return cell;
             }
+
+//            public override UITableViewCell GetCell(UITableView tv)
+//            {
+//                var cell = base.GetCell(tv);
+//                cell.TextLabel.ShadowColor = UIColor.Black;
+//                cell.TextLabel.ShadowOffset = new SizeF(0, -1); 
+//                cell.SelectedBackgroundView = new UIView { BackgroundColor = UIColor.FromRGB(25, 25, 25) };
+//                //var logo = UIScreen.MainScreen.Scale == 1.0f ? model.Logo : model.LargeLogo(32);
+//
+//
+//                return cell;
+//            }
         }
     }
 }
