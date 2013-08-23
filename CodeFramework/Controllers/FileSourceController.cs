@@ -10,6 +10,7 @@ namespace CodeFramework.Controllers
     public abstract class FileSourceController : WebViewController
     {
         protected static string TempDir = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "source");
+        private bool _loaded;
 
         public FileSourceController()
             : base(false)
@@ -33,7 +34,11 @@ namespace CodeFramework.Controllers
             base.ViewWillAppear(animated);
 
             //Do the request
-            this.DoWork(Request, ex => ErrorView.Show(this.View, ex.Message));
+            if (_loaded == false)
+            {
+                this.DoWork(Request, ex => ErrorView.Show(this.View, ex.Message));
+                _loaded = true;
+            }
         }
 
         protected override void OnLoadError(object sender, UIWebErrorArgs e)
