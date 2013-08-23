@@ -39,7 +39,7 @@ namespace CodeFramework.Elements
 		{
             var descriptionHeight = 0f;
             if (!string.IsNullOrEmpty(_description))
-                descriptionHeight = _description.MonoStringHeight(UIFont.SystemFontOfSize(13f), tableView.Bounds.Width - 56f - 28f) + 9f;
+                descriptionHeight = _description.MonoStringHeight(UIFont.SystemFontOfSize(13f), tableView.Bounds.Width - 56f - 28f) + 8f;
             return 52f + descriptionHeight;
 		}
 		

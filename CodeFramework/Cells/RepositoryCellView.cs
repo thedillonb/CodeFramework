@@ -54,8 +54,8 @@ namespace CodeFramework.Cells
             Description.Text = description ?? string.Empty;
 
             var frame = Description.Frame;
-            frame.Y = 50f;
-            frame.Height = this.Bounds.Height - frame.Y - 10f;
+            frame.Y = 29f;
+            frame.Height = this.Bounds.Height - frame.Y - 16f - 12f;
             Description.Frame = frame;
 
             RepoName.Hidden = repoOwner == null;
