@@ -124,6 +124,11 @@ padding:0;
 padding-left: 43px;
 }
 
+.addcomment {
+background:#EED;
+border:1px solid #BBC;
+}
+
 .addcomment textarea {
 border:1px solid #999999;
 width:100%;
@@ -135,7 +140,7 @@ box-sizing: border-box;
 }
 
 .addcomment .inner {
-    padding: 10px 10px;
+padding: 10px 10px;
 }
 
 .addcomment a.ok {

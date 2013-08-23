@@ -38,6 +38,7 @@ namespace CodeFramework.Controllers
                 }
                 catch (Exception e)
                 {
+                    Utilities.LogException(e.Message, e);
                     if (error != null)
                         controller.InvokeOnMainThread(() => error(e));
                 }
@@ -80,6 +81,7 @@ namespace CodeFramework.Controllers
                 }
                 catch (Exception e)
                 {
+                    Utilities.LogException(e.Message, e);
                     if (error != null)
                         controller.InvokeOnMainThread(() => error(e));
                 }

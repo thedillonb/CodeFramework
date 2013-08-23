@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Diff</title>
     <link href="diffview.css" type="text/css" rel="stylesheet">
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="difflib.js"></script>
@@ -59,10 +60,11 @@
         var $ok = $("<a href='#' class='ok'>Add Comment</a>");
         $ok.click(function() {
             invokeNative("comment", {"content": $("#comment").val(), "line_to": $(element).parent().data('to'), "line_from": $(element).parent().data('from')});
+            return false;
         });
         
         var $cancel = $("<a href='#' class='cancel'>Cancel</a>");
-        $cancel.click(function() { discard(); });
+        $cancel.click(function(e) { discard(); return false; });
         
         var $comment = $("<tr class='addcomment'><th></th><th></th><td><div class='inner'><div class='content'><textarea rows='5' id='comment'></textarea></div></div></td></tr>");
         $comment.find(".inner").append($ok);

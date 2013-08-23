@@ -99,7 +99,7 @@ namespace CodeFramework.Controllers
         public override void ViewWillDisappear(bool animated)
         {
             base.ViewWillDisappear(animated);
-            if (_navigationToolbar)
+            if (ToolbarItems != null)
                 NavigationController.SetToolbarHidden(true, animated);
         }
         
@@ -118,7 +118,7 @@ namespace CodeFramework.Controllers
         
         public override void ViewWillAppear(bool animated)
         {
-            if (_navigationToolbar)
+            if (ToolbarItems != null)
                 NavigationController.SetToolbarHidden(false, animated);
             base.ViewWillAppear(animated);
             var bounds = View.Bounds;
