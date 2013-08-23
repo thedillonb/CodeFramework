@@ -42,6 +42,7 @@ namespace CodeFramework.Controllers
             Web.LoadFinished += OnLoadFinished;
             Web.LoadStarted += OnLoadStarted;
             Web.LoadError += OnLoadError;
+            Web.ShouldStartLoad = (w, r, n) => ShouldStartLoad(r, n);
 
             _navigationToolbar = navigationToolbar;
 
@@ -63,6 +64,11 @@ namespace CodeFramework.Controllers
                 ForwardButton.Enabled = false;
                 RefreshButton.Enabled = false;
             }
+        }
+
+        protected virtual bool ShouldStartLoad (MonoTouch.Foundation.NSUrlRequest request, UIWebViewNavigationType navigationType)
+        {
+            return true;
         }
 
         protected virtual void OnLoadError (object sender, UIWebErrorArgs e)

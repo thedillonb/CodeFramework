@@ -21,8 +21,8 @@ namespace CodeFramework.Filters.Controllers
                 DismissViewController(true, null);
             }));
             NavigationItem.RightBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Save, () => {
-                DismissViewController(true, null); 
                 ApplyButtonPressed();
+                DismissViewController(true, null); 
             }));
         }
 

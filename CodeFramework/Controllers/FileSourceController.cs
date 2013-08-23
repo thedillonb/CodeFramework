@@ -59,15 +59,25 @@ namespace CodeFramework.Controllers
             });
         }
 
-        protected void LoadDiffData(string baseText, string newText)
+        protected override bool ShouldStartLoad(NSUrlRequest request, UIWebViewNavigationType navigationType)
         {
-            InvokeOnMainThread(delegate {
-                var html = System.IO.File.ReadAllText("Diff/diffindex.html");
-                var filled = html.Replace("{BASE_TEXT}", JavaScriptStringEncode(baseText)).Replace("{NEW_TEXT}", JavaScriptStringEncode(newText));
-                var url = NSBundle.MainBundle.BundlePath + "/Diff";
-                url = url.Replace("/", "//").Replace(" ", "%20");
-                Web.LoadHtmlString(filled, NSUrl.FromString("file:/" + url + "//"));
-            });
+            if (request.Url.AbsoluteString.StartsWith("app://ready"))
+            {
+                DOMReady();
+                return false;
+            }
+
+            return true;
+        }
+
+        protected virtual void DOMReady()
+        {
+        }
+
+        protected void LoadDiffData()
+        {
+            var path = System.IO.Path.Combine(NSBundle.MainBundle.BundlePath, "Diff/diffindex.html");
+            LoadFile(path);
         }
 
         protected void LoadFile(string path)
@@ -79,6 +89,11 @@ namespace CodeFramework.Controllers
         public static string JavaScriptStringEncode (string value)
         {
             return System.Web.HttpUtility.JavaScriptStringEncode(value);
+        }
+
+        public static string Decode(string value)
+        {
+            return System.Web.HttpUtility.UrlDecode(value);
         }
     }
 }
