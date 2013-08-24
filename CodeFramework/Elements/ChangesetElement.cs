@@ -35,6 +35,7 @@ namespace CodeFramework.Elements
             var addRemove = ((ChangesetCell)cell).AddRemoveView;
             addRemove.Added = _added;
             addRemove.Removed = _removed;
+            addRemove.SetNeedsDisplay();
             return cell;
         }
 

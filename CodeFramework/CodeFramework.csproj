@@ -199,6 +199,7 @@
     <Content Include="Diff\diffview.js" />
     <Content Include="Diff\diffindex.html" />
     <Content Include="Diff\jquery.min.js" />
+    <Content Include="Diff\app.js" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Images\Buttons\add%402x.png" />
