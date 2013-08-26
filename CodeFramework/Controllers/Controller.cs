@@ -107,7 +107,20 @@ namespace CodeFramework.Controllers
 
         public void Render()
         {
-            _object.InvokeOnMainThread(DoViewRender);
+            Exception ex = null;
+            _object.InvokeOnMainThread(() => {
+                try
+                {
+                    DoViewRender();
+                } 
+                catch (Exception e)
+                {
+                    ex = e;
+                }
+            });
+
+            if (ex != null)
+                throw ex;
         }
 
         protected virtual void DoViewRender()

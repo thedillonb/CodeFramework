@@ -21,7 +21,6 @@ namespace CodeFramework.Images
         public static UIImage MenuSectionBackground { get { return UIImageHelper.FromFileAuto("Images/Components/menu_section_bg"); } }
         public static UIImage MenuNavbar { get { return UIImageHelper.FromFileAuto("Images/Components/menu_navbar"); } }
         public static UIImage Warning { get { return UIImageHelper.FromFileAuto("Images/Components/warning"); } }
-        public static UIImage Dropbar { get { return UIImageHelper.FromFileAuto("Images/Components/dropbar"); } }
     }
 
     public static class Views

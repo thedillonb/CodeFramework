@@ -8,14 +8,16 @@ namespace CodeFramework.Views
         private UIView _img;
         private float _height;
 
+        public static UIImage BackgroundImage;
+
         public DropbarView(float width)
             : base (new RectangleF(0, 0, width, 0f))
         {
             this.ClipsToBounds = false;
-            _height = Images.Components.Dropbar.Size.Height;
+            _height = BackgroundImage.Size.Height;
 
             _img = new UIView();
-            _img.BackgroundColor = UIColor.FromPatternImage(Images.Components.Dropbar);
+            _img.BackgroundColor = UIColor.FromPatternImage(BackgroundImage);
             _img.Layer.MasksToBounds = false;
             _img.Layer.ShadowColor = UIColor.Black.CGColor;
             _img.Layer.ShadowOpacity = 0.3f;

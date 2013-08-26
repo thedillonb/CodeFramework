@@ -14,6 +14,8 @@ namespace CodeFramework.Cells
         public static UIImage Heart;
         public static UIImage Fork;
 
+        public static bool RoundImages = true;
+
         public static RepositoryCellView Create()
         {
             var cell = new RepositoryCellView();
@@ -25,9 +27,13 @@ namespace CodeFramework.Cells
                 cell.Image1.Image = Heart;
                 cell.Image3.Image = Fork;
                 cell.UserImage.Image = User;
-                cell.BigImage.Layer.MasksToBounds = true;
-                cell.BigImage.Layer.CornerRadius = cell.BigImage.Bounds.Height / 2f;
                 cell.BackgroundView = new MonoTouch.Dialog.CellBackgroundView();
+
+                if (RoundImages)
+                {
+                    cell.BigImage.Layer.MasksToBounds = true;
+                    cell.BigImage.Layer.CornerRadius = cell.BigImage.Bounds.Height / 2f;
+                }
             }
 
             //Create the icons

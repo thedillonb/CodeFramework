@@ -193,7 +193,6 @@
     <Content Include="Images\Web\back_button%402x.png" />
     <Content Include="Images\Web\forward_button%402x.png" />
     <Content Include="Images\Components\warning.png" />
-    <Content Include="Images\Components\dropbar.png" />
     <Content Include="Diff\difflib.js" />
     <Content Include="Diff\diffview.css" />
     <Content Include="Diff\diffview.js" />
