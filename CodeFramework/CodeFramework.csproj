@@ -209,5 +209,7 @@
     <BundleResource Include="Images\Misc\anonymous%402x.png" />
     <BundleResource Include="Images\Buttons\gear.png" />
     <BundleResource Include="Images\Buttons\gear%402x.png" />
+    <BundleResource Include="Images\Buttons\view%402x.png" />
+    <BundleResource Include="Images\Buttons\view.png" />
   </ItemGroup>
 </Project>

@@ -85,12 +85,6 @@ namespace CodeFramework.Controllers
             LoadFile(path);
         }
 
-        protected void LoadFile(string path)
-        {
-            var uri = Uri.EscapeUriString("file://" + path) + "#" + Environment.TickCount;
-            InvokeOnMainThread(() => Web.LoadRequest(new NSUrlRequest(new NSUrl(uri))));
-        }
-
         public static string JavaScriptStringEncode (string value)
         {
             return System.Web.HttpUtility.JavaScriptStringEncode(value);

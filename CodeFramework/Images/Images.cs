@@ -13,7 +13,7 @@ namespace CodeFramework.Images
         public static UIImage Add { get { return UIImageHelper.FromFileAuto("Images/Buttons/add"); } }
         public static UIImage Filter { get { return UIImageHelper.FromFileAuto("Images/Buttons/filter"); } }
         public static UIImage Gear { get { return UIImageHelper.FromFileAuto("Images/Buttons/gear"); } }
-
+        public static UIImage View { get { return UIImageHelper.FromFileAuto("Images/Buttons/view"); } }
     }
 
     public static class Components
