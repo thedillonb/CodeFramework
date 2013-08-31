@@ -4,8 +4,6 @@ using MonoTouch.UIKit;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
-using CodeFramework.Elements;
-using System;
 using MonoTouch.CoreGraphics;
 
 namespace CodeFramework.Controllers
@@ -17,19 +15,8 @@ namespace CodeFramework.Controllers
         /// </summary>
         /// <param name="push">If set to <c>true</c> push.</param>
         public BaseDialogViewController(bool push)
-            : this(push, "Back")
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BaseDialogViewController"/> class.
-        /// </summary>
-        /// <param name="push">If set to <c>true</c> push.</param>
-        /// <param name="backButtonText">Back button text.</param>
-        public BaseDialogViewController(bool push, string backButtonText)
             : base(new RootElement(""), push)
         {
-            NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Back, () => NavigationController.PopViewControllerAnimated(true)));
             SearchPlaceholder = "Search".t();
             Autorotate = true;
             AutoHideSearch = true;
@@ -45,9 +32,7 @@ namespace CodeFramework.Controllers
             {
                 //This needs to be in the begin invoke because there's logic in the base class that
                 //moves the scroll around. So by doing this we move this logic to execute after it.
-                BeginInvokeOnMainThread(() => {
-                    TableView.ScrollRectToVisible(new RectangleF(0, 0, 1, 1), false);
-                });
+                BeginInvokeOnMainThread(() => TableView.ScrollRectToVisible(new RectangleF(0, 0, 1, 1), false));
             }
         }
         
@@ -111,6 +96,8 @@ namespace CodeFramework.Controllers
             backgroundView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
             this.TableView.BackgroundView = backgroundView;
             base.ViewDidLoad();
+
+            NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Back, () => NavigationController.PopViewControllerAnimated(true)));
         }
 
         sealed class RefreshView : RefreshTableHeaderView
@@ -201,7 +188,7 @@ namespace CodeFramework.Controllers
             DialogViewController _searchController;
             List<ElementContainer> _searchElements;
 
-            static UIColor NoItemColor = UIColor.FromRGBA(0.1f, 0.1f, 0.1f, 0.9f);
+            static readonly UIColor NoItemColor = UIColor.FromRGBA(0.1f, 0.1f, 0.1f, 0.9f);
 
             class ElementContainer
             {

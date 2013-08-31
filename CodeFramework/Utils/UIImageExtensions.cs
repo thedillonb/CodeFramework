@@ -1,5 +1,4 @@
 using System;
-using MonoTouch.UIKit;
 using System.Drawing;
 using MonoTouch.CoreGraphics;
 
@@ -17,7 +16,7 @@ namespace MonoTouch.UIKit
         public static UIImage FromFileAuto(string filename, string extension = "png")
         {
             UIImage img = null;
-            if (MonoTouch.Foundation.NSThread.Current.IsMainThread)
+            if (Foundation.NSThread.Current.IsMainThread)
                 img = LoadImageFromFile(filename, extension);
             else
             {
@@ -34,24 +33,18 @@ namespace MonoTouch.UIKit
             if (UIScreen.MainScreen.Scale > 1.0)
             {
                 var file = filename + "@2x." + extension;
-                if (System.IO.File.Exists(file))
-                    return UIImage.FromFile(file);
-                else
-                    return UIImage.FromFile(filename + "." + extension);
+                return System.IO.File.Exists(file) ? UIImage.FromFile(file) : UIImage.FromFile(filename + "." + extension);
             }
             else
             {
                 var file = filename + "." + extension;
-                if (System.IO.File.Exists(file))
-                    return UIImage.FromFile(file);
-                else
-                    return UIImage.FromFile(filename + "@2x." + extension);
+                return System.IO.File.Exists(file) ? UIImage.FromFile(file) : UIImage.FromFile(filename + "@2x." + extension);
             }
         }
 
         public static UIImage ConvertToGrayScale (UIImage image)
         {
-            RectangleF imageRect = new RectangleF (PointF.Empty, image.Size);
+            var imageRect = new RectangleF (PointF.Empty, image.Size);
             using (var colorSpace = CGColorSpace.CreateDeviceGray ())
                 using (var context = new CGBitmapContext (IntPtr.Zero, (int) imageRect.Width, (int) imageRect.Height, 8, 0, colorSpace, CGImageAlphaInfo.None)) {
                 context.DrawImage (imageRect, image.CGImage);

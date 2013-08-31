@@ -8,9 +8,7 @@ public static class LocalizationExtensions
     /// </summary>
     public static string t(this string text)
     {
-        if (String.IsNullOrEmpty (text))
-            return text;
-        return NSBundle.MainBundle.LocalizedString (text, String.Empty, String.Empty);
+        return String.IsNullOrEmpty (text) ? text : NSBundle.MainBundle.LocalizedString (text, String.Empty, String.Empty);
     }
 }
 

@@ -54,25 +54,25 @@ namespace CodeFramework.Controllers
         private class ComposerView : UIView 
         {
             const UIBarButtonItemStyle Style = UIBarButtonItemStyle.Bordered;
-            internal readonly UITextView textView;
+            internal readonly UITextView TextView;
             
             public ComposerView (RectangleF bounds, Composer composer) : base (bounds)
             {
-                textView = new UITextView (RectangleF.Empty) {
+                TextView = new UITextView (RectangleF.Empty) {
                     Font = UIFont.SystemFontOfSize (18),
                 };
                 
                 // Work around an Apple bug in the UITextView that crashes
                 if (MonoTouch.ObjCRuntime.Runtime.Arch == MonoTouch.ObjCRuntime.Arch.SIMULATOR)
-                    textView.AutocorrectionType = UITextAutocorrectionType.No;
+                    TextView.AutocorrectionType = UITextAutocorrectionType.No;
 
-                AddSubview (textView);
+                AddSubview (TextView);
             }
 
             
             internal void Reset (string text)
             {
-                textView.Text = text;
+                TextView.Text = text;
             }
             
             public override void LayoutSubviews ()
@@ -82,15 +82,15 @@ namespace CodeFramework.Controllers
             
             void Resize (RectangleF bounds)
             {
-                textView.Frame = new RectangleF (0, 0, bounds.Width, bounds.Height);
+                TextView.Frame = new RectangleF (0, 0, bounds.Width, bounds.Height);
             }
             
             public string Text { 
                 get {
-                    return textView.Text;
+                    return TextView.Text;
                 }
                 set {
-                    textView.Text = value;
+                    TextView.Text = value;
                 }
             }
         }
@@ -175,7 +175,7 @@ namespace CodeFramework.Controllers
         {
             base.ViewWillAppear (animated);
             NSNotificationCenter.DefaultCenter.AddObserver (new NSString("UIKeyboardWillShowNotification"), KeyboardWillShow);
-            _composerView.textView.BecomeFirstResponder ();
+            _composerView.TextView.BecomeFirstResponder ();
         }
 
         public override void ViewWillDisappear(bool animated)
@@ -189,7 +189,7 @@ namespace CodeFramework.Controllers
             _navItem.Title = Title;
             ReturnAction = action;
             _previousController = parent;
-            _composerView.textView.BecomeFirstResponder ();
+            _composerView.TextView.BecomeFirstResponder ();
             parent.PresentViewController(this, true, null);
 		}
 	}

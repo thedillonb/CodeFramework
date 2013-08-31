@@ -1,11 +1,7 @@
 using System;
-using System.Linq;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
-using MonoTouch.Dialog;
 using System.IO;
-using System.Text;
-using System.Diagnostics;
 using System.Globalization;
 using GoogleAnalytics;
 

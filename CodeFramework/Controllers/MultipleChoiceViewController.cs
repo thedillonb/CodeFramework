@@ -1,4 +1,3 @@
-using CodeFramework.Elements;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 
@@ -16,7 +15,7 @@ namespace CodeFramework.Controllers
             var e = (StyledStringElement)r;
             var value = (bool)field.GetValue(_obj);
             field.SetValue(_obj, !value);
-            e.Accessory = !value ? MonoTouch.UIKit.UITableViewCellAccessory.Checkmark : MonoTouch.UIKit.UITableViewCellAccessory.None;
+            e.Accessory = !value ? UITableViewCellAccessory.Checkmark : UITableViewCellAccessory.None;
             Root.Reload(e, UITableViewRowAnimation.None);
         }
         
@@ -25,7 +24,7 @@ namespace CodeFramework.Controllers
         {
             _obj = obj;
             Title = title;
-            Style = MonoTouch.UIKit.UITableViewStyle.Grouped;
+            Style = UITableViewStyle.Grouped;
 
             var sec = new Section();
             var fields = obj.GetType().GetFields();
@@ -33,7 +32,7 @@ namespace CodeFramework.Controllers
             {
                 var copy = s;
                 sec.Add(new StyledStringElement(s.Name, () => OnValueSelected(copy)) { 
-                    Accessory = (bool)s.GetValue(_obj) ? MonoTouch.UIKit.UITableViewCellAccessory.Checkmark : MonoTouch.UIKit.UITableViewCellAccessory.None 
+                    Accessory = (bool)s.GetValue(_obj) ? UITableViewCellAccessory.Checkmark : UITableViewCellAccessory.None 
                 });
             }
             Root.Add(sec);

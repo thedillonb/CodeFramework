@@ -1,25 +1,21 @@
 using System.Collections.Generic;
-using CodeFramework.Elements;
 using MonoTouch.UIKit;
 using System.Linq;
 using System;
 using CodeFramework.Controllers;
-using CodeFramework.Filters.Models;
 using CodeFramework.Views;
 
 namespace CodeFramework.Filters.Controllers
 {
     public abstract class FilterViewController : BaseDialogViewController
     {
-        public FilterViewController()
+        protected FilterViewController()
             : base(true)
         {
             Title = "Filter & Sort".t();
-            Style = MonoTouch.UIKit.UITableViewStyle.Grouped;
+            Style = UITableViewStyle.Grouped;
 
-            NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Cancel, () => { 
-                DismissViewController(true, null);
-            }));
+            NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Cancel, () => DismissViewController(true, null)));
             NavigationItem.RightBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Save, () => {
                 ApplyButtonPressed();
                 DismissViewController(true, null); 
@@ -88,12 +84,9 @@ namespace CodeFramework.Filters.Controllers
             return element;
         }
 
-        protected EnumChoiceElement CreateEnumElement(string title, int defaultVal, System.Type enumType)
+        protected EnumChoiceElement CreateEnumElement(string title, int defaultVal, Type enumType)
         {
-            var values = new List<string>();
-            foreach (var x in System.Enum.GetValues(enumType).Cast<System.Enum>())
-                values.Add(x.Description());
-
+            var values = Enum.GetValues(enumType).Cast<Enum>().Select(x => x.Description()).ToList();
             return CreateEnumElement(title, values[defaultVal], values);
         }
 
@@ -139,12 +132,7 @@ namespace CodeFramework.Filters.Controllers
             }
             var str = sb.ToString();
             if (str.EndsWith(", "))
-            {
-                if (trueCounter == fields.Length)
-                    return "Any".t();
-                else
-                    return str.Substring(0, str.Length - 2);
-            }
+                return trueCounter == fields.Length ? "Any".t() : str.Substring(0, str.Length - 2);
             return "None".t();
         }
     }

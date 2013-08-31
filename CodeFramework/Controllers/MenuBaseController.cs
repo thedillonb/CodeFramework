@@ -2,8 +2,6 @@ using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using System.Drawing;
-using System.Linq;
-using CodeFramework.Elements;
 using CodeFramework.Views;
 
 namespace CodeFramework.Controllers
@@ -110,7 +108,7 @@ namespace CodeFramework.Controllers
             UpdateProfilePicture();
         }
 
-        protected class MenuElement : MonoTouch.Dialog.StyledStringElement
+        protected class MenuElement : StyledStringElement
         {
             public MenuElement(string title, NSAction tapped, UIImage image)
                 : base(title, tapped)
@@ -125,7 +123,7 @@ namespace CodeFramework.Controllers
             //So, during layout, we'll resize the imageview and pin it to a specific size!
             private class Cell : UITableViewCell
             {
-                private static float _imageSize = 16f;
+                private const float ImageSize = 16f;
 
                 public Cell(UITableViewCellStyle style, string key)
                     : base(style, key)
@@ -138,14 +136,13 @@ namespace CodeFramework.Controllers
                     if (ImageView != null)
                     {
                         var center = ImageView.Center;
-                        ImageView.Frame = new RectangleF(0, 0, _imageSize, _imageSize);
-                        ImageView.Center = new PointF(_imageSize, center.Y);
+                        ImageView.Frame = new RectangleF(0, 0, ImageSize, ImageSize);
+                        ImageView.Center = new PointF(ImageSize, center.Y);
 
                         if (TextLabel != null)
                         {
                             var frame = TextLabel.Frame;
-                            var right = frame.Right;
-                            frame.X = _imageSize * 2;
+                            frame.X = ImageSize * 2;
                             frame.Width += (TextLabel.Frame.X - frame.X);
                             TextLabel.Frame = frame;
                         }

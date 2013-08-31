@@ -1,14 +1,10 @@
 using System;
-using CodeFramework.Elements;
+using System.Linq;
 using CodeFramework.Views;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
-using System.Linq;
-using System.Drawing;
-using System.Collections.Generic;
 using MonoTouch;
 using CodeFramework.Filters.Controllers;
-using CodeFramework.Filters.Models;
 
 namespace CodeFramework.Controllers
 {
@@ -23,7 +19,7 @@ namespace CodeFramework.Controllers
             get { return _enableFilter; }
             set 
             {
-                if (value == true)
+                if (value)
                     EnableSearch = true;
                 _enableFilter = value;
             }
@@ -54,13 +50,9 @@ namespace CodeFramework.Controllers
                 {
                     foreach (var grp in items.FilteredData)
                     {
-                        var sec = new Section(new TableViewSectionView(grp.Key.ToString()));
-                        foreach (var item in grp)
-                        {
-                            var element = select(item);
-                            if (element != null)
-                                sec.Add(element);
-                        }
+                        var sec = new Section(new TableViewSectionView(grp.Key));
+                        foreach (var element in grp.Select(select).Where(element => element != null))
+                            sec.Add(element);
 
                         if (sec.Elements.Count > 0)
                             root.Add(sec);
@@ -81,10 +73,8 @@ namespace CodeFramework.Controllers
 
                 if (items.More != null)
                 {
-                    var loadMore = new PaginateElement("Load More".t(), "Loading...".t(), e => {
-                        this.DoWorkNoHud(() => items.More(),
-                                         x => Utilities.ShowAlert("Unable to load more!".t(), x.Message));
-                    }) { AutoLoadOnVisible = true };
+                    var loadMore = new PaginateElement("Load More".t(), "Loading...".t(), e => this.DoWorkNoHud(() => items.More(),
+                                                                                                                x => Utilities.ShowAlert("Unable to load more!".t(), x.Message))) { AutoLoadOnVisible = true };
                     root.Add(new Section { loadMore });
                 }
             }
@@ -120,10 +110,7 @@ namespace CodeFramework.Controllers
                 searchBar.FilterButton.TouchUpInside += FilterButtonTouched;
                 return searchBar;
             }
-            else
-            {
-                return base.CreateSearchBar();
-            }
+            return base.CreateSearchBar();
         }
 
         protected virtual FilterViewController CreateFilterController()

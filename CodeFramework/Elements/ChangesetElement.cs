@@ -1,4 +1,3 @@
-using System;
 using MonoTouch.Dialog;
 using CodeFramework.Views;
 
@@ -6,8 +5,8 @@ namespace CodeFramework.Elements
 {
     public class ChangesetElement : SubcaptionElement
     {
-        private int? _added;
-        private int? _removed;
+        private readonly int? _added;
+        private readonly int? _removed;
 
         public ChangesetElement(string title, string subtitle, int? added, int? removed)
             : base(title, subtitle)

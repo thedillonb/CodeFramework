@@ -8,7 +8,7 @@ namespace CodeFramework.Controllers
 {
     public abstract class BaseAccountsController : BaseDialogViewController
     {
-        public BaseAccountsController() : base(true)
+        protected BaseAccountsController() : base(true)
         {
             Title = "Accounts";
         }
@@ -62,7 +62,7 @@ namespace CodeFramework.Controllers
             AccountDeleted(accountElement.Account);
         }
 
-        private class EditSource : MonoTouch.Dialog.DialogViewController.Source
+        private class EditSource : Source
         {
             private readonly BaseAccountsController _parent;
             public EditSource(BaseAccountsController dvc) 
@@ -108,7 +108,7 @@ namespace CodeFramework.Controllers
                 : base(account.Username)
             {
                 Account = account;
-                Image = CodeFramework.Images.Misc.Anonymous;
+                Image = Images.Misc.Anonymous;
                 if (!string.IsNullOrEmpty(Account.AvatarUrl))
                     this.ImageUri = new Uri(Account.AvatarUrl);
             }

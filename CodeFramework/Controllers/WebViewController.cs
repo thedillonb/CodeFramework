@@ -1,7 +1,6 @@
 using System;
 using CodeFramework.Views;
 using MonoTouch.UIKit;
-using CodeFramework.Utils;
 
 namespace CodeFramework.Controllers
 {

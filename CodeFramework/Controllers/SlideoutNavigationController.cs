@@ -1,4 +1,3 @@
-using System;
 using MonoTouch.UIKit;
 using CodeFramework.Views;
 
@@ -7,7 +6,8 @@ namespace CodeFramework.Controllers
     public class SlideoutNavigationController : MonoTouch.SlideoutNavigation.SlideoutNavigationController
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CodeBucket.Controllers.SlideoutNavigationController"/> class.
+        /// Initializes a new instance of the <see cref="CodeFramework.Controllers.SlideoutNavigationController" />
+        ///   class.
         /// </summary>
         public SlideoutNavigationController()
         {

@@ -1,8 +1,5 @@
 using System;
 using MonoTouch.UIKit;
-using System.Linq;
-using CodeFramework.Controllers;
-using CodeFramework.Utils;
 using MonoTouch;
 
 namespace CodeFramework.Controllers
@@ -12,7 +9,7 @@ namespace CodeFramework.Controllers
         private UIImageView _imgView;
         private UIImage _img;
 
-        public StartupController()
+        protected StartupController()
         {
             if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone)
                 WantsFullScreenLayout = true;
@@ -34,7 +31,7 @@ namespace CodeFramework.Controllers
                 //Load the background image
                 if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone)
                 {
-                    _img = UIImageHelper.FromFileAuto(MonoTouch.Utilities.IsTall ? "Default-568h" : "Default");
+                    _img = UIImageHelper.FromFileAuto(Utilities.IsTall ? "Default-568h" : "Default");
                 }
                 else
                 {
@@ -44,7 +41,7 @@ namespace CodeFramework.Controllers
                         _img = UIImageHelper.FromFileAuto("Default-Landscape");
                 }
 
-                if (_img != null)
+                if (_img != null && _imgView != null)
                     _imgView.Image = _img;
             }
             catch (Exception e)
@@ -57,8 +54,7 @@ namespace CodeFramework.Controllers
         {
             base.ViewDidLoad();
             View.AutosizesSubviews = true;
-            _imgView = new UIImageView();
-            _imgView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
+            _imgView = new UIImageView {AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight};
             Add(_imgView);
         }
 

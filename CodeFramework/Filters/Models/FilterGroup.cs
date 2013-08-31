@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -14,7 +13,7 @@ namespace CodeFramework.Filters.Models
             _elements = elements;
         }
 
-        public System.Collections.Generic.IEnumerator<TElement> GetEnumerator()
+        public IEnumerator<TElement> GetEnumerator()
         {
             return this._elements.GetEnumerator();
         }

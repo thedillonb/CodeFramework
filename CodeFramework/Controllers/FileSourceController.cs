@@ -1,8 +1,5 @@
-using System;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using System.Text;
-using CodeFramework.Controllers;
 using CodeFramework.Views;
 
 namespace CodeFramework.Controllers
@@ -12,7 +9,7 @@ namespace CodeFramework.Controllers
         protected static string TempDir = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "source");
         private bool _loaded;
 
-        public FileSourceController()
+        protected FileSourceController()
             : base(false)
         {
             Web.DataDetectorTypes = UIDataDetectorType.None;

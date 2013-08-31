@@ -1,14 +1,5 @@
-using System;
-using CodeFramework.Elements;
 using CodeFramework.Views;
-using MonoTouch.Dialog;
-using MonoTouch.UIKit;
-using System.Linq;
-using System.Drawing;
-using System.Collections.Generic;
 using MonoTouch;
-using CodeFramework.Filters.Controllers;
-using CodeFramework.Filters.Models;
 
 namespace CodeFramework.Controllers
 {
@@ -41,13 +32,13 @@ namespace CodeFramework.Controllers
 
             if (force)
             {
-                this.DoWorkNoHud(() => Controller.UpdateAndRender(force), 
+                this.DoWorkNoHud(() => Controller.UpdateAndRender(true), 
                                  ex => Utilities.ShowAlert("Unable to refresh!".t(), "There was an issue while attempting to refresh. ".t() + ex.Message), 
                                  ReloadComplete);
             }
             else
             {
-                this.DoWork(() => Controller.UpdateAndRender(force),
+                this.DoWork(() => Controller.UpdateAndRender(false),
                             ex => { CurrentError = ErrorView.Show(View.Superview, ex.Message); }, 
                 ReloadComplete);
             }

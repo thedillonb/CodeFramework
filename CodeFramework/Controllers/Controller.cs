@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using MonoTouch.Foundation;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,45 +14,44 @@ namespace CodeFramework.Controllers
         void Render();
     }
 
-    public interface IFilterController<F> where F : FilterModel<F>, new()
+    public interface IFilterController<TFilter> where TFilter : FilterModel<TFilter>, new()
     {
-        F Filter { get; }
+        TFilter Filter { get; }
 
-        void ApplyFilter(F filter, bool saveAsDefault = false, bool render = true);
+        void ApplyFilter(TFilter filter, bool saveAsDefault = false, bool render = true);
     }
 
-    public abstract class ListController<T, F> : Controller<ListModel<T>>, IFilterController<F> where T : new() where F : FilterModel<F>, new()
+    public abstract class ListController<T, TFilter> : Controller<ListModel<T>>, IFilterController<TFilter> where T : new() where TFilter : FilterModel<TFilter>, new()
     {
         public static int[] IntegerCeilings = new[] { 6, 11, 21, 31, 41, 51, 61, 71, 81, 91, 101, 251, 501, 1001, 2001, 4001, 8001, 16001, int.MaxValue };
 
-        public F Filter { get; protected set; }
+        public TFilter Filter { get; protected set; }
 
-        public ListController(IView<ListModel<T>> view)
+        protected ListController(IView<ListModel<T>> view)
             : base(view)
         {
         }
 
         protected override void DoViewRender()
         {
-            var viewData = new ListModel<T>() { More = Model.More };
-            viewData.Data = FilterModel(Model.Data, Filter);
+            var viewData = new ListModel<T> {More = Model.More, Data = FilterModel(Model.Data, Filter)};
             viewData.FilteredData = GroupModel(viewData.Data, Filter);
             View.Render(viewData);
         }
 
-        protected virtual List<T> FilterModel(List<T> model, F filter)
+        protected virtual List<T> FilterModel(List<T> model, TFilter filter)
         {
             return model;
         }
 
-        protected virtual List<IGrouping<string, T>> GroupModel(List<T> model, F filter)
+        protected virtual List<IGrouping<string, T>> GroupModel(List<T> model, TFilter filter)
         {
             return null;
         }
 
-        protected abstract void SaveFilterAsDefault(F filter);
+        protected abstract void SaveFilterAsDefault(TFilter filter);
 
-        public virtual void ApplyFilter(F filter, bool saveAsDefault = false, bool render = true)
+        public virtual void ApplyFilter(TFilter filter, bool saveAsDefault = false, bool render = true)
         {
             Filter = filter;
             if (saveAsDefault)
@@ -78,7 +76,7 @@ namespace CodeFramework.Controllers
 
     public abstract class ListController<T> : Controller<ListModel<T>> where T : new()
     {
-        public ListController(IView<ListModel<T>> view)
+        protected ListController(IView<ListModel<T>> view)
             : base(view)
         {
         }
@@ -90,7 +88,7 @@ namespace CodeFramework.Controllers
 
         public IView<T> View { get; private set; }
 
-        public Controller(IView<T> view)
+        protected Controller(IView<T> view)
         {
             View = view;
         }
