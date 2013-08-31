@@ -139,10 +139,17 @@ namespace CodeFramework.Elements
             public override bool ShouldFollowLink (OHAttributedLabel sender, NSObject linkInfo)
             {
                 var a = (NSUrl)MonoTouch.ObjCRuntime.Runtime.GetNSObject (MonoTouch.ObjCRuntime.Messaging.IntPtr_objc_msgSend(linkInfo.Handle, MonoTouch.ObjCRuntime.Selector.GetHandle ("URL")));
-                var id = Int32.Parse(a.AbsoluteString);
                 try
                 {
-                    Parent._listToLinks[id].Callback();
+                    if (a.AbsoluteString.StartsWith("http"))
+                    {
+                        try { UIApplication.SharedApplication.OpenUrl(new NSUrl(a.AbsoluteString)); } catch { }
+                    }
+                    else
+                    {
+                        var id = Int32.Parse(a.AbsoluteString);
+                        Parent._listToLinks[id].Callback();
+                    }
                 }
                 catch (Exception e)
                 {
