@@ -4,18 +4,18 @@ using System.Linq;
 using CodeFramework.Controllers;
 using CodeFramework.Filters.Models;
 using CodeFramework.Views;
+using System;
 
 namespace CodeFramework.Filters.Controllers
+{
+    public abstract class FilterViewController : BaseDialogViewController
     {
         protected FilterViewController()
-    {
-        public FilterViewController()
             : base(true)
+        {
             Style = UITableViewStyle.Grouped;
             Title = "Filter & Sort".t();
             NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Cancel, () => DismissViewController(true, null)));
-                DismissViewController(true, null);
-            }));
             NavigationItem.RightBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Save, () => {
                 ApplyButtonPressed();
                 DismissViewController(true, null); 
@@ -124,10 +124,10 @@ namespace CodeFramework.Filters.Controllers
                     sb.Append(", ");
                     trueCounter++;
                 }
+            }
+            var str = sb.ToString();
             if (str.EndsWith(", "))
                 return trueCounter == fields.Length ? "Any".t() : str.Substring(0, str.Length - 2);
-                    return str.Substring(0, str.Length - 2);
-            }
             return "None".t();
         }
     }
