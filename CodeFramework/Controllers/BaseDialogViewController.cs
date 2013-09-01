@@ -21,6 +21,7 @@ namespace CodeFramework.Controllers
             Autorotate = true;
             AutoHideSearch = true;
             Style = UITableViewStyle.Grouped;
+            NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Back, () => NavigationController.PopViewControllerAnimated(true)));
         }
 
         public override void ViewWillAppear(bool animated)
@@ -96,8 +97,6 @@ namespace CodeFramework.Controllers
             backgroundView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
             this.TableView.BackgroundView = backgroundView;
             base.ViewDidLoad();
-
-            NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Back, () => NavigationController.PopViewControllerAnimated(true)));
         }
 
         sealed class RefreshView : RefreshTableHeaderView
