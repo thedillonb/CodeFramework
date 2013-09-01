@@ -1,21 +1,21 @@
 using System.Collections.Generic;
 using MonoTouch.UIKit;
 using System.Linq;
-using System;
 using CodeFramework.Controllers;
+using CodeFramework.Filters.Models;
 using CodeFramework.Views;
 
 namespace CodeFramework.Filters.Controllers
-{
-    public abstract class FilterViewController : BaseDialogViewController
     {
         protected FilterViewController()
+    {
+        public FilterViewController()
             : base(true)
-        {
-            Title = "Filter & Sort".t();
             Style = UITableViewStyle.Grouped;
-
+            Title = "Filter & Sort".t();
             NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Cancel, () => DismissViewController(true, null)));
+                DismissViewController(true, null);
+            }));
             NavigationItem.RightBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Save, () => {
                 ApplyButtonPressed();
                 DismissViewController(true, null); 
@@ -35,59 +35,54 @@ namespace CodeFramework.Filters.Controllers
             TableView.ReloadData();
         }
 
-        public class EnumChoiceElement : MonoTouch.Dialog.StyledStringElement
+        public class EnumChoiceElement<T> : MonoTouch.Dialog.StyledStringElement where T : struct, IConvertible
         {
-            public int Obj;
-            public EnumChoiceElement(string title, string defaultVal, IEnumerable<string> values)
-                : base(title, defaultVal, UITableViewCellStyle.Value1)
+            private T _value;
+
+            public new T Value
+            {
+                get { return _value; }
+                set
+                {
+                    _value = value;
+                    base.Value = ((Enum)Enum.ToObject(typeof(T), value)).Description();
+                }
+            }
+
+            public EnumChoiceElement(string title, T defaultVal)
+                : base(title, string.Empty, UITableViewCellStyle.Value1)
             {
                 Accessory = UITableViewCellAccessory.DisclosureIndicator;
-                int i = 0;
-                foreach (var a in values)
-                {
-                    if (a.Equals(defaultVal))
-                    {
-                        Obj = i;
-                        break;
-                    }
-                    i++;
-                }
+                Value = defaultVal;
             }
         }
 
-        protected EnumChoiceElement CreateEnumElement(string title, string defaultVal, IEnumerable<string> values)
+        public EnumChoiceElement<T> CreateEnumElement<T>(string title, T value) where T : struct, IConvertible
         {
-            var element = new EnumChoiceElement(title, defaultVal, values);
+            var element = new EnumChoiceElement<T>(title, value);
+
             element.Tapped += () =>
             {
-                var en = new RadioChoiceViewController(element.Caption, values, element.Value);
-                en.ValueSelected += obj =>
+                var ctrl = new BaseDialogViewController(true);
+                ctrl.Title = title;
+                ctrl.Style = MonoTouch.UIKit.UITableViewStyle.Grouped;
+
+                var sec = new MonoTouch.Dialog.Section();
+                foreach (var x in System.Enum.GetValues(typeof(T)).Cast<System.Enum>())
                 {
-                    element.Value = obj;
-
-                    int i = 0;
-                    foreach (var a in values)
-                    {
-                        if (a.Equals(obj))
-                        {
-                            element.Obj = i;
-                            break;
-                        }
-                        i++;
-                    }
-
-                    NavigationController.PopViewControllerAnimated(true);
-                };
-                NavigationController.PushViewController(en, true);
+                    sec.Add(new MonoTouch.Dialog.StyledStringElement(x.Description(), () => { 
+                        element.Value = (T)Enum.ToObject(typeof(T), x); 
+                        NavigationController.PopViewControllerAnimated(true);
+                    }) { 
+                        Accessory = object.Equals(x, element.Value) ? 
+                            MonoTouch.UIKit.UITableViewCellAccessory.Checkmark : MonoTouch.UIKit.UITableViewCellAccessory.None 
+                    });
+                }
+                ctrl.Root = new MonoTouch.Dialog.RootElement(title) { sec };
+                NavigationController.PushViewController(ctrl, true);
             };
             
             return element;
-        }
-
-        protected EnumChoiceElement CreateEnumElement(string title, int defaultVal, Type enumType)
-        {
-            var values = Enum.GetValues(enumType).Cast<Enum>().Select(x => x.Description()).ToList();
-            return CreateEnumElement(title, values[defaultVal], values);
         }
 
         public class MultipleChoiceElement<T> : MonoTouch.Dialog.StyledStringElement
@@ -129,10 +124,10 @@ namespace CodeFramework.Filters.Controllers
                     sb.Append(", ");
                     trueCounter++;
                 }
-            }
-            var str = sb.ToString();
             if (str.EndsWith(", "))
                 return trueCounter == fields.Length ? "Any".t() : str.Substring(0, str.Length - 2);
+                    return str.Substring(0, str.Length - 2);
+            }
             return "None".t();
         }
     }

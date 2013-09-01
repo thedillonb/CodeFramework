@@ -1,8 +1,11 @@
+using System;
+
 namespace CodeFramework.Filters.Models
 {
-    public abstract class FilterModel<TFilter>
+    [Serializable]
+    public abstract class FilterModel<F>
     {
-        public abstract TFilter Clone();
+        public abstract F Clone();
     }
 }
 
