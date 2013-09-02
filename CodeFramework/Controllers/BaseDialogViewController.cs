@@ -21,7 +21,7 @@ namespace CodeFramework.Controllers
             Autorotate = true;
             AutoHideSearch = true;
             Style = UITableViewStyle.Grouped;
-            NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Back, () => NavigationController.PopViewControllerAnimated(true)));
+            NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Theme.CurrentTheme.BackButton, () => NavigationController.PopViewControllerAnimated(true)));
         }
 
         public override void ViewWillAppear(bool animated)
