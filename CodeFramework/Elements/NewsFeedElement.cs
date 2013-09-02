@@ -70,7 +70,7 @@ namespace CodeFramework.Elements
             Time = time.ToDaysAgo();
             Name = name ?? "Unknown";
 
-            Image = Images.Misc.Anonymous;
+            Image = Theme.CurrentTheme.AnonymousUserImage;
             if (imageUrl != null)
                 ImageUri = new Uri(imageUrl);
 

@@ -108,7 +108,7 @@ namespace CodeFramework.Controllers
                 : base(account.Username)
             {
                 Account = account;
-                Image = Images.Misc.Anonymous;
+                Image = Theme.CurrentTheme.AnonymousUserImage;
                 if (!string.IsNullOrEmpty(Account.AvatarUrl))
                     this.ImageUri = new Uri(Account.AvatarUrl);
             }

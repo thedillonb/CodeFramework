@@ -5,7 +5,7 @@ namespace CodeFramework.Controllers
 {
     public class MultipleChoiceViewController : BaseDialogViewController
     {
-        private object _obj;
+        private readonly object _obj;
         
         protected void OnValueSelected(System.Reflection.FieldInfo field)
         {

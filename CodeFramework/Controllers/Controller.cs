@@ -82,7 +82,7 @@ namespace CodeFramework.Controllers
         }
     }
     
-    public abstract class Controller<T> : IController where T : new()
+    public abstract class Controller<T> : IController where T : class, new()
     {
         private static NSObject _object = new NSObject();
 

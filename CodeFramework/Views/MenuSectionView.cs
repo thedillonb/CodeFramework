@@ -1,4 +1,3 @@
-using System;
 using MonoTouch.UIKit;
 using System.Drawing;
 
@@ -9,10 +8,10 @@ namespace CodeFramework.Views
         public MenuSectionView(string caption)
             : base(new RectangleF(0, 0, 320, 27))
         {
-            UIImageView background = new UIImageView(Images.Components.MenuSectionBackground);
+            var background = new UIImageView(Theme.CurrentTheme.MenuSectionBackground);
             background.Frame = this.Frame; 
 
-            UILabel label = new UILabel(); 
+            var label = new UILabel(); 
             label.BackgroundColor = UIColor.Clear; 
             label.Opaque = false; 
             label.TextColor = UIColor.FromRGB(171, 171, 171); 

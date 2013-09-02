@@ -5,8 +5,8 @@ namespace CodeFramework.Views
 {
     public class ErrorView : UIView
     {
-        private UIImageView _imgView;
-        private UILabel _label;
+        private readonly UIImageView _imgView;
+        private readonly UILabel _label;
 
         public static UIFont TitleFont = UIFont.SystemFontOfSize(15f); 
 
@@ -19,7 +19,7 @@ namespace CodeFramework.Views
         private ErrorView()
         {
             BackgroundColor = UIColor.White;
-            _imgView = new UIImageView(Images.Components.Warning);
+            _imgView = new UIImageView(Theme.CurrentTheme.WarningImage);
             _label = new UILabel();
             _label.TextAlignment = UITextAlignment.Center;
             _label.LineBreakMode = UILineBreakMode.WordWrap;

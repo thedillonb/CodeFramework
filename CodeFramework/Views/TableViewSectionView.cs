@@ -5,11 +5,10 @@ namespace CodeFramework.Views
 {
     public class TableViewSectionView : UIView
     {
-        public static UIImage BackgroundImage;
         readonly UILabel _lbl;
 
-        static readonly MonoTouch.CoreGraphics.CGGradient BottomGradient;
-        static readonly MonoTouch.CoreGraphics.CGGradient TopGradient;
+        public static MonoTouch.CoreGraphics.CGGradient BottomGradient;
+        public static MonoTouch.CoreGraphics.CGGradient TopGradient;
         
         static TableViewSectionView ()
         {
@@ -30,7 +29,7 @@ namespace CodeFramework.Views
         public TableViewSectionView(string text)
         {
             Frame = new RectangleF(0, 0, 320, 24);
-            BackgroundColor = UIColor.FromPatternImage(BackgroundImage).ColorWithAlpha(0.9f);
+            BackgroundColor = UIColor.FromPatternImage(Theme.CurrentTheme.TableViewSectionBackground).ColorWithAlpha(0.9f);
             
             _lbl = new UILabel();
             _lbl.Text = text;

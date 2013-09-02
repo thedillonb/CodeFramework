@@ -35,7 +35,7 @@ namespace CodeFramework.Controllers
 
         public WebViewController(bool navigationToolbar)
         {
-            NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Back, () => NavigationController.PopViewControllerAnimated(true)));
+            NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Theme.CurrentTheme.BackButton, () => NavigationController.PopViewControllerAnimated(true)));
 
             Web = new UIWebView {ScalesPageToFit = true};
             Web.LoadFinished += OnLoadFinished;
@@ -48,9 +48,9 @@ namespace CodeFramework.Controllers
             if (_navigationToolbar)
             {
                 ToolbarItems = new [] { 
-                    (BackButton = new UIBarButtonItem(Images.Web.Back, UIBarButtonItemStyle.Plain, (s, e) => GoBack()) { Enabled = false }),
+                    (BackButton = new UIBarButtonItem(Theme.CurrentTheme.WebBackButton, UIBarButtonItemStyle.Plain, (s, e) => GoBack()) { Enabled = false }),
                     new UIBarButtonItem(UIBarButtonSystemItem.FixedSpace) { Width = 40f },
-                    (ForwardButton = new UIBarButtonItem(Images.Web.Forward, UIBarButtonItemStyle.Plain, (s, e) => GoForward()) { Enabled = false }),
+                    (ForwardButton = new UIBarButtonItem(Theme.CurrentTheme.WebFowardButton, UIBarButtonItemStyle.Plain, (s, e) => GoForward()) { Enabled = false }),
                     new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
                     (RefreshButton = new UIBarButtonItem(UIBarButtonSystemItem.Refresh, (s, e) => Refresh()))
                                       };
@@ -105,7 +105,7 @@ namespace CodeFramework.Controllers
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            this.View.BackgroundColor = UIColor.FromPatternImage(Images.Views.Background);
+            this.View.BackgroundColor = UIColor.FromPatternImage(Theme.CurrentTheme.ViewBackground);
             Add(Web);
         }
 

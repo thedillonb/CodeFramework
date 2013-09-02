@@ -13,7 +13,7 @@ namespace CodeFramework.Elements
              if (!string.IsNullOrWhiteSpace(realName))
                 Value = realName;
             Accessory = UITableViewCellAccessory.DisclosureIndicator;
-            Image = Images.Misc.Anonymous;
+            Image = Theme.CurrentTheme.AnonymousUserImage;
             if (avatar != null)
                 ImageUri = new Uri(avatar);
         }

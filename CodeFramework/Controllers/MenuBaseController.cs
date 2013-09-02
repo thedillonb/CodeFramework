@@ -14,7 +14,7 @@ namespace CodeFramework.Controllers
         /// <summary>
         /// Initializes a new instance of the <see cref="CodeFramework.Controllers.MenuBaseController"/> class.
         /// </summary>
-		public MenuBaseController()
+        protected MenuBaseController()
             : base(UITableViewStyle.Plain, new RootElement(string.Empty))
         {
             Autorotate = true;

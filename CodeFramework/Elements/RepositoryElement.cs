@@ -10,13 +10,13 @@ namespace CodeFramework.Elements
 	
 	public class RepositoryElement : Element, IElementSizing, IColorizeBackground, IImageUpdated
 	{       
-		private string _name;
-		private int _followers;
-		private int _forks;
-		private string _description;
-		private string _owner;
+		private readonly string _name;
+		private readonly int _followers;
+		private readonly int _forks;
+		private readonly string _description;
+		private readonly string _owner;
         private UIImage _image;
-        private Uri _imageUri;
+        private readonly Uri _imageUri;
 
 		public UIColor BackgroundColor { get; set; }
 
@@ -54,10 +54,8 @@ namespace CodeFramework.Elements
 		
 		public override UITableViewCell GetCell (UITableView tv)
 		{
-			var cell = tv.DequeueReusableCell(CellKey) as RepositoryCellView;
-			if (cell == null)
-				cell = RepositoryCellView.Create();
-			return cell;
+			var cell = tv.DequeueReusableCell(CellKey) as RepositoryCellView ?? RepositoryCellView.Create();
+		    return cell;
 		}
 		
 		public override bool Matches(string text)
@@ -101,7 +99,7 @@ namespace CodeFramework.Elements
             var root = GetImmediateRootElement ();
             if (root == null || root.TableView == null)
                 return;
-            root.TableView.ReloadRows (new NSIndexPath [] { IndexPath }, UITableViewRowAnimation.None);
+            root.TableView.ReloadRows (new [] { IndexPath }, UITableViewRowAnimation.None);
         }
 
         #endregion

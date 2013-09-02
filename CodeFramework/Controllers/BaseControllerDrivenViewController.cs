@@ -10,8 +10,6 @@ namespace CodeFramework.Controllers
 
         public IController Controller { get; protected set; }
 
-        public bool Loaded { get; private set; }
-
         /// <summary>
         /// Initializes a new instance of the class.
         /// </summary>

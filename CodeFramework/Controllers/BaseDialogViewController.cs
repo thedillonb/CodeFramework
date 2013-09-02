@@ -93,7 +93,7 @@ namespace CodeFramework.Controllers
                 TableView.TableFooterView = new DropbarView(View.Bounds.Width) {Hidden = true};
             }
 
-            var backgroundView = new UIView { BackgroundColor = UIColor.FromPatternImage(Images.Views.Background) };
+            var backgroundView = new UIView { BackgroundColor = UIColor.FromPatternImage(Theme.CurrentTheme.ViewBackground) };
             backgroundView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
             this.TableView.BackgroundView = backgroundView;
             base.ViewDidLoad();

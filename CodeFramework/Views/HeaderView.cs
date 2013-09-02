@@ -9,10 +9,10 @@ namespace CodeFramework.Views
     {
         private const float XPad = 14f;
         private const float YPad = 10f;
+
         public static UIFont TitleFont = UIFont.BoldSystemFontOfSize(16);
         public static UIFont SubtitleFont = UIFont.SystemFontOfSize(13);
-
-        static readonly CGGradient Gradient;
+        public static CGGradient Gradient;
 
         static HeaderView ()
         {

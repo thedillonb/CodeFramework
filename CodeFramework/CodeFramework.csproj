@@ -43,24 +43,14 @@
     </Reference>
     <Reference Include="System.Web.Services" />
   </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
-    <Folder Include="Markup\" />
-    <Folder Include="Data\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Images\Web\" />
-    <Folder Include="Images\Misc\" />
-    <Folder Include="Filters\" />
-    <Folder Include="Filters\Controllers\" />
-    <Folder Include="Filters\Models\" />
-    <Folder Include="Diff\" />
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
+    <Compile Include="Theme.cs" />
     <Compile Include="Views\ErrorView.cs" />
     <Compile Include="Views\DropbarView.cs" />
     <Compile Include="Views\HeaderView.cs" />
     <Compile Include="Views\SearchFilterView.cs" />
-    <Compile Include="Views\TitleView.cs" />
     <Compile Include="Views\TableViewSectionView.cs" />
     <Compile Include="Utils\DateTimeExtensions.cs" />
     <Compile Include="Utils\MbProgressHud.cs" />
@@ -95,7 +85,6 @@
     <Compile Include="Views\MenuSectionView.cs" />
     <Compile Include="Controllers\SlideoutNavigationController.cs" />
     <Compile Include="Views\ProfileButton.cs" />
-    <Compile Include="Images\Images.cs" />
     <Compile Include="Controllers\StartupController.cs" />
     <Compile Include="Utils\Transitions.cs" />
     <Compile Include="Data\WebCacheProvider.cs" />
@@ -111,7 +100,6 @@
     <Compile Include="Controllers\BaseControllerDrivenViewController.cs" />
     <Compile Include="Controllers\BaseListControllerDrivenViewController.cs" />
     <Compile Include="Filters\Models\FilterGroup.cs" />
-    <Compile Include="Filters\Models\EmptyFilterModel.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -123,10 +111,6 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
-    <ProjectReference Include="..\monotouch-uservoice\UserVoice\UserVoice\UserVoice.csproj">
-      <Project>{3A0C5D98-D568-43C1-A877-B1BA00BA4A87}</Project>
-      <Name>UserVoice</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OHAttributedLabel\OHAttributedLabel.csproj">
       <Project>{1FD1BA85-25F8-460D-B588-0E753CFF578D}</Project>
       <Name>OHAttributedLabel</Name>
@@ -177,40 +161,11 @@
     <Content Include="SourceBrowser\prettify.css" />
     <Content Include="SourceBrowser\prettify.js" />
     <Content Include="SourceBrowser\run_prettify.js" />
-    <Content Include="Images\Buttons\back%402x.png" />
-    <Content Include="Images\Buttons\back.png" />
-    <Content Include="Images\Buttons\three_lines%402x.png" />
-    <Content Include="Images\Buttons\three_lines.png" />
-    <Content Include="Images\Buttons\cancel.png" />
-    <Content Include="Images\Buttons\cancel%402x.png" />
-    <Content Include="Images\Buttons\save%402x.png" />
-    <Content Include="Images\Buttons\save.png" />
-    <Content Include="Images\Buttons\edit%402x.png" />
-    <Content Include="Images\Buttons\edit.png" />
-    <Content Include="Images\Components\menu_section_bg%402x.png" />
-    <Content Include="Images\Components\menu_section_bg.png" />
-    <Content Include="Images\Components\menu_navbar%402x.png" />
-    <Content Include="Images\Components\menu_navbar.png" />
-    <Content Include="Images\Web\back_button%402x.png" />
-    <Content Include="Images\Web\forward_button%402x.png" />
-    <Content Include="Images\Components\warning.png" />
     <Content Include="Diff\difflib.js" />
     <Content Include="Diff\diffview.css" />
     <Content Include="Diff\diffview.js" />
     <Content Include="Diff\diffindex.html" />
     <Content Include="Diff\jquery.min.js" />
     <Content Include="Diff\app.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Images\Buttons\add%402x.png" />
-    <BundleResource Include="Images\Buttons\add.png" />
-    <BundleResource Include="Images\Buttons\filter%402x.png" />
-    <BundleResource Include="Images\Buttons\filter.png" />
-    <BundleResource Include="Images\Misc\anonymous.png" />
-    <BundleResource Include="Images\Misc\anonymous%402x.png" />
-    <BundleResource Include="Images\Buttons\gear.png" />
-    <BundleResource Include="Images\Buttons\gear%402x.png" />
-    <BundleResource Include="Images\Buttons\view%402x.png" />
-    <BundleResource Include="Images\Buttons\view.png" />
   </ItemGroup>
 </Project>

@@ -34,7 +34,7 @@ namespace CodeFramework.Views
                 _button.SetBackgroundImage(ButtonBackground, UIControlState.Highlighted);
             }
 
-            _button.SetImage(Images.Buttons.Filter, UIControlState.Normal);
+            _button.SetImage(Theme.CurrentTheme.FilterButton, UIControlState.Normal);
             _button.SizeToFit();
             this.AddSubview(_button);
         }

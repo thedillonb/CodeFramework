@@ -1,19 +1,13 @@
 using System;
-using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using MonoTouch.ObjCRuntime;
-using CodeFramework.Views;
 
 namespace CodeFramework.Cells
 {
 
     public partial class RepositoryCellView : UITableViewCell
     {
-        public static UIImage User;
-        public static UIImage Heart;
-        public static UIImage Fork;
-
         public static bool RoundImages = true;
 
         public static RepositoryCellView Create()
@@ -24,9 +18,9 @@ namespace CodeFramework.Cells
 
             if (cell != null)
             {
-                cell.Image1.Image = Heart;
-                cell.Image3.Image = Fork;
-                cell.UserImage.Image = User;
+                cell.Image1.Image = Theme.CurrentTheme.RepositoryCellFollowers;
+                cell.Image3.Image = Theme.CurrentTheme.RepositoryCellForks;
+                cell.UserImage.Image = Theme.CurrentTheme.RepositoryCellUser;
                 cell.BackgroundView = new MonoTouch.Dialog.CellBackgroundView();
 
                 if (RoundImages)
@@ -66,7 +60,7 @@ namespace CodeFramework.Cells
 
             RepoName.Hidden = repoOwner == null;
             UserImage.Hidden = RepoName.Hidden;
-            RepoName.Text = repoOwner != null ? repoOwner : string.Empty;
+            RepoName.Text = repoOwner ?? string.Empty;
         }
     }
 }

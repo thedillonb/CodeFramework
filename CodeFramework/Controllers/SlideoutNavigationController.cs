@@ -15,7 +15,7 @@ namespace CodeFramework.Controllers
             SlideHeight = 9999f;
 
             //Set the menu navigation background
-            SetMenuNavigationBackgroundImage(Images.Components.MenuNavbar, UIBarMetrics.Default);
+            SetMenuNavigationBackgroundImage(Theme.CurrentTheme.MenuNavbarBackground, UIBarMetrics.Default);
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace CodeFramework.Controllers
         /// <returns>The menu button.</returns>
         protected override UIBarButtonItem CreateMenuButton()
         {
-            return new UIBarButtonItem(NavigationButton.Create(Images.Buttons.ThreeLines, Show));
+            return new UIBarButtonItem(NavigationButton.Create(Theme.CurrentTheme.ThreeLinesButton, Show));
         }
     }
 }

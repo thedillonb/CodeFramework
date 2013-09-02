@@ -5,17 +5,11 @@ using MonoTouch.UIKit;
 using MonoTouch.ObjCRuntime;
 using MonoTouch.Dialog;
 using MonoTouch.CoreGraphics;
-using CodeFramework.Views;
 
 namespace CodeFramework.Cells
 {
     public partial class IssueCellView : UITableViewCell
     {
-        public static UIImage User;
-        public static UIImage Priority;
-        public static UIImage Pencil;
-        public static UIImage Cog;
-
         public static IssueCellView Create()
         {
             var cell = new IssueCellView();
@@ -28,11 +22,11 @@ namespace CodeFramework.Cells
             }
             else
             {
-                cell.AddSubview(new SeperatorIssues() {Frame = new RectangleF(65f, 5f, 1f, cell.Frame.Height - 10f)});
-                cell.Image1.Image = Cog;
-                cell.Image2.Image = Priority;
-                cell.Image3.Image = User;
-                cell.Image4.Image = Pencil;
+                cell.AddSubview(new SeperatorIssues {Frame = new RectangleF(65f, 5f, 1f, cell.Frame.Height - 10f)});
+                cell.Image1.Image = Theme.CurrentTheme.IssueCellImage1;
+                cell.Image2.Image = Theme.CurrentTheme.IssueCellImage2;
+                cell.Image3.Image = Theme.CurrentTheme.IssueCellImage3;
+                cell.Image4.Image = Theme.CurrentTheme.IssueCellImage4;
                 cell.BackgroundView = new CellBackgroundView();
             }
 
@@ -121,9 +115,9 @@ namespace CodeFramework.Cells
                 //context.ClipToRect(new RectangleF(63f, 0f, 3f, rect.Height));
                 using (var cs = CGColorSpace.CreateDeviceRGB ())
                 {
-                    using (var gradient = new CGGradient (cs, new float [] { 1f, 1f, 1f, 1.0f, 
+                    using (var gradient = new CGGradient (cs, new [] { 1f, 1f, 1f, 1.0f, 
                         0.7f, 0.7f, 0.7f, 1f, 
-                        1f, 1f, 1.0f, 1.0f }, new float [] {0, 0.5f, 1f}))
+                        1f, 1f, 1.0f, 1.0f }, new [] {0, 0.5f, 1f}))
                     {
                         context.DrawLinearGradient(gradient, new PointF(0, 0), new PointF(0, rect.Height), 0);
                     }

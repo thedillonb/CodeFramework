@@ -53,10 +53,9 @@ namespace CodeFramework.Controllers
 
         private class ComposerView : UIView 
         {
-            const UIBarButtonItemStyle Style = UIBarButtonItemStyle.Bordered;
             internal readonly UITextView TextView;
             
-            public ComposerView (RectangleF bounds, Composer composer) : base (bounds)
+            public ComposerView (RectangleF bounds) : base (bounds)
             {
                 TextView = new UITextView (RectangleF.Empty) {
                     Font = UIFont.SystemFontOfSize (18),
@@ -104,15 +103,15 @@ namespace CodeFramework.Controllers
 		                         {AutoresizingMask = UIViewAutoresizing.FlexibleWidth, AutosizesSubviews = true};
 		    _navItem = new UINavigationItem ("");
 
-			var close = new UIBarButtonItem (NavigationButton.Create(Images.Buttons.Cancel, CloseComposer));
+			var close = new UIBarButtonItem (NavigationButton.Create(Theme.CurrentTheme.CancelButton, CloseComposer));
 			_navItem.LeftBarButtonItem = close;
-            SendItem = new UIBarButtonItem (NavigationButton.Create(Images.Buttons.Save, PostCallback));
+            SendItem = new UIBarButtonItem (NavigationButton.Create(Theme.CurrentTheme.SaveButton, PostCallback));
 			_navItem.RightBarButtonItem = SendItem;
 
 			_navigationBar.PushNavigationItem (_navItem, false);
 			
 			// Composer
-			_composerView = new ComposerView (ComputeComposerSize (RectangleF.Empty), this);
+			_composerView = new ComposerView (ComputeComposerSize (RectangleF.Empty));
 			
 			View.AddSubview (_composerView);
 			View.AddSubview (_navigationBar);
