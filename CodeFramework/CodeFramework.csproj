@@ -111,6 +111,7 @@
     <Compile Include="Controllers\BaseControllerDrivenViewController.cs" />
     <Compile Include="Controllers\BaseListControllerDrivenViewController.cs" />
     <Compile Include="Filters\Models\FilterGroup.cs" />
+    <Compile Include="Filters\Models\EmptyFilterModel.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
