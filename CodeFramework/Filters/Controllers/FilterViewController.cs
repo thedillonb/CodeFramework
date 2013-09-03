@@ -15,8 +15,8 @@ namespace CodeFramework.Filters.Controllers
         {
             Style = UITableViewStyle.Grouped;
             Title = "Filter & Sort".t();
-            NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Cancel, () => DismissViewController(true, null)));
-            NavigationItem.RightBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Images.Buttons.Save, () => {
+            NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Theme.CurrentTheme.CancelButton, () => DismissViewController(true, null)));
+            NavigationItem.RightBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Theme.CurrentTheme.SaveButton, () => {
                 ApplyButtonPressed();
                 DismissViewController(true, null); 
             }));
