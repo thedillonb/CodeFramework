@@ -18,6 +18,7 @@ namespace CodeFramework.Cells
 
             if (cell != null)
             {
+                cell.Caption.TextColor = Theme.CurrentTheme.MainTitleColor;
                 cell.Image1.Image = Theme.CurrentTheme.RepositoryCellFollowers;
                 cell.Image3.Image = Theme.CurrentTheme.RepositoryCellForks;
                 cell.UserImage.Image = Theme.CurrentTheme.RepositoryCellUser;

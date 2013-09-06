@@ -97,6 +97,11 @@ namespace CodeFramework.Controllers
 
         public abstract void Update(bool force);
 
+        /// <summary>
+        /// Updates (on this thread) and renders.
+        /// This should be called from a non-UI thread.
+        /// </summary>
+        /// <param name="force">If set to <c>true</c> force.</param>
         public void UpdateAndRender(bool force)
         {
             Update(force);

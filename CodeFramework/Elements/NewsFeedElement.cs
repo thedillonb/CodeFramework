@@ -100,7 +100,7 @@ namespace CodeFramework.Elements
                 }
 
                 if (color == null)
-                    color = UIColor.Black;
+                    color = Theme.CurrentTheme.MainTextColor;
                 if (font == null)
                     font = UIFont.SystemFontOfSize(12f);
 

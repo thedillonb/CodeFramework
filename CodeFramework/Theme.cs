@@ -38,10 +38,13 @@ namespace CodeFramework
         UIImage IssueCellImage2 { get; }
         UIImage IssueCellImage3 { get; }
         UIImage IssueCellImage4 { get; }
-        
+
         UIImage RepositoryCellFollowers { get; }
         UIImage RepositoryCellForks { get; }
         UIImage RepositoryCellUser { get; }
 
+        UIColor MainTitleColor { get; }
+        UIColor MainSubtitleColor { get; }
+        UIColor MainTextColor { get; }
     }
 }

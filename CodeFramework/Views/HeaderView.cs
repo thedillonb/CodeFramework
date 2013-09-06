@@ -83,7 +83,7 @@ namespace CodeFramework.Views
 
             if (!string.IsNullOrEmpty(Title))
             {
-                UIColor.FromRGB(0, 64, 128).SetColor();
+                Theme.CurrentTheme.MainTitleColor.SetColor();
                 DrawString(
                         Title,
                         new RectangleF(XPad, titleY, contentWidth, TitleFont.LineHeight),
@@ -94,8 +94,7 @@ namespace CodeFramework.Views
 
             if (!string.IsNullOrWhiteSpace(Subtitle))
             {
-                UIColor.FromRGB(81, 81, 81).SetColor();
-
+                Theme.CurrentTheme.MainSubtitleColor.SetColor();
                 DrawString(
                     Subtitle,
                     new RectangleF(XPad, YPad + TitleFont.LineHeight + 2f, contentWidth, SubtitleFont.LineHeight),
