@@ -58,12 +58,72 @@ namespace CodeFramework.Controllers
                     }
                 }
             }
+
+            //TableView.Scrolled -= HandleScrolled;
         }
 
         public override void ViewDidAppear(bool animated)
         {
             base.ViewDidAppear(animated);
             GoogleAnalytics.GAI.SharedInstance.DefaultTracker.TrackView(this.GetType().Name);
+            //TableView.Scrolled += HandleScrolled;
+        }
+
+        void HandleScrolled (object sender, System.EventArgs e)
+        {
+            // Depending on how far the user scrolled, set the new offset.
+            // Divide by a hundred so we have a sane value. You could adjust this
+            // for different effects.
+            // The larger you number divide by, the slower the shadow will change
+
+            if (TableView.ContentOffset.Y != 0)
+            {
+                StartShadow();
+            }
+            else
+            {
+                StopShadow();
+            }
+//
+//            float shadowOffset = (this.TableView.ContentOffset.Y/100);
+//
+////            // Make sure that the offset doesn't exceed 3 or drop below 0.5
+////            shadowOffset = MIN(MAX(shadowOffset, 0), 3);
+////
+////            //Ensure that the shadow radius is between 1 and 3
+////            float shadowRadius = MIN(MAX(shadowOffset, 1), 3);
+//
+//            //apply the offset and radius
+//
+//            NavigationController.NavigationBar.Layer.ShadowOffset = new SizeF(0, 1);
+//            NavigationController.NavigationBar.Layer.ShadowRadius = 1f;
+//            NavigationController.NavigationBar.Layer.ShadowColor = UIColor.DarkGray;
+//            NavigationController.NavigationBar.Layer.ShadowOpacity = 0.8;
+        }
+
+        bool shadowing = false;
+        private void StartShadow()
+        {
+            if (shadowing)
+                return;
+
+            NavigationController.NavigationBar.Layer.ShadowOffset = new SizeF(0, 1);
+            NavigationController.NavigationBar.Layer.ShadowRadius = 1f;
+            NavigationController.NavigationBar.Layer.ShadowColor = UIColor.DarkGray.CGColor;
+            NavigationController.NavigationBar.Layer.ShadowOpacity = 0.5f;
+            shadowing = true;
+        }
+
+        private void StopShadow()
+        {
+            if (!shadowing)
+                return;
+
+            NavigationController.NavigationBar.Layer.ShadowOffset = new SizeF(0, 0);
+            NavigationController.NavigationBar.Layer.ShadowRadius = 0;
+            NavigationController.NavigationBar.Layer.ShadowColor = UIColor.Clear.CGColor;
+            NavigationController.NavigationBar.Layer.ShadowOpacity = 0.0f;
+            shadowing = false;
         }
 
         /// <summary>
@@ -93,7 +153,7 @@ namespace CodeFramework.Controllers
                 TableView.TableFooterView = new DropbarView(View.Bounds.Width) {Hidden = true};
             }
 
-            var backgroundView = new UIView { BackgroundColor = UIColor.FromPatternImage(Theme.CurrentTheme.ViewBackground) };
+            var backgroundView = new UIView { BackgroundColor = Theme.CurrentTheme.ViewBackgroundColor };
             backgroundView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
             this.TableView.BackgroundView = backgroundView;
             base.ViewDidLoad();

@@ -105,7 +105,7 @@ namespace CodeFramework.Controllers
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            this.View.BackgroundColor = UIColor.FromPatternImage(Theme.CurrentTheme.ViewBackground);
+            this.View.BackgroundColor = Theme.CurrentTheme.ViewBackgroundColor;
             Add(Web);
         }
 

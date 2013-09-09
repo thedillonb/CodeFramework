@@ -23,6 +23,7 @@ namespace CodeFramework.Cells
             else
             {
                 cell.Caption.TextColor = Theme.CurrentTheme.MainTitleColor;
+                cell.Number.TextColor = Theme.CurrentTheme.MainTitleColor;
                 cell.AddSubview(new SeperatorIssues {Frame = new RectangleF(65f, 5f, 1f, cell.Frame.Height - 10f)});
                 cell.Image1.Image = Theme.CurrentTheme.IssueCellImage1;
                 cell.Image2.Image = Theme.CurrentTheme.IssueCellImage2;

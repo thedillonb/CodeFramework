@@ -28,7 +28,6 @@ namespace CodeFramework
         UIImage MenuSectionBackground { get; }
         UIImage MenuNavbarBackground { get; }
         UIImage WarningImage { get; }
-        UIImage ViewBackground { get; }
         UIImage AnonymousUserImage { get; }
         UIImage DropbarBackground { get; }
 
@@ -46,5 +45,6 @@ namespace CodeFramework
         UIColor MainTitleColor { get; }
         UIColor MainSubtitleColor { get; }
         UIColor MainTextColor { get; }
+        UIColor ViewBackgroundColor { get; }
     }
 }

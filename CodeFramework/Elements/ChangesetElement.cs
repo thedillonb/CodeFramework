@@ -3,13 +3,13 @@ using CodeFramework.Views;
 
 namespace CodeFramework.Elements
 {
-    public class ChangesetElement : SubcaptionElement
+    public class ChangesetElement : StyledStringElement
     {
         private readonly int? _added;
         private readonly int? _removed;
 
         public ChangesetElement(string title, string subtitle, int? added, int? removed)
-            : base(title, subtitle)
+            : base(title, subtitle, MonoTouch.UIKit.UITableViewCellStyle.Subtitle)
         {
             Accessory = MonoTouch.UIKit.UITableViewCellAccessory.DisclosureIndicator;
             LineBreakMode = MonoTouch.UIKit.UILineBreakMode.TailTruncation;

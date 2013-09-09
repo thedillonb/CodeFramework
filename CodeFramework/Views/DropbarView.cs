@@ -20,7 +20,7 @@ namespace CodeFramework.Views
             _img.Layer.MasksToBounds = false;
             _img.Layer.ShadowColor = UIColor.Black.CGColor;
             _img.Layer.ShadowOpacity = 0.3f;
-            _img.Layer.ShadowOffset = new SizeF(0, 5f);
+            _img.Layer.ShadowOffset = new SizeF(0, 2f);
             AddSubview(_img);
         }
 

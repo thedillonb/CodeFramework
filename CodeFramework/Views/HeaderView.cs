@@ -19,7 +19,7 @@ namespace CodeFramework.Views
             using (var rgb = CGColorSpace.CreateDeviceRGB()){
                 float [] colorsBottom = {
                     1, 1, 1, 1f,
-                    0.96f, 0.97f, 0.98f, 1f
+                    0.97f, 0.97f, 0.97f, 1f
                 };
                 Gradient = new CGGradient (rgb, colorsBottom, null);
             }
@@ -37,10 +37,11 @@ namespace CodeFramework.Views
             : base(new RectangleF(0, 0, width, 60f))
         {
             ShadowImage = true;
+            BackgroundColor = UIColor.Clear;
             Layer.MasksToBounds = false;
             Layer.ShadowColor = UIColor.Gray.CGColor;
-            Layer.ShadowOpacity = 1.0f;
-            Layer.ShadowOffset = new SizeF(0, 2f);
+            Layer.ShadowOpacity = 0.4f;
+            Layer.ShadowOffset = new SizeF(0, 1f);
         }
 
         public override void Draw(RectangleF rect)
@@ -69,7 +70,7 @@ namespace CodeFramework.Views
                     context.SetFillColor(UIColor.White.CGColor);
                     context.TranslateCTM(left, top);
                     context.SetLineWidth(1.0f);
-                    context.SetShadowWithColor(new SizeF(0, 0), 5, UIColor.DarkGray.CGColor);
+                    context.SetShadowWithColor(new SizeF(0, 0), 5, UIColor.LightGray.CGColor);
                     context.AddPath(GraphicsUtil.MakeRoundedPath(width, 4));
                     context.FillPath();
                     context.RestoreState();

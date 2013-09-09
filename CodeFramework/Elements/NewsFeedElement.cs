@@ -12,7 +12,7 @@ namespace CodeFramework.Elements
     public class NewsFeedElement : NameTimeStringElement
     {
         public static UIColor LinkColor = UIColor.FromRGB(0, 64, 128);
-        public static UIFont LinkFont = UIFont.BoldSystemFontOfSize(12f);
+        public static UIFont LinkFont = UIFont.SystemFontOfSize(12f);
 
         private TextBlock[] _blocks;
         private NSMutableAttributedString _string;
