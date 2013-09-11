@@ -110,6 +110,8 @@ namespace CodeFramework.Controllers
 
         protected class MenuElement : StyledStringElement
         {
+            public int NotificationNumber { get; set; }
+
             public MenuElement(string title, NSAction tapped, UIImage image)
                 : base(title, tapped)
             {
@@ -124,10 +126,28 @@ namespace CodeFramework.Controllers
             private class Cell : UITableViewCell
             {
                 private const float ImageSize = 16f;
+                private UILabel _numberView;
+
+                public int NotificationNumber { get; set; }
 
                 public Cell(UITableViewCellStyle style, string key)
                     : base(style, key)
                 {
+                    var v = new UIView(new RectangleF(0, 0, Frame.Width, 1)) { 
+                        BackgroundColor = UIColor.FromRGB(44, 44, 44)
+                    };
+
+                    AddSubview(v);
+                    TextLabel.ShadowColor = UIColor.Black;
+                    TextLabel.ShadowOffset = new SizeF(0, -1); 
+                    SelectedBackgroundView = new UIView { BackgroundColor = UIColor.FromRGB(25, 25, 25) };
+
+                    _numberView = new UILabel { BackgroundColor = UIColor.FromRGB(54, 54, 54) };
+                    _numberView.Layer.MasksToBounds = true;
+                    _numberView.Layer.CornerRadius = 5f;
+                    _numberView.TextAlignment = UITextAlignment.Center;
+                    _numberView.TextColor = UIColor.White;
+                    _numberView.Font = UIFont.SystemFontOfSize(12f);
                 }
 
                 public override void LayoutSubviews()
@@ -147,33 +167,31 @@ namespace CodeFramework.Controllers
                             TextLabel.Frame = frame;
                         }
                     }
+
+                    if (NotificationNumber > 0)
+                    {
+                        _numberView.Frame = new RectangleF(ContentView.Bounds.Width - 44, 11, 34, 22f);
+                        _numberView.Text = NotificationNumber.ToString();
+                        AddSubview(_numberView);
+                    }
+                    else
+                    {
+                        _numberView.RemoveFromSuperview();
+                    }
                 }
+            }
+
+            public override UITableViewCell GetCell(UITableView tv)
+            {
+                var cell = base.GetCell(tv) as Cell;
+                cell.NotificationNumber = NotificationNumber;
+                return cell;
             }
 
             protected override UITableViewCell CreateTableViewCell(UITableViewCellStyle style, string key)
             {
-                var cell = new Cell(style, key);
-                var v = new UIView(new RectangleF(0, 0, cell.Frame.Width, 1)) { 
-                    BackgroundColor = UIColor.FromRGB(44, 44, 44)
-                };
-                cell.AddSubview(v);
-                cell.TextLabel.ShadowColor = UIColor.Black;
-                cell.TextLabel.ShadowOffset = new SizeF(0, -1); 
-                cell.SelectedBackgroundView = new UIView { BackgroundColor = UIColor.FromRGB(25, 25, 25) };
-                return cell;
+                return new Cell(style, key);
             }
-
-//            public override UITableViewCell GetCell(UITableView tv)
-//            {
-//                var cell = base.GetCell(tv);
-//                cell.TextLabel.ShadowColor = UIColor.Black;
-//                cell.TextLabel.ShadowOffset = new SizeF(0, -1); 
-//                cell.SelectedBackgroundView = new UIView { BackgroundColor = UIColor.FromRGB(25, 25, 25) };
-//                //var logo = UIScreen.MainScreen.Scale == 1.0f ? model.Logo : model.LargeLogo(32);
-//
-//
-//                return cell;
-//            }
         }
     }
 }
