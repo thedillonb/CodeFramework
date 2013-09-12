@@ -54,7 +54,7 @@ namespace CodeFramework.Data
             }
         }
 
-        public void Set<T>(T objectToCache, string name) where T : class
+        public void Set(string name, object objectToCache)
         {
             var cacheObj = new CachedObject { When = DateTime.Now, Cached = objectToCache };
 
