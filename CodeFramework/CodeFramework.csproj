@@ -100,6 +100,8 @@
     <Compile Include="Controllers\BaseControllerDrivenViewController.cs" />
     <Compile Include="Controllers\BaseListControllerDrivenViewController.cs" />
     <Compile Include="Filters\Models\FilterGroup.cs" />
+    <Compile Include="Data\CacheProvider.cs" />
+    <Compile Include="Data\CacheEntry.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
