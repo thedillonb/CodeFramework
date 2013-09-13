@@ -30,15 +30,18 @@ namespace CodeFramework.Elements
         /// </summary>
         private class PinnedImageTableViewCell : UITableViewCell
         {
-            public PinnedImageTableViewCell(UITableViewCellStyle style, string key) : base(style, key) { }
+            public PinnedImageTableViewCell(UITableViewCellStyle style, string key) 
+                : base(style, key) 
+            { 
+                ImageView.ContentMode = UIViewContentMode.ScaleAspectFill;
+                ImageView.Layer.CornerRadius = 4.0f;
+                ImageView.Layer.MasksToBounds = true;
+            }
 
             public override void LayoutSubviews()
             {
                 base.LayoutSubviews();
                 ImageView.Frame = new System.Drawing.RectangleF(6, 6, 32, 32);
-                ImageView.ContentMode = UIViewContentMode.ScaleAspectFill;
-                ImageView.Layer.CornerRadius = 4.0f;
-                ImageView.Layer.MasksToBounds = true;
                 //TextLabel.Frame = new System.Drawing.RectangleF(42, TextLabel.Frame.Y, TextLabel.Frame.Width, TextLabel.Frame.Height);
                 //if (DetailTextLabel != null)
                 //    DetailTextLabel.Frame = new System.Drawing.RectangleF(42, DetailTextLabel.Frame.Y, DetailTextLabel.Frame.Width, DetailTextLabel.Frame.Height);

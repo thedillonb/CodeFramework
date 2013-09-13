@@ -109,7 +109,6 @@ namespace CodeFramework.Controllers
                 : base(account.Username, string.Empty, string.Empty, account.AvatarUrl)
             {
                 Account = account;
-                Image = Theme.CurrentTheme.AnonymousUserImage;
             }
         }
     }
