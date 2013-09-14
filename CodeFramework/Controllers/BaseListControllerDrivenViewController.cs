@@ -42,41 +42,46 @@ namespace CodeFramework.Controllers
         {
             var root = new RootElement(Title) { UnevenRows = Root.UnevenRows };
 
-            if (items.Data.Count == 0)
-                root.Add(new Section { new NoItemsElement(NoItemsText) });
+            if (items.FilteredData != null)
+            {
+                foreach (var grp in items.FilteredData)
+                {
+                    var sec = new Section(new TableViewSectionView(grp.Key));
+                    foreach (var element in grp.Select(select).Where(element => element != null))
+                        sec.Add(element);
+
+                    if (sec.Elements.Count > 0)
+                        root.Add(sec);
+                }
+            }
             else
             {
-                if (items.FilteredData != null)
+                var sec = new Section();
+                foreach (var item in items.Data)
                 {
-                    foreach (var grp in items.FilteredData)
-                    {
-                        var sec = new Section(new TableViewSectionView(grp.Key));
-                        foreach (var element in grp.Select(select).Where(element => element != null))
-                            sec.Add(element);
-
-                        if (sec.Elements.Count > 0)
-                            root.Add(sec);
-                    }
+                    var element = select(item);
+                    if (element != null)
+                        sec.Add(element);
                 }
-                else
-                {
-                    var sec = new Section();
-                    foreach (var item in items.Data)
-                    {
-                        var element = select(item);
-                        if (element != null)
-                            sec.Add(element);
-                    }
+
+                //Make sure there's something to add
+                if (sec.Elements.Count > 0)
                     root.Add(sec);
-                }
+            }
 
+            var elements = 0;
+            foreach (var s in root)
+                elements += s.Elements.Count;
 
-                if (items.More != null)
-                {
-                    var loadMore = new PaginateElement("Load More".t(), "Loading...".t(), e => this.DoWorkNoHud(() => items.More(),
-                                                                                                                x => Utilities.ShowAlert("Unable to load more!".t(), x.Message))) { AutoLoadOnVisible = true };
-                    root.Add(new Section { loadMore });
-                }
+            //There are no items! We must have filtered them out
+            if (elements == 0)
+                root.Add(new Section { new NoItemsElement(NoItemsText) });
+
+            if (items.More != null)
+            {
+                var loadMore = new PaginateElement("Load More".t(), "Loading...".t(), e => this.DoWorkNoHud(() => items.More(),
+                                                                                                            x => Utilities.ShowAlert("Unable to load more!".t(), x.Message))) { AutoLoadOnVisible = true };
+                root.Add(new Section { loadMore });
             }
 
             Root = root;
