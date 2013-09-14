@@ -3,6 +3,7 @@ using MonoTouch.UIKit;
 using RedPlum;
 using System.Threading;
 using MonoTouch;
+using System.Threading.Tasks;
 
 namespace CodeFramework.Controllers
 {
@@ -64,6 +65,52 @@ namespace CodeFramework.Controllers
                     });
                 }
             });
+        }
+
+        public async static Task DoWorkAsync(this UIViewController controller, string workTitle, Action work)
+        {
+            MBProgressHUD hud = null;
+            UIView parent = null;
+
+            //Don't attach it to the UI window. It doesn't work well with orientation
+            if (controller.View.Superview is UIWindow)
+                parent = controller.View;
+            else
+                parent = controller.View.Superview;
+
+            hud = new MBProgressHUD(parent) {Mode = MBProgressHUDMode.Indeterminate, TitleText = workTitle};
+            parent.AddSubview(hud);
+            hud.Show(true);
+
+            //Make sure the Toolbar is disabled too
+            if (controller.ToolbarItems != null)
+            {
+                foreach (var t in controller.ToolbarItems)
+                    t.Enabled = false;
+            }
+
+            try
+            {
+                Utilities.PushNetworkActive();
+                await Task.Run(work);
+            }
+            finally
+            {
+                Utilities.PopNetworkActive();
+
+                if (hud != null)
+                {
+                    hud.Hide(true);
+                    hud.RemoveFromSuperview();
+                }
+
+                //Enable all the toolbar items
+                if (controller.ToolbarItems != null)
+                {
+                    foreach (var t in controller.ToolbarItems)
+                        t.Enabled = true;
+                }
+            }
         }
 
         public static void DoWork(this UIViewController controller, Action work, Action<Exception> error = null, Action final = null)
