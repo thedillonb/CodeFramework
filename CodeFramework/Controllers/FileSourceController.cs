@@ -48,11 +48,11 @@ namespace CodeFramework.Controllers
 
         protected abstract void Request();
 
-        protected void LoadRawData(string data)
+        protected void LoadRawData(string data, string language)
         {
             InvokeOnMainThread(delegate {
                 var html = System.IO.File.ReadAllText("SourceBrowser/index.html");
-                var filled = html.Replace("{DATA}", data);
+                var filled = html.Replace("{CODE}", language).Replace("{DATA}", data);
 
                 var url = NSBundle.MainBundle.BundlePath + "/SourceBrowser";
                 url = url.Replace("/", "//").Replace(" ", "%20");

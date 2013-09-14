@@ -162,7 +162,6 @@
     <Content Include="SourceBrowser\lang-yaml.js" />
     <Content Include="SourceBrowser\prettify.css" />
     <Content Include="SourceBrowser\prettify.js" />
-    <Content Include="SourceBrowser\run_prettify.js" />
     <Content Include="Diff\difflib.js" />
     <Content Include="Diff\diffview.css" />
     <Content Include="Diff\diffview.js" />
