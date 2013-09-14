@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using SQLite;
 using System.Linq;
 
-namespace CodeFramework.Data
+namespace CodeFramework.Cache
 {
     public class CacheProvider
     {

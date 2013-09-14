@@ -42,6 +42,7 @@
       <HintPath>lib\GoogleAnalytics.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Services" />
+    <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
@@ -72,7 +73,6 @@
       <DependentUpon>..\..\..\CodeBucket\Cells\RepositoryCellView.cs</DependentUpon>
     </Compile>
     <Compile Include="Elements\IssueElement.cs" />
-    <Compile Include="Data\SQLite.cs" />
     <Compile Include="Controllers\BaseDialogViewController.cs" />
     <Compile Include="Controllers\RadioChoiceViewController.cs" />
     <Compile Include="Controllers\MultipleChoiceViewController.cs" />
@@ -87,9 +87,7 @@
     <Compile Include="Views\ProfileButton.cs" />
     <Compile Include="Controllers\StartupController.cs" />
     <Compile Include="Utils\Transitions.cs" />
-    <Compile Include="Data\WebCacheProvider.cs" />
     <Compile Include="Controllers\BaseAccountsController.cs" />
-    <Compile Include="Data\IAccount.cs" />
     <Compile Include="Utils\Translate.cs" />
     <Compile Include="Views\AddRemoveView.cs" />
     <Compile Include="Elements\ChangesetElement.cs" />
@@ -100,8 +98,14 @@
     <Compile Include="Controllers\BaseControllerDrivenViewController.cs" />
     <Compile Include="Controllers\BaseListControllerDrivenViewController.cs" />
     <Compile Include="Filters\Models\FilterGroup.cs" />
-    <Compile Include="Data\CacheProvider.cs" />
-    <Compile Include="Data\CacheEntry.cs" />
+    <Compile Include="Data\Account.cs" />
+    <Compile Include="Data\Accounts.cs" />
+    <Compile Include="Data\Filter.cs" />
+    <Compile Include="Data\PinnedRepository.cs" />
+    <Compile Include="Cache\CacheEntry.cs" />
+    <Compile Include="Cache\CacheProvider.cs" />
+    <Compile Include="Cache\WebCacheProvider.cs" />
+    <Compile Include="Data\SQLite.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -168,5 +172,8 @@
     <Content Include="Diff\diffindex.html" />
     <Content Include="Diff\jquery.min.js" />
     <Content Include="Diff\app.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Cache\" />
   </ItemGroup>
 </Project>

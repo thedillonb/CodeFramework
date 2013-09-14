@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace CodeFramework.Data
+namespace CodeFramework.Cache
 {
     public class WebCacheProvider
     {

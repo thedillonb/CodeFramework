@@ -1,7 +1,7 @@
 using System;
 using SQLite;
 
-namespace CodeFramework.Data
+namespace CodeFramework.Cache
 {
     public class CacheEntry
     {

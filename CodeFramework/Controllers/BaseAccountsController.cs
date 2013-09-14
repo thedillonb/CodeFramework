@@ -18,7 +18,29 @@ namespace CodeFramework.Controllers
         /// Called when the accounts need to be populated
         /// </summary>
         /// <returns>The accounts.</returns>
-        protected abstract List<AccountElement> PopulateAccounts();
+        protected List<AccountElement> PopulateAccounts()
+        {
+            var accounts = new List<AccountElement>();   
+            foreach (var account in Accounts.Instance)
+            {
+                var thisAccount = account;
+                var t = new AccountElement(thisAccount);
+                t.Tapped += () => AccountSelected(thisAccount);
+
+                //Check to see if this account is the active account. Application.Account could be null 
+                //so make it the target of the equals, not the source.
+                if (thisAccount.Equals(Accounts.Instance.ActiveAccount))
+                    t.Accessory = UITableViewCellAccessory.Checkmark;
+                accounts.Add(t);
+            }
+            return accounts;
+        }
+
+        /// <summary>
+        /// Called when an account is selected
+        /// </summary>
+        /// <param name="account">Account.</param>
+        protected abstract void AccountSelected(Account account);
 
         /// <summary>
         /// Called when the "Add Account button is clicked"
@@ -29,7 +51,18 @@ namespace CodeFramework.Controllers
         /// Called when an account is deleted
         /// </summary>
         /// <param name="account">Account.</param>
-        protected abstract void AccountDeleted(IAccount account);
+        protected void AccountDeleted(Account account)
+        {
+            //Remove the designated username
+            var thisAccount = account;
+            Accounts.Instance.Remove(thisAccount);
+
+            if (Accounts.Instance.ActiveAccount != null && Accounts.Instance.ActiveAccount.Equals(thisAccount))
+            {
+                NavigationItem.LeftBarButtonItem.Enabled = false;
+                Accounts.Instance.SetActiveAccount(null);
+            }
+        }
 
         public override void ViewWillAppear(bool animated)
         {
@@ -103,9 +136,9 @@ namespace CodeFramework.Controllers
         /// </summary>
         protected class AccountElement : UserElement
         {
-            public IAccount Account { get; private set; }
+            public Account Account { get; private set; }
 
-            public AccountElement(IAccount account)
+            public AccountElement(Account account)
                 : base(account.Username, string.Empty, string.Empty, account.AvatarUrl)
             {
                 Account = account;

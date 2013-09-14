@@ -87,6 +87,7 @@ namespace MonoTouch
         }
 
 
+        private static UIAlertView _alert;
         public static void ShowAlert(string title, string message, Action dismissed = null)
         {
             var alert = new UIAlertView {Title = title, Message = message};
