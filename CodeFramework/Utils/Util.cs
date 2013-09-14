@@ -126,6 +126,44 @@ namespace MonoTouch
                 }
             }
         }
+
+        public static UIColor CreateRepeatingBackground()
+        {
+            UIImage bgImage = null;
+            if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone)
+            {
+                bgImage = UIImageHelper.FromFileAuto(MonoTouch.Utilities.IsTall ? "Default-568h" : "Default");
+            }
+            else
+            {
+                if (UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.Portrait || UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.PortraitUpsideDown)
+                    bgImage = UIImageHelper.FromFileAuto("Default-Portrait");
+                else
+                    bgImage = UIImageHelper.FromFileAuto("Default-Landscape");
+            }
+
+            if (bgImage == null)
+                return null;
+
+            UIGraphics.BeginImageContext(new System.Drawing.SizeF(40f, bgImage.Size.Height));
+            var ctx = UIGraphics.GetCurrentContext();
+            ctx.TranslateCTM (0, bgImage.Size.Height);
+            ctx.ScaleCTM (1f, -1f);
+
+            ctx.DrawImage(new System.Drawing.RectangleF(-10, 0, bgImage.Size.Width, bgImage.Size.Height), bgImage.CGImage);
+
+            var img = UIGraphics.GetImageFromCurrentImageContext();
+            UIGraphics.EndImageContext();
+            bgImage.Dispose();
+            bgImage = null;
+
+            if (img == null)
+                return null;
+
+            var ret = UIColor.FromPatternImage(img);
+            img.Dispose();
+            return ret;
+        }
     }
 }
 
