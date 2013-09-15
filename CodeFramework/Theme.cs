@@ -46,5 +46,7 @@ namespace CodeFramework
         UIColor MainSubtitleColor { get; }
         UIColor MainTextColor { get; }
         UIColor ViewBackgroundColor { get; }
+
+        UIColor WebButtonTint { get; }
     }
 }

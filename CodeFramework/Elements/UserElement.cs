@@ -34,8 +34,10 @@ namespace CodeFramework.Elements
                 : base(style, key) 
             { 
                 ImageView.ContentMode = UIViewContentMode.ScaleAspectFill;
-                ImageView.Layer.CornerRadius = 4.0f;
-                ImageView.Layer.MasksToBounds = true;
+//                ImageView.Layer.CornerRadius = 4.0f;
+//                ImageView.Layer.MasksToBounds = true;
+//                ImageView.Layer.ShouldRasterize = true;
+//                ImageView.Layer.RasterizationScale = UIScreen.MainScreen.Scale;
             }
 
             public override void LayoutSubviews()

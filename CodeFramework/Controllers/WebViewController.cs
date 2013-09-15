@@ -55,9 +55,9 @@ namespace CodeFramework.Controllers
                     (RefreshButton = new UIBarButtonItem(UIBarButtonSystemItem.Refresh, (s, e) => Refresh()))
                                       };
 
-                BackButton.TintColor = UIColor.White;
-                ForwardButton.TintColor = UIColor.White;
-                RefreshButton.TintColor = UIColor.White;
+                BackButton.TintColor = Theme.CurrentTheme.WebButtonTint;
+                ForwardButton.TintColor = Theme.CurrentTheme.WebButtonTint;
+                RefreshButton.TintColor = Theme.CurrentTheme.WebButtonTint;
 
                 BackButton.Enabled = false;
                 ForwardButton.Enabled = false;
