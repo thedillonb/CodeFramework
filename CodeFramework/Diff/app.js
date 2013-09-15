@@ -22,6 +22,49 @@ function diff(base_text, new_text) {
     });
 }
 
+function patch(p) {
+	var $body = $('body');
+	var $table = $("<table class='diff inlinediff'></table>");
+
+	function createRow(x, y, type, line, lineNum) {
+		$table.append("<tr data-to='" + lineNum + "'><th>" + x + "</th><th>" + y + "</th><td class='" + type + "'>" + line + "</td></tr>");
+	};
+	
+	var lines = p.split("\n");
+	var baseLine = 0;
+	var newLine = 0;
+	for (var i = 0; i < lines.length; i++) {
+		var line = lines[i];
+		if (line.lastIndexOf("@@", 0) === 0) {
+			createRow("...", "...", "skip", line, i);
+			var r = /@@ -(\d+).+\+(\d+)/i;
+			var arr = r.exec(line);
+			baseLine = arr[1];
+			newLine = arr[2];
+		} else {
+			if (line.lastIndexOf("+", 0) === 0) {
+				createRow("", newLine, "insert", line, i);
+				newLine++;
+			} else if (line.lastIndexOf("-", 0) === 0) {
+				createRow(baseLine, "", "delete", line, i);
+				baseLine++;
+			} else {
+				createRow(baseLine, newLine, "equal", line, i);
+				baseLine++;
+				newLine++;
+			}
+		}
+	}
+	
+	$body.append($table);
+	
+    $('td:not(.skip)').each(function(i, el) {
+        $(el).click(function() {
+            invokeNative("comment", {"line": $(el).parent().data('to')});
+        });
+    });
+}
+
 function invokeNative(functionName, args) {
     var iframe = document.createElement('IFRAME');
     iframe.setAttribute('src', 'app://' + functionName + '#' + JSON.stringify(args));
