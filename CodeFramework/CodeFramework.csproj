@@ -73,21 +73,11 @@
       <DependentUpon>..\..\..\CodeBucket\Cells\RepositoryCellView.cs</DependentUpon>
     </Compile>
     <Compile Include="Elements\IssueElement.cs" />
-    <Compile Include="Controllers\BaseDialogViewController.cs" />
-    <Compile Include="Controllers\RadioChoiceViewController.cs" />
-    <Compile Include="Controllers\MultipleChoiceViewController.cs" />
     <Compile Include="Utils\ControllerExtensions.cs" />
-    <Compile Include="Controllers\Composer.cs" />
-    <Compile Include="Controllers\WebViewController.cs" />
-    <Compile Include="Controllers\FileSourceController.cs" />
-    <Compile Include="Controllers\MenuBaseController.cs" />
     <Compile Include="Views\NavigationButton.cs" />
     <Compile Include="Views\MenuSectionView.cs" />
-    <Compile Include="Controllers\SlideoutNavigationController.cs" />
     <Compile Include="Views\ProfileButton.cs" />
-    <Compile Include="Controllers\StartupController.cs" />
     <Compile Include="Utils\Transitions.cs" />
-    <Compile Include="Controllers\BaseAccountsController.cs" />
     <Compile Include="Utils\Translate.cs" />
     <Compile Include="Views\AddRemoveView.cs" />
     <Compile Include="Elements\ChangesetElement.cs" />
@@ -95,8 +85,6 @@
     <Compile Include="Filters\Models\FilterModel.cs" />
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Filters\Controllers\FilterViewController.cs" />
-    <Compile Include="Controllers\BaseControllerDrivenViewController.cs" />
-    <Compile Include="Controllers\BaseListControllerDrivenViewController.cs" />
     <Compile Include="Filters\Models\FilterGroup.cs" />
     <Compile Include="Data\Account.cs" />
     <Compile Include="Data\Accounts.cs" />
@@ -104,8 +92,24 @@
     <Compile Include="Data\PinnedRepository.cs" />
     <Compile Include="Cache\CacheEntry.cs" />
     <Compile Include="Cache\CacheProvider.cs" />
-    <Compile Include="Cache\WebCacheProvider.cs" />
     <Compile Include="Data\SQLite.cs" />
+    <Compile Include="ViewControllers\BaseControllerDrivenViewController.cs" />
+    <Compile Include="ViewControllers\BaseDialogViewController.cs" />
+    <Compile Include="ViewControllers\BaseListControllerDrivenViewController.cs" />
+    <Compile Include="ViewControllers\WebViewController.cs" />
+    <Compile Include="ViewControllers\MultipleChoiceViewController.cs" />
+    <Compile Include="ViewControllers\RadioChoiceViewController.cs" />
+    <Compile Include="ViewControllers\Composer.cs" />
+    <Compile Include="ViewControllers\BaseAccountsViewController.cs" />
+    <Compile Include="ViewControllers\MenuBaseViewController.cs" />
+    <Compile Include="ViewControllers\StartupViewController.cs" />
+    <Compile Include="ViewControllers\FileSourceViewController.cs" />
+    <Compile Include="ViewControllers\SlideoutNavigationViewController.cs" />
+    <Compile Include="Controllers\IController.cs" />
+    <Compile Include="Controllers\ListController.cs" />
+    <Compile Include="Controllers\IFilterController.cs" />
+    <Compile Include="Controllers\ListModel.cs" />
+    <Compile Include="Controllers\IView.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -175,5 +179,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Cache\" />
+    <Folder Include="ViewControllers\" />
   </ItemGroup>
 </Project>

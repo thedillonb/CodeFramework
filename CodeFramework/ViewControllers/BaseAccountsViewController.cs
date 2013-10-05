@@ -7,9 +7,9 @@ using CodeFramework.Elements;
 
 namespace CodeFramework.Controllers
 {
-    public abstract class BaseAccountsController : BaseDialogViewController
+    public abstract class BaseAccountsViewController : BaseDialogViewController
     {
-        protected BaseAccountsController() : base(true)
+        protected BaseAccountsViewController() : base(true)
         {
             Title = "Accounts";
         }
@@ -98,8 +98,8 @@ namespace CodeFramework.Controllers
 
         private class EditSource : Source
         {
-            private readonly BaseAccountsController _parent;
-            public EditSource(BaseAccountsController dvc) 
+            private readonly BaseAccountsViewController _parent;
+            public EditSource(BaseAccountsViewController dvc) 
                 : base (dvc)
             {
                 _parent = dvc;

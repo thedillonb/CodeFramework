@@ -1,5 +1,7 @@
 using CodeFramework.Views;
 using MonoTouch;
+using System.Threading.Tasks;
+using System;
 
 namespace CodeFramework.Controllers
 {
@@ -19,32 +21,7 @@ namespace CodeFramework.Controllers
             : base(push)
         {
             if (refresh)
-                RefreshRequested += (sender, e) => UpdateAndRender(true);
-        }
-
-        private void UpdateAndRender(bool force)
-        {
-            if (CurrentError != null)
-                CurrentError.RemoveFromSuperview();
-            CurrentError = null;
-
-            if (force)
-            {
-                this.DoWorkNoHud(() => Controller.UpdateAndRender(true), 
-                                 ex => Utilities.ShowAlert("Unable to refresh!".t(), "There was an issue while attempting to refresh. ".t() + ex.Message), 
-                                 ReloadComplete);
-            }
-            else
-            {
-                this.DoWork(() => Controller.UpdateAndRender(false),
-                            ex => { CurrentError = ErrorView.Show(View.Superview, ex.Message); }, 
-                ReloadComplete);
-            }
-        }
-
-        public void UpdateAndRender()
-        {
-            UpdateAndRender(false);
+                RefreshRequested += (sender, e) => Controller.Update(true);
         }
 
         public override void ViewWillAppear(bool animated)
@@ -57,20 +34,34 @@ namespace CodeFramework.Controllers
                 //Check if the model is pre-loaded
                 if (Controller.IsModelValid)
                 {
-                    Controller.Render();
+                    Controller.Refresh();
                     ReloadComplete(); 
                 }
                 else
                 {
-                    UpdateAndRender(false);
+                    Controller.Update(false);
                 }
 
                 _firstSeen = true;
             }
         }
 
+        public void ShowLoading(bool background, Action loadAction)
+        {
+            if (background)
+            {
+                this.DoWorkNoHud(() => {
+                    loadAction();
+                }, (e) => { }, ReloadComplete);
+            }
+            else
+            {
+                this.DoWork("Loading...", () => {
+                    loadAction();
+                }, (e) => { }, ReloadComplete);
 
-
+            }
+        }
     }
 }
 

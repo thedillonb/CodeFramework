@@ -113,6 +113,24 @@ namespace CodeFramework.Controllers
             }
         }
 
+        public async static Task DoWorkNoHudAsync(this UIViewController controller, Action work)
+        {
+            try
+            {
+                Utilities.PushNetworkActive();
+                await Task.Run(work);
+            }
+            catch (Exception e)
+            {
+                Utilities.LogException(e.Message, e);
+                throw e;
+            }
+            finally 
+            {
+                Utilities.PopNetworkActive();
+            }
+        }
+
         public static void DoWork(this UIViewController controller, Action work, Action<Exception> error = null, Action final = null)
         {
             controller.DoWork("Loading...".t(), work, error, final);

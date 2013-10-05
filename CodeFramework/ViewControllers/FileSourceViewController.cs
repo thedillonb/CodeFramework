@@ -4,12 +4,12 @@ using CodeFramework.Views;
 
 namespace CodeFramework.Controllers
 {
-    public abstract class FileSourceController : WebViewController
+    public abstract class FileSourceViewController : WebViewController
     {
         protected static string TempDir = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "source");
         private bool _loaded;
 
-        protected FileSourceController()
+        protected FileSourceViewController()
             : base(false)
         {
             Web.DataDetectorTypes = UIDataDetectorType.None;

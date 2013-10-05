@@ -5,17 +5,18 @@ using System.Linq;
 
 namespace CodeFramework.Cache
 {
-    public class CacheProvider
+    public class CacheProvider : IEnumerable<CacheEntry>
     {
         private object _lock = new object();
         private SQLiteConnection _cacheDatabase;
 
         public CacheProvider(SQLiteConnection cacheDatabase)
         {
+            cacheDatabase.CreateTable<CacheEntry>();
             _cacheDatabase = cacheDatabase;
         }
 
-        public T Get<T>(string query) where T : class
+        public CacheEntry GetEntry(string query)
         {
             lock (_lock)
             {
@@ -32,18 +33,25 @@ namespace CodeFramework.Cache
                     return null;
                 }
 
-                try
-                {
-                    return cacheEntry.LoadResult<T>();
-                }
-                catch (Exception)
-                {
-                    return null;
-                }
+                return cacheEntry;
             }
         }
 
-        public void Set(string query, object content)
+        public T Get<T>(string query) where T : new()
+        {
+            var cacheEntry = GetEntry(query);
+
+            try
+            {
+                return cacheEntry.LoadResult<T>();
+            }
+            catch (Exception)
+            {
+                return default(T);
+            }
+        }
+
+        public void Set(string query, object content, string cacheTag = null)
         {
             lock (_lock)
             {
@@ -52,11 +60,12 @@ namespace CodeFramework.Cache
                 if (cacheEntry != null)
                 {
                     cacheEntry.SaveResult(content);
+                    cacheEntry.CacheTag = cacheTag;
                     _cacheDatabase.Update(cacheEntry);
                 }
                 else
                 {
-                    cacheEntry = new CacheEntry { Query = query, Path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), System.IO.Path.GetTempFileName()) };
+                    cacheEntry = new CacheEntry { Query = query, Path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), System.IO.Path.GetTempFileName()), CacheTag = cacheTag };
                     cacheEntry.SaveResult(content);
                     try
                     {
@@ -66,9 +75,19 @@ namespace CodeFramework.Cache
                     catch
                     {
                         //Clean up the file
-                        try { System.IO.File.Delete(cacheEntry.Path); } catch { }
+                        cacheEntry.Delete();
                     }
                 }
+            }
+        }
+
+        public void DeleteAll()
+        {
+            lock (_lock)
+            {
+                foreach (var entry in _cacheDatabase.Table<CacheEntry>())
+                    entry.Delete();
+                _cacheDatabase.DeleteAll<CacheEntry>();
             }
         }
 
@@ -78,7 +97,10 @@ namespace CodeFramework.Cache
             {
                 var cacheEntry = _cacheDatabase.Table<CacheEntry>().Where(x => x.Query.Equals(query)).FirstOrDefault();
                 if (cacheEntry != null)
+                {
+                    cacheEntry.Delete();
                     _cacheDatabase.Delete(cacheEntry);
+                }
             }
         }
 
@@ -86,9 +108,22 @@ namespace CodeFramework.Cache
         {
             lock (_lock)
             {
-                foreach (var e in _cacheDatabase.Table<CacheEntry>().Where(x => x.Query.StartsWith(query)))
-                    _cacheDatabase.Delete(e);
+                foreach (var cacheEntry in _cacheDatabase.Table<CacheEntry>().Where(x => x.Query.StartsWith(query)).ToList())
+                {
+                    cacheEntry.Delete();
+                    _cacheDatabase.Delete(cacheEntry);
+                }
             }
+        }
+
+        IEnumerator<CacheEntry> IEnumerable<CacheEntry>.GetEnumerator()
+        {
+            return _cacheDatabase.Table<CacheEntry>().GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return _cacheDatabase.Table<CacheEntry>().GetEnumerator();
         }
     }
 }

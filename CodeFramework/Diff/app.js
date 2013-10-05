@@ -27,7 +27,7 @@ function patch(p) {
 	var $table = $("<table class='diff inlinediff'></table>");
 
 	function createRow(x, y, type, line, lineNum) {
-		$table.append("<tr data-to='" + lineNum + "'><th>" + x + "</th><th>" + y + "</th><td class='" + type + "'>" + line + "</td></tr>");
+		$table.append("<tr data-to='" + lineNum + "' data-x='" + x + "' data-y='" + y + "'><th>" + x + "</th><th>" + y + "</th><td class='" + type + "'>" + line + "</td></tr>");
 	};
 	
 	var lines = p.split("\n");
@@ -60,7 +60,10 @@ function patch(p) {
 	
     $('td:not(.skip)').each(function(i, el) {
         $(el).click(function() {
-            invokeNative("comment", {"line": $(el).parent().data('to')});
+        	var fileLine = $(el).parent().data('y');
+        	if (fileLine === "")
+        		fileLine = $(el).parent().data('x')
+            invokeNative("comment", {"patch_line": $(el).parent().data('to'), "file_line": fileLine});
         });
     });
 }

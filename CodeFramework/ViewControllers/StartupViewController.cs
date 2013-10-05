@@ -4,12 +4,12 @@ using MonoTouch;
 
 namespace CodeFramework.Controllers
 {
-    public abstract class StartupController : UIViewController
+    public abstract class StartupViewController : UIViewController
     {
         private UIImageView _imgView;
         private UIImage _img;
 
-        protected StartupController()
+        protected StartupViewController()
         {
             if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone)
                 WantsFullScreenLayout = true;
@@ -99,8 +99,8 @@ namespace CodeFramework.Controllers
         /// </summary>
         protected class CustomNavigationController : UINavigationController
         {
-            readonly StartupController _parent;
-            public CustomNavigationController(StartupController parent, UIViewController root) : base(root) 
+            readonly StartupViewController _parent;
+            public CustomNavigationController(StartupViewController parent, UIViewController root) : base(root) 
             { 
                 _parent = parent;
             }

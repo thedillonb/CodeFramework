@@ -6,7 +6,7 @@ using CodeFramework.Views;
 
 namespace CodeFramework.Controllers
 {
-    public abstract class MenuBaseController : DialogViewController
+    public abstract class MenuBaseViewController : DialogViewController
     {
         readonly ProfileButton _profileButton;
         readonly UILabel _title;
@@ -14,7 +14,7 @@ namespace CodeFramework.Controllers
         /// <summary>
         /// Initializes a new instance of the <see cref="CodeFramework.Controllers.MenuBaseController"/> class.
         /// </summary>
-        protected MenuBaseController()
+        protected MenuBaseViewController()
             : base(UITableViewStyle.Plain, new RootElement(string.Empty))
         {
             Autorotate = true;

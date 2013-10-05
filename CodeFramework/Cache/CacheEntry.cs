@@ -16,7 +16,8 @@ namespace CodeFramework.Cache
         [MaxLength(1024)]
         public string Path { get; set; }
 
-        public DateTime Updated { get; set; }
+        [MaxLength(256)]
+        public string CacheTag { get; set; }
 
         [Ignore]
         public bool IsValid
@@ -27,14 +28,26 @@ namespace CodeFramework.Cache
             }
         }
 
-        public T LoadResult<T>() where T : class
+        public void Delete()
+        {
+            try
+            {
+                if (IsValid)
+                    System.IO.File.Delete(Path);
+            }
+            catch
+            {
+            }
+        }
+
+        public T LoadResult<T>() where T : new()
         {
             try
             {
                 using (var io = System.IO.File.OpenRead(Path))
                 {
-                    var f = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                    return f.Deserialize(io) as T;
+                    var s = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                    return (T)s.Deserialize(io);
                 }
             }
             catch
@@ -43,13 +56,12 @@ namespace CodeFramework.Cache
             }
         }
 
-        public void SaveResult(object result)
+        public void SaveResult(object data)
         {
             using (var io = System.IO.File.OpenWrite(Path))
             {
-                var f = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                f.Serialize(io, result);
-                Updated = DateTime.Now;
+                var s = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                s.Serialize(io, data);
             }
         }
     }
