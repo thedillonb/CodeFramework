@@ -11,6 +11,8 @@ namespace CodeFramework.Data
     public class Account
     {
         private static string AccountsDirectory = Path.Combine(Utilities.BaseDir, "Documents/accounts");
+        private SQLiteConnection _database;
+        private Cache.CacheProvider _cache;
 
         [PrimaryKey]
         [AutoIncrement]
@@ -29,7 +31,39 @@ namespace CodeFramework.Data
         public string AvatarUrl { get; set; }
 
         [Ignore]
-        public SQLiteConnection Database { get; private set; }
+        public SQLiteConnection Database 
+        {
+            get
+            {
+                if (_database == null)
+                {
+                    if (!Directory.Exists(AccountDirectory))
+                        Directory.CreateDirectory(AccountDirectory);
+
+                    var dbPath = Path.Combine(AccountDirectory, "settings.db");
+                    _database = new SQLiteConnection(dbPath);
+                    _database.CreateTable<PinnedRepository>();
+                    _database.CreateTable<Filter>();
+                    return _database;
+                }
+
+                return _database;
+            }
+        }
+
+        [Ignore]
+        public Cache.CacheProvider Cache
+        {
+            get
+            {
+                if (_cache == null)
+                {
+                    _cache = new CodeFramework.Cache.CacheProvider(Database);
+                }
+             
+                return _cache;
+            }
+        }
 
         [Ignore]
         public string AccountDirectory
@@ -48,11 +82,6 @@ namespace CodeFramework.Data
         {
             if (!Directory.Exists(AccountDirectory))
                 Directory.CreateDirectory(AccountDirectory);
-
-            var dbPath = Path.Combine(AccountDirectory, "settings.db");
-            Database = new SQLiteConnection(dbPath);
-            Database.CreateTable<PinnedRepository>();
-            Database.CreateTable<Filter>();
         }
 
         /// <summary>
@@ -62,6 +91,7 @@ namespace CodeFramework.Data
         {
             if (!Directory.Exists(AccountDirectory))
                 return;
+            Cache.DeleteAll();
             Directory.Delete(AccountDirectory, true);
         }
         
