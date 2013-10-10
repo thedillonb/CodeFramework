@@ -110,6 +110,11 @@
     <Compile Include="Controllers\IFilterController.cs" />
     <Compile Include="Controllers\ListModel.cs" />
     <Compile Include="Controllers\IView.cs" />
+    <Compile Include="Views\ToolbarButton.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewControllers\ViewModelDrivenViewController.cs" />
+    <Compile Include="Utils\CustomObservableCollection.cs" />
+    <Compile Include="ViewControllers\ViewModelCollectionDrivenViewController.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -180,5 +185,6 @@
   <ItemGroup>
     <Folder Include="Cache\" />
     <Folder Include="ViewControllers\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
 </Project>

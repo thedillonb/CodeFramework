@@ -71,8 +71,8 @@ namespace RedPlum
 		private float YOffset { get; set; }
 		private float XOffset { get; set; }
 		private bool TaskInProgress { get; set; }
-		private float GraceTime { get; set; }
-		private float MinShowTime { get; set; }
+		public float GraceTime { get; set; }
+        public float MinShowTime { get; set; }
 		private UILabel Label { get; set; }
 		private UILabel DetailsLabel { get; set; }
 		private float _progress;
@@ -228,14 +228,31 @@ namespace RedPlum
 		public new void Dispose ()
 		{
 			this.Indicator = null;
-			Label.Dispose ();
-			Label = null;
-			DetailsLabel.Dispose ();
-			DetailsLabel = null;
-			GraceTimer.Dispose ();
-			GraceTimer = null;
-			MinShowTimer.Dispose ();
-			MinShowTimer = null;
+			
+            if (Label != null)
+            {
+                Label.Dispose();
+                Label = null;
+            }
+
+            if (DetailsLabel != null)
+            {
+                DetailsLabel.Dispose();
+                DetailsLabel = null;
+            }
+
+            if (GraceTimer != null)
+            {
+                GraceTimer.Dispose();
+                GraceTimer = null;
+            }
+
+            if (MinShowTimer != null)
+            {
+                MinShowTimer.Dispose();
+                MinShowTimer = null;
+            }
+
 			base.Dispose ();
 		}
 

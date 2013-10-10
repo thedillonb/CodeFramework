@@ -10,6 +10,15 @@ namespace CodeFramework.Cache
         private object _lock = new object();
         private SQLiteConnection _cacheDatabase;
 
+        private static string CachePath = System.IO.Path.Combine (MonoTouch.Utilities.BaseDir, "Library/Caches/codeframework.cache/");
+
+        static CacheProvider()
+        {
+            //Make sure the cachePath exists
+            if (!System.IO.Directory.Exists(CachePath))
+                System.IO.Directory.CreateDirectory(CachePath);
+        }
+
         public CacheProvider(SQLiteConnection cacheDatabase)
         {
             cacheDatabase.CreateTable<CacheEntry>();
@@ -65,7 +74,7 @@ namespace CodeFramework.Cache
                 }
                 else
                 {
-                    cacheEntry = new CacheEntry { Query = query, Path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), System.IO.Path.GetTempFileName()), CacheTag = cacheTag };
+                    cacheEntry = new CacheEntry { Query = query, Path = System.IO.Path.Combine(CachePath, System.IO.Path.GetTempFileName()), CacheTag = cacheTag };
                     cacheEntry.SaveResult(content);
                     try
                     {

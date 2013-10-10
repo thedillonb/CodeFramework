@@ -67,6 +67,59 @@ namespace CodeFramework.Controllers
             });
         }
 
+        public async static Task DoWorkTest(this UIViewController controller, string workTitle, Func<Task> work)
+        {
+            UIView parent = null;
+
+            //Don't attach it to the UI window. It doesn't work well with orientation
+            if (controller.View.Superview is UIWindow)
+                parent = controller.View;
+            else
+                parent = controller.View.Superview;
+
+            var hud = new MBProgressHUD(parent) {
+                Mode = MBProgressHUDMode.Indeterminate, 
+                TitleText = workTitle,
+                GraceTime = 1.0f,
+                MinShowTime = 1.0f
+            };
+            hud.HudWasHidden += (sender, e) => { 
+                hud.RemoveFromSuperview();
+                hud.Dispose();
+            };
+
+            parent.AddSubview(hud);
+            hud.Show(true);
+
+            //Make sure the Toolbar is disabled too
+            if (controller.ToolbarItems != null)
+                foreach (var t in controller.ToolbarItems)
+                    t.Enabled = false;
+
+            try
+            {
+                Utilities.PushNetworkActive();
+                await work();
+            }
+            catch (Exception e)
+            {
+                Utilities.LogException(e.Message, e);
+                throw;
+            }
+            finally 
+            {
+                Utilities.PopNetworkActive();
+
+                hud.Hide(true);
+                //hud.RemoveFromSuperview();
+
+                //Enable all the toolbar items
+                if (controller.ToolbarItems != null)
+                    foreach (var t in controller.ToolbarItems)
+                        t.Enabled = true;
+            }
+        }
+
         public async static Task DoWorkAsync(this UIViewController controller, string workTitle, Action work)
         {
             MBProgressHUD hud = null;
