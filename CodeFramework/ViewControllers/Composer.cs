@@ -27,8 +27,9 @@ using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using CodeFramework.Views;
+using System.Threading.Tasks;
 
-namespace CodeFramework.Controllers
+namespace CodeFramework.ViewControllers
 {
 	
 	/// <summary>
@@ -43,7 +44,7 @@ namespace CodeFramework.Controllers
 	    readonly UINavigationItem _navItem;
 		internal UIBarButtonItem SendItem;
 		UIViewController _previousController;
-        public Action ReturnAction;
+        public Action<string> ReturnAction;
 
         public bool EnableSendButton
         {
@@ -139,7 +140,7 @@ namespace CodeFramework.Controllers
 		{
 			SendItem.Enabled = false;
             if (ReturnAction != null)
-                ReturnAction();
+                ReturnAction(Text);
 		}
 		
 		void KeyboardWillShow (NSNotification notification)
@@ -183,7 +184,7 @@ namespace CodeFramework.Controllers
             NSNotificationCenter.DefaultCenter.RemoveObserver(this);
         }
 		
-		public void NewComment (UIViewController parent, Action action)
+		public void NewComment (UIViewController parent, Action<string> action)
 		{
             _navItem.Title = Title;
             ReturnAction = action;

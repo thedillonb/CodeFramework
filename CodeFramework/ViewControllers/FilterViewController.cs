@@ -5,8 +5,9 @@ using CodeFramework.Controllers;
 using CodeFramework.Filters.Models;
 using CodeFramework.Views;
 using System;
+using CodeFramework.ViewControllers;
 
-namespace CodeFramework.Filters.Controllers
+namespace CodeFramework.Filters.ViewControllers
 {
     public abstract class FilterViewController : BaseDialogViewController
     {

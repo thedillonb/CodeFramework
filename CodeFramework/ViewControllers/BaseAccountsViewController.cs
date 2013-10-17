@@ -5,7 +5,7 @@ using CodeFramework.Data;
 using System.Collections.Generic;
 using CodeFramework.Elements;
 
-namespace CodeFramework.Controllers
+namespace CodeFramework.ViewControllers
 {
     public abstract class BaseAccountsViewController : BaseDialogViewController
     {

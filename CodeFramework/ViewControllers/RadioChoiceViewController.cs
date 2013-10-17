@@ -2,7 +2,7 @@ using System;
 using MonoTouch.Dialog;
 using System.Collections.Generic;
 
-namespace CodeFramework.Controllers
+namespace CodeFramework.ViewControllers
 {
     public class RadioChoiceViewController : BaseDialogViewController
     {

@@ -1,17 +1,16 @@
 using System;
 using MonoTouch.UIKit;
-using RedPlum;
+using MBProgressHUD;
 using System.Threading;
 using MonoTouch;
 using System.Threading.Tasks;
 
-namespace CodeFramework.Controllers
+namespace CodeFramework.ViewControllers
 {
-    public static class ControllerExtensions
+    public static class ViewControllerExtensions
     {
         public static void DoWork(this UIViewController controller, string workTitle, Action work, Action<Exception> error = null, Action final = null)
         {
-            MBProgressHUD hud = null;
             UIView parent = null;
 
             //Don't attach it to the UI window. It doesn't work well with orientation
@@ -20,7 +19,10 @@ namespace CodeFramework.Controllers
             else
                 parent = controller.View.Superview;
 
-            hud = new MBProgressHUD(parent) {Mode = MBProgressHUDMode.Indeterminate, TitleText = workTitle};
+            var hud = new MTMBProgressHUD(parent) {
+                Mode = MBProgressHUDMode.Indeterminate, 
+                LabelText = workTitle
+            };
             parent.AddSubview(hud);
             hud.Show(true);
 
@@ -77,16 +79,16 @@ namespace CodeFramework.Controllers
             else
                 parent = controller.View.Superview;
 
-            var hud = new MBProgressHUD(parent) {
+            var hud = new MTMBProgressHUD(parent) {
                 Mode = MBProgressHUDMode.Indeterminate, 
-                TitleText = workTitle,
-                GraceTime = 1.0f,
-                MinShowTime = 1.0f
+                LabelText = workTitle,
+                RemoveFromSuperViewOnHide = true,
+                AnimationType = MBProgressHUDAnimation.MBProgressHUDAnimationFade
             };
-            hud.HudWasHidden += (sender, e) => { 
-                hud.RemoveFromSuperview();
-                hud.Dispose();
-            };
+//            hud.DidHide += (sender, e) => { 
+//                hud.RemoveFromSuperview();
+//                hud.Dispose();
+//            };
 
             parent.AddSubview(hud);
             hud.Show(true);
@@ -108,10 +110,8 @@ namespace CodeFramework.Controllers
             }
             finally 
             {
-                Utilities.PopNetworkActive();
-
                 hud.Hide(true);
-                //hud.RemoveFromSuperview();
+                Utilities.PopNetworkActive();
 
                 //Enable all the toolbar items
                 if (controller.ToolbarItems != null)
@@ -120,9 +120,8 @@ namespace CodeFramework.Controllers
             }
         }
 
-        public async static Task DoWorkAsync(this UIViewController controller, string workTitle, Action work)
+        public async static Task DoWorkAsync(this UIViewController controller, string workTitle, Func<Task> work)
         {
-            MBProgressHUD hud = null;
             UIView parent = null;
 
             //Don't attach it to the UI window. It doesn't work well with orientation
@@ -131,7 +130,10 @@ namespace CodeFramework.Controllers
             else
                 parent = controller.View.Superview;
 
-            hud = new MBProgressHUD(parent) {Mode = MBProgressHUDMode.Indeterminate, TitleText = workTitle};
+            var hud = new MTMBProgressHUD(parent) {
+                Mode = MBProgressHUDMode.Indeterminate, 
+                LabelText = workTitle
+            };
             parent.AddSubview(hud);
             hud.Show(true);
 
@@ -145,7 +147,7 @@ namespace CodeFramework.Controllers
             try
             {
                 Utilities.PushNetworkActive();
-                await Task.Run(work);
+                await work();
             }
             finally
             {

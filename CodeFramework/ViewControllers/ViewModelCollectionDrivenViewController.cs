@@ -4,13 +4,13 @@ using CodeFramework.Views;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 using MonoTouch;
-using CodeFramework.Filters.Controllers;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Collections.Generic;
+using CodeFramework.Filters.ViewControllers;
 
-namespace CodeFramework.Controllers
+namespace CodeFramework.ViewControllers
 {
 	public abstract class ViewModelCollectionDrivenViewController : ViewModelDrivenViewController
     {
@@ -41,8 +41,6 @@ namespace CodeFramework.Controllers
             Style = UITableViewStyle.Plain;
             EnableSearch = true;
         }
-
-
         
         protected void BindCollection<TElement>(ObservableCollection<TElement> observableCollection, 
                                                 System.Linq.Expressions.Expression<Func<Task>> moreExpr, 
@@ -56,7 +54,7 @@ namespace CodeFramework.Controllers
             };
         }
 
-        private void RenderList<T>(IEnumerable<T> items, Func<T, Element> select, Task moreTask)
+        protected void RenderList<T>(IEnumerable<T> items, Func<T, Element> select, Task moreTask)
         {
             var sec = new Section();
             foreach (var item in items)

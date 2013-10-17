@@ -4,7 +4,7 @@ using MonoTouch.Foundation;
 using System.Drawing;
 using CodeFramework.Views;
 
-namespace CodeFramework.Controllers
+namespace CodeFramework.ViewControllers
 {
     public abstract class MenuBaseViewController : DialogViewController
     {

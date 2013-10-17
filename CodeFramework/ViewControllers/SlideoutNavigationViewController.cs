@@ -1,7 +1,7 @@
 using MonoTouch.UIKit;
 using CodeFramework.Views;
 
-namespace CodeFramework.Controllers
+namespace CodeFramework.ViewControllers
 {
     public class SlideoutNavigationViewController : MonoTouch.SlideoutNavigation.SlideoutNavigationController
     {

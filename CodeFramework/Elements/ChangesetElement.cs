@@ -5,10 +5,10 @@ namespace CodeFramework.Elements
 {
     public class ChangesetElement : StyledStringElement
     {
-        private readonly int? _added;
-        private readonly int? _removed;
+        private readonly uint? _added;
+        private readonly uint? _removed;
 
-        public ChangesetElement(string title, string subtitle, int? added, int? removed)
+        public ChangesetElement(string title, string subtitle, uint? added, uint? removed)
             : base(title, subtitle, MonoTouch.UIKit.UITableViewCellStyle.Subtitle)
         {
             Accessory = MonoTouch.UIKit.UITableViewCellAccessory.DisclosureIndicator;

@@ -2,7 +2,7 @@ using System;
 using CodeFramework.Views;
 using MonoTouch.UIKit;
 
-namespace CodeFramework.Controllers
+namespace CodeFramework.ViewControllers
 {
     public class WebViewController : UIViewController
     {

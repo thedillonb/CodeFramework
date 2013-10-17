@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FECA9DCA-3B0B-4C0E-B7B4-E826C1BFDDB2}</ProjectGuid>
+    <ProjectGuid>{E339202F-BCD7-4A0C-AC70-992465A51C3F}</ProjectGuid>
     <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <RootNamespace>CodeFramework</RootNamespace>
@@ -35,114 +35,22 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
+    <Reference Include="MBProgressHUD">
+      <HintPath>..\MBProgressHud\MBProgressHUD.dll</HintPath>
+    </Reference>
     <Reference Include="Textile">
       <HintPath>Markup\Textile.dll</HintPath>
     </Reference>
     <Reference Include="GoogleAnalytics">
       <HintPath>lib\GoogleAnalytics.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Services" />
     <Reference Include="System.Runtime.Serialization" />
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
-  <ItemGroup>
-    <Compile Include="Theme.cs" />
-    <Compile Include="Views\ErrorView.cs" />
-    <Compile Include="Views\DropbarView.cs" />
-    <Compile Include="Views\HeaderView.cs" />
-    <Compile Include="Views\SearchFilterView.cs" />
-    <Compile Include="Views\TableViewSectionView.cs" />
-    <Compile Include="Utils\DateTimeExtensions.cs" />
-    <Compile Include="Utils\MbProgressHud.cs" />
-    <Compile Include="Utils\UIImageExtensions.cs" />
-    <Compile Include="Utils\Util.cs" />
-    <Compile Include="Utils\EnumExtensions.cs" />
-    <Compile Include="Markup\CreoleParser.cs" />
-    <Compile Include="Markup\MarkdownParser.cs" />
-    <Compile Include="Markup\Textile.cs" />
-    <Compile Include="Elements\NewsFeedElement.cs" />
-    <Compile Include="Elements\UserElement.cs" />
-    <Compile Include="Elements\RepositoryElement.cs" />
-    <Compile Include="Cells\IssueCellView.cs" />
-    <Compile Include="Cells\IssueCellView.designer.cs">
-      <DependentUpon>..\..\..\CodeBucket\Cells\IssueCellView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Cells\RepositoryCellView.cs" />
-    <Compile Include="Cells\RepositoryCellView.designer.cs">
-      <DependentUpon>..\..\..\CodeBucket\Cells\RepositoryCellView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Elements\IssueElement.cs" />
-    <Compile Include="Utils\ControllerExtensions.cs" />
-    <Compile Include="Views\NavigationButton.cs" />
-    <Compile Include="Views\MenuSectionView.cs" />
-    <Compile Include="Views\ProfileButton.cs" />
-    <Compile Include="Utils\Transitions.cs" />
-    <Compile Include="Utils\Translate.cs" />
-    <Compile Include="Views\AddRemoveView.cs" />
-    <Compile Include="Elements\ChangesetElement.cs" />
-    <Compile Include="Elements\CommentElement.cs" />
-    <Compile Include="Filters\Models\FilterModel.cs" />
-    <Compile Include="Controllers\Controller.cs" />
-    <Compile Include="Filters\Controllers\FilterViewController.cs" />
-    <Compile Include="Filters\Models\FilterGroup.cs" />
-    <Compile Include="Data\Account.cs" />
-    <Compile Include="Data\Accounts.cs" />
-    <Compile Include="Data\Filter.cs" />
-    <Compile Include="Data\PinnedRepository.cs" />
-    <Compile Include="Cache\CacheEntry.cs" />
-    <Compile Include="Cache\CacheProvider.cs" />
-    <Compile Include="Data\SQLite.cs" />
-    <Compile Include="ViewControllers\BaseControllerDrivenViewController.cs" />
-    <Compile Include="ViewControllers\BaseDialogViewController.cs" />
-    <Compile Include="ViewControllers\BaseListControllerDrivenViewController.cs" />
-    <Compile Include="ViewControllers\WebViewController.cs" />
-    <Compile Include="ViewControllers\MultipleChoiceViewController.cs" />
-    <Compile Include="ViewControllers\RadioChoiceViewController.cs" />
-    <Compile Include="ViewControllers\Composer.cs" />
-    <Compile Include="ViewControllers\BaseAccountsViewController.cs" />
-    <Compile Include="ViewControllers\MenuBaseViewController.cs" />
-    <Compile Include="ViewControllers\StartupViewController.cs" />
-    <Compile Include="ViewControllers\FileSourceViewController.cs" />
-    <Compile Include="ViewControllers\SlideoutNavigationViewController.cs" />
-    <Compile Include="Controllers\IController.cs" />
-    <Compile Include="Controllers\ListController.cs" />
-    <Compile Include="Controllers\IFilterController.cs" />
-    <Compile Include="Controllers\ListModel.cs" />
-    <Compile Include="Controllers\IView.cs" />
-    <Compile Include="Views\ToolbarButton.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="ViewControllers\ViewModelDrivenViewController.cs" />
-    <Compile Include="Utils\CustomObservableCollection.cs" />
-    <Compile Include="ViewControllers\ViewModelCollectionDrivenViewController.cs" />
-  </ItemGroup>
-  <ProjectExtensions>
-    <MonoDevelop>
-      <Properties>
-        <Policies>
-          <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="FileFormatDefault" />
-        </Policies>
-      </Properties>
-    </MonoDevelop>
-  </ProjectExtensions>
-  <ItemGroup>
-    <ProjectReference Include="..\OHAttributedLabel\OHAttributedLabel.csproj">
-      <Project>{1FD1BA85-25F8-460D-B588-0E753CFF578D}</Project>
-      <Name>OHAttributedLabel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MonoTouch.SlideoutNavigation\MonoTouch.SlideoutNavigation\MonoTouch.SlideoutNavigation.csproj">
-      <Project>{6D7B9B53-CFEF-46BE-A608-14A4A1381CF6}</Project>
-      <Name>MonoTouch.SlideoutNavigation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MonoTouch.Dialog\MonoTouch.Dialog\MonoTouch.Dialog.csproj">
-      <Project>{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}</Project>
-      <Name>MonoTouch.Dialog</Name>
-    </ProjectReference>
+    <Reference Include="System.Web.Services" />
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="Cells\IssueCellView.xib" />
-    <InterfaceDefinition Include="Cells\RepositoryCellView.xib" />
+    <Folder Include="Resources\" />
   </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Content Include="SourceBrowser\index.html" />
     <Content Include="SourceBrowser\lang-apollo.js" />
@@ -175,16 +83,99 @@
     <Content Include="SourceBrowser\lang-yaml.js" />
     <Content Include="SourceBrowser\prettify.css" />
     <Content Include="SourceBrowser\prettify.js" />
+    <Content Include="Diff\app.js" />
+    <Content Include="Diff\diffindex.html" />
     <Content Include="Diff\difflib.js" />
     <Content Include="Diff\diffview.css" />
     <Content Include="Diff\diffview.js" />
-    <Content Include="Diff\diffindex.html" />
     <Content Include="Diff\jquery.min.js" />
-    <Content Include="Diff\app.js" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Cache\" />
-    <Folder Include="ViewControllers\" />
-    <Folder Include="ViewModels\" />
+    <Compile Include="Markup\CreoleParser.cs" />
+    <Compile Include="Markup\MarkdownParser.cs" />
+    <Compile Include="Markup\Textile.cs" />
+    <Compile Include="Data\Account.cs" />
+    <Compile Include="Data\Accounts.cs" />
+    <Compile Include="Data\Filter.cs" />
+    <Compile Include="Data\PinnedRepository.cs" />
+    <Compile Include="Data\SQLite.cs" />
+    <Compile Include="Controllers\IFilterController.cs" />
+    <Compile Include="Controllers\ListController.cs" />
+    <Compile Include="Controllers\ListModel.cs" />
+    <Compile Include="Cache\CacheEntry.cs" />
+    <Compile Include="Cache\CacheProvider.cs" />
+    <Compile Include="Utils\CustomObservableCollection.cs" />
+    <Compile Include="Utils\DateTimeExtensions.cs" />
+    <Compile Include="Utils\EnumExtensions.cs" />
+    <Compile Include="Utils\FireAndForgetTask.cs" />
+    <Compile Include="ViewModels\FilterGroup.cs" />
+    <Compile Include="ViewModels\FilterModel.cs" />
+    <Compile Include="ViewModels\SimpleCollectionViewModel.cs" />
+    <Compile Include="ViewModels\ViewModel.cs" />
+    <Compile Include="Cells\IssueCellView.cs" />
+    <Compile Include="Cells\IssueCellView.designer.cs">
+      <DependentUpon>..\..\..\CodeBucket\Cells\IssueCellView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cells\RepositoryCellView.cs" />
+    <Compile Include="Cells\RepositoryCellView.designer.cs">
+      <DependentUpon>..\..\..\CodeBucket\Cells\RepositoryCellView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Elements\ChangesetElement.cs" />
+    <Compile Include="Elements\CommentElement.cs" />
+    <Compile Include="Elements\IssueElement.cs" />
+    <Compile Include="Elements\NewsFeedElement.cs" />
+    <Compile Include="Elements\RepositoryElement.cs" />
+    <Compile Include="Elements\UserElement.cs" />
+    <Compile Include="Utils\Transitions.cs" />
+    <Compile Include="Utils\Translate.cs" />
+    <Compile Include="Utils\UIImageExtensions.cs" />
+    <Compile Include="Utils\ViewControllerExtensions.cs" />
+    <Compile Include="ViewControllers\BaseAccountsViewController.cs" />
+    <Compile Include="ViewControllers\BaseDialogViewController.cs" />
+    <Compile Include="ViewControllers\Composer.cs" />
+    <Compile Include="ViewControllers\FileSourceViewController.cs" />
+    <Compile Include="ViewControllers\FilterViewController.cs" />
+    <Compile Include="ViewControllers\MenuBaseViewController.cs" />
+    <Compile Include="ViewControllers\MultipleChoiceViewController.cs" />
+    <Compile Include="ViewControllers\RadioChoiceViewController.cs" />
+    <Compile Include="ViewControllers\SlideoutNavigationViewController.cs" />
+    <Compile Include="ViewControllers\StartupViewController.cs" />
+    <Compile Include="ViewControllers\ViewModelCollectionDrivenViewController.cs" />
+    <Compile Include="ViewControllers\ViewModelDrivenViewController.cs" />
+    <Compile Include="ViewControllers\WebViewController.cs" />
+    <Compile Include="Views\AddRemoveView.cs" />
+    <Compile Include="Views\DropbarView.cs" />
+    <Compile Include="Views\ErrorView.cs" />
+    <Compile Include="Views\HeaderView.cs" />
+    <Compile Include="Views\MenuSectionView.cs" />
+    <Compile Include="Views\NavigationButton.cs" />
+    <Compile Include="Views\ProfileButton.cs" />
+    <Compile Include="Views\SearchFilterView.cs" />
+    <Compile Include="Views\TableViewSectionView.cs" />
+    <Compile Include="Views\ToolbarButton.cs" />
+    <Compile Include="Theme.cs" />
+    <Compile Include="Utils\Util.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Include="Cells\IssueCellView.xib" />
+    <InterfaceDefinition Include="Cells\RepositoryCellView.xib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MonoTouch.Dialog\MonoTouch.Dialog\MonoTouch.Dialog.csproj">
+      <Project>{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}</Project>
+      <Name>MonoTouch.Dialog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MonoTouch.SlideoutNavigation\MonoTouch.SlideoutNavigation\MonoTouch.SlideoutNavigation.csproj">
+      <Project>{6D7B9B53-CFEF-46BE-A608-14A4A1381CF6}</Project>
+      <Name>MonoTouch.SlideoutNavigation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OHAttributedLabel\OHAttributedLabel.csproj">
+      <Project>{1FD1BA85-25F8-460D-B588-0E753CFF578D}</Project>
+      <Name>OHAttributedLabel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\monotouch-uservoice\UserVoice\UserVoice\UserVoice.csproj">
+      <Project>{3A0C5D98-D568-43C1-A877-B1BA00BA4A87}</Project>
+      <Name>UserVoice</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

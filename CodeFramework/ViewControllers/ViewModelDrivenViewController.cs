@@ -6,14 +6,14 @@ using CodeFramework.ViewModels;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace CodeFramework.Controllers
+namespace CodeFramework.ViewControllers
 {
     public abstract class ViewModelDrivenViewController : BaseDialogViewController
     {
         protected ErrorView CurrentError;
         private bool _firstSeen;
 
-        public ViewModelBase ViewModel { get; protected set; }
+        public ViewModel ViewModel { get; protected set; }
 
         /// <summary>
         /// Initializes a new instance of the class.
@@ -27,7 +27,7 @@ namespace CodeFramework.Controllers
                 RefreshRequested += HandleRefreshRequested;
         }
 
-        protected void Bind<T, R>(T viewModel, System.Linq.Expressions.Expression<Func<T, R>> outExpr, Action b) where T : CodeFramework.ViewModels.ViewModelBase
+        protected void Bind<T, R>(T viewModel, System.Linq.Expressions.Expression<Func<T, R>> outExpr, Action b) where T : CodeFramework.ViewModels.ViewModel
         {
             INotifyPropertyChanged m = viewModel;
             var expr = (System.Linq.Expressions.MemberExpression) outExpr.Body;
@@ -39,7 +39,20 @@ namespace CodeFramework.Controllers
             };
         }
 
-        protected void BindCollection<T, R>(T viewModel, System.Linq.Expressions.Expression<Func<T, R>> outExpr, Action<NotifyCollectionChangedEventArgs> b) where T : CodeFramework.ViewModels.ViewModelBase where R : INotifyCollectionChanged
+        protected void Bind<T, R>(T viewModel, System.Linq.Expressions.Expression<Func<T, R>> outExpr, Action<R> b) where T : CodeFramework.ViewModels.ViewModel
+        {
+            INotifyPropertyChanged m = viewModel;
+            var expr = (System.Linq.Expressions.MemberExpression) outExpr.Body;
+            var prop = (System.Reflection.PropertyInfo) expr.Member;
+            var name = prop.Name;
+            var comp = outExpr.Compile();
+            m.PropertyChanged += (object sender, System.ComponentModel.PropertyChangedEventArgs e) => {
+                if (e.PropertyName.Equals(name))
+                    BeginInvokeOnMainThread(new MonoTouch.Foundation.NSAction(() => b(comp(viewModel))));
+            };
+        }
+
+        protected void BindCollection<T, R>(T viewModel, System.Linq.Expressions.Expression<Func<T, R>> outExpr, Action<NotifyCollectionChangedEventArgs> b) where T : CodeFramework.ViewModels.ViewModel where R : INotifyCollectionChanged
         {
             var exp = outExpr.Compile();
             INotifyCollectionChanged m = exp(viewModel);

@@ -2,7 +2,7 @@ using System;
 using MonoTouch.UIKit;
 using MonoTouch;
 
-namespace CodeFramework.Controllers
+namespace CodeFramework.ViewControllers
 {
     public abstract class StartupViewController : UIViewController
     {

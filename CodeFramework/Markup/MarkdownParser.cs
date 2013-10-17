@@ -85,7 +85,6 @@ software, even if advised of the possibility of such damage.
 
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Text;
 using System.Text.RegularExpressions;
 
