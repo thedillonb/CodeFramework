@@ -12,7 +12,6 @@ namespace CodeFramework.ViewModels
         protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] String propertyName = null)
         {
             //if (object.Equals(storage, value)) return false;
-
             storage = value;
             this.OnPropertyChanged(propertyName);
             return true;
@@ -22,9 +21,7 @@ namespace CodeFramework.ViewModels
         {
             var eventHandler = this.PropertyChanged;
             if (eventHandler != null)
-            {
                 eventHandler(this, new PropertyChangedEventArgs(propertyName));
-            }
         }
 
         protected void OnPropertyChanged<T>(System.Linq.Expressions.Expression<Func<T>> property)
@@ -33,8 +30,6 @@ namespace CodeFramework.ViewModels
             var prop = (System.Reflection.PropertyInfo) expr.Member;
             OnPropertyChanged(prop.Name);
         }
-
-        public abstract Task Load(bool forceDataRefresh);
     }
 }
 

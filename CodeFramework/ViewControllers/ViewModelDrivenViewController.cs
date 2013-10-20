@@ -52,30 +52,33 @@ namespace CodeFramework.ViewControllers
             };
         }
 
-        protected void BindCollection<T, R>(T viewModel, System.Linq.Expressions.Expression<Func<T, R>> outExpr, Action<NotifyCollectionChangedEventArgs> b) where T : CodeFramework.ViewModels.ViewModel where R : INotifyCollectionChanged
+        protected void BindCollection<T>(T viewModel, System.Linq.Expressions.Expression<Func<T, INotifyCollectionChanged>> outExpr, Action<NotifyCollectionChangedEventArgs> b) where T : CodeFramework.ViewModels.ViewModel
         {
             var exp = outExpr.Compile();
             INotifyCollectionChanged m = exp(viewModel);
             m.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => {
                 BeginInvokeOnMainThread(() => b(e));
-
             };
         }
 
-        private void HandleRefreshRequested(object sender, EventArgs e)
+        private async void HandleRefreshRequested(object sender, EventArgs e)
         {
-//            try
-//            {
-//                //Do some work
-//                this.DoWorkTest("Loading...", () => ViewModel.Load(true));
-//            }
-//            catch (Exception e)
-//            {
-//                CurrentError = ErrorView.Show(this, e.Message);
-//            }
-
-            // Indicate that the reload is complete
-            ReloadComplete();
+            var loadableViewModel = ViewModel as ILoadableViewModel;
+            if (loadableViewModel != null)
+            {
+                try
+                {
+                    await this.DoWorkNoHudAsync(() => loadableViewModel.Load(true));
+                }
+                catch (Exception ex)
+                {
+                    Utilities.ShowAlert("Error".t(), ex.Message);
+                }
+                finally
+                {
+                    ReloadComplete();
+                }
+            }
         }
 
         public override async void ViewWillAppear(bool animated)
@@ -86,19 +89,23 @@ namespace CodeFramework.ViewControllers
             if (!_firstSeen)
             {
                 _firstSeen = true;
- 
-                try
-                {
-                    //Do some work
-                    await this.DoWorkTest("Loading...", () => ViewModel.Load(false));
-                }
-                catch (Exception e)
-                {
-                    CurrentError = ErrorView.Show(this.View, e.Message);
-                }
 
-                // Indicate that the reload is complete
-                ReloadComplete();
+                var loadableViewModel = ViewModel as ILoadableViewModel;
+                if (loadableViewModel != null)
+                {
+                    try
+                    {
+                        //Do some work
+                        await this.DoWorkTest("Loading...", () => loadableViewModel.Load(false));
+                    }
+                    catch (Exception e)
+                    {
+                        CurrentError = ErrorView.Show(this.View, e.Message);
+                    }
+
+                    // Indicate that the reload is complete
+                    ReloadComplete();
+                }
             }
         }
     }

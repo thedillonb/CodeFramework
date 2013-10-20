@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Collections.Generic;
 using CodeFramework.Filters.ViewControllers;
+using CodeFramework.ViewModels;
 
 namespace CodeFramework.ViewControllers
 {
@@ -41,20 +42,47 @@ namespace CodeFramework.ViewControllers
             Style = UITableViewStyle.Plain;
             EnableSearch = true;
         }
-        
-        protected void BindCollection<TElement>(ObservableCollection<TElement> observableCollection, 
-                                                System.Linq.Expressions.Expression<Func<Task>> moreExpr, 
+
+        protected void BindCollection<T, R>(T viewModel, Func<T, CollectionViewModel<R>> outExpr, Func<R, Element> element) where T : CodeFramework.ViewModels.ViewModel
+        {
+            BindCollection(outExpr(viewModel), element);
+        }
+
+        protected void BindCollection<TElement>(CollectionViewModel<TElement> viewModel, 
                                                 Func<TElement, Element> element)
         {
-			var exp = moreExpr.Compile();
-            observableCollection.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => {
-                BeginInvokeOnMainThread(() => {
-                    RenderList(observableCollection, element, exp());
-                });
+            Action updateDel = () =>
+            {
+                IEnumerable<TElement> items = viewModel.Items;
+                var filterFn = viewModel.FilteringFunction;
+                if (filterFn != null)
+                    items = filterFn(items);
+
+                var sortFn = viewModel.SortingFunction;
+                if (sortFn != null)
+                    items = sortFn(items);
+
+                var groupingFn = viewModel.GroupingFunction;
+                IEnumerable<IGrouping<string, TElement>> groupedItems = null;
+                if (groupingFn != null)
+                    groupedItems = groupingFn(items);
+
+                if (groupedItems == null)
+                    RenderList(viewModel.Items, element, viewModel.MoreItems);
+                else
+                    RenderGroupedItems(groupedItems, element, viewModel.MoreItems);
+            };
+
+            Bind(viewModel, x => x.GroupingFunction, updateDel);
+            Bind(viewModel, x => x.FilteringFunction, updateDel);
+            Bind(viewModel, x => x.SortingFunction, updateDel);
+
+            viewModel.Items.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => {
+                BeginInvokeOnMainThread(() => updateDel());
             };
         }
 
-        protected void RenderList<T>(IEnumerable<T> items, Func<T, Element> select, Task moreTask)
+        protected void RenderList<T>(IEnumerable<T> items, Func<T, Element> select, Action moreTask)
         {
             var sec = new Section();
             foreach (var item in items)
@@ -67,7 +95,7 @@ namespace CodeFramework.ViewControllers
             RenderSections(new [] { sec }, moreTask);
         }
 
-        private void RenderGroupedItems<T>(IEnumerable<IGrouping<string, T>> items, Func<T, Element> select, Task moreTask)
+        protected void RenderGroupedItems<T>(IEnumerable<IGrouping<string, T>> items, Func<T, Element> select, Action moreTask)
         {
             var sections = new List<Section>(items.Count());
             foreach (var grp in items)
@@ -83,7 +111,7 @@ namespace CodeFramework.ViewControllers
             RenderSections(sections, moreTask);
         }
 
-        private void RenderSections(IEnumerable<Section> sections, Task moreTask)
+        private void RenderSections(IEnumerable<Section> sections, Action moreTask)
         {
             var root = new RootElement(Title) { UnevenRows = Root.UnevenRows };
 
@@ -100,7 +128,7 @@ namespace CodeFramework.ViewControllers
 
             if (moreTask != null)
             {
-                var loadMore = new PaginateElement("Load More".t(), "Loading...".t(), e => this.DoWorkNoHud(() => moreTask.RunSynchronously(),
+                var loadMore = new PaginateElement("Load More".t(), "Loading...".t(), e => this.DoWorkNoHud(() => moreTask(),
                                                                                                             x => Utilities.ShowAlert("Unable to load more!".t(), x.Message))) { AutoLoadOnVisible = true };
                 root.Add(new Section { loadMore });
             }

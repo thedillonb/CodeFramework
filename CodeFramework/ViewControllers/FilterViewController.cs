@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using MonoTouch.UIKit;
 using System.Linq;
-using CodeFramework.Controllers;
 using CodeFramework.Filters.Models;
 using CodeFramework.Views;
 using System;

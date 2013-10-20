@@ -99,18 +99,13 @@
     <Compile Include="Data\Filter.cs" />
     <Compile Include="Data\PinnedRepository.cs" />
     <Compile Include="Data\SQLite.cs" />
-    <Compile Include="Controllers\IFilterController.cs" />
-    <Compile Include="Controllers\ListController.cs" />
-    <Compile Include="Controllers\ListModel.cs" />
     <Compile Include="Cache\CacheEntry.cs" />
     <Compile Include="Cache\CacheProvider.cs" />
     <Compile Include="Utils\CustomObservableCollection.cs" />
     <Compile Include="Utils\DateTimeExtensions.cs" />
     <Compile Include="Utils\EnumExtensions.cs" />
     <Compile Include="Utils\FireAndForgetTask.cs" />
-    <Compile Include="ViewModels\FilterGroup.cs" />
     <Compile Include="ViewModels\FilterModel.cs" />
-    <Compile Include="ViewModels\SimpleCollectionViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Cells\IssueCellView.cs" />
     <Compile Include="Cells\IssueCellView.designer.cs">
@@ -155,6 +150,11 @@
     <Compile Include="Views\ToolbarButton.cs" />
     <Compile Include="Theme.cs" />
     <Compile Include="Utils\Util.cs" />
+    <Compile Include="ViewModels\IFilterableViewModel.cs" />
+    <Compile Include="ViewModels\CollectionViewModel.cs" />
+    <Compile Include="ViewModels\FilterableCollectionViewModel.cs" />
+    <Compile Include="ViewModels\FilterGroup.cs" />
+    <Compile Include="ViewModels\ILoadableViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />

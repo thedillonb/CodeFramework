@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace CodeFramework.Filters.Models
+namespace CodeFramework.ViewModels
 {
     public class FilterGroup<TElement> : IGrouping<string, TElement>
     {

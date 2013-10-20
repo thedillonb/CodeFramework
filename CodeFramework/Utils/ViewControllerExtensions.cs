@@ -146,13 +146,10 @@ namespace CodeFramework.ViewControllers
 
             try
             {
-                Utilities.PushNetworkActive();
-                await work();
+                await DoWorkNoHudAsync(controller, work);
             }
             finally
             {
-                Utilities.PopNetworkActive();
-
                 if (hud != null)
                 {
                     hud.Hide(true);
@@ -168,12 +165,12 @@ namespace CodeFramework.ViewControllers
             }
         }
 
-        public async static Task DoWorkNoHudAsync(this UIViewController controller, Action work)
+        public async static Task DoWorkNoHudAsync(this UIViewController controller, Func<Task> work)
         {
             try
             {
                 Utilities.PushNetworkActive();
-                await Task.Run(work);
+                await work();
             }
             catch (Exception e)
             {
