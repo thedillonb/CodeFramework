@@ -34,9 +34,8 @@ namespace CodeFramework.ViewControllers
         /// Initializes a new instance of the class.
         /// </summary>
         /// <param name='push'>True if navigation controller should push, false if otherwise</param>
-        /// <param name='refresh'>True if the data can be refreshed, false if otherwise</param>
-		protected ViewModelCollectionDrivenViewController(bool push = true, bool refresh = true)
-            : base(push, refresh)
+		protected ViewModelCollectionDrivenViewController(bool push = true)
+            : base(push)
         {
             NoItemsText = "No Items".t();
             Style = UITableViewStyle.Plain;
@@ -68,7 +67,7 @@ namespace CodeFramework.ViewControllers
                     groupedItems = groupingFn(items);
 
                 if (groupedItems == null)
-                    RenderList(viewModel.Items, element, viewModel.MoreItems);
+                    RenderList(items, element, viewModel.MoreItems);
                 else
                     RenderGroupedItems(groupedItems, element, viewModel.MoreItems);
             };
@@ -76,10 +75,7 @@ namespace CodeFramework.ViewControllers
             viewModel.Bind(x => x.GroupingFunction, updateDel);
             viewModel.Bind(x => x.FilteringFunction, updateDel);
             viewModel.Bind(x => x.SortingFunction, updateDel);
-
-            viewModel.Items.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => {
-                BeginInvokeOnMainThread(() => updateDel());
-            };
+            viewModel.BindCollection(x => x.Items, (e) => updateDel());
         }
 
         protected void RenderList<T>(IEnumerable<T> items, Func<T, Element> select, Action moreTask)

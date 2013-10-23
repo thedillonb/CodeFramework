@@ -45,7 +45,7 @@ namespace CodeFramework.ViewModels
         public Func<IEnumerable<TItem>, IEnumerable<TItem>> SortingFunction
         {
             get { return _sortingFunction; }
-            protected set
+            set
             {
                 _sortingFunction = value;
                 if (!IsDefering)
@@ -56,7 +56,7 @@ namespace CodeFramework.ViewModels
         public Func<IEnumerable<TItem>, IEnumerable<TItem>> FilteringFunction
         {
             get { return _filteringFunction; }
-            protected set
+            set
             {
                 _filteringFunction = value;
                 if (!IsDefering)
@@ -67,7 +67,7 @@ namespace CodeFramework.ViewModels
         public Func<IEnumerable<TItem>, IEnumerable<IGrouping<string, TItem>>> GroupingFunction
         {
             get { return _groupingFunction; }
-            protected set
+            set
             {
                 _groupingFunction = value;
                 if (!IsDefering)
@@ -76,8 +76,14 @@ namespace CodeFramework.ViewModels
         }
 
         public CollectionViewModel()
+            : this (new CustomObservableCollection<TItem>())
+        {
+        }
+
+        public CollectionViewModel(CustomObservableCollection<TItem> source)
         {
             //Forward events
+            _source = source;
             _source.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => 
             {
                 if (IsDefering)

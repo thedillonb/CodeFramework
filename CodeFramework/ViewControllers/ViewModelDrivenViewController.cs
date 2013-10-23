@@ -12,19 +12,75 @@ namespace CodeFramework.ViewControllers
     {
         protected ErrorView CurrentError;
         private bool _firstSeen;
+        private ViewModel _viewModel;
+        private MBProgressHUD.MTMBProgressHUD _loadingHud;
 
-        public ViewModel ViewModel { get; protected set; }
+        public ViewModel ViewModel
+        {
+            get { return _viewModel; }
+            protected set
+            {
+                _viewModel = value;
+                var loadable = _viewModel as ILoadableViewModel;
+                if (loadable != null)
+                {
+                    RefreshRequested += HandleRefreshRequested;
+
+//                    loadable.Bind(x => x.IsLoading, isLoading => {
+//                        if (isLoading)
+//                            StartLoading();
+//                        else
+//                            EndLoading();
+//                    });
+                }
+            }
+        }
+
+        private void StartLoading()
+        {
+            if (_loadingHud != null)
+                return;
+
+            //Make sure the Toolbar is disabled too
+            if (this.ToolbarItems != null)
+            {
+                foreach (var t in this.ToolbarItems)
+                    t.Enabled = false;
+            }
+
+            _loadingHud = new MBProgressHUD.MTMBProgressHUD(this.View) {
+                Mode = MBProgressHUD.MBProgressHUDMode.Indeterminate, 
+                LabelText = "Loading..."
+            };
+
+            this.View.AddSubview(_loadingHud);
+            _loadingHud.Show(true);
+        }
+
+        private void EndLoading()
+        {
+            if (_loadingHud == null)
+                return;
+
+            _loadingHud.Hide(true);
+            _loadingHud.RemoveFromSuperview();
+
+            //Enable all the toolbar items
+            if (this.ToolbarItems != null)
+            {
+                foreach (var t in this.ToolbarItems)
+                    t.Enabled = true;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the class.
         /// </summary>
         /// <param name='push'>True if navigation controller should push, false if otherwise</param>
         /// <param name='refresh'>True if the data can be refreshed, false if otherwise</param>
-		protected ViewModelDrivenViewController(bool push = true, bool refresh = true)
+		protected ViewModelDrivenViewController(bool push = true)
             : base(push)
         {
-            if (refresh)
-                RefreshRequested += HandleRefreshRequested;
         }
 
         private async void HandleRefreshRequested(object sender, EventArgs e)

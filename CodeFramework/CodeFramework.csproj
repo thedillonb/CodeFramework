@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -156,6 +157,8 @@
     <Compile Include="ViewModels\FilterGroup.cs" />
     <Compile Include="ViewModels\ILoadableViewModel.cs" />
     <Compile Include="Utils\ViewModelExtensions.cs" />
+    <Compile Include="Services\IErrorReporter.cs" />
+    <Compile Include="Utils\FilterGroup.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
