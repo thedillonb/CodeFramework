@@ -14,6 +14,7 @@ namespace CodeFramework.ViewModels
         private Func<IEnumerable<TItem>, IEnumerable<TItem>> _sortingFunction;
         private Func<IEnumerable<TItem>, IEnumerable<TItem>> _filteringFunction;
         private Action _moreItems;
+        private int _deferLevel;
 
         public event NotifyCollectionChangedEventHandler CollectionChanged;
 
@@ -22,38 +23,93 @@ namespace CodeFramework.ViewModels
             get { return _source; }
         }
 
+        public bool IsDefering
+        {
+            get
+            {
+                return _deferLevel > 0;
+            }
+        }
+
         public Action MoreItems
         {
             get { return _moreItems; }
-            set { SetProperty(ref _moreItems, value); }
+            set 
+            {
+                _moreItems = value;
+                if (!IsDefering)
+                    OnPropertyChanged(() => MoreItems);
+            }
         }
 
         public Func<IEnumerable<TItem>, IEnumerable<TItem>> SortingFunction
         {
             get { return _sortingFunction; }
-            protected set { SetProperty(ref _sortingFunction, value); }
+            protected set
+            {
+                _sortingFunction = value;
+                if (!IsDefering)
+                    OnPropertyChanged(() => SortingFunction);
+            }
         }
 
         public Func<IEnumerable<TItem>, IEnumerable<TItem>> FilteringFunction
         {
             get { return _filteringFunction; }
-            protected set { SetProperty(ref _filteringFunction, value); }
+            protected set
+            {
+                _filteringFunction = value;
+                if (!IsDefering)
+                    OnPropertyChanged(() => FilteringFunction);
+            }
         }
 
         public Func<IEnumerable<TItem>, IEnumerable<IGrouping<string, TItem>>> GroupingFunction
         {
             get { return _groupingFunction; }
-            protected set { SetProperty(ref _groupingFunction, value); }
+            protected set
+            {
+                _groupingFunction = value;
+                if (!IsDefering)
+                    OnPropertyChanged(() => GroupingFunction);
+            }
         }
 
         public CollectionViewModel()
         {
             //Forward events
-            _source.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => {
+            _source.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => 
+            {
+                if (IsDefering)
+                    return;
+
                 var eventHandler = CollectionChanged;
                 if (eventHandler != null)
                     eventHandler(sender, e);
             };
+        }
+
+        public void Refresh()
+        {
+            if (IsDefering)
+                return;
+
+            var eventHandler = CollectionChanged;
+            if (eventHandler != null)
+                eventHandler(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
+
+        public IDisposable DeferRefresh()
+        {
+            ++_deferLevel;
+            return new DeferHelper(this);
+        }
+
+        private void EndDefer()
+        {
+            --_deferLevel;
+            if (_deferLevel == 0)
+                Refresh();
         }
 
         public IEnumerator<TItem> GetEnumerator()
@@ -64,6 +120,22 @@ namespace CodeFramework.ViewModels
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        private class DeferHelper : IDisposable
+        {
+            private CollectionViewModel<TItem> _parent;
+
+            public DeferHelper(CollectionViewModel<TItem> parent)
+            {
+                _parent = parent;
+            }
+
+            public void Dispose()
+            {
+                if (_parent != null)
+                    _parent.EndDefer();
+            }
         }
     }
 }

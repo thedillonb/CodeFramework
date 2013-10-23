@@ -24,6 +24,7 @@ namespace CodeFramework
         UIImage ViewButton { get; }
         UIImage WebBackButton { get; }
         UIImage WebFowardButton { get; }
+        UIImage ForkButton { get; }
 
         UIImage MenuSectionBackground { get; }
         UIImage MenuNavbarBackground { get; }
