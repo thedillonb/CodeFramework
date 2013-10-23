@@ -115,10 +115,11 @@ namespace CodeFramework.ViewControllers
             Web.Frame = View.Bounds;
         }
 
-        protected void LoadFile(string path)
+        protected string LoadFile(string path)
         {
             var uri = Uri.EscapeUriString("file://" + path) + "#" + Environment.TickCount;
             InvokeOnMainThread(() => Web.LoadRequest(new MonoTouch.Foundation.NSUrlRequest(new MonoTouch.Foundation.NSUrl(uri))));
+            return uri;
         }
         
         public override void ViewWillAppear(bool animated)

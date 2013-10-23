@@ -155,6 +155,7 @@
     <Compile Include="ViewModels\FilterableCollectionViewModel.cs" />
     <Compile Include="ViewModels\FilterGroup.cs" />
     <Compile Include="ViewModels\ILoadableViewModel.cs" />
+    <Compile Include="Utils\ViewModelExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />

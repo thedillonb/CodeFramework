@@ -73,9 +73,9 @@ namespace CodeFramework.ViewControllers
                     RenderGroupedItems(groupedItems, element, viewModel.MoreItems);
             };
 
-            Bind(viewModel, x => x.GroupingFunction, updateDel);
-            Bind(viewModel, x => x.FilteringFunction, updateDel);
-            Bind(viewModel, x => x.SortingFunction, updateDel);
+            viewModel.Bind(x => x.GroupingFunction, updateDel);
+            viewModel.Bind(x => x.FilteringFunction, updateDel);
+            viewModel.Bind(x => x.SortingFunction, updateDel);
 
             viewModel.Items.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => {
                 BeginInvokeOnMainThread(() => updateDel());
