@@ -75,7 +75,12 @@ namespace CodeFramework.ViewControllers
             viewModel.Bind(x => x.GroupingFunction, updateDel);
             viewModel.Bind(x => x.FilteringFunction, updateDel);
             viewModel.Bind(x => x.SortingFunction, updateDel);
-            viewModel.BindCollection(x => x.Items, (e) => updateDel());
+
+            //The CollectionViewModel binds all of the collection events from the observablecollection + more
+            //So just listen to it.
+            viewModel.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => {
+                BeginInvokeOnMainThread(() => updateDel());
+            };
         }
 
         protected void RenderList<T>(IEnumerable<T> items, Func<T, Element> select, Action moreTask)
