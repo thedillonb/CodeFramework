@@ -1,4 +1,7 @@
-bin/
-obj/
+*/bin
+*/obj
+*.DS_Store
 *.userprefs
-*.DS_store
+_ReSharper*
+*ReSharper.user
+*.suo
