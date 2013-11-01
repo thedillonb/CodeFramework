@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2698B412-26A3-4269-AA01-AC3BC79A0F14}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>CodeFramework.iOS</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>CodeFramework.iOS</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Cells\IssueCellView.cs" />
+    <Compile Include="Cells\IssueCellView.designer.cs">
+      <DependentUpon>IssueCellView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cells\RepositoryCellView.cs" />
+    <Compile Include="Cells\RepositoryCellView.designer.cs">
+      <DependentUpon>RepositoryCellView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Elements\ChangesetElement.cs" />
+    <Compile Include="Elements\CommentElement.cs" />
+    <Compile Include="Elements\IssueElement.cs" />
+    <Compile Include="Elements\NewsFeedElement.cs" />
+    <Compile Include="Elements\RepositoryElement.cs" />
+    <Compile Include="Elements\UserElement.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Theme.cs" />
+    <Compile Include="Utils\DateTimeExtensions.cs" />
+    <Compile Include="Utils\EnumExtensions.cs" />
+    <Compile Include="Utils\Transitions.cs" />
+    <Compile Include="Utils\Translate.cs" />
+    <Compile Include="Utils\UIImageExtensions.cs" />
+    <Compile Include="Utils\Util.cs" />
+    <Compile Include="Utils\ViewControllerExtensions.cs" />
+    <Compile Include="Utils\ViewModelExtensions.cs" />
+    <Compile Include="ViewControllers\BaseAccountsViewController.cs" />
+    <Compile Include="ViewControllers\BaseDialogViewController.cs" />
+    <Compile Include="ViewControllers\Composer.cs" />
+    <Compile Include="ViewControllers\FileSourceViewController.cs" />
+    <Compile Include="ViewControllers\FilterViewController.cs" />
+    <Compile Include="ViewControllers\MenuBaseViewController.cs" />
+    <Compile Include="ViewControllers\MultipleChoiceViewController.cs" />
+    <Compile Include="ViewControllers\RadioChoiceViewController.cs" />
+    <Compile Include="ViewControllers\SlideoutNavigationViewController.cs" />
+    <Compile Include="ViewControllers\StartupViewController.cs" />
+    <Compile Include="ViewControllers\ViewModelCollectionDrivenViewController.cs" />
+    <Compile Include="ViewControllers\ViewModelDrivenViewController.cs" />
+    <Compile Include="ViewControllers\WebViewController.cs" />
+    <Compile Include="Views\AddRemoveView.cs" />
+    <Compile Include="Views\CellBackgroundView.cs" />
+    <Compile Include="Views\DropbarView.cs" />
+    <Compile Include="Views\ErrorView.cs" />
+    <Compile Include="Views\HeaderView.cs" />
+    <Compile Include="Views\MenuSectionView.cs" />
+    <Compile Include="Views\NavigationButton.cs" />
+    <Compile Include="Views\ProfileButton.cs" />
+    <Compile Include="Views\SearchFilterView.cs" />
+    <Compile Include="Views\TableViewSectionView.cs" />
+    <Compile Include="Views\ToolbarButton.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Cells\IssueCellView.xib" />
+    <None Include="Cells\RepositoryCellView.xib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Cirrious.CrossCore">
+      <HintPath>..\lib\iOS\Cirrious.CrossCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Cirrious.CrossCore.Touch">
+      <HintPath>..\lib\iOS\Cirrious.CrossCore.Touch.dll</HintPath>
+    </Reference>
+    <Reference Include="Cirrious.MvvmCross">
+      <HintPath>..\lib\iOS\Cirrious.MvvmCross.dll</HintPath>
+    </Reference>
+    <Reference Include="Cirrious.MvvmCross.Touch">
+      <HintPath>..\lib\iOS\Cirrious.MvvmCross.Touch.dll</HintPath>
+    </Reference>
+    <Reference Include="GoogleAnalytics">
+      <HintPath>lib\GoogleAnalytics\GoogleAnalytics.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+    <Reference Include="System.Web.Services" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CodeFramework.Core\CodeFramework.Core.iOS.csproj">
+      <Project>{c99fe7e3-0985-48f1-9ebb-91680a795f0f}</Project>
+      <Name>CodeFramework.Core.iOS</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+</Project>

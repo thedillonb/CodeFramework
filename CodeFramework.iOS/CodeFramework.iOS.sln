@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeFramework.Core", "CodeFramework.Core\CodeFramework.Core.csproj", "{C99FE7E3-0985-48F1-9EBB-91680A795F0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeFramework.iOS", "CodeFramework.iOS.csproj", "{2698B412-26A3-4269-AA01-AC3BC79A0F14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeFramework.Core.iOS", "..\CodeFramework.Core\CodeFramework.Core.iOS.csproj", "{C99FE7E3-0985-48F1-9EBB-91680A795F0F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,6 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2698B412-26A3-4269-AA01-AC3BC79A0F14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2698B412-26A3-4269-AA01-AC3BC79A0F14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2698B412-26A3-4269-AA01-AC3BC79A0F14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2698B412-26A3-4269-AA01-AC3BC79A0F14}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C99FE7E3-0985-48F1-9EBB-91680A795F0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C99FE7E3-0985-48F1-9EBB-91680A795F0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C99FE7E3-0985-48F1-9EBB-91680A795F0F}.Release|Any CPU.ActiveCfg = Release|Any CPU

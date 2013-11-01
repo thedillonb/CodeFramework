@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeFramework.Core", "CodeFramework.Core\CodeFramework.Core.csproj", "{C99FE7E3-0985-48F1-9EBB-91680A795F0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeFramework.Core.iOS", "CodeFramework.Core.iOS.csproj", "{C99FE7E3-0985-48F1-9EBB-91680A795F0F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
