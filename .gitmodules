@@ -1,6 +1,3 @@
-[submodule "CodeFramework.iOS/lib/MonoTouch.SlideoutNavigation"]
-	path = CodeFramework.iOS/lib/MonoTouch.SlideoutNavigation
-	url = https://github.com/thedillonb/MonoTouch.SlideoutNavigation.git
 [submodule "CodeFramework.iOS/lib/monotouch-uservoice"]
 	path = CodeFramework.iOS/lib/monotouch-uservoice
 	url = https://github.com/alexkuz/monotouch-uservoice.git

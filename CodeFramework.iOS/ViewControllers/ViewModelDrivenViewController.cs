@@ -1,21 +1,21 @@
-using CodeFramework.Views;
-using MonoTouch;
-using System.Threading.Tasks;
 using System;
-using CodeFramework.ViewModels;
-using System.Collections.Specialized;
-using System.ComponentModel;
+using Cirrious.MvvmCross.ViewModels;
+using CodeFramework.Core.ViewModels;
+using CodeFramework.iOS.Utils;
+using CodeFramework.iOS.Views;
+using CodeFramework.ViewControllers;
+using MonoTouch;
 
-namespace CodeFramework.ViewControllers
+namespace CodeFramework.iOS.ViewControllers
 {
     public abstract class ViewModelDrivenViewController : BaseDialogViewController
     {
         protected ErrorView CurrentError;
         private bool _firstSeen;
-        private ViewModel _viewModel;
+        private MvxViewModel _viewModel;
         private MBProgressHUD.MTMBProgressHUD _loadingHud;
 
-        public ViewModel ViewModel
+        public MvxViewModel ViewModel
         {
             get { return _viewModel; }
             protected set

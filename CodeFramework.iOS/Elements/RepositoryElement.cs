@@ -1,11 +1,11 @@
 using System;
 using CodeFramework.iOS.Cells;
-using MonoTouch.UIKit;
 using MonoTouch.Dialog;
-using MonoTouch.Foundation;
 using MonoTouch.Dialog.Utilities;
+using MonoTouch.Foundation;
+using MonoTouch.UIKit;
 
-namespace CodeFramework.Elements
+namespace CodeFramework.iOS.Elements
 {
 	
 	public class RepositoryElement : Element, IElementSizing, IColorizeBackground, IImageUpdated

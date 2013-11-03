@@ -1,12 +1,13 @@
 using System;
+using Cirrious.MvvmCross.Binding.Touch.Views;
+using CodeFramework.iOS.Views;
 using MonoTouch.Foundation;
 using MonoTouch.ObjCRuntime;
 using MonoTouch.UIKit;
 
 namespace CodeFramework.iOS.Cells
 {
-
-    public partial class RepositoryCellView : UITableViewCell
+    public partial class RepositoryCellView : MvxTableViewCell
     {
         public static bool RoundImages = true;
 
@@ -23,7 +24,7 @@ namespace CodeFramework.iOS.Cells
                 cell.Image1.Image = Theme.CurrentTheme.RepositoryCellFollowers;
                 cell.Image3.Image = Theme.CurrentTheme.RepositoryCellForks;
                 cell.UserImage.Image = Theme.CurrentTheme.RepositoryCellUser;
-                cell.BackgroundView = new MonoTouch.Dialog.CellBackgroundView();
+                cell.BackgroundView = new CellBackgroundView();
 
                 if (RoundImages)
                 {

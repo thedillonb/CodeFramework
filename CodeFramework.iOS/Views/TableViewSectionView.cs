@@ -1,8 +1,7 @@
-using CodeFramework.iOS;
-using MonoTouch.UIKit;
 using System.Drawing;
+using MonoTouch.UIKit;
 
-namespace CodeFramework.Views
+namespace CodeFramework.iOS.Views
 {
     public class TableViewSectionView : UIView
     {
@@ -38,7 +37,7 @@ namespace CodeFramework.Views
             _lbl.Font = UIFont.BoldSystemFontOfSize(14f);
             _lbl.BackgroundColor = UIColor.Clear;
             _lbl.ShadowColor = UIColor.FromRGBA(255, 255, 255, 225);
-            _lbl.ShadowOffset = new System.Drawing.SizeF(0, 1);
+            _lbl.ShadowOffset = new SizeF(0, 1);
             _lbl.LineBreakMode = UILineBreakMode.TailTruncation;
             AddSubview(_lbl);
         }

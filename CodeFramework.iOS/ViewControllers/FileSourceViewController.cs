@@ -1,8 +1,10 @@
+using CodeFramework.iOS.Utils;
+using CodeFramework.iOS.Views;
+using CodeFramework.ViewControllers;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using CodeFramework.Views;
 
-namespace CodeFramework.ViewControllers
+namespace CodeFramework.iOS.ViewControllers
 {
     public abstract class FileSourceViewController : WebViewController
     {

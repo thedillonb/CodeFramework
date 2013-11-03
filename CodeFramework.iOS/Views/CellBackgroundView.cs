@@ -1,8 +1,8 @@
+using System.Drawing;
 using MonoTouch.CoreGraphics;
 using MonoTouch.UIKit;
-using System.Drawing;
 
-namespace MonoTouch.Dialog
+namespace CodeFramework.iOS.Views
 {
     public class CellBackgroundView : UIView
     {

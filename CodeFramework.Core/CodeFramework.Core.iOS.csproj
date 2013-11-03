@@ -52,12 +52,15 @@
     <Compile Include="Utils\EnumExtensions.cs" />
     <Compile Include="Utils\FilterGroup.cs" />
     <Compile Include="Utils\FireAndForgetTask.cs" />
+    <Compile Include="ViewModels\AccountsViewModel.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CollectionViewModel.cs" />
     <Compile Include="ViewModels\FilterableCollectionViewModel.cs" />
     <Compile Include="ViewModels\FilterGroup.cs" />
     <Compile Include="ViewModels\FilterModel.cs" />
     <Compile Include="ViewModels\IFilterableViewModel.cs" />
     <Compile Include="ViewModels\ILoadableViewModel.cs" />
+    <Compile Include="ViewModels\StartupViewModel.cs" />
     <Compile Include="ViewModels\ViewModelExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +74,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />

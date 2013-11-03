@@ -1,8 +1,8 @@
 using System;
-using MonoTouch.UIKit;
 using MonoTouch.Dialog;
+using MonoTouch.UIKit;
 
-namespace CodeFramework.Elements
+namespace CodeFramework.iOS.Elements
 {
     public class UserElement : StyledStringElement
     {

@@ -1,10 +1,9 @@
-using CodeFramework.iOS;
-using MonoTouch.UIKit;
 using System.Drawing;
-using MonoTouch.Dialog;
+using CodeFramework.iOS.Utils;
 using MonoTouch.CoreGraphics;
+using MonoTouch.UIKit;
 
-namespace CodeFramework.Views
+namespace CodeFramework.iOS.Views
 {
     public class HeaderView : UIView
     {

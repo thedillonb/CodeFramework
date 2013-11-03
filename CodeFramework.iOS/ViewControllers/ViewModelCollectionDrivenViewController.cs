@@ -1,15 +1,15 @@
 using System;
 using System.Linq;
-using CodeFramework.Views;
+using Cirrious.MvvmCross.ViewModels;
+using CodeFramework.Core.ViewModels;
+using CodeFramework.iOS.Utils;
+using CodeFramework.iOS.ViewControllers;
+using CodeFramework.iOS.Views;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 using MonoTouch;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Collections.Generic;
-using CodeFramework.Filters.ViewControllers;
-using CodeFramework.ViewModels;
 
 namespace CodeFramework.ViewControllers
 {
@@ -42,7 +42,7 @@ namespace CodeFramework.ViewControllers
             EnableSearch = true;
         }
 
-        protected void BindCollection<T, R>(T viewModel, Func<T, CollectionViewModel<R>> outExpr, Func<R, Element> element) where T : CodeFramework.ViewModels.ViewModel
+        protected void BindCollection<T, R>(T viewModel, Func<T, CollectionViewModel<R>> outExpr, Func<R, Element> element) where T : MvxViewModel
         {
             BindCollection(outExpr(viewModel), element);
         }
@@ -119,9 +119,7 @@ namespace CodeFramework.ViewControllers
             foreach (var section in sections)
                 root.Add(section);
 
-            var elements = 0;
-            foreach (var s in root)
-                elements += s.Elements.Count;
+            var elements = root.Sum(s => s.Elements.Count);
 
             //There are no items! We must have filtered them out
             if (elements == 0)
@@ -129,7 +127,7 @@ namespace CodeFramework.ViewControllers
 
             if (moreTask != null)
             {
-                var loadMore = new PaginateElement("Load More".t(), "Loading...".t(), e => this.DoWorkNoHud(() => moreTask(),
+                var loadMore = new PaginateElement("Load More".t(), "Loading...".t(), e => this.DoWorkNoHud(moreTask,
                                                                                                             x => Utilities.ShowAlert("Unable to load more!".t(), x.Message))) { AutoLoadOnVisible = true };
                 root.Add(new Section { loadMore });
             }

@@ -1,8 +1,9 @@
 using System;
-using MonoTouch.Dialog;
 using System.Collections.Generic;
+using CodeFramework.ViewControllers;
+using MonoTouch.Dialog;
 
-namespace CodeFramework.ViewControllers
+namespace CodeFramework.iOS.ViewControllers
 {
     public class RadioChoiceViewController : BaseDialogViewController
     {

@@ -6,7 +6,7 @@ using SQLite;
 
 namespace CodeFramework.Core.Data
 {
-    public abstract class Account
+    public abstract class Account : IAccount
     {
         private SQLiteConnection _database;
         private AccountFilters _filters;

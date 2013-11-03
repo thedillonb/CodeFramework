@@ -16,7 +16,7 @@ namespace CodeFramework.Core.Services
         string CacheDir { get;  }
     }
 
-    public interface IAccountsService<TAccount> : IAccountsService where TAccount : IAccount
+    public interface IAccountsService<TAccount> : IAccountsService, IEnumerable<TAccount> where TAccount : IAccount
     {
         /// <summary>
         /// Gets the active account
@@ -73,11 +73,5 @@ namespace CodeFramework.Core.Services
         /// Find the specified account via it's username
         /// </summary>
         TAccount Find(int id);
-
-        /// <summary>
-        /// Gets the accounts
-        /// </summary>
-        /// <returns></returns>
-        IEnumerable<TAccount> GetAccounts();
     }
 }

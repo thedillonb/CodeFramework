@@ -1,13 +1,13 @@
 using System;
-using System.Drawing;
-using MonoTouch.CoreGraphics;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using MonoTouch.CoreGraphics;
 using MonoTouch.Dialog;
+using MonoTouch.Foundation;
+using MonoTouch.UIKit;
 
-namespace CodeFramework.Elements
+namespace CodeFramework.iOS.Elements
 {
     public class NewsFeedElement : NameTimeStringElement
     {

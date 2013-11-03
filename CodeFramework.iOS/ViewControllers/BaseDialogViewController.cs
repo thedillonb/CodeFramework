@@ -1,3 +1,5 @@
+using CodeFramework.iOS;
+using CodeFramework.iOS.Views;
 using CodeFramework.Views;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;

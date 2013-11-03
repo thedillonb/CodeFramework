@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using CodeFramework.Core.Data;
@@ -96,9 +97,14 @@ namespace CodeFramework.Core.Services
             return query;
         }
 
-        public IEnumerable<TAccount> GetAccounts()
+        public IEnumerator<TAccount> GetEnumerator()
         {
-            return _userDatabase.Table<TAccount>();
+            return _userDatabase.Table<TAccount>().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

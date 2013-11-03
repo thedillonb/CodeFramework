@@ -1,11 +1,14 @@
-using System;
-using MonoTouch.UIKit;
-using MonoTouch.Dialog;
-using CodeFramework.Data;
 using System.Collections.Generic;
+using Cirrious.CrossCore;
+using CodeFramework.Core.Data;
+using CodeFramework.Core.Services;
 using CodeFramework.Elements;
+using CodeFramework.iOS.Elements;
+using CodeFramework.ViewControllers;
+using MonoTouch.Dialog;
+using MonoTouch.UIKit;
 
-namespace CodeFramework.ViewControllers
+namespace CodeFramework.iOS.ViewControllers
 {
     public abstract class BaseAccountsViewController : BaseDialogViewController
     {
@@ -20,8 +23,10 @@ namespace CodeFramework.ViewControllers
         /// <returns>The accounts.</returns>
         protected List<AccountElement> PopulateAccounts()
         {
-            var accounts = new List<AccountElement>();   
-            foreach (var account in Accounts.Instance)
+            var accounts = new List<AccountElement>();
+            var accountsService = Mvx.Resolve<IAccountsService<IAccount>>();
+
+            foreach (var account in accountsService.GetAccounts())
             {
                 var thisAccount = account;
                 var t = new AccountElement(thisAccount);
@@ -29,7 +34,7 @@ namespace CodeFramework.ViewControllers
 
                 //Check to see if this account is the active account. Application.Account could be null 
                 //so make it the target of the equals, not the source.
-                if (thisAccount.Equals(Accounts.Instance.ActiveAccount))
+                if (thisAccount.Equals(accountsService.ActiveAccount))
                     t.Accessory = UITableViewCellAccessory.Checkmark;
                 accounts.Add(t);
             }
@@ -40,7 +45,7 @@ namespace CodeFramework.ViewControllers
         /// Called when an account is selected
         /// </summary>
         /// <param name="account">Account.</param>
-        protected abstract void AccountSelected(Account account);
+        protected abstract void AccountSelected(IAccount account);
 
         /// <summary>
         /// Called when the "Add Account button is clicked"
@@ -51,16 +56,18 @@ namespace CodeFramework.ViewControllers
         /// Called when an account is deleted
         /// </summary>
         /// <param name="account">Account.</param>
-        protected void AccountDeleted(Account account)
+        protected void AccountDeleted(IAccount account)
         {
             //Remove the designated username
             var thisAccount = account;
-            Accounts.Instance.Remove(thisAccount);
+            var accountsService = Mvx.Resolve<IAccountsService<IAccount>>();
 
-            if (Accounts.Instance.ActiveAccount != null && Accounts.Instance.ActiveAccount.Equals(thisAccount))
+            accountsService.Remove(thisAccount);
+
+            if (accountsService.ActiveAccount != null && accountsService.ActiveAccount.Equals(thisAccount))
             {
                 NavigationItem.LeftBarButtonItem.Enabled = false;
-                Accounts.Instance.SetActiveAccount(null);
+                accountsService.SetActiveAccount(null);
             }
         }
 
@@ -136,9 +143,9 @@ namespace CodeFramework.ViewControllers
         /// </summary>
         protected class AccountElement : UserElement
         {
-            public Account Account { get; private set; }
+            public IAccount Account { get; private set; }
 
-            public AccountElement(Account account)
+            public AccountElement(IAccount account)
                 : base(account.Username, string.Empty, string.Empty, account.AvatarUrl)
             {
                 Account = account;

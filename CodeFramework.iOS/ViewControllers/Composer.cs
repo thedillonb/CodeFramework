@@ -24,7 +24,7 @@
 
 using System;
 using System.Drawing;
-using CodeFramework.Views;
+using CodeFramework.iOS.Views;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 

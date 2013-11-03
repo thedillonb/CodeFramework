@@ -1,8 +1,7 @@
-using CodeFramework.iOS;
-using MonoTouch.UIKit;
 using System.Drawing;
+using MonoTouch.UIKit;
 
-namespace CodeFramework.Views
+namespace CodeFramework.iOS.Views
 {
     public class MenuSectionView : UIView
     {

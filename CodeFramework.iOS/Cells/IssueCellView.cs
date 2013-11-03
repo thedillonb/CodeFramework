@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using CodeFramework.iOS.Views;
 using MonoTouch.CoreGraphics;
 using MonoTouch.Foundation;
 using MonoTouch.ObjCRuntime;

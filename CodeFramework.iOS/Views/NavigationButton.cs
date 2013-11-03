@@ -1,7 +1,7 @@
 using System;
 using MonoTouch.UIKit;
 
-namespace CodeFramework.Views
+namespace CodeFramework.iOS.Views
 {
     public class NavigationButton
     {

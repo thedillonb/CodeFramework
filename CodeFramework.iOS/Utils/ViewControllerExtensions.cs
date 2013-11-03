@@ -1,11 +1,11 @@
 using System;
-using MonoTouch.UIKit;
-using MBProgressHUD;
 using System.Threading;
-using MonoTouch;
 using System.Threading.Tasks;
+using MBProgressHUD;
+using MonoTouch;
+using MonoTouch.UIKit;
 
-namespace CodeFramework.ViewControllers
+namespace CodeFramework.iOS.Utils
 {
     public static class ViewControllerExtensions
     {

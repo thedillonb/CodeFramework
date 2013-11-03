@@ -1,12 +1,10 @@
-using System.Collections.Generic;
-using MonoTouch.UIKit;
-using System.Linq;
-using CodeFramework.Filters.Models;
-using CodeFramework.Views;
 using System;
+using System.Linq;
+using CodeFramework.iOS.Views;
 using CodeFramework.ViewControllers;
+using MonoTouch.UIKit;
 
-namespace CodeFramework.Filters.ViewControllers
+namespace CodeFramework.iOS.ViewControllers
 {
     public abstract class FilterViewController : BaseDialogViewController
     {

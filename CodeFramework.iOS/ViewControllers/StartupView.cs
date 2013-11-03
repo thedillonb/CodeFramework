@@ -1,15 +1,15 @@
 using System;
-using MonoTouch.UIKit;
 using MonoTouch;
+using MonoTouch.UIKit;
 
-namespace CodeFramework.ViewControllers
+namespace CodeFramework.iOS.ViewControllers
 {
-    public abstract class StartupViewController : UIViewController
+    public abstract class StartupView : UIViewController
     {
         private UIImageView _imgView;
         private UIImage _img;
 
-        protected StartupViewController()
+        protected StartupView()
         {
             if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone)
                 WantsFullScreenLayout = true;
@@ -58,18 +58,6 @@ namespace CodeFramework.ViewControllers
             Add(_imgView);
         }
 
-        public override void ViewDidAppear(bool animated)
-        {
-            base.ViewDidAppear(animated);
-
-            Utilities.Analytics.TrackView(this.GetType().Name);
-
-            //Start the login
-            ProcessAccounts();
-        }
-
-		protected abstract void ProcessAccounts ();
-
         public override bool ShouldAutorotate()
         {
             return true;
@@ -99,8 +87,8 @@ namespace CodeFramework.ViewControllers
         /// </summary>
         protected class CustomNavigationController : UINavigationController
         {
-            readonly StartupViewController _parent;
-            public CustomNavigationController(StartupViewController parent, UIViewController root) : base(root) 
+            readonly StartupView _parent;
+            public CustomNavigationController(StartupView parent, UIViewController root) : base(root) 
             { 
                 _parent = parent;
             }

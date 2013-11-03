@@ -1,7 +1,8 @@
+using CodeFramework.ViewControllers;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 
-namespace CodeFramework.ViewControllers
+namespace CodeFramework.iOS.ViewControllers
 {
     public class MultipleChoiceViewController : BaseDialogViewController
     {
