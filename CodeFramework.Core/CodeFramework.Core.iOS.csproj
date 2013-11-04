@@ -44,7 +44,9 @@
     <Compile Include="Services\AccountsService.cs" />
     <Compile Include="Data\AccountCache.cs" />
     <Compile Include="Data\AccountFilters.cs" />
+    <Compile Include="Services\IAccountPreferencesService.cs" />
     <Compile Include="Services\IAccountsService.cs" />
+    <Compile Include="Services\IDefaultValueService.cs" />
     <Compile Include="Services\IErrorReporter.cs" />
     <Compile Include="Data\AccountPinnedRepositories.cs" />
     <Compile Include="Utils\CustomObservableCollection.cs" />

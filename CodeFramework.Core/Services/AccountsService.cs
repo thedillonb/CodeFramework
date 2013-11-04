@@ -7,34 +7,40 @@ using SQLite;
 
 namespace CodeFramework.Core.Services
 {
-    public abstract class AccountsService<TAccount> : IAccountsService<TAccount> where TAccount : IAccount, new()
+    public abstract class AccountsService<TAccount> : IAccountsService<TAccount> where TAccount : class, IAccount, new()
     {
-        private readonly string _accountsPath;
         private readonly SQLiteConnection _userDatabase;
+        private readonly IDefaultValueService _defaults;
+        private readonly string _accountsPath;
 
         public TAccount ActiveAccount { get; private set; }
 
-        public abstract string AccountsDir { get; }
-
-        public abstract string CacheDir { get; }
-
-        protected AccountsService(string accountsPath)
+        protected AccountsService(IDefaultValueService defaults, IAccountPreferencesService accountPreferences)
         {
-            _accountsPath = accountsPath;
+            _defaults = defaults;
+            _accountsPath = accountPreferences.AccountsDir;
 
             // Assure creation of the accounts path
-            if (!Directory.Exists(accountsPath))
-                Directory.CreateDirectory(accountsPath);
+            if (!Directory.Exists(_accountsPath))
+                Directory.CreateDirectory(_accountsPath);
 
-            _userDatabase = new SQLiteConnection(Path.Combine(accountsPath, "accounts.db"));
+            _userDatabase = new SQLiteConnection(Path.Combine(_accountsPath, "accounts.db"));
             _userDatabase.CreateTable<TAccount>();
         }
 
-        protected abstract TAccount OnSetActiveAccount(TAccount account);
+        public TAccount GetDefault()
+        {
+            int id;
+            return !_defaults.TryGet("DEFAULT_ACCOUNT", out id) ? null : Find(id);
+        }
 
-        public abstract TAccount GetDefault();
-
-        public abstract void SetDefault(TAccount account);
+        public void SetDefault(TAccount account)
+        {
+            if (account == null)
+                _defaults.Set("DEFAULT_ACCOUNT", null);
+            else
+                _defaults.Set("DEFAULT_ACCOUNT", account.Id);
+        }
 
         public void SetActiveAccount(TAccount account)
         {
@@ -42,7 +48,7 @@ namespace CodeFramework.Core.Services
             if (!Directory.Exists(accountDir))
                 Directory.CreateDirectory(accountDir);
 
-            ActiveAccount = OnSetActiveAccount(account);
+            ActiveAccount = account;
         }
 
         protected string CreateAccountDirectory(TAccount account)

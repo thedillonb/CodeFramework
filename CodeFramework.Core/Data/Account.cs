@@ -53,7 +53,7 @@ namespace CodeFramework.Core.Data
         {
             get
             {
-                var accountsDir = Mvx.Resolve<IAccountsService>().AccountsDir;
+                var accountsDir = Mvx.Resolve<IAccountPreferencesService>().AccountsDir;
                 return Path.Combine(accountsDir, Id.ToString(CultureInfo.InvariantCulture));
             }
         }
@@ -81,7 +81,7 @@ namespace CodeFramework.Core.Data
         {
             get
             {
-                return _cache ?? (_cache = new AccountCache(Database, Mvx.Resolve<IAccountsService>().CacheDir));
+                return _cache ?? (_cache = new AccountCache(Database, Mvx.Resolve<IAccountPreferencesService>().CacheDir));
             }
         }
 

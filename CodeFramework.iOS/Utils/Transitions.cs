@@ -8,14 +8,13 @@ namespace CodeFramework.Utils
     /// </summary>
     public static class Transitions
     {
-        public static void TransitionToController(UIViewController controller, Action doneCallback = null)
+        public static void TransitionToController(UIWindow window, UIViewController controller, Action doneCallback = null)
         {
-            Transition(controller, UIViewAnimationOptions.TransitionCrossDissolve, 1.0, doneCallback);
+            Transition(window, controller, UIViewAnimationOptions.TransitionCrossDissolve, 1.0, doneCallback);
         }
 
-        public static void Transition(UIViewController controller, UIViewAnimationOptions options, double duration = 0.6, Action doneCallback = null)
+        public static void Transition(UIWindow window, UIViewController controller, UIViewAnimationOptions options, double duration = 0.6, Action doneCallback = null)
         {
-            var window = UIApplication.SharedApplication.KeyWindow;
             UIView.Transition(window, duration, options, () => {
                 var oldState = UIView.AnimationsEnabled;
                 UIView.AnimationsEnabled = false;

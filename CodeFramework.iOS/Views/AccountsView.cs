@@ -2,17 +2,17 @@ using System.Collections.Generic;
 using Cirrious.CrossCore;
 using CodeFramework.Core.Data;
 using CodeFramework.Core.Services;
-using CodeFramework.Elements;
+using CodeFramework.Core.ViewModels;
 using CodeFramework.iOS.Elements;
 using CodeFramework.ViewControllers;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 
-namespace CodeFramework.iOS.ViewControllers
+namespace CodeFramework.iOS.Views
 {
-    public abstract class BaseAccountsViewController : BaseDialogViewController
+    public class AccountsView : BaseDialogViewController
     {
-        protected BaseAccountsViewController() : base(true)
+        public AccountsView() : base(true)
         {
             Title = "Accounts";
         }
@@ -26,7 +26,7 @@ namespace CodeFramework.iOS.ViewControllers
             var accounts = new List<AccountElement>();
             var accountsService = Mvx.Resolve<IAccountsService<IAccount>>();
 
-            foreach (var account in accountsService.GetAccounts())
+            foreach (var account in accountsService)
             {
                 var thisAccount = account;
                 var t = new AccountElement(thisAccount);
@@ -45,12 +45,20 @@ namespace CodeFramework.iOS.ViewControllers
         /// Called when an account is selected
         /// </summary>
         /// <param name="account">Account.</param>
-        protected abstract void AccountSelected(IAccount account);
+        private void AccountSelected(IAccount account)
+        {
+            var accountsViewModel = (AccountsViewModel)this.ViewModel;
+            accountsViewModel.SelectAccountCommand.Execute(account);
+        }
 
         /// <summary>
         /// Called when the "Add Account button is clicked"
         /// </summary>
-        protected abstract void AddAccountClicked();
+        private void AddAccountClicked()
+        {
+            var accountsViewModel = (AccountsViewModel) this.ViewModel;
+            accountsViewModel.AddAccountCommand.Execute(null);
+        }
 
         /// <summary>
         /// Called when an account is deleted
@@ -105,8 +113,8 @@ namespace CodeFramework.iOS.ViewControllers
 
         private class EditSource : Source
         {
-            private readonly BaseAccountsViewController _parent;
-            public EditSource(BaseAccountsViewController dvc) 
+            private readonly AccountsView _parent;
+            public EditSource(AccountsView dvc) 
                 : base (dvc)
             {
                 _parent = dvc;

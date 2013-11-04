@@ -3,20 +3,7 @@ using CodeFramework.Core.Data;
 
 namespace CodeFramework.Core.Services
 {
-    public interface IAccountsService
-    {
-        /// <summary>
-        /// Gets the accounts directory
-        /// </summary>
-        string AccountsDir { get; } 
-
-        /// <summary>
-        /// Gets the cache directory for the accounts
-        /// </summary>
-        string CacheDir { get;  }
-    }
-
-    public interface IAccountsService<TAccount> : IAccountsService, IEnumerable<TAccount> where TAccount : IAccount
+    public interface IAccountsService<TAccount> : IEnumerable<TAccount> where TAccount : IAccount
     {
         /// <summary>
         /// Gets the active account

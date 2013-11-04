@@ -1,15 +1,16 @@
 using System;
+using Cirrious.MvvmCross.Touch.Views;
 using MonoTouch;
 using MonoTouch.UIKit;
 
 namespace CodeFramework.iOS.ViewControllers
 {
-    public abstract class StartupView : UIViewController
+    public class StartupView : MvxViewController
     {
         private UIImageView _imgView;
         private UIImage _img;
 
-        protected StartupView()
+        public StartupView()
         {
             if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone)
                 WantsFullScreenLayout = true;
