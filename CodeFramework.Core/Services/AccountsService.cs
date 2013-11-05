@@ -7,13 +7,13 @@ using SQLite;
 
 namespace CodeFramework.Core.Services
 {
-    public abstract class AccountsService<TAccount> : IAccountsService<TAccount> where TAccount : class, IAccount, new()
+    public abstract class AccountsService<TAccount> : IAccountsService where TAccount : class, IAccount, new()
     {
         private readonly SQLiteConnection _userDatabase;
         private readonly IDefaultValueService _defaults;
         private readonly string _accountsPath;
 
-        public TAccount ActiveAccount { get; private set; }
+        public IAccount ActiveAccount { get; private set; }
 
         protected AccountsService(IDefaultValueService defaults, IAccountPreferencesService accountPreferences)
         {
@@ -28,13 +28,13 @@ namespace CodeFramework.Core.Services
             _userDatabase.CreateTable<TAccount>();
         }
 
-        public TAccount GetDefault()
+        public IAccount GetDefault()
         {
             int id;
             return !_defaults.TryGet("DEFAULT_ACCOUNT", out id) ? null : Find(id);
         }
 
-        public void SetDefault(TAccount account)
+        public void SetDefault(IAccount account)
         {
             if (account == null)
                 _defaults.Set("DEFAULT_ACCOUNT", null);
@@ -42,7 +42,7 @@ namespace CodeFramework.Core.Services
                 _defaults.Set("DEFAULT_ACCOUNT", account.Id);
         }
 
-        public void SetActiveAccount(TAccount account)
+        public void SetActiveAccount(IAccount account)
         {
             var accountDir = CreateAccountDirectory(account);
             if (!Directory.Exists(accountDir))
@@ -51,17 +51,17 @@ namespace CodeFramework.Core.Services
             ActiveAccount = account;
         }
 
-        protected string CreateAccountDirectory(TAccount account)
+        protected string CreateAccountDirectory(IAccount account)
         {
             return Path.Combine(_accountsPath, account.Id.ToString(CultureInfo.InvariantCulture));
         }
 
-        public void Insert(TAccount account)
+        public void Insert(IAccount account)
         {
             _userDatabase.Insert(account);
         }
 
-        public void Remove(TAccount account)
+        public void Remove(IAccount account)
         {
             _userDatabase.Delete(account);
             var accountDir = CreateAccountDirectory(account);
@@ -71,7 +71,7 @@ namespace CodeFramework.Core.Services
             Directory.Delete(accountDir, true);
         }
 
-        public void Update(TAccount account)
+        public void Update(IAccount account)
         {
             _userDatabase.Update(account);
         }
@@ -86,24 +86,24 @@ namespace CodeFramework.Core.Services
                 Remove(account);
         }
 
-        public bool Exists(TAccount account)
+        public bool Exists(IAccount account)
         {
             return Find(account.Username) != null;
         }
 
-        public TAccount Find(string username)
+        public IAccount Find(string username)
         {
             var lowerUser = username.ToLower();
             return _userDatabase.Find<TAccount>(x => x.Username.ToLower().Equals(lowerUser));
         }
 
-        public TAccount Find(int id)
+        public IAccount Find(int id)
         {
             var query = _userDatabase.Find<TAccount>(x => x.Id == id);
             return query;
         }
 
-        public IEnumerator<TAccount> GetEnumerator()
+        public IEnumerator<IAccount> GetEnumerator()
         {
             return _userDatabase.Table<TAccount>().GetEnumerator();
         }

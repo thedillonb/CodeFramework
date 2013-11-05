@@ -3,43 +3,43 @@ using CodeFramework.Core.Data;
 
 namespace CodeFramework.Core.Services
 {
-    public interface IAccountsService<TAccount> : IEnumerable<TAccount> where TAccount : IAccount
+    public interface IAccountsService : IEnumerable<IAccount>
     {
         /// <summary>
         /// Gets the active account
         /// </summary>
-        TAccount ActiveAccount { get; }
+        IAccount ActiveAccount { get; }
 
         /// <summary>
         /// Sets the active account
         /// </summary>
         /// <param name="account"></param>
-        void SetActiveAccount(TAccount account);
+        void SetActiveAccount(IAccount account);
 
         /// <summary>
         /// Gets the default account
         /// </summary>
-        TAccount GetDefault();
+        IAccount GetDefault();
 
         /// <summary>
         /// Sets the default account
         /// </summary>
-        void SetDefault(TAccount account);
+        void SetDefault(IAccount account);
 
         /// <summary>
         /// Insert the specified account.
         /// </summary>
-        void Insert(TAccount account);
+        void Insert(IAccount account);
 
         /// <summary>
         /// Remove the specified account.
         /// </summary>
-        void Remove(TAccount account);
+        void Remove(IAccount account);
 
         /// <summary>
         /// Update this instance in the database
         /// </summary>
-        void Update(TAccount account);
+        void Update(IAccount account);
 
         /// <summary>
         /// Remove the specified username.
@@ -49,16 +49,16 @@ namespace CodeFramework.Core.Services
         /// <summary>
         /// Checks to see whether a specific account exists (Username comparison)
         /// </summary>
-        bool Exists(TAccount account);
+        bool Exists(IAccount account);
 
         /// <summary>
         /// Find the specified account via it's username
         /// </summary>
-        TAccount Find(string username);
+        IAccount Find(string username);
 
         /// <summary>
         /// Find the specified account via it's username
         /// </summary>
-        TAccount Find(int id);
+        IAccount Find(int id);
     }
 }

@@ -1,22 +1,21 @@
-using MonoTouch.Dialog;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
 using System.Drawing;
+using CodeFramework.ViewControllers;
 using CodeFramework.Views;
+using MonoTouch.Dialog;
+using MonoTouch.Foundation;
+using MonoTouch.UIKit;
 
-namespace CodeFramework.ViewControllers
+namespace CodeFramework.iOS.ViewControllers
 {
-    public abstract class MenuBaseViewController : DialogViewController
+    public abstract class MenuBaseViewController : BaseDialogViewController
     {
         readonly ProfileButton _profileButton;
         readonly UILabel _title;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CodeFramework.Controllers.MenuBaseController"/> class.
-        /// </summary>
         protected MenuBaseViewController()
-            : base(UITableViewStyle.Plain, new RootElement(string.Empty))
+            : base(false)
         {
+            Style = UITableViewStyle.Plain;
             Autorotate = true;
             _title = new UILabel(new RectangleF(0, 40, 320, 40));
             _title.TextAlignment = UITextAlignment.Left;
@@ -37,10 +36,11 @@ namespace CodeFramework.ViewControllers
         /// <value>The title.</value>
         public override string Title {
             get {
-                return _title.Text;
+                return _title == null ? base.Title : _title.Text;
             }
             set {
-                _title.Text = value;
+                if (_title != null)
+                    _title.Text = value;
                 base.Title = value;
             }
         }

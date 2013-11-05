@@ -29,7 +29,7 @@ namespace CodeFramework.Core.ViewModels
         /// <returns>The default account.</returns>
         protected IAccount GetDefaultAccount()
         {
-            var accounts = Mvx.Resolve<IAccountsService<IAccount>>();
+            var accounts = Mvx.Resolve<IAccountsService>();
             return accounts.GetDefault();
         }
 
@@ -38,7 +38,7 @@ namespace CodeFramework.Core.ViewModels
             var defaultAccount = GetDefaultAccount();
             if (defaultAccount == null)
             {
-                this.ShowViewModel<AccountsViewModel>();
+                this.ShowViewModel<BaseAccountsViewModel>();
                 return;
             }
 

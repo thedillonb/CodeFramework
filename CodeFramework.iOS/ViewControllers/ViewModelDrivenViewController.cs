@@ -1,5 +1,4 @@
 using System;
-using Cirrious.MvvmCross.ViewModels;
 using CodeFramework.Core.ViewModels;
 using CodeFramework.iOS.Utils;
 using CodeFramework.iOS.Views;
@@ -12,28 +11,14 @@ namespace CodeFramework.iOS.ViewControllers
     {
         protected ErrorView CurrentError;
         private bool _firstSeen;
-        private MvxViewModel _viewModel;
         private MBProgressHUD.MTMBProgressHUD _loadingHud;
 
-        public MvxViewModel ViewModel
+        public override void ViewDidLoad()
         {
-            get { return _viewModel; }
-            protected set
-            {
-                _viewModel = value;
-                var loadable = _viewModel as ILoadableViewModel;
-                if (loadable != null)
-                {
-                    RefreshRequested += HandleRefreshRequested;
+            if (ViewModel is ILoadableViewModel)
+                RefreshRequested += HandleRefreshRequested;
 
-//                    loadable.Bind(x => x.IsLoading, isLoading => {
-//                        if (isLoading)
-//                            StartLoading();
-//                        else
-//                            EndLoading();
-//                    });
-                }
-            }
+            base.ViewDidLoad();
         }
 
         private void StartLoading()

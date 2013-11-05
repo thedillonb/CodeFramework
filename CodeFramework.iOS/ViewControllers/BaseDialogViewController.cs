@@ -20,6 +20,19 @@ namespace CodeFramework.ViewControllers
 {
     public class BaseDialogViewController : DialogViewController, IMvxTouchView, IMvxEventSourceViewController
     {
+        private UISearchBar _searchBar;
+
+        public new string SearchPlaceholder
+        {
+            get { return base.SearchPlaceholder; }
+            set
+            {
+                base.SearchPlaceholder = value;
+                if (_searchBar != null)
+                    _searchBar.Placeholder = value;
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseDialogViewController"/> class.
         /// </summary>
@@ -27,13 +40,13 @@ namespace CodeFramework.ViewControllers
         public BaseDialogViewController(bool push)
             : base(new RootElement(""), push)
         {
+            this.AdaptForBinding();
+
             SearchPlaceholder = "Search".t();
             Autorotate = true;
             AutoHideSearch = true;
             Style = UITableViewStyle.Grouped;
             NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Theme.CurrentTheme.BackButton, () => NavigationController.PopViewControllerAnimated(true)));
-
-            this.AdaptForBinding();
         }
 
         public override void ViewWillAppear(bool animated)
@@ -160,6 +173,8 @@ namespace CodeFramework.ViewControllers
         
         public override void ViewDidLoad()
         {
+            base.ViewDidLoad();
+
             if (Title != null && Root != null)
                 Root.Caption = Title;
 
@@ -173,7 +188,6 @@ namespace CodeFramework.ViewControllers
             var backgroundView = new UIView { BackgroundColor = Theme.CurrentTheme.ViewBackgroundColor };
             backgroundView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
             this.TableView.BackgroundView = backgroundView;
-            base.ViewDidLoad();
 
             ViewDidLoadCalled.Raise(this);
         }
@@ -255,9 +269,9 @@ namespace CodeFramework.ViewControllers
         /// <returns>The header view.</returns>
         protected sealed override UISearchBar CreateHeaderView()
         {
-            var searchBar = CreateSearchBar();
-            searchBar.Placeholder = SearchPlaceholder;
-            return searchBar;
+            _searchBar = CreateSearchBar();
+            _searchBar.Placeholder = SearchPlaceholder;
+            return _searchBar;
         }
                
         protected class CustomSearchDelegate : UISearchBarDelegate
@@ -429,24 +443,9 @@ namespace CodeFramework.ViewControllers
             set { DataContext = value; }
         }
 
-        private IMvxBindingContext _bindingContext;
+        public IMvxBindingContext BindingContext { get; set; }
 
-        public IMvxBindingContext BindingContext
-        {
-            get
-            {
-                return _bindingContext;
-            }
-            set { _bindingContext = value; }
-        }
-
-        private MvxViewModelRequest _request;
-
-        public MvxViewModelRequest Request
-        {
-            get { return _request; }
-            set { _request = value; }
-        }
+        public MvxViewModelRequest Request { get; set; }
 
 
         public override void ViewDidDisappear(bool animated)

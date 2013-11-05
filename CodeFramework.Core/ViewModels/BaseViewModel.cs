@@ -22,12 +22,14 @@ namespace CodeFramework.Core.ViewModels
 
         protected static void ReportError(Exception e)
         {
-            Mvx.Resolve<IErrorReporter>().ReportError(e);
+            Console.WriteLine(e.Message);
+            //Mvx.Resolve<IErrorReporter>().ReportError(e);
         }
 
         protected static void ReportError(string message, Exception e)
         {
-            Mvx.Resolve<IErrorReporter>().ReportError(message, e);
+            Console.WriteLine(message + ": " + e.Message);
+            //Mvx.Resolve<IErrorReporter>().ReportError(message, e);
         }
     }
 }

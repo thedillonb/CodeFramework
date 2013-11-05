@@ -6,10 +6,10 @@ using CodeFramework.Core.Utils;
 
 namespace CodeFramework.Core.ViewModels
 {
-    public class AccountsViewModel : BaseViewModel
+    public abstract class BaseAccountsViewModel : BaseViewModel
     {
         private readonly CustomObservableCollection<IAccount> _accounts = new CustomObservableCollection<IAccount>();
-        private readonly IAccountsService<IAccount> _accountsService;
+        private readonly IAccountsService _accountsService;
 
         public CustomObservableCollection<IAccount> Accounts
         {
@@ -25,25 +25,19 @@ namespace CodeFramework.Core.ViewModels
         {
             get { return new MvxCommand<IAccount>(SelectAccount); }
         }
-//
-//        public AccountsViewModel(IAccountsService<IAccount> accountsService)
-//        {
-//            _accountsService = accountsService;
-//        }
 
-        private void AddAccount()
+        protected BaseAccountsViewModel(IAccountsService accountsService)
         {
-            
+            _accountsService = accountsService;
         }
 
-        private void SelectAccount(IAccount account)
-        {
-            
-        }
+        protected abstract void AddAccount();
+
+        protected abstract void SelectAccount(IAccount account);
 
         public void Init()
         {
-            //_accounts.Reset(_accountsService);
+            _accounts.Reset(_accountsService);
         }
     }
 }

@@ -3,10 +3,10 @@ using Cirrious.CrossCore;
 using Cirrious.MvvmCross.Touch.Views;
 using Cirrious.MvvmCross.Touch.Views.Presenters;
 using Cirrious.MvvmCross.ViewModels;
+using CodeFramework.Core;
 using CodeFramework.iOS.ViewControllers;
 using CodeFramework.iOS.Views;
 using CodeFramework.Utils;
-using MonoTouch.SlideoutNavigation;
 using MonoTouch.UIKit;
 
 namespace CodeFramework.iOS
@@ -14,7 +14,8 @@ namespace CodeFramework.iOS
     public class TouchViewPresenter : MvxBaseTouchViewPresenter
     {
         private readonly UIWindow _window;
-        private SlideoutNavigationController _slidoutController;
+        private UINavigationController _generalNavigationController;
+        private SlideoutNavigationViewController _slideoutController;
 
         public TouchViewPresenter(UIWindow window)
         {
@@ -23,7 +24,8 @@ namespace CodeFramework.iOS
 
         public override void Show(MvxViewModelRequest request)
         {
-            var view = Mvx.Resolve<IMvxTouchViewCreator>().CreateView(request);
+            var viewCreator = Mvx.Resolve<IMvxTouchViewCreator>();
+            var view = viewCreator.CreateView(request);
             var uiView = view as UIViewController;
 
             if (uiView == null)
@@ -35,19 +37,28 @@ namespace CodeFramework.iOS
             }
             else if (uiView is AccountsView)
             {
-                Transitions.Transition(_window, uiView, UIViewAnimationOptions.TransitionFlipFromRight);
+                _slideoutController = null;
+                _generalNavigationController = new UINavigationController(uiView);
+                Transitions.Transition(_window, _generalNavigationController, UIViewAnimationOptions.TransitionFlipFromRight);
+            }
+            else if (uiView is MenuBaseViewController)
+            {
+                _slideoutController = new SlideoutNavigationViewController();
+                _slideoutController.MenuView = uiView;
+                Transitions.Transition(_window, _slideoutController, UIViewAnimationOptions.TransitionFlipFromRight);
             }
             else
             {
-                _slidoutController.TopView.NavigationController.PushViewController(uiView, true);
+                if (request.PresentationValues != null && request.PresentationValues.ContainsKey(PresentationValues.SlideoutRootPresentation))
+                {
+                    _slideoutController.SelectView(uiView);
+                    _generalNavigationController = _slideoutController.TopView.NavigationController;
+                }
+                else
+                {
+                    _generalNavigationController.PushViewController(uiView, true);
+                }
             }
-        }
-
-        public void GotoSlideout(SlideoutNavigationController slidoutController, UIViewController menuViewController)
-        {
-            _slidoutController = slidoutController;
-            _slidoutController.MenuView = menuViewController;
-            Transitions.Transition(_window, _slidoutController, UIViewAnimationOptions.TransitionFlipFromRight);
         }
     }
 }

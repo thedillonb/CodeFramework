@@ -12,6 +12,12 @@ namespace CodeFramework.iOS.Views
 {
     public class AccountsView : BaseDialogViewController
     {
+        public new BaseAccountsViewModel ViewModel
+        {
+            get { return (BaseAccountsViewModel) base.ViewModel; }
+            set { base.ViewModel = value; }
+        }
+
         public AccountsView() : base(true)
         {
             Title = "Accounts";
@@ -24,13 +30,13 @@ namespace CodeFramework.iOS.Views
         protected List<AccountElement> PopulateAccounts()
         {
             var accounts = new List<AccountElement>();
-            var accountsService = Mvx.Resolve<IAccountsService<IAccount>>();
+            var accountsService = Mvx.Resolve<IAccountsService>();
 
             foreach (var account in accountsService)
             {
                 var thisAccount = account;
                 var t = new AccountElement(thisAccount);
-                t.Tapped += () => AccountSelected(thisAccount);
+                t.Tapped += () => ViewModel.SelectAccountCommand.Execute(thisAccount);
 
                 //Check to see if this account is the active account. Application.Account could be null 
                 //so make it the target of the equals, not the source.
@@ -42,25 +48,6 @@ namespace CodeFramework.iOS.Views
         }
 
         /// <summary>
-        /// Called when an account is selected
-        /// </summary>
-        /// <param name="account">Account.</param>
-        private void AccountSelected(IAccount account)
-        {
-            var accountsViewModel = (AccountsViewModel)this.ViewModel;
-            accountsViewModel.SelectAccountCommand.Execute(account);
-        }
-
-        /// <summary>
-        /// Called when the "Add Account button is clicked"
-        /// </summary>
-        private void AddAccountClicked()
-        {
-            var accountsViewModel = (AccountsViewModel) this.ViewModel;
-            accountsViewModel.AddAccountCommand.Execute(null);
-        }
-
-        /// <summary>
         /// Called when an account is deleted
         /// </summary>
         /// <param name="account">Account.</param>
@@ -68,7 +55,7 @@ namespace CodeFramework.iOS.Views
         {
             //Remove the designated username
             var thisAccount = account;
-            var accountsService = Mvx.Resolve<IAccountsService<IAccount>>();
+            var accountsService = Mvx.Resolve<IAccountsService>();
 
             accountsService.Remove(thisAccount);
 
@@ -89,7 +76,7 @@ namespace CodeFramework.iOS.Views
             root.Add(accountSection);
 
             var addAccountSection = new Section();
-            addAccountSection.Add(new StyledStringElement("Add Account".t(), AddAccountClicked));
+            addAccountSection.Add(new StyledStringElement("Add Account".t(), () => ViewModel.AddAccountCommand.Execute(null)));
             root.Add(addAccountSection);
 
             Root = root;
