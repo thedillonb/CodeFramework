@@ -85,8 +85,12 @@
     <Compile Include="Views\ToolbarButton.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Cells\IssueCellView.xib" />
-    <None Include="Cells\RepositoryCellView.xib" />
+    <InterfaceDefinition Include="Cells\IssueCellView.xib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </InterfaceDefinition>
+    <InterfaceDefinition Include="Cells\RepositoryCellView.xib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </InterfaceDefinition>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Cirrious.CrossCore">

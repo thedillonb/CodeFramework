@@ -1,10 +1,11 @@
 using System;
+using Cirrious.MvvmCross.Touch.Views;
 using CodeFramework.iOS.Views;
 using MonoTouch.UIKit;
 
 namespace CodeFramework.iOS.ViewControllers
 {
-    public class WebViewController : UIViewController
+    public class WebViewController : MvxViewController
     {
         protected UIBarButtonItem BackButton;
         protected UIBarButtonItem RefreshButton;
