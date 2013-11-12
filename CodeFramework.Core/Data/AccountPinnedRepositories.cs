@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using SQLite;
 
 namespace CodeFramework.Core.Data
@@ -14,7 +15,6 @@ namespace CodeFramework.Core.Data
             _sqLiteConnection.CreateTable<PinnedRepository>();
         }
 
-
         /// <summary>
         /// Adds the pinned repository.
         /// </summary>
@@ -25,7 +25,10 @@ namespace CodeFramework.Core.Data
         public void AddPinnedRepository(string owner, string slug, string name, string imageUri)
         {
             var resource = new PinnedRepository { Owner = owner, Slug = slug, Name = name, ImageUri = imageUri };
-            _sqLiteConnection.Insert(resource);
+            lock (_sqLiteConnection)
+            {
+                _sqLiteConnection.Insert(resource);
+            }
         }
 
         /// <summary>
@@ -34,7 +37,10 @@ namespace CodeFramework.Core.Data
         /// <param name="id">Identifier.</param>
         public void RemovePinnedRepository(int id)
         {
-            _sqLiteConnection.Delete(new PinnedRepository { Id = id });
+            lock (_sqLiteConnection)
+            {
+                _sqLiteConnection.Delete(new PinnedRepository { Id = id });
+            }
         }
 
         /// <summary>
@@ -45,12 +51,18 @@ namespace CodeFramework.Core.Data
         /// <param name="slug">Slug.</param>
         public PinnedRepository GetPinnedRepository(string owner, string slug)
         {
-            return _sqLiteConnection.Find<PinnedRepository>(x => x.Owner == owner && x.Slug == slug);
+            lock (_sqLiteConnection)
+            {
+                return _sqLiteConnection.Find<PinnedRepository>(x => x.Owner == owner && x.Slug == slug);
+            }
         }
 
         public IEnumerator<PinnedRepository> GetEnumerator()
         {
-            return _sqLiteConnection.Table<PinnedRepository>().OrderBy(x => x.Name).GetEnumerator();
+            lock (_sqLiteConnection)
+            {
+                return _sqLiteConnection.Table<PinnedRepository>().OrderBy(x => x.Name).ToList().GetEnumerator();
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()

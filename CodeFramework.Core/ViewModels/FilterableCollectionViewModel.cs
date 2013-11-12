@@ -1,5 +1,6 @@
 using Cirrious.CrossCore;
 using CodeFramework.Core.Services;
+using MonoTouch.UIKit;
 
 namespace CodeFramework.Core.ViewModels
 {
@@ -21,14 +22,18 @@ namespace CodeFramework.Core.ViewModels
         public FilterableCollectionViewModel(string filterKey)
         {
             _filterKey = filterKey;
-           // _filter = CodeFramework.Data.Accounts.Instance.ActiveAccount.GetFilter<TF>(_filterKey);
+            var accounts = Mvx.Resolve<IAccountsService>();
+            _filter = accounts.ActiveAccount.Filters.GetFilter<TF>(_filterKey);
         }
 
         public void ApplyFilter(TF filter, bool saveAsDefault = false)
         {
             Filter = filter;
-            // (saveAsDefault)
-                //CodeFramework.Data.Accounts.Instance.ActiveAccount.AddFilter(_filterKey, filter);
+            if (saveAsDefault)
+            {
+                var accounts = Mvx.Resolve<IAccountsService>();
+                accounts.ActiveAccount.Filters.AddFilter(_filterKey, filter);
+            }
         }
     }
 }

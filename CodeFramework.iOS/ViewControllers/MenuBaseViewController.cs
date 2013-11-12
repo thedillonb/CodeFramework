@@ -1,5 +1,4 @@
 using System.Drawing;
-using CodeFramework.ViewControllers;
 using CodeFramework.Views;
 using MonoTouch.Dialog;
 using MonoTouch.Foundation;
@@ -7,7 +6,7 @@ using MonoTouch.UIKit;
 
 namespace CodeFramework.iOS.ViewControllers
 {
-    public abstract class MenuBaseViewController : BaseDialogViewController
+    public abstract class MenuBaseViewController : ViewModelDrivenViewController
     {
         readonly ProfileButton _profileButton;
         readonly UILabel _title;

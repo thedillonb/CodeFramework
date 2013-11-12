@@ -4,13 +4,14 @@ using CodeFramework.Core.Data;
 using CodeFramework.Core.Services;
 using CodeFramework.Core.ViewModels;
 using CodeFramework.iOS.Elements;
+using CodeFramework.iOS.ViewControllers;
 using CodeFramework.ViewControllers;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 
 namespace CodeFramework.iOS.Views
 {
-    public class AccountsView : BaseDialogViewController
+    public class AccountsView : ViewModelDrivenViewController
     {
         public new BaseAccountsViewModel ViewModel
         {

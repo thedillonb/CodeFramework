@@ -1,11 +1,13 @@
+using System;
 using System.Drawing;
 using CodeFramework.iOS.Utils;
 using MonoTouch.CoreGraphics;
+using MonoTouch.Dialog.Utilities;
 using MonoTouch.UIKit;
 
 namespace CodeFramework.iOS.Views
 {
-    public class HeaderView : UIView
+    public class HeaderView : UIView, IImageUpdated
     {
         private const float XPad = 14f;
         private const float YPad = 10f;
@@ -13,6 +15,9 @@ namespace CodeFramework.iOS.Views
         public static UIFont TitleFont = UIFont.BoldSystemFontOfSize(16);
         public static UIFont SubtitleFont = UIFont.SystemFontOfSize(13);
         public static CGGradient Gradient;
+        private string _title;
+        private string _subtitle;
+        private UIImage _image;
 
         static HeaderView ()
         {
@@ -25,11 +30,39 @@ namespace CodeFramework.iOS.Views
             }
         }
 
-        public string Title { get; set; }
+        public string Title
+        {
+            get { return _title; }
+            set { _title = value; SetNeedsDisplay(); }
+        }
 
-        public string Subtitle { get; set; }
+        public string Subtitle
+        {
+            get { return _subtitle; }
+            set { _subtitle = value; SetNeedsDisplay(); }
+        }
 
-        public UIImage Image { get; set; }
+        public UIImage Image
+        {
+            get { return _image; }
+            set
+            {
+                if (_image == value)
+                    return;
+                _image = value; 
+                SetNeedsDisplay();
+            }
+        }
+
+        public string ImageUri
+        {
+            get { return string.Empty; }
+            set 
+            {
+                _image = ImageLoader.DefaultRequestImage(new Uri(value), this); 
+                SetNeedsDisplay(); 
+            }
+        }
 
         public bool ShadowImage { get; set; }
         
@@ -42,6 +75,11 @@ namespace CodeFramework.iOS.Views
             Layer.ShadowColor = UIColor.Gray.CGColor;
             Layer.ShadowOpacity = 0.4f;
             Layer.ShadowOffset = new SizeF(0, 1f);
+        }
+
+        public void UpdatedImage(Uri uri)
+        {
+            Image = ImageLoader.DefaultRequestImage(uri, this);
         }
 
         public override void Draw(RectangleF rect)

@@ -1,14 +1,5 @@
-using System;
-using Cirrious.CrossCore.Core;
-using Cirrious.CrossCore.Touch.Views;
-using Cirrious.MvvmCross.Binding.BindingContext;
-using Cirrious.MvvmCross.Binding.Bindings;
-using Cirrious.MvvmCross.Touch.Views;
-using Cirrious.MvvmCross.ViewModels;
-using Cirrious.MvvmCross.Views;
 using CodeFramework.iOS;
 using CodeFramework.iOS.Views;
-using CodeFramework.Views;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 using System.Drawing;
@@ -18,7 +9,7 @@ using MonoTouch.CoreGraphics;
 
 namespace CodeFramework.ViewControllers
 {
-    public class BaseDialogViewController : DialogViewController, IMvxTouchView, IMvxEventSourceViewController
+    public class BaseDialogViewController : DialogViewController
     {
         private UISearchBar _searchBar;
 
@@ -40,8 +31,6 @@ namespace CodeFramework.ViewControllers
         public BaseDialogViewController(bool push)
             : base(new RootElement(""), push)
         {
-            this.AdaptForBinding();
-
             SearchPlaceholder = "Search".t();
             Autorotate = true;
             AutoHideSearch = true;
@@ -60,8 +49,6 @@ namespace CodeFramework.ViewControllers
                 //moves the scroll around. So by doing this we move this logic to execute after it.
                 BeginInvokeOnMainThread(() => TableView.ScrollRectToVisible(new RectangleF(0, 0, 1, 1), false));
             }
-
-            ViewWillAppearCalled.Raise(this, animated);
         }
         
         public override void ViewWillDisappear(bool animated)
@@ -86,8 +73,6 @@ namespace CodeFramework.ViewControllers
                 }
             }
 
-            ViewWillDisappearCalled.Raise(this, animated);
-
             //TableView.Scrolled -= HandleScrolled;
         }
 
@@ -95,7 +80,6 @@ namespace CodeFramework.ViewControllers
         {
             base.ViewDidAppear(animated);
             GoogleAnalytics.GAI.SharedInstance.DefaultTracker.TrackView(this.GetType().Name);
-            ViewDidAppearCalled.Raise(this, animated);
             //TableView.Scrolled += HandleScrolled;
         }
 
@@ -188,8 +172,6 @@ namespace CodeFramework.ViewControllers
             var backgroundView = new UIView { BackgroundColor = Theme.CurrentTheme.ViewBackgroundColor };
             backgroundView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
             this.TableView.BackgroundView = backgroundView;
-
-            ViewDidLoadCalled.Raise(this);
         }
 
         sealed class RefreshView : RefreshTableHeaderView
@@ -420,55 +402,6 @@ namespace CodeFramework.ViewControllers
                 }
             }
         }
-
-        protected T Bind<T>(T element, string bindingDescription)
-        {
-            return element.Bind(this, bindingDescription);
-        }
-
-        protected T Bind<T>(T element, IEnumerable<MvxBindingDescription> bindingDescription)
-        {
-            return element.Bind(this, bindingDescription);
-        }
-
-        public object DataContext
-        {
-            get { return BindingContext.DataContext; }
-            set { BindingContext.DataContext = value; }
-        }
-
-        public IMvxViewModel ViewModel
-        {
-            get { return DataContext as IMvxViewModel;  }
-            set { DataContext = value; }
-        }
-
-        public IMvxBindingContext BindingContext { get; set; }
-
-        public MvxViewModelRequest Request { get; set; }
-
-
-        public override void ViewDidDisappear(bool animated)
-        {
-            base.ViewDidDisappear(animated);
-            ViewDidDisappearCalled.Raise(this, animated);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                DisposeCalled.Raise(this);
-            }
-            base.Dispose(disposing);
-        }
-
-        public event EventHandler DisposeCalled;
-        public event EventHandler ViewDidLoadCalled;
-        public event EventHandler<MvxValueEventArgs<bool>> ViewWillAppearCalled;
-        public event EventHandler<MvxValueEventArgs<bool>> ViewDidAppearCalled;
-        public event EventHandler<MvxValueEventArgs<bool>> ViewDidDisappearCalled;
-        public event EventHandler<MvxValueEventArgs<bool>> ViewWillDisappearCalled;
     }
 }
 

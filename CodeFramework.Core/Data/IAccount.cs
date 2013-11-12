@@ -15,5 +15,10 @@
         /// </summary>
         /// <value>The avatar URL.</value>
         string AvatarUrl { get; set; }
+
+        /// <summary>
+        /// Gets the filters
+        /// </summary>
+        AccountFilters Filters { get; }
     }
 }

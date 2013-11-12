@@ -23,7 +23,12 @@ namespace CodeFramework.Core.Data
         /// <param name="key">Key.</param>
         public TFilter GetFilter<TFilter>(string key) where TFilter : FilterModel<TFilter>, new()
         {
-            var filter = _sqLiteConnection.Find<Filter>(x => x.Type == key);
+            Filter filter;
+            lock (_sqLiteConnection)
+            {
+                filter = _sqLiteConnection.Find<Filter>(x => x.Type == key);
+            }
+
             if (filter == null)
                 return new TFilter();
             var filterModel = filter.GetData<TFilter>();
@@ -50,7 +55,11 @@ namespace CodeFramework.Core.Data
             RemoveFilters(key);
             var filter = new Filter { Type = key };
             filter.SetData(data);
-            _sqLiteConnection.Insert(filter);
+
+            lock (_sqLiteConnection)
+            {
+                _sqLiteConnection.Insert(filter);
+            }
         }
 
         /// <summary>
@@ -59,7 +68,10 @@ namespace CodeFramework.Core.Data
         /// <param name="id">Identifier.</param>
         public void RemoveFilter(int id)
         {
-            _sqLiteConnection.Delete(new Filter { Id = id });
+            lock (_sqLiteConnection)
+            {
+                _sqLiteConnection.Delete(new Filter { Id = id });
+            }
         }
 
         /// <summary>
@@ -68,14 +80,20 @@ namespace CodeFramework.Core.Data
         /// <param name="key">Key.</param>
         public void RemoveFilters(string key)
         {
-            var filters = _sqLiteConnection.Table<Filter>().Where(x => x.Type == key).ToList();
-            foreach (var filter in filters)
-                _sqLiteConnection.Delete(filter);
+            lock (_sqLiteConnection)
+            {
+                var filters = _sqLiteConnection.Table<Filter>().Where(x => x.Type == key).ToList();
+                foreach (var filter in filters)
+                    _sqLiteConnection.Delete(filter);
+            }
         }
 
         public IEnumerator<Filter> GetEnumerator()
         {
-            return _sqLiteConnection.Table<Filter>().GetEnumerator();
+            lock (_sqLiteConnection)
+            {
+                return _sqLiteConnection.Table<Filter>().ToList().GetEnumerator();
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()

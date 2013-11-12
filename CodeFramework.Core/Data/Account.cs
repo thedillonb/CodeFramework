@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using System.IO;
 using Cirrious.CrossCore;
@@ -10,7 +11,7 @@ namespace CodeFramework.Core.Data
     {
         private SQLiteConnection _database;
         private AccountFilters _filters;
-        private AccountPinnedRepositories _pinnedRepositorieses;
+        private AccountPinnedRepositories _pinnedRepositories;
         private AccountCache _cache;
 
         [PrimaryKey]
@@ -41,6 +42,11 @@ namespace CodeFramework.Core.Data
 
                     var dbPath = Path.Combine(AccountDirectory, "settings.db");
                     _database = new SQLiteConnection(dbPath);
+
+
+                    Console.WriteLine("Are we multithraded: " + SQLite3.Config(SQLite3.ConfigOption.MultiThread).ToString());
+                    
+                    
                     return _database;
                 }
 
@@ -72,7 +78,7 @@ namespace CodeFramework.Core.Data
         {
             get
             {
-                return _pinnedRepositorieses ?? (_pinnedRepositorieses = new AccountPinnedRepositories(Database));
+                return _pinnedRepositories ?? (_pinnedRepositories = new AccountPinnedRepositories(Database));
             }
         }
 
@@ -85,13 +91,18 @@ namespace CodeFramework.Core.Data
             }
         }
 
+        private void CreateAccountDirectory()
+        {
+            if (!Directory.Exists(AccountDirectory))
+                Directory.CreateDirectory(AccountDirectory);
+        }
+
         /// <summary>
         /// This creates this account's directory
         /// </summary>
         public void Initialize()
         {
-            if (!Directory.Exists(AccountDirectory))
-                Directory.CreateDirectory(AccountDirectory);
+            CreateAccountDirectory();
         }
 
         /// <summary>

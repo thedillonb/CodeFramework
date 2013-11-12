@@ -1,11 +1,11 @@
 using System.ComponentModel;
-using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace CodeFramework.Core.ViewModels
 {
-    public interface ILoadableViewModel : INotifyPropertyChanged
+    public interface ILoadableViewModel
     {
-        Task Load(bool forceDataRefresh);
+        ICommand LoadCommand { get; }
     }
 }
 
