@@ -19,7 +19,6 @@ namespace CodeFramework.ViewControllers
         public BaseDialogViewController(bool push)
             : base(new RootElement(""), push)
         {
-            SearchPlaceholder = "Search".t();
             Autorotate = true;
 			//AutoHideSearch = true;
             Style = UITableViewStyle.Grouped;
