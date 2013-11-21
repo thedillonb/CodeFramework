@@ -16,13 +16,13 @@ namespace CodeFramework.iOS.ViewControllers
         {
             Style = UITableViewStyle.Plain;
             Autorotate = true;
-            _title = new UILabel(new RectangleF(0, 40, 320, 40));
+			_title = new UILabel(new RectangleF(0, 40, 320, 40));
             _title.TextAlignment = UITextAlignment.Left;
             _title.BackgroundColor = UIColor.Clear;
             _title.Font = UIFont.BoldSystemFontOfSize(20f);
             _title.TextColor = UIColor.FromRGB(246, 246, 246);
-            _title.ShadowColor = UIColor.FromRGB(21, 21, 21);
-            _title.ShadowOffset = new SizeF(0, 1);
+//            _title.ShadowColor = UIColor.FromRGB(21, 21, 21);
+//            _title.ShadowOffset = new SizeF(0, 1);
             NavigationItem.TitleView = _title;
 
             _profileButton = new ProfileButton();
@@ -72,7 +72,7 @@ namespace CodeFramework.iOS.ViewControllers
                 size = new SizeF(24, 24);
             }
 
-            _profileButton.Frame = new RectangleF(new PointF(4, 4), size);
+			_profileButton.Frame = new RectangleF(new PointF(4, 4), size);
 
             NavigationItem.LeftBarButtonItem = new UIBarButtonItem(_profileButton);
         }
@@ -132,13 +132,13 @@ namespace CodeFramework.iOS.ViewControllers
                 public Cell(UITableViewCellStyle style, string key)
                     : base(style, key)
                 {
-                    var v = new UIView(new RectangleF(0, 0, Frame.Width, 1)) { 
-                        BackgroundColor = UIColor.FromRGB(44, 44, 44)
-                    };
-
-                    AddSubview(v);
-                    TextLabel.ShadowColor = UIColor.Black;
-                    TextLabel.ShadowOffset = new SizeF(0, -1); 
+//                    var v = new UIView(new RectangleF(0, 0, Frame.Width, 1)) { 
+//                        BackgroundColor = UIColor.FromRGB(44, 44, 44)
+//                    };
+//
+//                    AddSubview(v);
+//                    TextLabel.ShadowColor = UIColor.Black;
+//                    TextLabel.ShadowOffset = new SizeF(0, -1); 
                     SelectedBackgroundView = new UIView { BackgroundColor = UIColor.FromRGB(25, 25, 25) };
 
                     _numberView = new UILabel { BackgroundColor = UIColor.FromRGB(54, 54, 54) };
