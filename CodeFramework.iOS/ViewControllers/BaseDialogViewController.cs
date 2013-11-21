@@ -20,6 +20,7 @@ namespace CodeFramework.ViewControllers
             : base(new RootElement(""), push)
         {
             Autorotate = true;
+			SearchPlaceholder = "Search";
 			//AutoHideSearch = true;
             Style = UITableViewStyle.Grouped;
             NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Theme.CurrentTheme.BackButton, () => NavigationController.PopViewControllerAnimated(true)));

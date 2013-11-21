@@ -29,7 +29,7 @@ namespace CodeFramework.iOS.Views
         public TableViewSectionView(string text)
         {
             Frame = new RectangleF(0, 0, 320, 24);
-            BackgroundColor = UIColor.FromPatternImage(Theme.CurrentTheme.TableViewSectionBackground).ColorWithAlpha(0.9f);
+			//BackgroundColor = UIColor.FromPatternImage(Theme.CurrentTheme.TableViewSectionBackground).ColorWithAlpha(0.9f);
             
             _lbl = new UILabel();
             _lbl.Text = text;

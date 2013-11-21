@@ -101,7 +101,7 @@ namespace CodeFramework.ViewControllers
             var sections = new List<Section>(items.Count());
             foreach (var grp in items)
             {
-                var sec = new Section(new TableViewSectionView(grp.Key));
+                var sec = new Section(grp.Key);
                 foreach (var element in grp.Select(select).Where(element => element != null))
                     sec.Add(element);
 

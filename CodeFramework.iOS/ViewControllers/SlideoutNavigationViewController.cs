@@ -15,14 +15,10 @@ namespace CodeFramework.iOS.ViewControllers
             SlideHeight = 9999f;
         }
 
-        /// <summary>
-        /// Creates the menu button.
-        /// </summary>
-        /// <returns>The menu button.</returns>
-        protected override UIBarButtonItem CreateMenuButton()
-        {
-            return new UIBarButtonItem(NavigationButton.Create(Theme.CurrentTheme.ThreeLinesButton, Show));
-        }
+		protected override UIBarButtonItem CreateLeftMenuButton()
+		{
+			return new UIBarButtonItem(NavigationButton.Create(Theme.CurrentTheme.ThreeLinesButton, ShowMenuLeft));
+		}
     }
 }
 

@@ -4,3 +4,6 @@
 [submodule "CodeFramework.iOS/lib/MonoTouch.Dialog"]
 	path = CodeFramework.iOS/lib/MonoTouch.Dialog
 	url = https://thedillonb@github.com/thedillonb/MonoTouch.Dialog
+[submodule "CodeFramework.iOS/lib/MonoTouch.SlideoutNavigation"]
+	path = CodeFramework.iOS/lib/MonoTouch.SlideoutNavigation
+	url = https://thedillonb@github.com/thedillonb/MonoTouch.SlideoutNavigation.git

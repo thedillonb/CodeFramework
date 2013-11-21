@@ -28,9 +28,6 @@ namespace CodeFramework.iOS
 
         UIImage WarningImage { get; }
         UIImage AnonymousUserImage { get; }
-        UIImage DropbarBackground { get; }
-
-        UIImage TableViewSectionBackground { get; }
 
         UIImage IssueCellImage1 { get; }
         UIImage IssueCellImage2 { get; }
@@ -47,5 +44,10 @@ namespace CodeFramework.iOS
         UIColor ViewBackgroundColor { get; }
 
         UIColor WebButtonTint { get; }
+
+		UIColor AccountsNavigationBarTint { get; }
+		UIColor SlideoutNavigationBarTint { get; }
+		UIColor ApplicationNavigationBarTint { get; }
+
     }
 }
