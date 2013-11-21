@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2698B412-26A3-4269-AA01-AC3BC79A0F14}</ProjectGuid>
@@ -73,14 +73,11 @@
     <Compile Include="ViewControllers\ViewModelDrivenViewController.cs" />
     <Compile Include="ViewControllers\WebViewController.cs" />
     <Compile Include="Views\AddRemoveView.cs" />
-    <Compile Include="Views\CellBackgroundView.cs" />
-    <Compile Include="Views\DropbarView.cs" />
     <Compile Include="Views\ErrorView.cs" />
     <Compile Include="Views\HeaderView.cs" />
     <Compile Include="Views\MenuSectionView.cs" />
     <Compile Include="Views\NavigationButton.cs" />
     <Compile Include="Views\ProfileButton.cs" />
-    <Compile Include="Views\SearchFilterView.cs" />
     <Compile Include="Views\TableViewSectionView.cs" />
     <Compile Include="Views\ToolbarButton.cs" />
   </ItemGroup>
@@ -107,14 +104,8 @@
     <Reference Include="Cirrious.MvvmCross.Touch">
       <HintPath>..\lib\iOS\Cirrious.MvvmCross.Touch.dll</HintPath>
     </Reference>
-    <Reference Include="GoogleAnalytics">
-      <HintPath>lib\GoogleAnalytics\GoogleAnalytics.dll</HintPath>
-    </Reference>
     <Reference Include="MBProgressHUD">
       <HintPath>lib\MBProgressHud\MBProgressHUD.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoTouch.Dialog">
-      <HintPath>..\lib\iOS\MonoTouch.Dialog.dll</HintPath>
     </Reference>
     <Reference Include="MonoTouch.Slideout">
       <HintPath>..\lib\iOS\MonoTouch.Slideout.dll</HintPath>
@@ -128,8 +119,12 @@
     <Reference Include="System.Web.Services" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\lib\MonoTouch.Dialog\MonoTouch.Dialog\MonoTouch.Dialog.csproj">
+      <Project>{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}</Project>
+      <Name>MonoTouch.Dialog</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeFramework.Core\CodeFramework.Core.iOS.csproj">
-      <Project>{c99fe7e3-0985-48f1-9ebb-91680a795f0f}</Project>
+      <Project>{C99FE7E3-0985-48F1-9EBB-91680A795F0F}</Project>
       <Name>CodeFramework.Core.iOS</Name>
     </ProjectReference>
   </ItemGroup>

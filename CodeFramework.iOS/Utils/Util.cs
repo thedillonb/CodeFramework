@@ -3,7 +3,6 @@ using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using System.IO;
 using System.Globalization;
-using GoogleAnalytics;
 
 namespace MonoTouch
 {
@@ -47,37 +46,37 @@ namespace MonoTouch
 
         public static NSUserDefaults Defaults = NSUserDefaults.StandardUserDefaults;
 
-        public static void SetupAnalytics(string trackerId, string appName)
-        {
-            var result = GoogleAnalytics.GAI.SharedInstance;
-            result.GetTracker(trackerId);
-            result.TrackUncaughtExceptions = true;
-            result.DefaultTracker.AppName = appName;
-            result.DispatchInterval = 30;
-            result.DefaultTracker.AppVersion = NSBundle.MainBundle.InfoDictionary[new NSString("CFBundleVersion")].ToString();
-        }
-
-        public static bool AnalyticsEnabled
-        {
-            get { return !GoogleAnalytics.GAI.SharedInstance.OptOut; }
-            set { GoogleAnalytics.GAI.SharedInstance.OptOut = !value; }
-        }
-
-        public static GAITracker Analytics
-        {
-            get { return GoogleAnalytics.GAI.SharedInstance.DefaultTracker; }
-        }
+//        public static void SetupAnalytics(string trackerId, string appName)
+//        {
+//            var result = GoogleAnalytics.GAI.SharedInstance;
+//            result.GetTracker(trackerId);
+//            result.TrackUncaughtExceptions = true;
+//            result.DefaultTracker.AppName = appName;
+//            result.DispatchInterval = 30;
+//            result.DefaultTracker.AppVersion = NSBundle.MainBundle.InfoDictionary[new NSString("CFBundleVersion")].ToString();
+//        }
+//
+//        public static bool AnalyticsEnabled
+//        {
+//            get { return !GoogleAnalytics.GAI.SharedInstance.OptOut; }
+//            set { GoogleAnalytics.GAI.SharedInstance.OptOut = !value; }
+//        }
+//
+//        public static GAITracker Analytics
+//        {
+//            get { return GoogleAnalytics.GAI.SharedInstance.DefaultTracker; }
+//        }
 
         public static void LogException (string text, Exception e)
         {
             Console.WriteLine (String.Format ("On {0}, message: {1}\nException:\n{2}", DateTime.Now, text, e));
-            Analytics.TrackException(false, e.Message + " - " + e.StackTrace);
+			//Analytics.TrackException(false, e.Message + " - " + e.StackTrace);
         }
 
         public static void LogException (Exception e)
         {
             Console.WriteLine (String.Format ("On {0} Exception:\n{1}", DateTime.Now, e));
-            Analytics.TrackException(false, e.Message + " - " + e.StackTrace);
+			//Analytics.TrackException(false, e.Message + " - " + e.StackTrace);
         }
 
         static UIActionSheet _sheet;

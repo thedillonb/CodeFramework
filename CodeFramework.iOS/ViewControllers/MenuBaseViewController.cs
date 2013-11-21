@@ -6,7 +6,7 @@ using MonoTouch.UIKit;
 
 namespace CodeFramework.iOS.ViewControllers
 {
-    public abstract class MenuBaseViewController : ViewModelDrivenViewController
+	public abstract class MenuBaseViewController : ViewModelDrivenViewController
     {
         readonly ProfileButton _profileButton;
         readonly UILabel _title;

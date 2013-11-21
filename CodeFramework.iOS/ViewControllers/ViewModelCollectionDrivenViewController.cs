@@ -138,32 +138,32 @@ namespace CodeFramework.ViewControllers
                 TableView.TableFooterView.Hidden = false;
         }
 
-        protected override void SearchStart()
-        {
-            base.StartSearch();
-
-            var searchBar = SearchBar as SearchFilterBar;
-            if (searchBar != null)
-                searchBar.FilterButtonVisible = false;
-        }
-
-        protected override void SearchEnd()
-        {
-            var searchBar = SearchBar as SearchFilterBar;
-            if (searchBar != null)
-                searchBar.FilterButtonVisible = true;
-        }
-
-        protected override UISearchBar CreateSearchBar()
-        {
-            if (EnableFilter)
-            {
-                var searchBar = new SearchFilterBar { Delegate = new CustomSearchDelegate(this) };
-                searchBar.FilterButton.TouchUpInside += FilterButtonTouched;
-                return searchBar;
-            }
-            return base.CreateSearchBar();
-        }
+//        protected override void SearchStart()
+//        {
+//            base.StartSearch();
+//
+//            var searchBar = SearchBar as SearchFilterBar;
+//            if (searchBar != null)
+//                searchBar.FilterButtonVisible = false;
+//        }
+//
+//        protected override void SearchEnd()
+//        {
+//            var searchBar = SearchBar as SearchFilterBar;
+//            if (searchBar != null)
+//                searchBar.FilterButtonVisible = true;
+//        }
+//
+//        protected override UISearchBar CreateSearchBar()
+//        {
+//            if (EnableFilter)
+//            {
+//                var searchBar = new SearchFilterBar { Delegate = new CustomSearchDelegate(this) };
+//                searchBar.FilterButton.TouchUpInside += FilterButtonTouched;
+//                return searchBar;
+//            }
+//            return base.CreateSearchBar();
+//        }
 
         protected virtual FilterViewController CreateFilterController()
         {

@@ -24,7 +24,6 @@ namespace CodeFramework.iOS.Cells
                 cell.Image1.Image = Theme.CurrentTheme.RepositoryCellFollowers;
                 cell.Image3.Image = Theme.CurrentTheme.RepositoryCellForks;
                 cell.UserImage.Image = Theme.CurrentTheme.RepositoryCellUser;
-                cell.BackgroundView = new CellBackgroundView();
 
                 if (RoundImages)
                 {

@@ -1,3 +1,9 @@
 [submodule "CodeFramework.iOS/lib/monotouch-uservoice"]
 	path = CodeFramework.iOS/lib/monotouch-uservoice
 	url = https://github.com/alexkuz/monotouch-uservoice.git
+[submodule "lib/MonoTouch.Dialog"]
+	path = lib/MonoTouch.Dialog
+	url = https://thedillonb@github.com/thedillonb/MonoTouch.Dialog.git
+[submodule "lib/MonoTouch.SlideoutNavigation.git"]
+	path = lib/MonoTouch.SlideoutNavigation.git
+	url = https://thedillonb@github.com/thedillonb/MonoTouch.SlideoutNavigation.git

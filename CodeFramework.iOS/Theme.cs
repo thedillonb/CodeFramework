@@ -26,8 +26,6 @@ namespace CodeFramework.iOS
         UIImage WebFowardButton { get; }
         UIImage ForkButton { get; }
 
-        UIImage MenuSectionBackground { get; }
-        UIImage MenuNavbarBackground { get; }
         UIImage WarningImage { get; }
         UIImage AnonymousUserImage { get; }
         UIImage DropbarBackground { get; }

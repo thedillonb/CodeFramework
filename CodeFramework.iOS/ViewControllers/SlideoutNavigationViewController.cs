@@ -13,9 +13,6 @@ namespace CodeFramework.iOS.ViewControllers
         {
             //Setting the height to a large amount means that it will activate the slide pretty much whereever your finger is on the screen.
             SlideHeight = 9999f;
-
-            //Set the menu navigation background
-            SetMenuNavigationBackgroundImage(Theme.CurrentTheme.MenuNavbarBackground, UIBarMetrics.Default);
         }
 
         /// <summary>

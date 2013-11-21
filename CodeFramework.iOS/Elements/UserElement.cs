@@ -6,6 +6,12 @@ namespace CodeFramework.iOS.Elements
 {
     public class UserElement : StyledStringElement
     {
+		/// <summary>
+		/// Gets or sets a value indicating whether this <see cref="CodeFramework.iOS.Elements.UserElement"/> use pinned image.
+		/// </summary>
+		/// <value><c>true</c> if use pinned image; otherwise, <c>false</c>.</value>
+		public bool UsePinnedImage { get; set; }
+
         public UserElement(string username, string firstName, string lastName, string avatar)
             : base (username, string.Empty, UITableViewCellStyle.Subtitle)
         {
@@ -16,13 +22,17 @@ namespace CodeFramework.iOS.Elements
             Image = Theme.CurrentTheme.AnonymousUserImage;
             if (avatar != null)
                 ImageUri = new Uri(avatar);
+			UsePinnedImage = true;
         }
 
         
         // We need to create our own cell so we can position the image view appropriately
         protected override UITableViewCell CreateTableViewCell(UITableViewCellStyle style, string key)
         {
-            return new PinnedImageTableViewCell(style, key);
+			if (UsePinnedImage)
+				return new PinnedImageTableViewCell(style, key);
+			else
+				return base.CreateTableViewCell(style, key);
         }
 
         /// <summary>
@@ -44,7 +54,7 @@ namespace CodeFramework.iOS.Elements
             {
                 base.LayoutSubviews();
                 ImageView.Frame = new System.Drawing.RectangleF(6, 6, 32, 32);
-                //TextLabel.Frame = new System.Drawing.RectangleF(42, TextLabel.Frame.Y, TextLabel.Frame.Width, TextLabel.Frame.Height);
+				TextLabel.Frame = new System.Drawing.RectangleF(48, TextLabel.Frame.Y, TextLabel.Frame.Width, TextLabel.Frame.Height);
                 //if (DetailTextLabel != null)
                 //    DetailTextLabel.Frame = new System.Drawing.RectangleF(42, DetailTextLabel.Frame.Y, DetailTextLabel.Frame.Width, DetailTextLabel.Frame.Height);
             }

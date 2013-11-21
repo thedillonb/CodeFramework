@@ -14,10 +14,10 @@ namespace CodeFramework.iOS.Utils
             UIView parent = null;
 
             //Don't attach it to the UI window. It doesn't work well with orientation
-            if (controller.View.Superview is UIWindow)
+//            if (controller.View.Superview is UIWindow)
                 parent = controller.View;
-            else
-                parent = controller.View.Superview;
+//            else
+//                parent = controller.View.Superview;
 
             var hud = new MTMBProgressHUD(parent) {
                 Mode = MBProgressHUDMode.Indeterminate, 
@@ -71,15 +71,15 @@ namespace CodeFramework.iOS.Utils
 
         public async static Task DoWorkTest(this UIViewController controller, string workTitle, Func<Task> work)
         {
-            UIView parent = null;
+			UIView parent = null;
 
             //Don't attach it to the UI window. It doesn't work well with orientation
-            if (controller.View.Superview is UIWindow)
-                parent = controller.View;
-            else
-                parent = controller.View.Superview;
+//            if (controller.View.Superview is UIWindow)
+               parent = controller.View;
+//            else
+//                parent = controller.View.Superview;
 
-            var hud = new MTMBProgressHUD(parent) {
+			var hud = new MTMBProgressHUD(parent) {
                 Mode = MBProgressHUDMode.Indeterminate, 
                 LabelText = workTitle,
                 RemoveFromSuperViewOnHide = true,
@@ -125,10 +125,10 @@ namespace CodeFramework.iOS.Utils
             UIView parent = null;
 
             //Don't attach it to the UI window. It doesn't work well with orientation
-            if (controller.View.Superview is UIWindow)
+//            if (controller.View.Superview is UIWindow)
                 parent = controller.View;
-            else
-                parent = controller.View.Superview;
+//            else
+//                parent = controller.View.Superview;
 
             var hud = new MTMBProgressHUD(parent) {
                 Mode = MBProgressHUDMode.Indeterminate, 

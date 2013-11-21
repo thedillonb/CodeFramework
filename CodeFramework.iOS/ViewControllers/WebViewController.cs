@@ -134,7 +134,7 @@ namespace CodeFramework.iOS.ViewControllers
             Web.Frame = bounds;
 
 
-            MonoTouch.Utilities.Analytics.TrackView(this.GetType().Name);
+			//MonoTouch.Utilities.Analytics.TrackView(this.GetType().Name);
         }
         
         public override void DidRotate(UIInterfaceOrientation fromInterfaceOrientation)

@@ -8,8 +8,8 @@ namespace CodeFramework.iOS.Views
         public MenuSectionView(string caption)
             : base(new RectangleF(0, 0, 320, 27))
         {
-            var background = new UIImageView(Theme.CurrentTheme.MenuSectionBackground);
-            background.Frame = this.Frame; 
+			//var background = new UIImageView(Theme.CurrentTheme.MenuSectionBackground);
+			//background.Frame = this.Frame; 
 
             var label = new UILabel(); 
             label.BackgroundColor = UIColor.Clear; 
@@ -21,7 +21,7 @@ namespace CodeFramework.iOS.Views
             label.ShadowColor = UIColor.FromRGB(0, 0, 0); 
             label.ShadowOffset = new SizeF(0, -1); 
 
-            this.AddSubview(background); 
+			//this.AddSubview(background); 
             this.AddSubview(label); 
         }
     }

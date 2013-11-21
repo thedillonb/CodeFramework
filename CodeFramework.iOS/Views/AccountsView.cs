@@ -8,10 +8,11 @@ using CodeFramework.iOS.ViewControllers;
 using CodeFramework.ViewControllers;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
+using CodeFramework.iOS.ViewControllers;
 
 namespace CodeFramework.iOS.Views
 {
-    public class AccountsView : ViewModelDrivenViewController
+	public class AccountsView : ViewModelDrivenViewController
     {
         public new BaseAccountsViewModel ViewModel
         {
