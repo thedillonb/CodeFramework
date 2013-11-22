@@ -2,10 +2,11 @@ using System;
 using Cirrious.MvvmCross.Touch.Views;
 using CodeFramework.iOS.Views;
 using MonoTouch.UIKit;
+using CodeFramework.Core;
 
-namespace CodeFramework.iOS.ViewControllers
+namespace CodeFramework.iOS.Views
 {
-    public class WebViewController : MvxViewController
+    public class WebView : MvxViewController
     {
         protected UIBarButtonItem BackButton;
         protected UIBarButtonItem RefreshButton;
@@ -29,12 +30,12 @@ namespace CodeFramework.iOS.ViewControllers
             Web.GoForward();
         }
          
-        public WebViewController()
-            : this(true)
+		public WebView()
+			: this(true, true)
         {
         }
 
-        public WebViewController(bool navigationToolbar)
+		public WebView(bool navigationToolbar, bool showPageAsTitle = false)
         {
             NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Theme.CurrentTheme.BackButton, () => NavigationController.PopViewControllerAnimated(true)));
 
@@ -43,6 +44,14 @@ namespace CodeFramework.iOS.ViewControllers
             Web.LoadStarted += OnLoadStarted;
             Web.LoadError += OnLoadError;
             Web.ShouldStartLoad = (w, r, n) => ShouldStartLoad(r, n);
+
+			if (showPageAsTitle)
+			{
+				Web.LoadFinished += (sender, e) =>
+				{
+					Title = Web.EvaluateJavascript("document.title");
+				};
+			}
 
             _navigationToolbar = navigationToolbar;
 
@@ -106,7 +115,6 @@ namespace CodeFramework.iOS.ViewControllers
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            this.View.BackgroundColor = Theme.CurrentTheme.ViewBackgroundColor;
             Add(Web);
         }
 
@@ -118,6 +126,9 @@ namespace CodeFramework.iOS.ViewControllers
 
         protected string LoadFile(string path)
         {
+			if (path == null)
+				return string.Empty;
+
             var uri = Uri.EscapeUriString("file://" + path) + "#" + Environment.TickCount;
             InvokeOnMainThread(() => Web.LoadRequest(new MonoTouch.Foundation.NSUrlRequest(new MonoTouch.Foundation.NSUrl(uri))));
             return uri;
@@ -132,9 +143,6 @@ namespace CodeFramework.iOS.ViewControllers
             if (_navigationToolbar)
                 bounds.Height -= NavigationController.Toolbar.Frame.Height;
             Web.Frame = bounds;
-
-
-			//MonoTouch.Utilities.Analytics.TrackView(this.GetType().Name);
         }
         
         public override void DidRotate(UIInterfaceOrientation fromInterfaceOrientation)

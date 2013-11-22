@@ -71,7 +71,6 @@
     <Compile Include="ViewControllers\StartupView.cs" />
     <Compile Include="ViewControllers\ViewModelCollectionDrivenViewController.cs" />
     <Compile Include="ViewControllers\ViewModelDrivenViewController.cs" />
-    <Compile Include="ViewControllers\WebViewController.cs" />
     <Compile Include="Views\AddRemoveView.cs" />
     <Compile Include="Views\ErrorView.cs" />
     <Compile Include="Views\HeaderView.cs" />
@@ -80,6 +79,8 @@
     <Compile Include="Views\ProfileButton.cs" />
     <Compile Include="Views\TableViewSectionView.cs" />
     <Compile Include="Views\ToolbarButton.cs" />
+    <Compile Include="Views\WebView.cs" />
+    <Compile Include="Views\WebBrowserView.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />

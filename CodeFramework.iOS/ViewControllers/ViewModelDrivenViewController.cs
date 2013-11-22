@@ -10,13 +10,6 @@ using CodeFramework.Core.ViewModels;
 using CodeFramework.iOS.Views;
 using CodeFramework.ViewControllers;
 using MonoTouch;
-using Cirrious.CrossCore.Core;
-using Cirrious.MvvmCross.ViewModels;
-using Cirrious.MvvmCross.Binding.BindingContext;
-using Cirrious.MvvmCross.Binding.Bindings;
-using System.Collections.Generic;
-using Cirrious.MvvmCross.Touch.Views;
-using Cirrious.CrossCore.Touch.Views;
 
 namespace CodeFramework.iOS.ViewControllers
 {

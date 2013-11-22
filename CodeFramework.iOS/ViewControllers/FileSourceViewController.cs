@@ -6,7 +6,7 @@ using MonoTouch.UIKit;
 
 namespace CodeFramework.iOS.ViewControllers
 {
-    public abstract class FileSourceViewController : WebViewController
+    public abstract class FileSourceViewController : WebView
     {
         protected static string TempDir = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "source");
         private bool _loaded;

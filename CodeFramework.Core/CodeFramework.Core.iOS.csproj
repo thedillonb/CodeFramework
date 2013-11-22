@@ -66,6 +66,7 @@
     <Compile Include="ViewModels\ILoadableViewModel.cs" />
     <Compile Include="ViewModels\StartupViewModel.cs" />
     <Compile Include="ViewModels\ViewModelExtensions.cs" />
+    <Compile Include="ViewModels\WebBrowserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
