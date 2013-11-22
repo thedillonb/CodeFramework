@@ -36,6 +36,10 @@ namespace CodeFramework.iOS.Views
 
             foreach (var account in accountsService)
             {
+				#if DEBUG
+				ViewModel.SelectAccountCommand.Execute(account);
+				#endif
+
                 var thisAccount = account;
                 var t = new AccountElement(thisAccount);
                 t.Tapped += () => ViewModel.SelectAccountCommand.Execute(thisAccount);
