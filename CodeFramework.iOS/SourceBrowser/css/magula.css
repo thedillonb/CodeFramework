@@ -1,32 +1,31 @@
-/*
-
-Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
-
+﻿/*
+Description: Magula style for highligh.js
+Author: Ruslan Keba <rukeba@gmail.com>
+Website: http://rukeba.com/
+Version: 1.0
+Date: 2009-01-03
+Music: Aphex Twin / Xtal
 */
 
 pre code {
   display: block; padding: 0.5em;
-  background: #F0F0F0;
+  background-color: #f4f4f4;
 }
 
 pre code,
 pre .subst,
-pre .tag .title,
 pre .lisp .title,
-pre .clojure .built_in,
-pre .nginx .title {
+pre .clojure .built_in {
   color: black;
 }
 
 pre .string,
 pre .title,
-pre .constant,
 pre .parent,
 pre .tag .value,
 pre .rules .value,
 pre .rules .value .number,
 pre .preprocessor,
-pre .haml .symbol,
 pre .ruby .symbol,
 pre .ruby .symbol .string,
 pre .aggregate,
@@ -37,42 +36,28 @@ pre .addition,
 pre .flow,
 pre .stream,
 pre .bash .variable,
-pre .apache .tag,
 pre .apache .cbracket,
-pre .tex .command,
-pre .tex .special,
-pre .erlang_repl .function_or_atom,
-pre .asciidoc .header,
-pre .markdown .header,
 pre .coffeescript .attribute {
-  color: #800;
+  color: #050;
 }
 
 pre .comment,
 pre .annotation,
 pre .template_comment,
 pre .diff .header,
-pre .chunk,
-pre .asciidoc .blockquote,
-pre .markdown .blockquote {
-  color: #888;
+pre .chunk {
+  color: #777;
 }
 
 pre .number,
 pre .date,
 pre .regexp,
 pre .literal,
-pre .hexcolor,
 pre .smalltalk .symbol,
 pre .smalltalk .char,
-pre .go .constant,
 pre .change,
-pre .lasso .variable,
-pre .asciidoc .bullet,
-pre .markdown .bullet,
-pre .asciidoc .link_url,
-pre .markdown .link_url {
-  color: #080;
+pre .tex .special {
+  color: #800;
 }
 
 pre .label,
@@ -83,10 +68,8 @@ pre .filter .argument,
 pre .localvars,
 pre .array,
 pre .attr_selector,
-pre .important,
 pre .pseudo,
 pre .pi,
-pre .haml .bullet,
 pre .doctype,
 pre .deletion,
 pre .envvar,
@@ -94,43 +77,27 @@ pre .shebang,
 pre .apache .sqbracket,
 pre .nginx .built_in,
 pre .tex .formula,
-pre .erlang_repl .reserved,
 pre .prompt,
-pre .asciidoc .link_label,
-pre .markdown .link_label,
-pre .vhdl .attribute,
-pre .clojure .attribute,
-pre .asciidoc .attribute,
-pre .lasso .attribute,
-pre .coffeescript .property {
-  color: #88F
+pre .clojure .attribute {
+  color: #00e;
 }
 
 pre .keyword,
 pre .id,
+pre .phpdoc,
 pre .title,
 pre .built_in,
 pre .aggregate,
-pre .css .tag,
-pre .javadoctag,
-pre .phpdoc,
-pre .yardoctag,
 pre .smalltalk .class,
 pre .winutils,
 pre .bash .variable,
 pre .apache .tag,
-pre .go .typename,
+pre .xml .tag,
 pre .tex .command,
-pre .asciidoc .strong,
-pre .markdown .strong,
 pre .request,
 pre .status {
   font-weight: bold;
-}
-
-pre .asciidoc .emphasis,
-pre .markdown .emphasis {
-  font-style: italic;
+  color: navy;
 }
 
 pre .nginx .built_in {
@@ -139,7 +106,6 @@ pre .nginx .built_in {
 
 pre .coffeescript .javascript,
 pre .javascript .xml,
-pre .lasso .markup,
 pre .tex .formula,
 pre .xml .javascript,
 pre .xml .vbscript,
@@ -147,3 +113,10 @@ pre .xml .css,
 pre .xml .cdata {
   opacity: 0.5;
 }
+
+/* --- */
+pre .apache .tag {
+  font-weight: bold;
+  color: blue;
+}
+
