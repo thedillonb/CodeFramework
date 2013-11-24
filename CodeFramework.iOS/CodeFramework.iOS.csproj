@@ -131,4 +131,17 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="SourceBrowser\" />
+    <Folder Include="SourceBrowser\css\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SourceBrowser\index.html" />
+    <Content Include="SourceBrowser\css\prism-line-numbers.css" />
+    <Content Include="SourceBrowser\css\default.css" />
+    <Content Include="SourceBrowser\prism.js" />
+    <Content Include="SourceBrowser\prism-line-numbers.js" />
+    <Content Include="SourceBrowser\prism-file-highlight.js" />
+    <Content Include="SourceBrowser\css\override.css" />
+  </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@ using Cirrious.MvvmCross.Touch.Views;
 using CodeFramework.iOS.Views;
 using MonoTouch.UIKit;
 using CodeFramework.Core;
+using MonoTouch.Foundation;
 
 namespace CodeFramework.iOS.Views
 {
@@ -63,7 +64,7 @@ namespace CodeFramework.iOS.Views
                     (ForwardButton = new UIBarButtonItem(Theme.CurrentTheme.WebFowardButton, UIBarButtonItemStyle.Plain, (s, e) => GoForward()) { Enabled = false }),
                     new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
                     (RefreshButton = new UIBarButtonItem(UIBarButtonSystemItem.Refresh, (s, e) => Refresh()))
-                                      };
+                };
 
                 BackButton.TintColor = Theme.CurrentTheme.WebButtonTint;
                 ForwardButton.TintColor = Theme.CurrentTheme.WebButtonTint;
@@ -124,7 +125,7 @@ namespace CodeFramework.iOS.Views
             Web.Frame = View.Bounds;
         }
 
-        protected string LoadFile(string path)
+		protected string LoadFile(string path)
         {
 			if (path == null)
 				return string.Empty;
@@ -133,6 +134,12 @@ namespace CodeFramework.iOS.Views
             InvokeOnMainThread(() => Web.LoadRequest(new MonoTouch.Foundation.NSUrlRequest(new MonoTouch.Foundation.NSUrl(uri))));
             return uri;
         }
+
+		protected void LoadContent(string content, string contextPath)
+		{
+			contextPath = contextPath.Replace("/", "//").Replace(" ", "%20");
+			Web.LoadHtmlString(content, NSUrl.FromString("file:/" + contextPath + "//"));
+		}
         
         public override void ViewWillAppear(bool animated)
         {
