@@ -6,24 +6,36 @@ using MonoTouch.CoreGraphics;
 using MonoTouch.Dialog;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using MonoTouch.Dialog.Utilities;
 
 namespace CodeFramework.iOS.Elements
 {
-    public class NewsFeedElement : NameTimeStringElement
+	public class NewsFeedElement : Element, IElementSizing, IColorizeBackground, IImageUpdated
     {
+		private readonly string _name;
+		private readonly string _time;
+		private readonly Uri _imageUri;
+		private UIImage _image;
+		private readonly UIImage _actionImage;
+		private readonly int _bodyBlocks;
+		private readonly Action _tapped;
+
+		private readonly NSMutableAttributedString _attributedHeader;
+		private readonly NSMutableAttributedString _attributedBody;
+		private readonly List<Link> _headerLinks;
+		private readonly List<Link> _bodyLinks;
+
+		private readonly LinkDelegate _headerLinkDelegate;
+		private readonly LinkDelegate _bodyLinkDelegate;
+
         public static UIColor LinkColor = UIColor.FromRGB(0, 64, 128);
         public static UIFont LinkFont = UIFont.SystemFontOfSize(12f);
 
-        private TextBlock[] _blocks;
-        private NSMutableAttributedString _string;
-        private Kitty _kitty;
-        private OHAttributedLabel _label;
-
         private UIImage LittleImage { get; set; }
-        private float _lastHeight = 0;
 
-        private List<ListToLinks> _listToLinks;
-        private class ListToLinks
+		public Action<NSUrl> WebLinkClicked;
+
+        private class Link
         {
             public NSRange Range;
             public NSAction Callback;
@@ -33,9 +45,9 @@ namespace CodeFramework.iOS.Elements
         public class TextBlock
         {
             public string Value;
-            public NSAction Tapped;
+			public Action Tapped;
             public UIFont Font;
-            public UIColor Color;
+			public UIColor Color;
 
             public TextBlock()
             {
@@ -46,13 +58,13 @@ namespace CodeFramework.iOS.Elements
                 Value = value;
             }
 
-            public TextBlock(string value, NSAction tapped = null)
+			public TextBlock(string value, Action tapped = null)
                 : this (value)
             {
                 Tapped = tapped;
             }
 
-            public TextBlock(string value, UIFont font = null, UIColor color = null, NSAction tapped = null)
+			public TextBlock(string value, UIFont font = null, UIColor color = null, Action tapped = null)
                 : this(value, tapped)
             {
                 Font = font; 
@@ -60,96 +72,102 @@ namespace CodeFramework.iOS.Elements
             }
         }
 
-        public NewsFeedElement(string name, string imageUrl, DateTime time, IEnumerable<TextBlock> blocks, UIImage littleImage)
+		public NewsFeedElement(string name, string imageUrl, DateTime time, IEnumerable<TextBlock> headerBlocks, IEnumerable<TextBlock> bodyBlocks, UIImage littleImage, Action tapped)
+			: base(null)
         {
-            Lines = 4;
-            _blocks = blocks.ToArray();
-            _kitty = new Kitty { Parent = this };
+			_name = name;
+			_imageUri = new Uri(imageUrl);
+			_time = time.ToDaysAgo();
+			_actionImage = littleImage;
+			_tapped = tapped;
 
-            LittleImage = littleImage;
-            Time = time.ToDaysAgo();
-            Name = name ?? "Unknown";
+			var header = CreateAttributedStringFromBlocks(headerBlocks);
+			_attributedHeader = header.Item1;
+			_headerLinks = header.Item2;
 
-            Image = Theme.CurrentTheme.AnonymousUserImage;
-            if (imageUrl != null)
-                ImageUri = new Uri(imageUrl);
+			var body = CreateAttributedStringFromBlocks(bodyBlocks);
+			_attributedBody = body.Item1;
+			_bodyLinks = body.Item2;
+			_bodyBlocks = bodyBlocks.Count();
 
-            _string = new NSMutableAttributedString();
-            _listToLinks = new List<ListToLinks>(_blocks.Length);
-
-            int lengthCounter = 0;
-            int i = 0;
-            foreach (var b in _blocks)
-            {
-                UIColor color = null;
-                if (b.Color != null)
-                    color = b.Color;
-                else
-                {
-                    if (b.Tapped != null)
-                        color = LinkColor;
-                }
-
-                UIFont font = null;
-                if (b.Font != null)
-                    font = b.Font;
-                else
-                {
-                    if (b.Tapped != null)
-                        font = LinkFont;
-                }
-
-                if (color == null)
-                    color = Theme.CurrentTheme.MainTextColor;
-                if (font == null)
-                    font = UIFont.SystemFontOfSize(12f);
-
-
-                var ctFont = new MonoTouch.CoreText.CTFont(font.Name, font.PointSize);
-                var str = new NSAttributedString(b.Value, new MonoTouch.CoreText.CTStringAttributes() { ForegroundColor = color.CGColor, Font = ctFont });
-                _string.Append(str);
-                var strLength = str.Length;
-
-                if (b.Tapped != null)
-                    _listToLinks.Add(new ListToLinks { Range = new NSRange(lengthCounter, strLength), Callback = b.Tapped, Id = i++ });
-
-                lengthCounter += strLength;
-            }
+			_headerLinkDelegate = new LinkDelegate(_headerLinks, this);
+			_bodyLinkDelegate = new LinkDelegate(_bodyLinks, this);
         }
 
-        public override UITableViewCell GetCell(UITableView tv)
+		private Tuple<NSMutableAttributedString,List<Link>> CreateAttributedStringFromBlocks(IEnumerable<TextBlock> blocks)
+		{
+			var attributedString = new NSMutableAttributedString();
+			var links = new List<Link>();
+
+			int lengthCounter = 0;
+			int i = 0;
+
+			foreach (var b in blocks)
+			{
+				UIColor color = null;
+				if (b.Color != null)
+					color = b.Color;
+				else
+				{
+					if (b.Tapped != null)
+						color = LinkColor;
+				}
+
+				UIFont font = null;
+				if (b.Font != null)
+					font = b.Font;
+				else
+				{
+					if (b.Tapped != null)
+						font = LinkFont;
+				}
+
+				if (color == null)
+					color = Theme.CurrentTheme.MainTextColor;
+				if (font == null)
+					font = UIFont.SystemFontOfSize(12f);
+
+
+				var ctFont = new MonoTouch.CoreText.CTFont(font.Name, font.PointSize);
+				var str = new NSAttributedString(b.Value, new MonoTouch.CoreText.CTStringAttributes() { ForegroundColor = color.CGColor, Font = ctFont });
+				attributedString.Append(str);
+				var strLength = str.Length;
+
+				if (b.Tapped != null)
+					links.Add(new Link { Range = new NSRange(lengthCounter, strLength), Callback = new NSAction(b.Tapped), Id = i++ });
+
+				lengthCounter += strLength;
+			}
+
+			return new Tuple<NSMutableAttributedString, List<Link>>(attributedString, links);
+		}
+
+		private class LinkDelegate : OHAttributedLabelDelegate
         {
-            var cell = base.GetCell(tv);
-            cell.AutosizesSubviews = true;
+			private readonly List<Link> _links;
+			private readonly NewsFeedElement _parent;
 
-            foreach (var view in cell.Subviews)
-            {
-                if (view is OHAttributedLabel) {
-                    view.RemoveFromSuperview();
-                }
-            }
+			public LinkDelegate(List<Link> links, NewsFeedElement parent)
+			{
+				_links = links;
+				_parent = parent;
+			}
 
-            cell.AddSubview(_label);
-            return cell;
-        }
-
-        public class Kitty : OHAttributedLabelDelegate
-        {
-            public NewsFeedElement Parent;
             public override bool ShouldFollowLink (OHAttributedLabel sender, NSObject linkInfo)
             {
                 var a = (NSUrl)MonoTouch.ObjCRuntime.Runtime.GetNSObject (MonoTouch.ObjCRuntime.Messaging.IntPtr_objc_msgSend(linkInfo.Handle, MonoTouch.ObjCRuntime.Selector.GetHandle ("URL")));
                 try
                 {
-                    if (a.AbsoluteString.StartsWith("http"))
-                    {
-                        try { UIApplication.SharedApplication.OpenUrl(new NSUrl(a.AbsoluteString)); } catch { }
-                    }
-                    else
-                    {
-                        var id = Int32.Parse(a.AbsoluteString);
-                        Parent._listToLinks[id].Callback();
-                    }
+					if (a.AbsoluteString.StartsWith("http"))
+					{
+						if (_parent.WebLinkClicked != null)
+							_parent.WebLinkClicked(a);
+					}
+					else
+					{
+						var id = Int32.Parse(a.AbsoluteString);
+						_links[id].Callback();
+					}
                 }
                 catch (Exception e)
                 {
@@ -159,62 +177,73 @@ namespace CodeFramework.iOS.Elements
             }
         }
 
-        private void CreateOrUpdate(RectangleF frame)
-        {
-            if (_label == null)
-            {
-                _label = new OHAttributedLabel(frame);
-                _label.Tag = 100;
-                _label.BackgroundColor = UIColor.Clear;
-                _label.AttributedText = _string;
-                _label.Delegate = _kitty;
-                _label.RemoveAllCustomLinks();
-                _label.SetUnderlineLinks(false);
-                _label.LineBreakMode = UILineBreakMode.WordWrap;
-                if (LinkColor != null)
-                    _label.LinkColor = LinkColor;
+		private static float CharacterHeight = "A".MonoStringHeight(UIFont.SystemFontOfSize(12f), 1000);
 
-                foreach (var b in _listToLinks)
-                {
-                    _label.AddCustomLink(new NSUrl(b.Id.ToString()), b.Range);
-                }
+		public float GetHeight (UITableView tableView, NSIndexPath indexPath)
+		{
+			if (_attributedBody.Length > 0)
+			{
+				var rec = _attributedBody.GetBoundingRect(new SizeF(tableView.Bounds.Width - 41, 10000), NSStringDrawingOptions.UsesLineFragmentOrigin | NSStringDrawingOptions.UsesFontLeading, null);
+				var height = rec.Height;
 
-            }
-            else
-            {
-                _label.Frame = frame;
-            }
-        }
+				if (_bodyBlocks == 1 && height > (CharacterHeight * 4))
+					height = CharacterHeight * 4;
 
-        public override float Height(RectangleF bounds)
-        {
-            var f =  base.Height(bounds);
+				var descCalc = 66f + height;
+				var ret = ((int)Math.Ceiling(descCalc)) + 1f + 8f;
+				return ret;
+			}
+			return 66f;
+		}
 
-            if (bounds.Width != _lastHeight)
-            {
-                var width = bounds.Width;
-                if (IsTappedAssigned)
-                    width -= 20f;
-                var frameX = LeftRightPadding * 2 + 32f + 3f;
+		protected override NSString CellKey {
+			get {
+				return new NSString("NewsCellView");
+			}
+		}
 
-                var newFrame = new RectangleF(frameX, 45f, width - frameX - LeftRightPadding, 0);
-                CreateOrUpdate(newFrame);
-                _label.SizeToFit();
-                if (_label.Frame.Height > 60f)
-                    CreateOrUpdate(new RectangleF(frameX, 45f, width - frameX - LeftRightPadding, 60));
+		public override UITableViewCell GetCell (UITableView tv)
+		{
+			var cell = tv.DequeueReusableCell(CellKey) as NewsCellView ?? NewsCellView.Create();
+			return cell;
+		}
 
-                _label.SetNeedsDisplay();
-                _lastHeight = bounds.Width;
-            }
+		public override void Selected(DialogViewController dvc, UITableView tableView, NSIndexPath path)
+		{
+			base.Selected(dvc, tableView, path);
+			if (_tapped != null)
+				_tapped();
+			tableView.DeselectRow (path, true);
+		}
 
-            return f + _label.Frame.Height;
-        }
+		void IColorizeBackground.WillDisplay(UITableView tableView, UITableViewCell cell, NSIndexPath indexPath)
+		{
+			var c = cell as NewsCellView;
+			if (c == null)
+				return;
 
-        public override void Draw(RectangleF bounds, CGContext context, UIView view)
-        {
-            base.Draw(bounds, context, view);
-            if (LittleImage != null)
-                LittleImage.Draw(new RectangleF(LeftRightPadding + 16f, TopBottomPadding + 32f + 5f, 16f, 16f));
-        }
+			if (_image == null && _imageUri != null)
+				_image = ImageLoader.DefaultRequestImage(_imageUri, this);
+			c.Set(_name, _image, _time, _actionImage, _attributedHeader, _attributedBody, _headerLinkDelegate, _bodyLinkDelegate);
+		}
+
+		#region IImageUpdated implementation
+
+		public void UpdatedImage(Uri uri)
+		{
+			var img = ImageLoader.DefaultRequestImage(uri, this);
+			if (img == null)
+				return;
+			_image = img;
+
+			if (uri == null)
+				return;
+			var root = GetImmediateRootElement ();
+			if (root == null || root.TableView == null)
+				return;
+			root.TableView.ReloadRows (new [] { IndexPath }, UITableViewRowAnimation.None);
+		}
+
+		#endregion
     }
 }

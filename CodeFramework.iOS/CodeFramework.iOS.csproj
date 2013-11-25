@@ -81,10 +81,15 @@
     <Compile Include="Views\ToolbarButton.cs" />
     <Compile Include="Views\WebView.cs" />
     <Compile Include="Views\WebBrowserView.cs" />
+    <Compile Include="Cells\NewsCellView.cs" />
+    <Compile Include="Cells\NewsCellView.designer.cs">
+      <DependentUpon>NewsCellView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
     <InterfaceDefinition Include="Cells\RepositoryCellView.xib" />
+    <InterfaceDefinition Include="Cells\NewsCellView.xib" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Cirrious.CrossCore">
