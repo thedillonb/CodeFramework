@@ -20,12 +20,13 @@ namespace CodeFramework.iOS.ViewControllers
         private bool _firstSeen;
         private MBProgressHUD.MTMBProgressHUD _loadingHud;
 		private UIRefreshControl _refreshControl;
-		private float _beforeLoadingOffset;
 		
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
 			ViewDidLoadCalled.Raise(this);
+
+			EdgesForExtendedLayout = UIRectEdge.None;
 
 			var loadableViewModel = ViewModel as LoadableViewModel;
 			if (loadableViewModel != null)
@@ -37,13 +38,12 @@ namespace CodeFramework.iOS.ViewControllers
 				{
 						if (x)
 						{
-							_beforeLoadingOffset = TableView.ContentInset.Top;
 							_refreshControl.BeginRefreshing();
 							TableView.SetContentOffset(new System.Drawing.PointF(0, -TableView.ContentInset.Top), true);
 						}
 						else
 						{
-							TableView.SetContentOffset(new System.Drawing.PointF(0, _beforeLoadingOffset), true);
+							TableView.SetContentOffset(new System.Drawing.PointF(0, 0), true);
 							_refreshControl.EndRefreshing();
 						}
 				});
