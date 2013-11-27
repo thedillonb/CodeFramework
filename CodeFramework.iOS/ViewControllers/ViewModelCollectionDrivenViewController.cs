@@ -39,7 +39,7 @@ namespace CodeFramework.ViewControllers
         {
             NoItemsText = "No Items".t();
             Style = UITableViewStyle.Plain;
-            EnableSearch = true;
+			EnableSearch = true;
         }
 
         protected void BindCollection<T, R>(T viewModel, Func<T, CollectionViewModel<R>> outExpr, Func<R, Element> element) where T : MvxViewModel

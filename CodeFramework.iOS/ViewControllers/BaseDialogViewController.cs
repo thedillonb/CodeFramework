@@ -26,12 +26,6 @@ namespace CodeFramework.ViewControllers
             NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Theme.CurrentTheme.BackButton, () => NavigationController.PopViewControllerAnimated(true)));
         }
 
-        public override void ViewDidAppear(bool animated)
-        {
-            base.ViewDidAppear(animated);
-			//GoogleAnalytics.GAI.SharedInstance.DefaultTracker.TrackView(this.GetType().Name);
-        }
-
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();

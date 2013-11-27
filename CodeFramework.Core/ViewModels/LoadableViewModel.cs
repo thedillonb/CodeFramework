@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CodeFramework.Core.ViewModels
 {
-	public abstract class LoadableViewModel : BaseViewModel, ILoadableViewModel
+	public abstract class LoadableViewModel : BaseViewModel
 	{
 		private readonly ICommand _loadCommand;
 		private bool _isLoading;
@@ -31,10 +31,9 @@ namespace CodeFramework.Core.ViewModels
 						IsLoading = true;
 						await Load(forceCacheInvalidation ?? false);
 					}
-					catch (Exception)
+					catch (Exception e)
 					{
-						Console.WriteLine("I had trouble!!!");
-						throw;
+						Console.WriteLine("I had trouble: " + e.Message);
 					}
 					finally
 					{

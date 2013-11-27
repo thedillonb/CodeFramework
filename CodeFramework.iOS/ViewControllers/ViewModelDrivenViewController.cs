@@ -10,6 +10,7 @@ using CodeFramework.Core.ViewModels;
 using CodeFramework.iOS.Views;
 using CodeFramework.ViewControllers;
 using MonoTouch;
+using MonoTouch.UIKit;
 
 namespace CodeFramework.iOS.ViewControllers
 {
@@ -18,15 +19,35 @@ namespace CodeFramework.iOS.ViewControllers
         protected ErrorView CurrentError;
         private bool _firstSeen;
         private MBProgressHUD.MTMBProgressHUD _loadingHud;
+		private UIRefreshControl _refreshControl;
+		private float _beforeLoadingOffset;
 		
         public override void ViewDidLoad()
         {
-
-            if (ViewModel is ILoadableViewModel)
-                RefreshRequested += HandleRefreshRequested;
-
             base.ViewDidLoad();
-            ViewDidLoadCalled.Raise(this);
+			ViewDidLoadCalled.Raise(this);
+
+			var loadableViewModel = ViewModel as LoadableViewModel;
+			if (loadableViewModel != null)
+			{
+				_refreshControl = new UIRefreshControl();
+				RefreshControl = _refreshControl;
+				_refreshControl.ValueChanged += HandleRefreshRequested;
+				loadableViewModel.Bind(x => x.IsLoading, x =>
+				{
+						if (x)
+						{
+							_beforeLoadingOffset = TableView.ContentInset.Top;
+							_refreshControl.BeginRefreshing();
+							TableView.SetContentOffset(new System.Drawing.PointF(0, -TableView.ContentInset.Top), true);
+						}
+						else
+						{
+							TableView.SetContentOffset(new System.Drawing.PointF(0, _beforeLoadingOffset), true);
+							_refreshControl.EndRefreshing();
+						}
+				});
+			}
         }
 
         private void StartLoading()
@@ -79,7 +100,7 @@ namespace CodeFramework.iOS.ViewControllers
 
         private void HandleRefreshRequested(object sender, EventArgs e)
         {
-            var loadableViewModel = ViewModel as ILoadableViewModel;
+			var loadableViewModel = ViewModel as LoadableViewModel;
             if (loadableViewModel != null)
             {
                 try
@@ -89,10 +110,6 @@ namespace CodeFramework.iOS.ViewControllers
                 catch (Exception ex)
                 {
                     Utilities.ShowAlert("Error".t(), ex.Message);
-                }
-                finally
-                {
-                    ReloadComplete();
                 }
             }
         }
@@ -106,7 +123,7 @@ namespace CodeFramework.iOS.ViewControllers
             {
                 _firstSeen = true;
 
-                var loadableViewModel = ViewModel as ILoadableViewModel;
+				var loadableViewModel = ViewModel as LoadableViewModel;
                 if (loadableViewModel != null)
                 {
                     try
@@ -117,13 +134,17 @@ namespace CodeFramework.iOS.ViewControllers
                     {
                         CurrentError = ErrorView.Show(this.View, e.Message);
                     }
-
-                    // Indicate that the reload is complete
-                    ReloadComplete();
                 }
             }
 
         }
+
+		public override float GetHeightForFooter(MonoTouch.UIKit.UITableView tableView, int section)
+		{
+			if (tableView.Style == MonoTouch.UIKit.UITableViewStyle.Grouped)
+				return 2;
+			return base.GetHeightForFooter(tableView, section);
+		}
 
 		public override void ViewWillDisappear(bool animated)
 		{

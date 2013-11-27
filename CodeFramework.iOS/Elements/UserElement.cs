@@ -24,7 +24,6 @@ namespace CodeFramework.iOS.Elements
                 ImageUri = new Uri(avatar);
 			UsePinnedImage = true;
         }
-
         
         // We need to create our own cell so we can position the image view appropriately
         protected override UITableViewCell CreateTableViewCell(UITableViewCellStyle style, string key)
@@ -43,6 +42,7 @@ namespace CodeFramework.iOS.Elements
             public PinnedImageTableViewCell(UITableViewCellStyle style, string key) 
                 : base(style, key) 
             { 
+				this.SeparatorInset = new MonoTouch.UIKit.UIEdgeInsets(0, 48f, 0, 0); 
                 ImageView.ContentMode = UIViewContentMode.ScaleAspectFill;
 //                ImageView.Layer.CornerRadius = 4.0f;
 //                ImageView.Layer.MasksToBounds = true;

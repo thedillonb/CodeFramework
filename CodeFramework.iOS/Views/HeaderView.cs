@@ -65,16 +65,19 @@ namespace CodeFramework.iOS.Views
         }
 
         public bool ShadowImage { get; set; }
+
+		public UIColor SeperatorColor { get; set; }
         
-        public HeaderView(float width)
-            : base(new RectangleF(0, 0, width, 60f))
+		public HeaderView()
+			: base(new RectangleF(0, 0, 0, 60f))
         {
             ShadowImage = true;
             BackgroundColor = UIColor.Clear;
-            Layer.MasksToBounds = false;
-            Layer.ShadowColor = UIColor.Gray.CGColor;
-            Layer.ShadowOpacity = 0.4f;
-            Layer.ShadowOffset = new SizeF(0, 1f);
+			SeperatorColor = UIColor.FromRGB(199, 199, 204);
+//            Layer.MasksToBounds = false;
+//            Layer.ShadowColor = UIColor.Gray.CGColor;
+//            Layer.ShadowOpacity = 0.4f;
+//            Layer.ShadowOffset = new SizeF(0, 1f);
         }
 
         public void UpdatedImage(Uri uri)
@@ -102,18 +105,18 @@ namespace CodeFramework.iOS.Views
                 var top = rect.Height / 2 - height / 2;
                 var left = rect.Width - XPad - width;
 
-                if (ShadowImage)
-                {
-                    context.SaveState();
-                    context.SetFillColor(UIColor.White.CGColor);
-                    context.TranslateCTM(left, top);
-                    context.SetLineWidth(1.0f);
-                    context.SetShadowWithColor(new SizeF(0, 0), 5, UIColor.LightGray.CGColor);
-                    context.AddPath(GraphicsUtil.MakeRoundedPath(width, 4));
-                    context.FillPath();
-                    context.RestoreState();
-                }
-
+//                if (ShadowImage)
+//                {
+//                    context.SaveState();
+//                    context.SetFillColor(UIColor.White.CGColor);
+//                    context.TranslateCTM(left, top);
+//                    context.SetLineWidth(1.0f);
+//                    context.SetShadowWithColor(new SizeF(0, 0), 5, UIColor.LightGray.CGColor);
+//                    context.AddPath(GraphicsUtil.MakeRoundedPath(width, 4));
+//                    context.FillPath();
+//                    context.RestoreState();
+//                }
+//
 
                 Image.Draw(new RectangleF(left, top, width, height));
                 contentWidth -= (width + XPad * 2); 
@@ -142,7 +145,18 @@ namespace CodeFramework.iOS.Views
                 );
             }
 
+			context.SetStrokeColor(SeperatorColor.CGColor);
+			context.SetLineWidth(1.0f);
 
+			context.BeginPath();
+			context.MoveTo(0, 0);
+			context.AddLineToPoint(rect.Width, 0);
+			context.StrokePath();
+
+			context.BeginPath();
+			context.MoveTo(0, rect.Bottom);
+			context.AddLineToPoint(rect.Width, rect.Bottom);
+			context.StrokePath();
         }
     }
 }
