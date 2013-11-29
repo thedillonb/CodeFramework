@@ -97,9 +97,9 @@ namespace CodeFramework.iOS.ViewControllers
 		public Composer () : base (null, null)
 		{
             Title = "New Comment".t();
-
+			EdgesForExtendedLayout = UIRectEdge.None;
 			// Navigation Bar
-		    _navigationBar = new UINavigationBar(new RectangleF(0, 0, UIScreen.MainScreen.Bounds.Width, 44))
+			_navigationBar = new UINavigationBar(new RectangleF(0, 0, UIScreen.MainScreen.Bounds.Width, 64))
 		                         {AutoresizingMask = UIViewAutoresizing.FlexibleWidth, AutosizesSubviews = true};
 		    _navItem = new UINavigationItem ("");
 
@@ -161,7 +161,7 @@ namespace CodeFramework.iOS.ViewControllers
         public override void ViewWillLayoutSubviews()
         {
             base.ViewWillLayoutSubviews();
-            _navigationBar.Frame = new RectangleF (0, 0, View.Bounds.Width, 44);
+			_navigationBar.Frame = new RectangleF (0, 0, View.Bounds.Width, 64);
         }
 
         [Obsolete]

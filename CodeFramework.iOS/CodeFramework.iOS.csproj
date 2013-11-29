@@ -139,6 +139,7 @@
   <ItemGroup>
     <Folder Include="SourceBrowser\" />
     <Folder Include="SourceBrowser\css\" />
+    <Folder Include="Diff\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SourceBrowser\index.html" />
@@ -146,6 +147,12 @@
     <Content Include="SourceBrowser\highlight.pack.js" />
     <Content Include="SourceBrowser\css\vs.css" />
     <Content Include="SourceBrowser\css\line-numbers.css" />
+    <Content Include="Diff\diffindex.html" />
+    <Content Include="Diff\jquery.min.js" />
+    <Content Include="Diff\app.js" />
+    <Content Include="Diff\difflib.js" />
+    <Content Include="Diff\diffview.css" />
+    <Content Include="Diff\diffview.js" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SourceBrowser\css\arta.css" />

@@ -19,6 +19,7 @@ namespace CodeFramework.ViewControllers
         public BaseDialogViewController(bool push)
             : base(new RootElement(""), push)
         {
+			EdgesForExtendedLayout = UIRectEdge.None;
             Autorotate = true;
 			SearchPlaceholder = "Search";
 			//AutoHideSearch = true;

@@ -1,5 +1,7 @@
 using System;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Cirrious.MvvmCross.ViewModels;
 
 namespace CodeFramework.Core.ViewModels
 {
@@ -33,12 +35,36 @@ namespace CodeFramework.Core.ViewModels
 			}
 		}
 
+		public string Title
+		{
+			get;
+			protected set;
+		}
+
+		public string HtmlUrl
+		{
+			get;
+			protected set;
+		}
+
+		public ICommand GoToHtmlUrlCommand
+		{
+			get { return new MvxCommand(() => ShowViewModel<WebBrowserViewModel>(new WebBrowserViewModel.NavObject { Url = HtmlUrl }), () => !string.IsNullOrEmpty(HtmlUrl)); }
+		}
+
 		protected string CreateContentFile()
 		{
 			var html = System.IO.File.ReadAllText("SourceBrowser/index.html");
 			var filled = html.Replace("{CODE_PATH}", "file://" + FilePath);
 			var filepath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "source.html");
 			System.IO.File.WriteAllText(filepath, filled, System.Text.Encoding.UTF8);
+			return filepath;
+		}
+
+		protected static string CreatePlainContentFile(string data, string filename)
+		{
+			var filepath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), filename);
+			System.IO.File.WriteAllText(filepath, data, System.Text.Encoding.UTF8);
 			return filepath;
 		}
 

@@ -68,6 +68,9 @@
     <Compile Include="ViewModels\WebBrowserViewModel.cs" />
     <Compile Include="ViewModels\FileSourceViewModel.cs" />
     <Compile Include="ViewModels\LoadableViewModel.cs" />
+    <Compile Include="Services\IViewModelTxService.cs" />
+    <Compile Include="Services\ViewModelTxService.cs" />
+    <Compile Include="Services\IJsonSerializationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

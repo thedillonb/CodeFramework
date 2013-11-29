@@ -17,16 +17,13 @@ namespace CodeFramework.iOS.ViewControllers
 	public abstract class ViewModelDrivenViewController : BaseDialogViewController, IMvxTouchView, IMvxEventSourceViewController
     {
         protected ErrorView CurrentError;
-        private bool _firstSeen;
-        private MBProgressHUD.MTMBProgressHUD _loadingHud;
 		private UIRefreshControl _refreshControl;
+		private bool _manualRefresh;
 		
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
 			ViewDidLoadCalled.Raise(this);
-
-			EdgesForExtendedLayout = UIRectEdge.None;
 
 			var loadableViewModel = ViewModel as LoadableViewModel;
 			if (loadableViewModel != null)
@@ -43,49 +40,69 @@ namespace CodeFramework.iOS.ViewControllers
 						}
 						else
 						{
-							TableView.SetContentOffset(new System.Drawing.PointF(0, 0), true);
+
 							_refreshControl.EndRefreshing();
+
+							if (_manualRefresh)
+								TableView.SetContentOffset(new System.Drawing.PointF(0, 0), true);
+							_manualRefresh = false;
+
+//							var hideSearch = EnableSearch && AutoHideSearch;
+//							var newY = hideSearch ? 44 : 0;
+//							_refreshControl.EndRefreshing();
+//							if (TableView.ContentOffset.Y != newY)
+//							{
+//							}
 						}
 				});
+
+				try
+				{
+					loadableViewModel.LoadCommand.Execute(false);
+				}
+				catch (Exception e)
+				{
+					CurrentError = ErrorView.Show(this.View, e.Message);
+				}
 			}
         }
-
-        private void StartLoading()
-        {
-            if (_loadingHud != null)
-                return;
-
-            //Make sure the Toolbar is disabled too
-            if (this.ToolbarItems != null)
-            {
-                foreach (var t in this.ToolbarItems)
-                    t.Enabled = false;
-            }
-
-            _loadingHud = new MBProgressHUD.MTMBProgressHUD(this.View) {
-                Mode = MBProgressHUD.MBProgressHUDMode.Indeterminate, 
-                LabelText = "Loading..."
-            };
-
-            this.View.AddSubview(_loadingHud);
-            _loadingHud.Show(true);
-        }
-
-        private void EndLoading()
-        {
-            if (_loadingHud == null)
-                return;
-
-            _loadingHud.Hide(true);
-            _loadingHud.RemoveFromSuperview();
-
-            //Enable all the toolbar items
-            if (this.ToolbarItems != null)
-            {
-                foreach (var t in this.ToolbarItems)
-                    t.Enabled = true;
-            }
-        }
+//
+//        private void StartLoading()
+//        {
+//            if (_loadingHud != null)
+//                return;
+//
+//            //Make sure the Toolbar is disabled too
+//            if (this.ToolbarItems != null)
+//            {
+//                foreach (var t in this.ToolbarItems)
+//                    t.Enabled = false;
+//            }
+//
+//            _loadingHud = new MBProgressHUD.MTMBProgressHUD(this.View) {
+//                Mode = MBProgressHUD.MBProgressHUDMode.Indeterminate, 
+//                LabelText = "Loading..."
+//            };
+//
+//            this.View.AddSubview(_loadingHud);
+//            _loadingHud.Show(true);
+//        }
+//
+//        private void EndLoading()
+//        {
+//            if (_loadingHud == null)
+//                return;
+//
+//            _loadingHud.Hide(true);
+//            _loadingHud.RemoveFromSuperview();
+//
+//            //Enable all the toolbar items
+//            if (this.ToolbarItems != null)
+//            {
+//                foreach (var t in this.ToolbarItems)
+//                    t.Enabled = true;
+//            }
+//        }
 
         /// <summary>
         /// Initializes a new instance of the class.
@@ -105,6 +122,7 @@ namespace CodeFramework.iOS.ViewControllers
             {
                 try
                 {
+					_manualRefresh = true;
                     loadableViewModel.LoadCommand.Execute(true);
                 }
                 catch (Exception ex)
@@ -114,29 +132,24 @@ namespace CodeFramework.iOS.ViewControllers
             }
         }
 
+
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
+			ViewWillAppearCalled.Raise(this, animated);
 
-            //We only want to run this code once, when teh view is first seen...
-            if (!_firstSeen)
-            {
-                _firstSeen = true;
-
-				var loadableViewModel = ViewModel as LoadableViewModel;
-                if (loadableViewModel != null)
-                {
-                    try
-                    {
-                        loadableViewModel.LoadCommand.Execute(false);
-                    }
-                    catch (Exception e)
-                    {
-                        CurrentError = ErrorView.Show(this.View, e.Message);
-                    }
-                }
-            }
-
+//            //We only want to run this code once, when teh view is first seen...
+//            if (!_firstSeen)
+//            {
+//                _firstSeen = true;
+//
+//				var loadableViewModel = ViewModel as LoadableViewModel;
+//                if (loadableViewModel != null)
+//                {
+//
+//                }
+//            }
+//
         }
 
 		public override float GetHeightForFooter(MonoTouch.UIKit.UITableView tableView, int section)
@@ -151,16 +164,16 @@ namespace CodeFramework.iOS.ViewControllers
 			base.ViewWillDisappear(animated);
 			ViewWillDisappearCalled.Raise(this, animated);
 		}
-
-		protected T Bind<T>(T element, string bindingDescription)
-		{
-			return element.Bind(this, bindingDescription);
-		}
-
-		protected T Bind<T>(T element, IEnumerable<MvxBindingDescription> bindingDescription)
-		{
-			return element.Bind(this, bindingDescription);
-		}
+//
+//		protected T Bind<T>(T element, string bindingDescription)
+//		{
+//			return element.Bind(this, bindingDescription);
+//		}
+//
+//		protected T Bind<T>(T element, IEnumerable<MvxBindingDescription> bindingDescription)
+//		{
+//			return element.Bind(this, bindingDescription);
+//		}
 
 		public object DataContext
 		{

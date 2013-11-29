@@ -74,6 +74,8 @@ namespace CodeFramework.iOS.Views
                 ForwardButton.Enabled = false;
                 RefreshButton.Enabled = false;
             }
+
+			EdgesForExtendedLayout = UIRectEdge.None;
         }
 
         protected virtual bool ShouldStartLoad (MonoTouch.Foundation.NSUrlRequest request, UIWebViewNavigationType navigationType)
@@ -124,6 +126,16 @@ namespace CodeFramework.iOS.Views
             base.ViewWillLayoutSubviews();
             Web.Frame = View.Bounds;
         }
+
+		protected static string JavaScriptStringEncode(string data)
+		{
+			return System.Web.HttpUtility.JavaScriptStringEncode(data);
+		}
+
+		protected static string UrlDecode(string data)
+		{
+			return System.Web.HttpUtility.UrlDecode(data);
+		}
 
 		protected string LoadFile(string path)
         {
