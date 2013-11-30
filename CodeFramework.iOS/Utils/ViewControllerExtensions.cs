@@ -132,7 +132,9 @@ namespace CodeFramework.iOS.Utils
 
             var hud = new MTMBProgressHUD(parent) {
                 Mode = MBProgressHUDMode.Indeterminate, 
-                LabelText = workTitle
+				LabelText = workTitle,
+				RemoveFromSuperViewOnHide = true,
+				AnimationType = MBProgressHUDAnimation.MBProgressHUDAnimationFade
             };
             parent.AddSubview(hud);
             hud.Show(true);
@@ -150,11 +152,7 @@ namespace CodeFramework.iOS.Utils
             }
             finally
             {
-                if (hud != null)
-                {
-                    hud.Hide(true);
-                    hud.RemoveFromSuperview();
-                }
+                hud.Hide(true);
 
                 //Enable all the toolbar items
                 if (controller.ToolbarItems != null)

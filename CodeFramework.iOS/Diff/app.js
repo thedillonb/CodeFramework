@@ -28,12 +28,16 @@ function loadFileAsPatch(path) {
 	});
 }
 
+function escapeHtml(data) {
+	return $('<div/>').text(data).html(); 
+}
+
 function patch(p) {
 	var $body = $('body');
 	var $table = $("<table class='diff inlinediff'></table>");
 
 	function createRow(x, y, type, line, lineNum) {
-		$table.append("<tr data-to='" + lineNum + "' data-x='" + x + "' data-y='" + y + "'><th>" + x + "</th><th>" + y + "</th><td class='" + type + "'>" + line + "</td></tr>");
+		$table.append("<tr data-to='" + lineNum + "' data-x='" + x + "' data-y='" + y + "'><th>" + x + "</th><th>" + y + "</th><td class='" + type + "'>" + escapeHtml(line) + "</td></tr>");
 	};
 	
 	var lines = p.split("\n");
