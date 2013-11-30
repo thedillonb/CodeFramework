@@ -19,7 +19,7 @@ namespace CodeFramework.iOS.ViewControllers
 			_title = new UILabel(new RectangleF(0, 40, 320, 40));
             _title.TextAlignment = UITextAlignment.Left;
             _title.BackgroundColor = UIColor.Clear;
-            _title.Font = UIFont.BoldSystemFontOfSize(20f);
+			_title.Font = UIFont.BoldSystemFontOfSize(18f);
             _title.TextColor = UIColor.FromRGB(246, 246, 246);
 //            _title.ShadowColor = UIColor.FromRGB(21, 21, 21);
 //            _title.ShadowOffset = new SizeF(0, 1);
@@ -35,11 +35,11 @@ namespace CodeFramework.iOS.ViewControllers
         /// <value>The title.</value>
         public override string Title {
             get {
-                return _title == null ? base.Title : _title.Text;
+				return _title == null ? base.Title : " " + _title.Text;
             }
             set {
                 if (_title != null)
-                    _title.Text = value;
+					_title.Text = " " + value;
                 base.Title = value;
             }
         }
@@ -72,7 +72,7 @@ namespace CodeFramework.iOS.ViewControllers
                 size = new SizeF(24, 24);
             }
 
-			_profileButton.Frame = new RectangleF(new PointF(4, 4), size);
+			_profileButton.Frame = new RectangleF(new PointF(0, 4), size);
 
             NavigationItem.LeftBarButtonItem = new UIBarButtonItem(_profileButton);
         }

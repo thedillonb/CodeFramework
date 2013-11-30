@@ -89,7 +89,7 @@ namespace CodeFramework.iOS.Views
         }
 
 
-        public override Source CreateSizingSource(bool unevenRows)
+		public override DialogViewController.Source CreateSizingSource(bool unevenRows)
         {
             return new EditSource(this);
         }
@@ -104,7 +104,7 @@ namespace CodeFramework.iOS.Views
             AccountDeleted(accountElement.Account);
         }
 
-        private class EditSource : Source
+		private class EditSource : BaseDialogViewController.Source
         {
             private readonly AccountsView _parent;
             public EditSource(AccountsView dvc) 

@@ -34,6 +34,41 @@ namespace CodeFramework.ViewControllers
             if (Title != null && Root != null)
                 Root.Caption = Title;
         }
+
+		public override DialogViewController.Source CreateSizingSource(bool unevenRows)
+		{
+			if (unevenRows)
+				return (DialogViewController.Source)new SizingSource(this);
+			else
+				return (DialogViewController.Source)new Source(this);
+		}
+
+		protected new class SizingSource : DialogViewController.SizingSource
+		{
+			public SizingSource (DialogViewController controller) : base (controller) {}
+
+			public override float GetHeightForFooter (UITableView tableView, int sectionIdx)
+			{
+				var section = Root[sectionIdx];
+				if (Container.Style == UITableViewStyle.Grouped && section.FooterView == null && string.IsNullOrEmpty(section.Footer))
+					return 3;
+				return base.GetHeightForFooter(tableView, sectionIdx);
+			}
+
+		}
+
+		protected new class Source : DialogViewController.Source
+		{
+			public Source (DialogViewController controller) : base (controller) {}
+
+			public override float GetHeightForFooter (UITableView tableView, int sectionIdx)
+			{
+				var section = Root[sectionIdx];
+				if (Container.Style == UITableViewStyle.Grouped && section.FooterView == null && string.IsNullOrEmpty(section.Footer))
+					return 3;
+				return base.GetHeightForFooter(tableView, sectionIdx);
+			}
+		}
     }
 }
 
