@@ -183,7 +183,7 @@ namespace CodeFramework.iOS.Elements
 		{
 			if (_attributedBody.Length > 0)
 			{
-				var rec = _attributedBody.GetBoundingRect(new SizeF(tableView.Bounds.Width - 41, 10000), NSStringDrawingOptions.UsesLineFragmentOrigin | NSStringDrawingOptions.UsesFontLeading, null);
+				var rec = _attributedBody.GetBoundingRect(new SizeF(tableView.Bounds.Width - 16, 10000), NSStringDrawingOptions.UsesLineFragmentOrigin | NSStringDrawingOptions.UsesFontLeading, null);
 				var height = rec.Height;
 
 				if (_bodyBlocks == 1 && height > (CharacterHeight * 4))
@@ -194,6 +194,13 @@ namespace CodeFramework.iOS.Elements
 				return ret;
 			}
 			return 66f;
+		}
+
+		private bool IsHeaderMultilined(UITableView tableView)
+		{
+			var rec = _attributedHeader.GetBoundingRect(new SizeF(tableView.Bounds.Width - 56, 10000), NSStringDrawingOptions.UsesLineFragmentOrigin | NSStringDrawingOptions.UsesFontLeading, null);
+			var height = rec.Height;
+			return height > (CharacterHeight);
 		}
 
 		protected override NSString CellKey {
@@ -224,6 +231,9 @@ namespace CodeFramework.iOS.Elements
 
 			if (_image == null && _imageUri != null)
 				_image = ImageLoader.DefaultRequestImage(_imageUri, this);
+
+			var isHeaderMultilined = IsHeaderMultilined(tableView);
+			c.SetHeaderAlignment(!isHeaderMultilined);
 			c.Set(_name, _image, _time, _actionImage, _attributedHeader, _attributedBody, _headerLinkDelegate, _bodyLinkDelegate);
 		}
 

@@ -2,19 +2,16 @@ using System;
 using Cirrious.MvvmCross.Touch.Views;
 using MonoTouch;
 using MonoTouch.UIKit;
+using CodeFramework.Core.ViewModels;
+using MBProgressHUD;
 
-namespace CodeFramework.iOS.ViewControllers
+namespace CodeFramework.iOS.Views
 {
     public class StartupView : MvxViewController
     {
         private UIImageView _imgView;
         private UIImage _img;
-
-        public StartupView()
-        {
-            if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone)
-                WantsFullScreenLayout = true;
-        }
+		private MTMBProgressHUD _hud;
 
         public override void ViewWillLayoutSubviews()
         {
@@ -57,7 +54,35 @@ namespace CodeFramework.iOS.ViewControllers
             View.AutosizesSubviews = true;
             _imgView = new UIImageView {AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight};
             Add(_imgView);
+
+			_hud = new MTMBProgressHUD(View) {
+				Mode = MBProgressHUDMode.Indeterminate, 
+				LabelText = "Logging in...",
+				RemoveFromSuperViewOnHide = true,
+				AnimationType = MBProgressHUDAnimation.MBProgressHUDAnimationFade
+			};
+
+			var vm = (BaseStartupViewModel)ViewModel;
+			vm.Bind(x => x.IsLoggingIn, x =>
+				{
+					if (x)
+					{
+						View.AddSubview(_hud);
+						_hud.Show(true);
+					}
+					else
+					{
+						_hud.Hide(true);
+					}
+				});
         }
+
+		public override void ViewDidAppear(bool animated)
+		{
+			base.ViewDidAppear(animated);
+			var vm = (BaseStartupViewModel)ViewModel;
+			vm.StartupCommand.Execute(null);
+		}
 
         public override bool ShouldAutorotate()
         {
@@ -69,18 +94,6 @@ namespace CodeFramework.iOS.ViewControllers
             if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone)
                 return UIInterfaceOrientationMask.Portrait | UIInterfaceOrientationMask.PortraitUpsideDown;
             return UIInterfaceOrientationMask.All;
-        }
-
-        [Obsolete]
-        public override bool ShouldAutorotateToInterfaceOrientation(UIInterfaceOrientation toInterfaceOrientation)
-        {
-            if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone)
-            {
-                if (toInterfaceOrientation == UIInterfaceOrientation.Portrait || toInterfaceOrientation == UIInterfaceOrientation.PortraitUpsideDown)
-                    return true;
-                return false;
-            }
-            return true;
         }
 
         /// <summary>

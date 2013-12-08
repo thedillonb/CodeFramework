@@ -4,11 +4,35 @@ using Cirrious.CrossCore;
 using Cirrious.MvvmCross.ViewModels;
 using CodeFramework.Core.Data;
 using CodeFramework.Core.Services;
+using System;
 
 namespace CodeFramework.Core.ViewModels
 {
-    public class StartupViewModel : BaseViewModel
+	public abstract class BaseStartupViewModel : BaseViewModel
     {
+		private bool _isLoggingIn;
+		private Exception _error;
+
+		public bool IsLoggingIn
+		{
+			get { return _isLoggingIn; }
+			protected set
+			{
+				_isLoggingIn = value;
+				RaisePropertyChanged(() => IsLoggingIn);
+			}
+		}
+
+		public Exception Error
+		{
+			get { return _error; }
+			protected set
+			{
+				_error = value;
+				RaisePropertyChanged(() => Error);
+			}
+		}
+
         public ICommand StartupCommand
         {
             get { return new MvxCommand(Startup);}
@@ -17,10 +41,7 @@ namespace CodeFramework.Core.ViewModels
         /// <summary>
         /// Execute startup code
         /// </summary>
-        protected virtual void Startup()
-        {
-            Login();
-        }
+		protected abstract void Startup();
 
         /// <summary>
         /// Gets the default account. If there is not one assigned it will pick the first in the account list.
@@ -35,16 +56,6 @@ namespace CodeFramework.Core.ViewModels
 
         private void Login()
         {
-            var defaultAccount = GetDefaultAccount();
-            if (defaultAccount == null)
-            {
-                this.ShowViewModel<BaseAccountsViewModel>();
-                return;
-            }
-
-
-
-
 //            var defaultAccount = GetDefaultAccount();
 //
 //            //There's no accounts... or something bad has happened to the default

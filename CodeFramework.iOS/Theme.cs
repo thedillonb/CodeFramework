@@ -2,7 +2,7 @@
 
 namespace CodeFramework.iOS
 {
-    public class Theme
+    public static class Theme
     {
         public static ICodeFrameworkTheme CurrentTheme;
     }

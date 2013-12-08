@@ -59,7 +59,7 @@ namespace CodeFramework.iOS.Views
             get { return string.Empty; }
             set 
             {
-                _image = ImageLoader.DefaultRequestImage(new Uri(value), this); 
+				_image = string.IsNullOrEmpty(value) ? null : ImageLoader.DefaultRequestImage(new Uri(value), this); 
                 SetNeedsDisplay(); 
             }
         }

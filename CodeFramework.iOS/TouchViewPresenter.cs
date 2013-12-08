@@ -3,11 +3,10 @@ using Cirrious.CrossCore;
 using Cirrious.MvvmCross.Touch.Views;
 using Cirrious.MvvmCross.Touch.Views.Presenters;
 using Cirrious.MvvmCross.ViewModels;
-using CodeFramework.Core;
 using CodeFramework.iOS.ViewControllers;
 using CodeFramework.iOS.Views;
-using CodeFramework.Utils;
 using MonoTouch.UIKit;
+using CodeFramework.Core;
 
 namespace CodeFramework.iOS
 {
@@ -22,10 +21,18 @@ namespace CodeFramework.iOS
             _window = window;
         }
 
+		public override void ChangePresentation(MvxPresentationHint hint)
+		{
+			if (hint is MvxClosePresentationHint)
+			{
+				_generalNavigationController.PopViewControllerAnimated(true);
+			}
+		}
+
         public override void Show(MvxViewModelRequest request)
         {
             var viewCreator = Mvx.Resolve<IMvxTouchViewCreator>();
-            var view = viewCreator.CreateView(request);
+			var view = viewCreator.CreateView(request);
             var uiView = view as UIViewController;
 
             if (uiView == null)
@@ -42,16 +49,14 @@ namespace CodeFramework.iOS
 //				_generalNavigationController.NavigationBar.BarTintColor = Theme.CurrentTheme.AccountsNavigationBarTint;
 				_generalNavigationController.NavigationBar.Translucent = false;
 
-                Transitions.Transition(_window, _generalNavigationController, UIViewAnimationOptions.TransitionFlipFromRight);
+				Transition(_generalNavigationController, UIViewAnimationTransition.FlipFromRight);
             }
-            else if (uiView is MenuBaseViewController)
+			else if (uiView is MenuBaseViewController)
             {
                 _slideoutController = new SlideoutNavigationViewController();
 				_slideoutController.MenuViewLeft = uiView;
-//				uiView.NavigationController.NavigationBar.BarTintColor = Theme.CurrentTheme.SlideoutNavigationBarTint;
 				uiView.NavigationController.NavigationBar.Translucent = false;
-
-                Transitions.Transition(_window, _slideoutController, UIViewAnimationOptions.TransitionFlipFromRight);
+				Transition(_slideoutController, UIViewAnimationTransition.FlipFromLeft);
             }
             else
             {
@@ -59,14 +64,23 @@ namespace CodeFramework.iOS
                 {
                     _slideoutController.SelectView(uiView);
                     _generalNavigationController = _slideoutController.TopView.NavigationController;
-//					_generalNavigationController.NavigationBar.BarTintColor = Theme.CurrentTheme.ApplicationNavigationBarTint;
+					//_generalNavigationController.NavigationBar.BarTintColor = Theme.CurrentTheme.ApplicationNavigationBarTint;
 					_generalNavigationController.NavigationBar.Translucent = false;
-                }
+				}
                 else
                 {
                     _generalNavigationController.PushViewController(uiView, true);
                 }
             }
         }
+
+		private void Transition(UIViewController controller, UIViewAnimationTransition animation)
+		{
+			UIView.BeginAnimations("view_presenter_transition");
+			_window.RootViewController = controller;
+			UIView.SetAnimationDuration(0.6);
+			UIView.SetAnimationTransition(animation, _window, false);
+			UIView.CommitAnimations();
+		}
     }
 }

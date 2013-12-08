@@ -8,12 +8,14 @@ using CodeFramework.iOS.ViewControllers;
 using CodeFramework.ViewControllers;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
-using CodeFramework.iOS.ViewControllers;
+using MBProgressHUD;
 
 namespace CodeFramework.iOS.Views
 {
 	public class AccountsView : ViewModelDrivenViewController
     {
+		private MTMBProgressHUD _hud;
+
         public new BaseAccountsViewModel ViewModel
         {
             get { return (BaseAccountsViewModel) base.ViewModel; }
@@ -23,7 +25,38 @@ namespace CodeFramework.iOS.Views
         public AccountsView() : base(true)
         {
             Title = "Accounts";
+
+			NavigationItem.LeftBarButtonItem = null;
+			NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s, e) =>
+			{
+				ViewModel.AddAccountCommand.Execute(null);
+			});
         }
+
+		public override void ViewDidLoad()
+		{
+			base.ViewDidLoad();
+
+			_hud = new MTMBProgressHUD(View) {
+				Mode = MBProgressHUDMode.Indeterminate, 
+				LabelText = "Logging in...",
+				RemoveFromSuperViewOnHide = true,
+				AnimationType = MBProgressHUDAnimation.MBProgressHUDAnimationFade
+			};
+
+			ViewModel.Bind(x => x.IsLoggingIn, x =>
+			{
+				if (x)
+				{
+					View.AddSubview(_hud);
+					_hud.Show(true);
+				}
+				else
+				{
+					_hud.Hide(true);
+				}
+			});
+		}
 
         /// <summary>
         /// Called when the accounts need to be populated
@@ -36,10 +69,6 @@ namespace CodeFramework.iOS.Views
 
             foreach (var account in accountsService)
             {
-				#if DEBUG
-				ViewModel.SelectAccountCommand.Execute(account);
-				#endif
-
                 var thisAccount = account;
                 var t = new AccountElement(thisAccount);
                 t.Tapped += () => ViewModel.SelectAccountCommand.Execute(thisAccount);
@@ -80,11 +109,6 @@ namespace CodeFramework.iOS.Views
             var accountSection = new Section();
             accountSection.AddAll(PopulateAccounts());
             root.Add(accountSection);
-
-            var addAccountSection = new Section();
-            addAccountSection.Add(new StyledStringElement("Add Account".t(), () => ViewModel.AddAccountCommand.Execute(null)));
-            root.Add(addAccountSection);
-
             Root = root;
         }
 

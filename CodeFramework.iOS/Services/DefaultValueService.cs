@@ -6,11 +6,6 @@ namespace CodeFramework.iOS.Services
 {
     public class DefaultValueService : IDefaultValueService
     {
-        public DefaultValueService()
-        {
-            Console.WriteLine("COOL!");
-        }
-
         public T Get<T>(string key)
         {
             if (typeof(T) == typeof(int))
@@ -20,14 +15,25 @@ namespace CodeFramework.iOS.Services
 
         public bool TryGet<T>(string key, out T value)
         {
-            var val = Utilities.Defaults.DataForKey(key);
-            if (val == null)
-            {
-                value = default(T);
-                return false;
-            }
-            value = Get<T>(key);
-            return true;
+			try
+			{
+				value = Get<T>(key);
+				return true;
+			}
+			catch
+			{
+				value = default(T);
+				return false;
+			}
+
+//			var val = Utilities.Defaults.ValueForKey(new MonoTouch.Foundation.NSString(key));
+//            if (val == null)
+//            {
+//                value = default(T);
+//                return false;
+//            }
+//			value = Get<T>(key);
+//            return true;
         }
 
         public void Set(string key, object value)

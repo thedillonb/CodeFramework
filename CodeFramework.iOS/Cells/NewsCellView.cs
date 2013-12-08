@@ -33,6 +33,10 @@ namespace CodeFramework.iOS
 			this.Body.Delegate = bodyDelegate;
 		}
 
+		public void SetHeaderAlignment(bool center)
+		{
+			this.Header.CenterVertically = center;
+		}
 //
 //		private void CreateOrUpdate(RectangleF frame)
 //		{

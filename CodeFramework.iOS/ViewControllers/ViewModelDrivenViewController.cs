@@ -1,16 +1,16 @@
 using System;
-using System.Collections.Generic;
 using Cirrious.CrossCore.Core;
 using Cirrious.CrossCore.Touch.Views;
 using Cirrious.MvvmCross.Binding.BindingContext;
-using Cirrious.MvvmCross.Binding.Bindings;
 using Cirrious.MvvmCross.Touch.Views;
 using Cirrious.MvvmCross.ViewModels;
 using CodeFramework.Core.ViewModels;
 using CodeFramework.iOS.Views;
 using CodeFramework.ViewControllers;
-using MonoTouch;
 using MonoTouch.UIKit;
+using Cirrious.MvvmCross.Plugins.Messenger;
+using Cirrious.CrossCore;
+using CodeFramework.Core.Messages;
 
 namespace CodeFramework.iOS.ViewControllers
 {
@@ -19,6 +19,7 @@ namespace CodeFramework.iOS.ViewControllers
         protected ErrorView CurrentError;
 		private UIRefreshControl _refreshControl;
 		private bool _manualRefresh;
+		private MvxSubscriptionToken _errorToken;
 		
         public override void ViewDidLoad()
         {
@@ -56,14 +57,7 @@ namespace CodeFramework.iOS.ViewControllers
 						}
 				});
 
-				try
-				{
-					loadableViewModel.LoadCommand.Execute(false);
-				}
-				catch (Exception e)
-				{
-					CurrentError = ErrorView.Show(this.View, e.Message);
-				}
+				loadableViewModel.LoadCommand.Execute(false);
 			}
         }
 //
@@ -120,15 +114,8 @@ namespace CodeFramework.iOS.ViewControllers
 			var loadableViewModel = ViewModel as LoadableViewModel;
             if (loadableViewModel != null)
             {
-                try
-                {
-					_manualRefresh = true;
-                    loadableViewModel.LoadCommand.Execute(true);
-                }
-                catch (Exception ex)
-                {
-                    Utilities.ShowAlert("Error".t(), ex.Message);
-                }
+				_manualRefresh = true;
+                loadableViewModel.LoadCommand.Execute(true);
             }
         }
 
@@ -137,20 +124,15 @@ namespace CodeFramework.iOS.ViewControllers
         {
             base.ViewWillAppear(animated);
 			ViewWillAppearCalled.Raise(this, animated);
-
-//            //We only want to run this code once, when teh view is first seen...
-//            if (!_firstSeen)
-//            {
-//                _firstSeen = true;
-//
-//				var loadableViewModel = ViewModel as LoadableViewModel;
-//                if (loadableViewModel != null)
-//                {
-//
-//                }
-//            }
-//
+			_errorToken = Mvx.Resolve<IMvxMessenger>().SubscribeOnMainThread<ErrorMessage>(OnErrorMessage);
         }
+
+		private void OnErrorMessage(ErrorMessage msg)
+		{
+			if (msg.Sender != ViewModel)
+				return;
+			MonoTouch.Utilities.ShowAlert("Error", msg.Error.Message);
+		}
 
 		public override float GetHeightForFooter(MonoTouch.UIKit.UITableView tableView, int section)
 		{
@@ -163,6 +145,8 @@ namespace CodeFramework.iOS.ViewControllers
 		{
 			base.ViewWillDisappear(animated);
 			ViewWillDisappearCalled.Raise(this, animated);
+			_errorToken.Dispose();
+			_errorToken = null;
 		}
 //
 //		protected T Bind<T>(T element, string bindingDescription)

@@ -35,9 +35,8 @@ namespace CodeFramework.Core.Data
                     return (T)d.ReadObject(stream);
                 }
             }
-            catch (Exception e)
+            catch
             {
-                Mvx.Resolve<IErrorReporter>().ReportError("Unable to deserialize filter", e);
                 return default(T);
             }
         }

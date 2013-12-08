@@ -48,7 +48,6 @@
     <Compile Include="Services\IAccountPreferencesService.cs" />
     <Compile Include="Services\IAccountsService.cs" />
     <Compile Include="Services\IDefaultValueService.cs" />
-    <Compile Include="Services\IErrorReporter.cs" />
     <Compile Include="Data\AccountPinnedRepositories.cs" />
     <Compile Include="Utils\CustomObservableCollection.cs" />
     <Compile Include="Utils\DateTimeExtensions.cs" />
@@ -63,7 +62,6 @@
     <Compile Include="ViewModels\FilterGroup.cs" />
     <Compile Include="ViewModels\FilterModel.cs" />
     <Compile Include="ViewModels\IFilterableViewModel.cs" />
-    <Compile Include="ViewModels\StartupViewModel.cs" />
     <Compile Include="ViewModels\ViewModelExtensions.cs" />
     <Compile Include="ViewModels\WebBrowserViewModel.cs" />
     <Compile Include="ViewModels\FileSourceViewModel.cs" />
@@ -71,6 +69,10 @@
     <Compile Include="Services\IViewModelTxService.cs" />
     <Compile Include="Services\ViewModelTxService.cs" />
     <Compile Include="Services\IJsonSerializationService.cs" />
+    <Compile Include="ViewModels\BaseStartupViewModel.cs" />
+    <Compile Include="Messages\ErrorMessage.cs" />
+    <Compile Include="Services\IErrorReporter.cs" />
+    <Compile Include="Services\ErrorReporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -85,6 +87,12 @@
     <Reference Include="Cirrious.MvvmCross">
       <HintPath>..\lib\iOS\Cirrious.MvvmCross.dll</HintPath>
     </Reference>
+    <Reference Include="Cirrious.MvvmCross.Plugins.Messenger">
+      <HintPath>..\lib\iOS\Cirrious.MvvmCross.Plugins.Messenger.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Messages\" />
+  </ItemGroup>
 </Project>

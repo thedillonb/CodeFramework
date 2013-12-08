@@ -54,7 +54,6 @@
     <Compile Include="Theme.cs" />
     <Compile Include="TouchViewPresenter.cs" />
     <Compile Include="Utils\Graphics.cs" />
-    <Compile Include="Utils\Transitions.cs" />
     <Compile Include="Utils\Translate.cs" />
     <Compile Include="Utils\UIImageExtensions.cs" />
     <Compile Include="Utils\Util.cs" />
@@ -62,13 +61,10 @@
     <Compile Include="Views\AccountsView.cs" />
     <Compile Include="ViewControllers\BaseDialogViewController.cs" />
     <Compile Include="ViewControllers\Composer.cs" />
-    <Compile Include="ViewControllers\FileSourceViewController.cs" />
     <Compile Include="ViewControllers\FilterViewController.cs" />
     <Compile Include="ViewControllers\MenuBaseViewController.cs" />
     <Compile Include="ViewControllers\MultipleChoiceViewController.cs" />
-    <Compile Include="ViewControllers\RadioChoiceViewController.cs" />
     <Compile Include="ViewControllers\SlideoutNavigationViewController.cs" />
-    <Compile Include="ViewControllers\StartupView.cs" />
     <Compile Include="ViewControllers\ViewModelCollectionDrivenViewController.cs" />
     <Compile Include="ViewControllers\ViewModelDrivenViewController.cs" />
     <Compile Include="Views\AddRemoveView.cs" />
@@ -85,6 +81,8 @@
     <Compile Include="Cells\NewsCellView.designer.cs">
       <DependentUpon>NewsCellView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\StartupView.cs" />
+    <Compile Include="Utils\Hud.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
@@ -120,6 +118,9 @@
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
     <Reference Include="System.Web.Services" />
+    <Reference Include="Cirrious.MvvmCross.Plugins.Messenger">
+      <HintPath>..\lib\iOS\Cirrious.MvvmCross.Plugins.Messenger.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeFramework.Core\CodeFramework.Core.iOS.csproj">

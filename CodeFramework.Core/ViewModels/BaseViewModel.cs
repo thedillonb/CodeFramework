@@ -2,6 +2,8 @@
 using Cirrious.CrossCore;
 using Cirrious.MvvmCross.ViewModels;
 using CodeFramework.Core.Services;
+using Cirrious.MvvmCross.Plugins.Messenger;
+using CodeFramework.Core.Messages;
 
 namespace CodeFramework.Core.ViewModels
 {
@@ -10,6 +12,24 @@ namespace CodeFramework.Core.ViewModels
     /// </summary>
     public abstract class BaseViewModel : MvxViewModel
     {
+		/// <summary>
+		/// Gets the ViewModelTxService
+		/// </summary>
+		/// <value>The tx sevice.</value>
+		public IViewModelTxService TxSevice
+		{
+			get { return GetService<IViewModelTxService>(); }
+		}
+
+		/// <summary>
+		/// Gets the messenger service
+		/// </summary>
+		/// <value>The messenger.</value>
+		public IMvxMessenger Messenger
+		{
+			get { return GetService<IMvxMessenger>(); }
+		}
+
         /// <summary>
         /// Gets the service.
         /// </summary>
@@ -20,16 +40,18 @@ namespace CodeFramework.Core.ViewModels
             return Mvx.Resolve<TService>();
         }
 
-        protected static void ReportError(Exception e)
+        protected void ReportError(Exception e)
         {
-            Console.WriteLine(e.Message);
-            //Mvx.Resolve<IErrorReporter>().ReportError(e);
+			Messenger.Publish(new ErrorMessage(this) { Error = e });
+			GetService<IErrorReporter>().ReportError(e);
         }
 
-        protected static void ReportError(string message, Exception e)
+        protected void ReportError(string message, Exception e)
         {
-            Console.WriteLine(message + ": " + e.Message);
-            //Mvx.Resolve<IErrorReporter>().ReportError(message, e);
+			var newException = new Exception(message, e);
+			Messenger.Publish(new ErrorMessage(this) { Error = newException });
+			GetService<IErrorReporter>().ReportError(newException);
+
         }
     }
 }
