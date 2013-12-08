@@ -29,8 +29,8 @@ namespace CodeFramework.iOS.Cells
                 cell.Image2.Image = Theme.CurrentTheme.IssueCellImage2;
                 cell.Image3.Image = Theme.CurrentTheme.IssueCellImage3;
                 cell.Image4.Image = Theme.CurrentTheme.IssueCellImage4;
+				cell.SeparatorInset = new UIEdgeInsets(0, 0, 0, 0);
             }
-
 
             //Create the icons
             return cell;
