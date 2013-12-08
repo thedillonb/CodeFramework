@@ -142,6 +142,7 @@
     <Folder Include="SourceBrowser\" />
     <Folder Include="SourceBrowser\css\" />
     <Folder Include="Diff\" />
+    <Folder Include="WebCell\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SourceBrowser\index.html" />
