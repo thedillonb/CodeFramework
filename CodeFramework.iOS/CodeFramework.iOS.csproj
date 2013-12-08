@@ -83,6 +83,7 @@
     </Compile>
     <Compile Include="Views\StartupView.cs" />
     <Compile Include="Utils\Hud.cs" />
+    <Compile Include="Elements\WebElement.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
