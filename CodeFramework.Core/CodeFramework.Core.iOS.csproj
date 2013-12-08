@@ -55,7 +55,6 @@
     <Compile Include="Utils\FilterGroup.cs" />
     <Compile Include="Utils\FireAndForgetTask.cs" />
     <Compile Include="ViewModels\BaseAccountsViewModel.cs" />
-    <Compile Include="ViewModels\BaseMenuViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CollectionViewModel.cs" />
     <Compile Include="ViewModels\FilterableCollectionViewModel.cs" />
@@ -73,6 +72,9 @@
     <Compile Include="Messages\ErrorMessage.cs" />
     <Compile Include="Services\IErrorReporter.cs" />
     <Compile Include="Services\ErrorReporter.cs" />
+    <Compile Include="Utils\DefaultStartupViewCommand.cs" />
+    <Compile Include="ViewModels\App\BaseMenuViewModel.cs" />
+    <Compile Include="ViewModels\App\BaseDefaultStartupViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -94,5 +96,6 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Messages\" />
+    <Folder Include="ViewModels\App\" />
   </ItemGroup>
 </Project>

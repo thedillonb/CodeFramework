@@ -20,5 +20,17 @@
         /// Gets the filters
         /// </summary>
         AccountFilters Filters { get; }
+
+		/// <summary>
+		/// Gets the pinned repositories
+		/// </summary>
+		/// <value>The pinnned repositories.</value>
+		AccountPinnedRepositories PinnnedRepositories { get; }
+
+		/// <summary>
+		/// Gets or sets the default startup view.
+		/// </summary>
+		/// <value>The default startup view.</value>
+		string DefaultStartupView { get; set; }
     }
 }

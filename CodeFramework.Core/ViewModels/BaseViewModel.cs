@@ -16,7 +16,7 @@ namespace CodeFramework.Core.ViewModels
 		/// Gets the ViewModelTxService
 		/// </summary>
 		/// <value>The tx sevice.</value>
-		public IViewModelTxService TxSevice
+		protected IViewModelTxService TxSevice
 		{
 			get { return GetService<IViewModelTxService>(); }
 		}
@@ -25,7 +25,7 @@ namespace CodeFramework.Core.ViewModels
 		/// Gets the messenger service
 		/// </summary>
 		/// <value>The messenger.</value>
-		public IMvxMessenger Messenger
+		protected IMvxMessenger Messenger
 		{
 			get { return GetService<IMvxMessenger>(); }
 		}
@@ -35,7 +35,7 @@ namespace CodeFramework.Core.ViewModels
         /// </summary>
         /// <typeparam name="TService">The type of the service.</typeparam>
         /// <returns>An instance of the service.</returns>
-        public TService GetService<TService>() where TService : class
+		protected TService GetService<TService>() where TService : class
         {
             return Mvx.Resolve<TService>();
         }

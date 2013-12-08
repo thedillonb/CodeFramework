@@ -59,7 +59,6 @@ namespace CodeFramework.iOS.Elements
 			webView = new UIWebView();
 			webView.ScrollView.ScrollEnabled = false;
 			webView.ScrollView.Bounces = false;
-			webView.UserInteractionEnabled = false;
 			webView.ShouldStartLoad = (w, r, n) => ShouldStartLoad(r, n);
 			webView.LoadFinished += (sender, e) => {
 				if (!string.IsNullOrEmpty(_value))
@@ -151,7 +150,6 @@ namespace CodeFramework.iOS.Elements
 			webView = new UIWebView();
 			webView.ScrollView.ScrollEnabled = false;
 			webView.ScrollView.Bounces = false;
-			webView.UserInteractionEnabled = false;
 			webView.ShouldStartLoad = (w, r, n) => ShouldStartLoad(r, n);
 			webView.LoadFinished += (sender, e) => {
 				if (!string.IsNullOrEmpty(_value))

@@ -30,6 +30,18 @@ namespace CodeFramework.Core.Data
         /// <value>The avatar URL.</value>
         public string AvatarUrl { get; set; }
 
+		/// <summary>
+		/// Gets or sets the name of the startup view when the account is loaded
+		/// </summary>
+		/// <value>The startup view.</value>
+		public string DefaultStartupView { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether this <see cref="Account"/> dont remember.
+		/// THIS HAS TO BE A NEGATIVE STATEMENT SINCE IT DEFAULTS TO 'FALSE' WHEN RETRIEVING A NULL VIA SQLITE
+		/// </summary>
+		public bool DontRemember { get; set; }
+
         [Ignore]
         public SQLiteConnection Database 
         {
@@ -42,11 +54,6 @@ namespace CodeFramework.Core.Data
 
                     var dbPath = Path.Combine(AccountDirectory, "settings.db");
                     _database = new SQLiteConnection(dbPath);
-
-
-                    Console.WriteLine("Are we multithraded: " + SQLite3.Config(SQLite3.ConfigOption.MultiThread).ToString());
-                    
-                    
                     return _database;
                 }
 

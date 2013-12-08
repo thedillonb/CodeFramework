@@ -84,6 +84,7 @@
     <Compile Include="Views\StartupView.cs" />
     <Compile Include="Utils\Hud.cs" />
     <Compile Include="Elements\WebElement.cs" />
+    <Compile Include="Views\App\DefaultStartupView.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
@@ -143,6 +144,7 @@
     <Folder Include="SourceBrowser\css\" />
     <Folder Include="Diff\" />
     <Folder Include="WebCell\" />
+    <Folder Include="Views\App\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SourceBrowser\index.html" />

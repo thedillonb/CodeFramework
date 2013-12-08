@@ -42,13 +42,13 @@ namespace CodeFramework.ViewControllers
 			EnableSearch = true;
         }
 
-        protected void BindCollection<T, R>(T viewModel, Func<T, CollectionViewModel<R>> outExpr, Func<R, Element> element) where T : MvxViewModel
+		protected void BindCollection<T, R>(T viewModel, Func<T, CollectionViewModel<R>> outExpr, Func<R, Element> element, bool activateNow = false) where T : MvxViewModel
         {
-            BindCollection(outExpr(viewModel), element);
+			BindCollection(outExpr(viewModel), element, activateNow);
         }
 
         protected void BindCollection<TElement>(CollectionViewModel<TElement> viewModel, 
-                                                Func<TElement, Element> element)
+												Func<TElement, Element> element, bool activateNow = false)
         {
             Action updateDel = () =>
             {
@@ -81,6 +81,9 @@ namespace CodeFramework.ViewControllers
             viewModel.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => {
                 BeginInvokeOnMainThread(() => updateDel());
             };
+
+			if (activateNow)
+				updateDel();
         }
 
         protected void RenderList<T>(IEnumerable<T> items, Func<T, Element> select, Action moreTask)
