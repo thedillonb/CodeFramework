@@ -130,9 +130,16 @@ namespace CodeFramework.ViewControllers
 
             if (moreTask != null)
             {
-                var loadMore = new PaginateElement("Load More".t(), "Loading...".t(), e => this.DoWorkNoHud(moreTask,
-                                                                                                            x => Utilities.ShowAlert("Unable to load more!".t(), x.Message))) { AutoLoadOnVisible = true };
-                root.Add(new Section { loadMore });
+				var loadMore = new PaginateElement("Load More".t(), "Loading...".t()) { AutoLoadOnVisible = true };
+				root.Add(new Section { loadMore });
+				loadMore.Tapped += (obj) => this.DoWorkNoHud(moreTask, x => Utilities.ShowAlert("Unable to load more!".t(), x.Message), () =>
+				{
+					if (loadMore.GetImmediateRootElement() != null)
+					{
+						var section = loadMore.Parent as Section;
+						Root.Remove(section, UITableViewRowAnimation.Fade);
+					}
+				});
             }
 
             Root = root;

@@ -28,8 +28,8 @@ namespace CodeFramework.iOS.Elements
 		private readonly LinkDelegate _headerLinkDelegate;
 		private readonly LinkDelegate _bodyLinkDelegate;
 
-        public static UIColor LinkColor = UIColor.FromRGB(0, 64, 128);
-        public static UIFont LinkFont = UIFont.SystemFontOfSize(12f);
+		public static UIColor LinkColor = Theme.CurrentTheme.MainTitleColor;
+		public static UIFont LinkFont = UIFont.BoldSystemFontOfSize(13f);
 
         private UIImage LittleImage { get; set; }
 
@@ -125,7 +125,7 @@ namespace CodeFramework.iOS.Elements
 				if (color == null)
 					color = Theme.CurrentTheme.MainTextColor;
 				if (font == null)
-					font = UIFont.SystemFontOfSize(12f);
+					font = UIFont.SystemFontOfSize(13f);
 
 
 				var ctFont = new MonoTouch.CoreText.CTFont(font.Name, font.PointSize);
@@ -177,13 +177,13 @@ namespace CodeFramework.iOS.Elements
             }
         }
 
-		private static float CharacterHeight = "A".MonoStringHeight(UIFont.SystemFontOfSize(12f), 1000);
+		private static float CharacterHeight = "A".MonoStringHeight(UIFont.SystemFontOfSize(13f), 1000);
 
 		public float GetHeight (UITableView tableView, NSIndexPath indexPath)
 		{
 			if (_attributedBody.Length > 0)
 			{
-				var rec = _attributedBody.GetBoundingRect(new SizeF(tableView.Bounds.Width - 16, 10000), NSStringDrawingOptions.UsesLineFragmentOrigin | NSStringDrawingOptions.UsesFontLeading, null);
+				var rec = _attributedBody.GetBoundingRect(new SizeF(tableView.Bounds.Width - 56, 10000), NSStringDrawingOptions.UsesLineFragmentOrigin | NSStringDrawingOptions.UsesFontLeading, null);
 				var height = rec.Height;
 
 				if (_bodyBlocks == 1 && height > (CharacterHeight * 4))

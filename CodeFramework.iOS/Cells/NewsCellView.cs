@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
@@ -9,6 +8,7 @@ namespace CodeFramework.iOS
     {
         public static readonly UINib Nib = UINib.FromName("NewsCellView", NSBundle.MainBundle);
         public static readonly NSString Key = new NSString("NewsCellView");
+		public static readonly UIEdgeInsets EdgeInsets = new UIEdgeInsets(0, 48f, 0, 0);
 
         public NewsCellView(IntPtr handle) : base(handle)
         {
@@ -37,39 +37,13 @@ namespace CodeFramework.iOS
 		{
 			this.Header.CenterVertically = center;
 		}
-//
-//		private void CreateOrUpdate(RectangleF frame)
-//		{
-//			if (_label == null)
-//			{
-//				_label = new OHAttributedLabel(frame);
-//				_label.Tag = 100;
-//				_label.BackgroundColor = UIColor.Clear;
-//				_label.AttributedText = _string;
-//				_label.Delegate = _kitty;
-//				_label.RemoveAllCustomLinks();
-//				_label.SetUnderlineLinks(false);
-//				_label.LineBreakMode = UILineBreakMode.WordWrap;
-//				if (LinkColor != null)
-//					_label.LinkColor = LinkColor;
-//
-//				foreach (var b in _listToLinks)
-//				{
-//					_label.AddCustomLink(new NSUrl(b.Id.ToString()), b.Range);
-//				}
-//
-//			}
-//			else
-//			{
-//				_label.Frame = frame;
-//			}
-//		}
 
         public static NewsCellView Create()
         {
 			var cell = (NewsCellView)Nib.Instantiate(null, null)[0];
 			cell.Body.SetUnderlineLinks(false);
 			cell.Header.SetUnderlineLinks(false);
+			cell.SeparatorInset = EdgeInsets;
 			//cell.Header.CenterVertically = true;
 			return cell;
         }
