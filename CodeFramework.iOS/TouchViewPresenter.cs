@@ -42,7 +42,7 @@ namespace CodeFramework.iOS
             {
                 _window.RootViewController = uiView;
             }
-            else if (uiView is AccountsView)
+			else if (uiView is AccountsView)
             {
                 _slideoutController = null;
                 _generalNavigationController = new UINavigationController(uiView);

@@ -42,11 +42,14 @@ namespace CodeFramework.Core.Services
                 _defaults.Set("DEFAULT_ACCOUNT", account.Id);
         }
 
-        public void SetActiveAccount(IAccount account)
+		public void SetActiveAccount(IAccount account)
         {
-            var accountDir = CreateAccountDirectory(account);
-            if (!Directory.Exists(accountDir))
-                Directory.CreateDirectory(accountDir);
+			if (account != null)
+			{
+				var accountDir = CreateAccountDirectory(account);
+				if (!Directory.Exists(accountDir))
+					Directory.CreateDirectory(accountDir);
+			}
 
             ActiveAccount = account;
         }

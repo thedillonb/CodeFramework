@@ -4,6 +4,9 @@ using CodeFramework.iOS.Views;
 using MonoTouch.UIKit;
 using CodeFramework.Core;
 using MonoTouch.Foundation;
+using Cirrious.MvvmCross.Plugins.Messenger;
+using Cirrious.CrossCore;
+using CodeFramework.Core.Messages;
 
 namespace CodeFramework.iOS.Views
 {
@@ -12,6 +15,7 @@ namespace CodeFramework.iOS.Views
         protected UIBarButtonItem BackButton;
         protected UIBarButtonItem RefreshButton;
         protected UIBarButtonItem ForwardButton;
+		private MvxSubscriptionToken _errorToken;
 
         public UIWebView Web { get; private set; }
         private readonly bool _navigationToolbar;
@@ -113,6 +117,8 @@ namespace CodeFramework.iOS.Views
             base.ViewWillDisappear(animated);
             if (ToolbarItems != null)
                 NavigationController.SetToolbarHidden(true, animated);
+			_errorToken.Dispose();
+			_errorToken = null;
         }
         
         public override void ViewDidLoad()
@@ -162,7 +168,15 @@ namespace CodeFramework.iOS.Views
             if (_navigationToolbar)
                 bounds.Height -= NavigationController.Toolbar.Frame.Height;
             Web.Frame = bounds;
+			_errorToken = Mvx.Resolve<IMvxMessenger>().SubscribeOnMainThread<ErrorMessage>(OnErrorMessage);
         }
+
+		private void OnErrorMessage(ErrorMessage msg)
+		{
+			if (msg.Sender != ViewModel)
+				return;
+			MonoTouch.Utilities.ShowAlert("Error", msg.Error.Message);
+		}
         
         public override void DidRotate(UIInterfaceOrientation fromInterfaceOrientation)
         {

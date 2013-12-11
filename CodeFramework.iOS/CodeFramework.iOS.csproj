@@ -143,7 +143,6 @@
     <Folder Include="SourceBrowser\" />
     <Folder Include="SourceBrowser\css\" />
     <Folder Include="Diff\" />
-    <Folder Include="WebCell\" />
     <Folder Include="Views\App\" />
   </ItemGroup>
   <ItemGroup>

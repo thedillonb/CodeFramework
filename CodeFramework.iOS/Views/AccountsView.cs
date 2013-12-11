@@ -96,7 +96,6 @@ namespace CodeFramework.iOS.Views
 
             if (accountsService.ActiveAccount != null && accountsService.ActiveAccount.Equals(thisAccount))
             {
-                NavigationItem.LeftBarButtonItem.Enabled = false;
                 accountsService.SetActiveAccount(null);
             }
         }
