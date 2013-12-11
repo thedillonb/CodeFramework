@@ -103,9 +103,9 @@ namespace CodeFramework.iOS.ViewControllers
 		                         {AutoresizingMask = UIViewAutoresizing.FlexibleWidth, AutosizesSubviews = true};
 		    _navItem = new UINavigationItem ("");
 
-			var close = new UIBarButtonItem (NavigationButton.Create(Theme.CurrentTheme.CancelButton, CloseComposer));
+			var close = new UIBarButtonItem (Theme.CurrentTheme.CancelButton, UIBarButtonItemStyle.Plain, (s, e) => CloseComposer());
 			_navItem.LeftBarButtonItem = close;
-            SendItem = new UIBarButtonItem (NavigationButton.Create(Theme.CurrentTheme.SaveButton, PostCallback));
+			SendItem = new UIBarButtonItem (Theme.CurrentTheme.SaveButton, UIBarButtonItemStyle.Plain, (s, e) => PostCallback());
 			_navItem.RightBarButtonItem = SendItem;
 
 			_navigationBar.PushNavigationItem (_navItem, false);

@@ -19,7 +19,7 @@ namespace CodeFramework.iOS.ViewControllers
 
 		protected override UIBarButtonItem CreateLeftMenuButton()
 		{
-			return new UIBarButtonItem(NavigationButton.Create(Theme.CurrentTheme.ThreeLinesButton, ShowMenuLeft));
+			return new UIBarButtonItem(Theme.CurrentTheme.ThreeLinesButton, UIBarButtonItemStyle.Plain, (s, e) => ShowMenuLeft());
 		}
     }
 }

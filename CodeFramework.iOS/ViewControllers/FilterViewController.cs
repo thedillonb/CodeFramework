@@ -13,11 +13,11 @@ namespace CodeFramework.iOS.ViewControllers
         {
             Style = UITableViewStyle.Grouped;
             Title = "Filter & Sort".t();
-            NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Theme.CurrentTheme.CancelButton, () => DismissViewController(true, null)));
-            NavigationItem.RightBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Theme.CurrentTheme.SaveButton, () => {
+			NavigationItem.LeftBarButtonItem = new UIBarButtonItem(Theme.CurrentTheme.CancelButton, UIBarButtonItemStyle.Plain, (s, e) => DismissViewController(true, null));
+			NavigationItem.RightBarButtonItem = new UIBarButtonItem(Theme.CurrentTheme.SaveButton, UIBarButtonItemStyle.Plain, (s, e) => {
                 ApplyButtonPressed();
                 DismissViewController(true, null); 
-            }));
+            });
         }
 
         public abstract void ApplyButtonPressed();

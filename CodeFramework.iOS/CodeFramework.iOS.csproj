@@ -71,7 +71,6 @@
     <Compile Include="Views\ErrorView.cs" />
     <Compile Include="Views\HeaderView.cs" />
     <Compile Include="Views\MenuSectionView.cs" />
-    <Compile Include="Views\NavigationButton.cs" />
     <Compile Include="Views\ProfileButton.cs" />
     <Compile Include="Views\TableViewSectionView.cs" />
     <Compile Include="Views\ToolbarButton.cs" />

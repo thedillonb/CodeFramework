@@ -18,9 +18,7 @@ namespace CodeFramework.iOS
         UIImage CancelButton { get; }
         UIImage EditButton { get; }
         UIImage SaveButton { get; }
-        UIImage AddButton { get; }
         UIImage FilterButton { get; }
-        UIImage GearButton { get; }
         UIImage ViewButton { get; }
         UIImage WebBackButton { get; }
         UIImage WebFowardButton { get; }

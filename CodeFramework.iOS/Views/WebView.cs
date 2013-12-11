@@ -42,7 +42,7 @@ namespace CodeFramework.iOS.Views
 
 		public WebView(bool navigationToolbar, bool showPageAsTitle = false)
         {
-            NavigationItem.LeftBarButtonItem = new UIBarButtonItem(NavigationButton.Create(Theme.CurrentTheme.BackButton, () => NavigationController.PopViewControllerAnimated(true)));
+			NavigationItem.LeftBarButtonItem = new UIBarButtonItem(Theme.CurrentTheme.BackButton, UIBarButtonItemStyle.Plain, (s, e) => NavigationController.PopViewControllerAnimated(true));
 
             Web = new UIWebView {ScalesPageToFit = true};
             Web.LoadFinished += OnLoadFinished;
