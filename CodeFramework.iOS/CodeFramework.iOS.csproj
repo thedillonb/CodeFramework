@@ -109,9 +109,6 @@
     <Reference Include="Cirrious.MvvmCross.Touch">
       <HintPath>..\lib\iOS\Cirrious.MvvmCross.Touch.dll</HintPath>
     </Reference>
-    <Reference Include="MBProgressHUD">
-      <HintPath>lib\MBProgressHud\MBProgressHUD.dll</HintPath>
-    </Reference>
     <Reference Include="OHAttributedLabel">
       <HintPath>..\lib\iOS\OHAttributedLabel.dll</HintPath>
     </Reference>
@@ -121,6 +118,9 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="Cirrious.MvvmCross.Plugins.Messenger">
       <HintPath>..\lib\iOS\Cirrious.MvvmCross.Plugins.Messenger.dll</HintPath>
+    </Reference>
+    <Reference Include="BTProgressHUD">
+      <HintPath>..\lib\iOS\BTProgressHUD.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -36,12 +36,13 @@ namespace CodeFramework.iOS.ViewControllers
 				{
 						if (x)
 						{
+							MonoTouch.Utilities.PushNetworkActive();
 							_refreshControl.BeginRefreshing();
 							TableView.SetContentOffset(new System.Drawing.PointF(0, -TableView.ContentInset.Top), true);
 						}
 						else
 						{
-
+							MonoTouch.Utilities.PopNetworkActive();
 							_refreshControl.EndRefreshing();
 
 							if (_manualRefresh)

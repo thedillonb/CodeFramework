@@ -8,13 +8,13 @@ using CodeFramework.iOS.ViewControllers;
 using CodeFramework.ViewControllers;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
-using MBProgressHUD;
+using CodeFramework.iOS.Utils;
 
 namespace CodeFramework.iOS.Views
 {
 	public class AccountsView : ViewModelDrivenViewController
     {
-		private MTMBProgressHUD _hud;
+		private IHud _hud;
 
         public new BaseAccountsViewModel ViewModel
         {
@@ -37,23 +37,17 @@ namespace CodeFramework.iOS.Views
 		{
 			base.ViewDidLoad();
 
-			_hud = new MTMBProgressHUD(View) {
-				Mode = MBProgressHUDMode.Indeterminate, 
-				LabelText = "Logging in...",
-				RemoveFromSuperViewOnHide = true,
-				AnimationType = MBProgressHUDAnimation.MBProgressHUDAnimationFade
-			};
+			_hud = new Hud(View);
 
 			ViewModel.Bind(x => x.IsLoggingIn, x =>
 			{
 				if (x)
 				{
-					View.AddSubview(_hud);
-					_hud.Show(true);
+					_hud.Show("Logging in...");
 				}
 				else
 				{
-					_hud.Hide(true);
+					_hud.Hide();
 				}
 			});
 		}

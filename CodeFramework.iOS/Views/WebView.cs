@@ -7,6 +7,7 @@ using MonoTouch.Foundation;
 using Cirrious.MvvmCross.Plugins.Messenger;
 using Cirrious.CrossCore;
 using CodeFramework.Core.Messages;
+using CodeFramework.Core.ViewModels;
 
 namespace CodeFramework.iOS.Views
 {
@@ -125,6 +126,16 @@ namespace CodeFramework.iOS.Views
         {
             base.ViewDidLoad();
             Add(Web);
+
+			var loadableViewModel = ViewModel as LoadableViewModel;
+			if (loadableViewModel != null)
+			{
+				loadableViewModel.Bind(x => x.IsLoading, x =>
+				{
+					if (x) MonoTouch.Utilities.PushNetworkActive();
+					else MonoTouch.Utilities.PopNetworkActive();
+				});
+			}
         }
 
         public override void ViewWillLayoutSubviews()

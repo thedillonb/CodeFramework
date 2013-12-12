@@ -3,7 +3,7 @@ using Cirrious.MvvmCross.Touch.Views;
 using MonoTouch;
 using MonoTouch.UIKit;
 using CodeFramework.Core.ViewModels;
-using MBProgressHUD;
+using CodeFramework.iOS.Utils;
 
 namespace CodeFramework.iOS.Views
 {
@@ -11,7 +11,7 @@ namespace CodeFramework.iOS.Views
     {
         private UIImageView _imgView;
         private UIImage _img;
-		private MTMBProgressHUD _hud;
+		private IHud _hud;
 
         public override void ViewWillLayoutSubviews()
         {
@@ -53,26 +53,19 @@ namespace CodeFramework.iOS.Views
             base.ViewDidLoad();
             View.AutosizesSubviews = true;
             _imgView = new UIImageView {AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight};
+			_hud = new Hud(View);
             Add(_imgView);
-
-			_hud = new MTMBProgressHUD(View) {
-				Mode = MBProgressHUDMode.Indeterminate, 
-				LabelText = "Logging in...",
-				RemoveFromSuperViewOnHide = true,
-				AnimationType = MBProgressHUDAnimation.MBProgressHUDAnimationFade
-			};
 
 			var vm = (BaseStartupViewModel)ViewModel;
 			vm.Bind(x => x.IsLoggingIn, x =>
 				{
 					if (x)
 					{
-						View.AddSubview(_hud);
-						_hud.Show(true);
+						_hud.Show("Logging in...");
 					}
 					else
 					{
-						_hud.Hide(true);
+						_hud.Hide();
 					}
 				});
         }

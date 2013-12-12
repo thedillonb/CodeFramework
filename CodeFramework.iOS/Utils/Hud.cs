@@ -1,33 +1,37 @@
-using System;
-using MBProgressHUD;
+using BigTed;
 using MonoTouch.UIKit;
 
 namespace CodeFramework.iOS.Utils
 {
 	public class Hud : IHud
     {
-		private readonly MTMBProgressHUD _hud;
+		public static UIColor BackgroundTint;
 		private readonly UIView _window;
 		public Hud(UIView window)
         {
 			_window = window;
-			_hud = new MTMBProgressHUD(_window) {
-				Mode = MBProgressHUDMode.Indeterminate, 
-				RemoveFromSuperViewOnHide = true,
-				AnimationType = MBProgressHUDAnimation.MBProgressHUDAnimationFade
-			};
+
         }
 
 		public void Show(string text)
 		{
-			_window.AddSubview(_hud);
-			_hud.LabelText = text;
-			_hud.Show(true);
+			ProgressHUD.Shared.HudBackgroundColour = BackgroundTint;
+			BTProgressHUD.Show(text, maskType: ProgressHUD.MaskType.Gradient);
+		}
+
+		public static void ShowSuccess(string text)
+		{
+			BTProgressHUD.ShowSuccessWithStatus(text);
+		}
+
+		public static void ShowFailure(string text)
+		{
+			BTProgressHUD.ShowErrorWithStatus(text);
 		}
 
 		public void Hide()
 		{
-			_hud.Hide(true);
+			BTProgressHUD.Dismiss();
 		}
     }
 

@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using MBProgressHUD;
 using MonoTouch;
 using MonoTouch.UIKit;
 
@@ -16,15 +15,8 @@ namespace CodeFramework.iOS.Utils
 
 		public async static Task<T> DoWorkAsync<T>(this UIViewController controller, string workTitle, Func<Task<T>> work)
 		{
-			var parent = controller.View;
-			var hud = new MTMBProgressHUD(parent) {
-				Mode = MBProgressHUDMode.Indeterminate, 
-				LabelText = workTitle,
-				RemoveFromSuperViewOnHide = true,
-				AnimationType = MBProgressHUDAnimation.MBProgressHUDAnimationFade
-			};
-			parent.AddSubview(hud);
-			hud.Show(true);
+			var hud = CreateHud(controller);
+			hud.Show(workTitle);
 
 			//Make sure the Toolbar is disabled too
 			if (controller.ToolbarItems != null)
@@ -39,7 +31,7 @@ namespace CodeFramework.iOS.Utils
 			}
 			finally
 			{
-				hud.Hide(true);
+				hud.Hide();
 
 				//Enable all the toolbar items
 				if (controller.ToolbarItems != null)
@@ -53,22 +45,8 @@ namespace CodeFramework.iOS.Utils
 
         public async static Task DoWorkAsync(this UIViewController controller, string workTitle, Func<Task> work)
         {
-            UIView parent = null;
-
-            //Don't attach it to the UI window. It doesn't work well with orientation
-//            if (controller.View.Superview is UIWindow)
-                parent = controller.View;
-//            else
-//                parent = controller.View.Superview;
-
-            var hud = new MTMBProgressHUD(parent) {
-                Mode = MBProgressHUDMode.Indeterminate, 
-				LabelText = workTitle,
-				RemoveFromSuperViewOnHide = true,
-				AnimationType = MBProgressHUDAnimation.MBProgressHUDAnimationFade
-            };
-            parent.AddSubview(hud);
-            hud.Show(true);
+			var hud = CreateHud(controller);
+			hud.Show(workTitle);
 
             //Make sure the Toolbar is disabled too
             if (controller.ToolbarItems != null)
@@ -83,7 +61,7 @@ namespace CodeFramework.iOS.Utils
             }
             finally
             {
-                hud.Hide(true);
+                hud.Hide();
 
                 //Enable all the toolbar items
                 if (controller.ToolbarItems != null)
