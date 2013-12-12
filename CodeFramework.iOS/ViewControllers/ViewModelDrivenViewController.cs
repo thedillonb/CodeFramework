@@ -16,7 +16,6 @@ namespace CodeFramework.iOS.ViewControllers
 {
 	public abstract class ViewModelDrivenViewController : BaseDialogViewController, IMvxTouchView, IMvxEventSourceViewController
     {
-        protected ErrorView CurrentError;
 		private UIRefreshControl _refreshControl;
 		private bool _manualRefresh;
 		private MvxSubscriptionToken _errorToken;

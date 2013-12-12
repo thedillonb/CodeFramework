@@ -4,7 +4,6 @@ using Cirrious.MvvmCross.ViewModels;
 using CodeFramework.Core.ViewModels;
 using CodeFramework.iOS.Utils;
 using CodeFramework.iOS.ViewControllers;
-using CodeFramework.iOS.Views;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 using MonoTouch;
@@ -15,20 +14,7 @@ namespace CodeFramework.ViewControllers
 {
 	public abstract class ViewModelCollectionDrivenViewController : ViewModelDrivenViewController
     {
-        private bool _enableFilter;
-
         public string NoItemsText { get; set; }
-
-        public bool EnableFilter
-        {
-            get { return _enableFilter; }
-            set 
-            {
-                if (value)
-                    EnableSearch = true;
-                _enableFilter = value;
-            }
-        }
 
         /// <summary>
         /// Initializes a new instance of the class.
@@ -148,46 +134,7 @@ namespace CodeFramework.ViewControllers
                 TableView.TableFooterView.Hidden = false;
         }
 
-//        protected override void SearchStart()
-//        {
-//            base.StartSearch();
-//
-//            var searchBar = SearchBar as SearchFilterBar;
-//            if (searchBar != null)
-//                searchBar.FilterButtonVisible = false;
-//        }
-//
-//        protected override void SearchEnd()
-//        {
-//            var searchBar = SearchBar as SearchFilterBar;
-//            if (searchBar != null)
-//                searchBar.FilterButtonVisible = true;
-//        }
-//
-//        protected override UISearchBar CreateSearchBar()
-//        {
-//            if (EnableFilter)
-//            {
-//                var searchBar = new SearchFilterBar { Delegate = new CustomSearchDelegate(this) };
-//                searchBar.FilterButton.TouchUpInside += FilterButtonTouched;
-//                return searchBar;
-//            }
-//            return base.CreateSearchBar();
-//        }
-
-        protected virtual FilterViewController CreateFilterController()
-        {
-            return null;
-        }
-
-        void FilterButtonTouched (object sender, EventArgs e)
-        {
-            var filter = CreateFilterController();
-            if (filter != null)
-                ShowFilterController(filter);
-        }
-
-        private void ShowFilterController(FilterViewController filter)
+		protected void ShowFilterController(FilterViewController filter)
         {
             var nav = new UINavigationController(filter);
             PresentViewController(nav, true, null);

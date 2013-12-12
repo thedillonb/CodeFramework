@@ -1,12 +1,6 @@
 using CodeFramework.iOS;
-using CodeFramework.iOS.Views;
-using CodeFramework.Views;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
-using System.Drawing;
-using System.Collections.Generic;
-using System.Linq;
-using MonoTouch.CoreGraphics;
 
 namespace CodeFramework.ViewControllers
 {

@@ -16,15 +16,12 @@ namespace CodeFramework.iOS
         UIImage BackButton { get; }
         UIImage ThreeLinesButton { get; }
         UIImage CancelButton { get; }
-        UIImage EditButton { get; }
         UIImage SaveButton { get; }
-        UIImage FilterButton { get; }
         UIImage ViewButton { get; }
         UIImage WebBackButton { get; }
         UIImage WebFowardButton { get; }
         UIImage ForkButton { get; }
 
-        UIImage WarningImage { get; }
         UIImage AnonymousUserImage { get; }
 
         UIImage IssueCellImage1 { get; }

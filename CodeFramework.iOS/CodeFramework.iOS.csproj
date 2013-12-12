@@ -68,7 +68,6 @@
     <Compile Include="ViewControllers\ViewModelCollectionDrivenViewController.cs" />
     <Compile Include="ViewControllers\ViewModelDrivenViewController.cs" />
     <Compile Include="Views\AddRemoveView.cs" />
-    <Compile Include="Views\ErrorView.cs" />
     <Compile Include="Views\HeaderView.cs" />
     <Compile Include="Views\MenuSectionView.cs" />
     <Compile Include="Views\ProfileButton.cs" />
