@@ -22,8 +22,8 @@ namespace CodeFramework.iOS.Elements
 
 		private readonly NSMutableAttributedString _attributedHeader;
 		private readonly NSMutableAttributedString _attributedBody;
-		private readonly List<Link> _headerLinks;
-		private readonly List<Link> _bodyLinks;
+		private readonly List<NewsCellView.Link> _headerLinks;
+		private readonly List<NewsCellView.Link> _bodyLinks;
 
 		private readonly LinkDelegate _headerLinkDelegate;
 		private readonly LinkDelegate _bodyLinkDelegate;
@@ -34,13 +34,6 @@ namespace CodeFramework.iOS.Elements
         private UIImage LittleImage { get; set; }
 
 		public Action<NSUrl> WebLinkClicked;
-
-        private class Link
-        {
-            public NSRange Range;
-            public NSAction Callback;
-            public int Id;
-        }
 
         public class TextBlock
         {
@@ -94,10 +87,10 @@ namespace CodeFramework.iOS.Elements
 			_bodyLinkDelegate = new LinkDelegate(_bodyLinks, this);
         }
 
-		private Tuple<NSMutableAttributedString,List<Link>> CreateAttributedStringFromBlocks(IEnumerable<TextBlock> blocks)
+		private Tuple<NSMutableAttributedString,List<NewsCellView.Link>> CreateAttributedStringFromBlocks(IEnumerable<TextBlock> blocks)
 		{
 			var attributedString = new NSMutableAttributedString();
-			var links = new List<Link>();
+			var links = new List<NewsCellView.Link>();
 
 			int lengthCounter = 0;
 			int i = 0;
@@ -134,20 +127,20 @@ namespace CodeFramework.iOS.Elements
 				var strLength = str.Length;
 
 				if (b.Tapped != null)
-					links.Add(new Link { Range = new NSRange(lengthCounter, strLength), Callback = new NSAction(b.Tapped), Id = i++ });
+					links.Add(new NewsCellView.Link { Range = new NSRange(lengthCounter, strLength), Callback = new NSAction(b.Tapped), Id = i++ });
 
 				lengthCounter += strLength;
 			}
 
-			return new Tuple<NSMutableAttributedString, List<Link>>(attributedString, links);
+			return new Tuple<NSMutableAttributedString, List<NewsCellView.Link>>(attributedString, links);
 		}
 
 		private class LinkDelegate : OHAttributedLabelDelegate
         {
-			private readonly List<Link> _links;
+			private readonly List<NewsCellView.Link> _links;
 			private readonly NewsFeedElement _parent;
 
-			public LinkDelegate(List<Link> links, NewsFeedElement parent)
+			public LinkDelegate(List<NewsCellView.Link> links, NewsFeedElement parent)
 			{
 				_links = links;
 				_parent = parent;
@@ -234,7 +227,7 @@ namespace CodeFramework.iOS.Elements
 
 			var isHeaderMultilined = IsHeaderMultilined(tableView);
 			c.SetHeaderAlignment(!isHeaderMultilined);
-			c.Set(_name, _image, _time, _actionImage, _attributedHeader, _attributedBody, _headerLinkDelegate, _bodyLinkDelegate);
+			c.Set(_name, _image, _time, _actionImage, _attributedHeader, _attributedBody, _headerLinkDelegate, _bodyLinkDelegate, _headerLinks, _bodyLinks);
 		}
 
 		#region IImageUpdated implementation

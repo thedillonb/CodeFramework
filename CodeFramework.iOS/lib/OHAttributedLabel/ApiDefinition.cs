@@ -78,6 +78,9 @@ namespace MonoTouch.UIKit
         [ExportAttribute("linkColor")]
         UIColor LinkColor { get; set; }
 
+		[ExportAttribute("automaticallyAddLinksForType")]
+		int AutomaticallyAddLinksForType { get; set; }
+
         [ExportAttribute("resetAttributedText")]
         void ResetAttributedText();
 
