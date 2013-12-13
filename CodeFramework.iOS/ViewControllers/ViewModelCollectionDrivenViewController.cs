@@ -85,12 +85,17 @@ namespace CodeFramework.ViewControllers
             RenderSections(new [] { sec }, moreTask);
         }
 
+		protected virtual Section CreateSection(string text)
+		{
+			return new Section(text);
+		}
+
         protected void RenderGroupedItems<T>(IEnumerable<IGrouping<string, T>> items, Func<T, Element> select, Action moreTask)
         {
             var sections = new List<Section>(items.Count());
             foreach (var grp in items)
             {
-                var sec = new Section(grp.Key);
+				var sec = CreateSection(grp.Key);
                 foreach (var element in grp.Select(select).Where(element => element != null))
                     sec.Add(element);
 
