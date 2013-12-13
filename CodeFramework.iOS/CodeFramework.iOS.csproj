@@ -83,6 +83,7 @@
     <Compile Include="Utils\Hud.cs" />
     <Compile Include="Elements\WebElement.cs" />
     <Compile Include="Views\App\DefaultStartupView.cs" />
+    <Compile Include="Services\AnalyticsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
@@ -120,6 +121,9 @@
     </Reference>
     <Reference Include="BTProgressHUD">
       <HintPath>..\lib\iOS\BTProgressHUD.dll</HintPath>
+    </Reference>
+    <Reference Include="GoogleAnalytics.iOS">
+      <HintPath>..\lib\iOS\GoogleAnalytics.iOS.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -39,7 +39,7 @@ namespace CodeFramework.Core.ViewModels
 					{
 						IsLoading = false;
 					}
-				}, _ => IsLoading == false);
+				}, _ => !IsLoading);
 		}
 
 		protected abstract Task Load(bool forceCacheInvalidation);

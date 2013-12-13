@@ -75,6 +75,7 @@
     <Compile Include="Utils\DefaultStartupViewCommand.cs" />
     <Compile Include="ViewModels\App\BaseMenuViewModel.cs" />
     <Compile Include="ViewModels\App\BaseDefaultStartupViewModel.cs" />
+    <Compile Include="Services\IAnalyticsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

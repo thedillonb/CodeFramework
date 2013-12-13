@@ -4,6 +4,7 @@ using Cirrious.MvvmCross.ViewModels;
 using CodeFramework.Core.Services;
 using Cirrious.MvvmCross.Plugins.Messenger;
 using CodeFramework.Core.Messages;
+using System.Windows.Input;
 
 namespace CodeFramework.Core.ViewModels
 {
@@ -12,6 +13,15 @@ namespace CodeFramework.Core.ViewModels
     /// </summary>
     public abstract class BaseViewModel : MvxViewModel
     {
+		/// <summary>
+		/// Gets the go to URL command.
+		/// </summary>
+		/// <value>The go to URL command.</value>
+		public ICommand GoToUrlCommand
+		{
+			get { return new MvxCommand<string>(x => ShowViewModel<WebBrowserViewModel>(new WebBrowserViewModel.NavObject { Url = x })); }
+		}
+
 		/// <summary>
 		/// Gets the ViewModelTxService
 		/// </summary>
