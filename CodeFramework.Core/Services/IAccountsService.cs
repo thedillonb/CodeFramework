@@ -42,19 +42,9 @@ namespace CodeFramework.Core.Services
         void Update(IAccount account);
 
         /// <summary>
-        /// Remove the specified username.
-        /// </summary>
-        void Remove(string username);
-
-        /// <summary>
         /// Checks to see whether a specific account exists (Username comparison)
         /// </summary>
         bool Exists(IAccount account);
-
-        /// <summary>
-        /// Find the specified account via it's username
-        /// </summary>
-        IAccount Find(string username);
 
         /// <summary>
         /// Find the specified account via it's username

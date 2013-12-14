@@ -61,12 +61,18 @@ namespace CodeFramework.Core.Services
 
         public void Insert(IAccount account)
         {
-            _userDatabase.Insert(account);
+			lock (_userDatabase)
+			{
+				_userDatabase.Insert(account);
+			}
         }
 
         public void Remove(IAccount account)
         {
-            _userDatabase.Delete(account);
+			lock (_userDatabase)
+			{
+				_userDatabase.Delete(account);
+			}
             var accountDir = CreateAccountDirectory(account);
 
             if (!Directory.Exists(accountDir))
@@ -76,34 +82,24 @@ namespace CodeFramework.Core.Services
 
         public void Update(IAccount account)
         {
-            _userDatabase.Update(account);
-        }
-
-        public void Remove(string username)
-        {
-            var q = from f in _userDatabase.Table<TAccount>()
-                    where f.Username == username
-                    select f;
-            var account = q.FirstOrDefault();
-            if (account != null)
-                Remove(account);
+			lock (_userDatabase)
+			{
+				_userDatabase.Update(account);
+			}
         }
 
         public bool Exists(IAccount account)
         {
-            return Find(account.Username) != null;
-        }
-
-        public IAccount Find(string username)
-        {
-            var lowerUser = username.ToLower();
-            return _userDatabase.Find<TAccount>(x => x.Username.ToLower().Equals(lowerUser));
+			return Find(account.Id) != null;
         }
 
         public IAccount Find(int id)
         {
-            var query = _userDatabase.Find<TAccount>(x => x.Id == id);
-            return query;
+			lock (_userDatabase)
+			{
+				var query = _userDatabase.Find<TAccount>(x => x.Id == id);
+				return query;
+			}
         }
 
         public IEnumerator<IAccount> GetEnumerator()

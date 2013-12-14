@@ -6,11 +6,8 @@ namespace CodeFramework.iOS.Utils
 	public class Hud : IHud
     {
 		public static UIColor BackgroundTint;
-		private readonly UIView _window;
 		public Hud(UIView window)
         {
-			_window = window;
-
         }
 
 		public void Show(string text)
