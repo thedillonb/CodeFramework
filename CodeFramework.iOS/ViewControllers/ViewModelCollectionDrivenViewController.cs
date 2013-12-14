@@ -11,6 +11,7 @@ using System.Collections.Specialized;
 using System.Collections.Generic;
 using Cirrious.CrossCore;
 using CodeFramework.Core.Services;
+using System.Threading.Tasks;
 
 namespace CodeFramework.ViewControllers
 {
@@ -79,7 +80,7 @@ namespace CodeFramework.ViewControllers
 				updateDel();
         }
 
-        protected void RenderList<T>(IEnumerable<T> items, Func<T, Element> select, Action moreTask)
+		protected void RenderList<T>(IEnumerable<T> items, Func<T, Element> select, Task moreTask)
         {
             var sec = new Section();
 			if (items != null)
@@ -107,7 +108,7 @@ namespace CodeFramework.ViewControllers
 			return new Section(text);
 		}
 
-        protected void RenderGroupedItems<T>(IEnumerable<IGrouping<string, T>> items, Func<T, Element> select, Action moreTask)
+		protected void RenderGroupedItems<T>(IEnumerable<IGrouping<string, T>> items, Func<T, Element> select, Task moreTask)
         {
             var sections = new List<Section>();
 
@@ -134,7 +135,7 @@ namespace CodeFramework.ViewControllers
             RenderSections(sections, moreTask);
         }
 
-        private void RenderSections(IEnumerable<Section> sections, Action moreTask)
+		private void RenderSections(IEnumerable<Section> sections, Task moreTask)
         {
             var root = new RootElement(Title) { UnevenRows = Root.UnevenRows };
 
@@ -151,14 +152,24 @@ namespace CodeFramework.ViewControllers
             {
 				var loadMore = new PaginateElement("Load More".t(), "Loading...".t()) { AutoLoadOnVisible = true };
 				root.Add(new Section { loadMore });
-				loadMore.Tapped += (obj) => this.DoWorkNoHud(moreTask, x => Utilities.ShowAlert("Unable to load more!".t(), x.Message), () =>
+				loadMore.Tapped += async (obj) =>
 				{
-					if (loadMore.GetImmediateRootElement() != null)
+					try
 					{
-						var section = loadMore.Parent as Section;
-						Root.Remove(section, UITableViewRowAnimation.Fade);
+						moreTask.Start();
+						await this.DoWorkNoHudAsync(() => moreTask);
+						if (loadMore.GetImmediateRootElement() != null)
+						{
+							var section = loadMore.Parent as Section;
+							Root.Remove(section, UITableViewRowAnimation.Fade);
+						}
 					}
-				});
+					catch (Exception e)
+					{
+						Utilities.ShowAlert("Unable to load more!".t(), e.Message);
+					}
+
+				};	
             }
 
             Root = root;

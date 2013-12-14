@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using Cirrious.MvvmCross.ViewModels;
 using CodeFramework.Core.Utils;
+using System.Threading.Tasks;
 
 namespace CodeFramework.Core.ViewModels
 {
@@ -13,7 +14,7 @@ namespace CodeFramework.Core.ViewModels
         private Func<IEnumerable<TItem>, IEnumerable<IGrouping<string, TItem>>> _groupingFunction;
         private Func<IEnumerable<TItem>, IEnumerable<TItem>> _sortingFunction;
         private Func<IEnumerable<TItem>, IEnumerable<TItem>> _filteringFunction;
-        private Action _moreItems;
+		private Task _moreItems;
         private int _deferLevel;
 
         public event NotifyCollectionChangedEventHandler CollectionChanged;
@@ -31,7 +32,7 @@ namespace CodeFramework.Core.ViewModels
             }
         }
 
-        public Action MoreItems
+		public Task MoreItems
         {
             get { return _moreItems; }
             set 
