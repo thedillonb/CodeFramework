@@ -15,6 +15,7 @@ namespace CodeFramework.iOS.Services
 			_tracker = result.GetTracker(name, tracker);
 			result.TrackUncaughtExceptions = true;
 			result.DispatchInterval = 30;
+			AppDomain.CurrentDomain.UnhandledException += (sender, e) => LogException(e.ExceptionObject as Exception, true);
 		}
 
 		public bool Enabled
@@ -25,7 +26,15 @@ namespace CodeFramework.iOS.Services
 
 		public void LogException(Exception e)
 		{
-			//_tracker..TrackException(false, e.Message + " - " + e.StackTrace);
+			LogException(e, false);
+		}
+
+		public void LogException(Exception e, bool fatal)
+		{
+			if (e == null)
+				return;
+
+			_tracker.Send(GAIDictionaryBuilder.CreateException(e.GetType().Name + " - " + e.Message + " - " + e.StackTrace, fatal ? 1 : 0).Build());
 		}
     }
 }

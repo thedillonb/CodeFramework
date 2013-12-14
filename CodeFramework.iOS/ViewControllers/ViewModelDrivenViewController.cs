@@ -68,8 +68,6 @@ namespace CodeFramework.iOS.ViewControllers
 //							}
 						}
 				});
-
-				loadableViewModel.LoadCommand.Execute(false);
 			}
         }
 //
@@ -131,12 +129,20 @@ namespace CodeFramework.iOS.ViewControllers
             }
         }
 
-
+		bool _isLoaded = false;
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
 			ViewWillAppearCalled.Raise(this, animated);
 			_errorToken = Mvx.Resolve<IMvxMessenger>().SubscribeOnMainThread<ErrorMessage>(OnErrorMessage);
+
+			if (!_isLoaded)
+			{
+				var loadableViewModel = ViewModel as LoadableViewModel;
+				if (loadableViewModel != null)
+					loadableViewModel.LoadCommand.Execute(false);
+				_isLoaded = true;
+			}
         }
 
 		private void OnErrorMessage(ErrorMessage msg)
@@ -160,16 +166,6 @@ namespace CodeFramework.iOS.ViewControllers
 			_errorToken.Dispose();
 			_errorToken = null;
 		}
-//
-//		protected T Bind<T>(T element, string bindingDescription)
-//		{
-//			return element.Bind(this, bindingDescription);
-//		}
-//
-//		protected T Bind<T>(T element, IEnumerable<MvxBindingDescription> bindingDescription)
-//		{
-//			return element.Bind(this, bindingDescription);
-//		}
 
 		public object DataContext
 		{
@@ -198,7 +194,6 @@ namespace CodeFramework.iOS.ViewControllers
 			base.ViewDidAppear(animated);
 			ViewDidAppearCalled.Raise(this, animated);
 		}
-
 
 		protected override void Dispose(bool disposing)
 		{

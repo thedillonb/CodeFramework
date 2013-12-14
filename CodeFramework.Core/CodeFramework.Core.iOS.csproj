@@ -70,12 +70,13 @@
     <Compile Include="Services\IJsonSerializationService.cs" />
     <Compile Include="ViewModels\BaseStartupViewModel.cs" />
     <Compile Include="Messages\ErrorMessage.cs" />
-    <Compile Include="Services\IErrorReporter.cs" />
-    <Compile Include="Services\ErrorReporter.cs" />
     <Compile Include="Utils\DefaultStartupViewCommand.cs" />
     <Compile Include="ViewModels\App\BaseMenuViewModel.cs" />
     <Compile Include="ViewModels\App\BaseDefaultStartupViewModel.cs" />
     <Compile Include="Services\IAnalyticsService.cs" />
+    <Compile Include="Services\IErrorService.cs" />
+    <Compile Include="Services\ErrorService.cs" />
+    <Compile Include="Utils\ExceptionExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

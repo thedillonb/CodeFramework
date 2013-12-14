@@ -9,6 +9,8 @@ using MonoTouch.UIKit;
 using MonoTouch;
 using System.Collections.Specialized;
 using System.Collections.Generic;
+using Cirrious.CrossCore;
+using CodeFramework.Core.Services;
 
 namespace CodeFramework.ViewControllers
 {
@@ -38,24 +40,31 @@ namespace CodeFramework.ViewControllers
         {
             Action updateDel = () =>
             {
-                IEnumerable<TElement> items = viewModel.Items;
-                var filterFn = viewModel.FilteringFunction;
-                if (filterFn != null)
-                    items = filterFn(items);
+				try
+				{
+	                IEnumerable<TElement> items = viewModel.Items;
+	                var filterFn = viewModel.FilteringFunction;
+	                if (filterFn != null)
+	                    items = filterFn(items);
 
-                var sortFn = viewModel.SortingFunction;
-                if (sortFn != null)
-                    items = sortFn(items);
+	                var sortFn = viewModel.SortingFunction;
+	                if (sortFn != null)
+	                    items = sortFn(items);
 
-                var groupingFn = viewModel.GroupingFunction;
-                IEnumerable<IGrouping<string, TElement>> groupedItems = null;
-                if (groupingFn != null)
-                    groupedItems = groupingFn(items);
+	                var groupingFn = viewModel.GroupingFunction;
+	                IEnumerable<IGrouping<string, TElement>> groupedItems = null;
+	                if (groupingFn != null)
+	                    groupedItems = groupingFn(items);
 
-                if (groupedItems == null)
-                    RenderList(items, element, viewModel.MoreItems);
-                else
-                    RenderGroupedItems(groupedItems, element, viewModel.MoreItems);
+	                if (groupedItems == null)
+	                    RenderList(items, element, viewModel.MoreItems);
+	                else
+	                    RenderGroupedItems(groupedItems, element, viewModel.MoreItems);
+				}
+				catch (Exception e)
+				{
+					e.Report();
+				}
             };
 
             viewModel.Bind(x => x.GroupingFunction, updateDel);
@@ -64,9 +73,10 @@ namespace CodeFramework.ViewControllers
 
             //The CollectionViewModel binds all of the collection events from the observablecollection + more
             //So just listen to it.
-            viewModel.CollectionChanged += (object sender, NotifyCollectionChangedEventArgs e) => {
-                BeginInvokeOnMainThread(() => updateDel());
-            };
+			viewModel.CollectionChanged += (sender, e) =>
+			{
+				InvokeOnMainThread(() => updateDel());
+			};
 
 			if (activateNow)
 				updateDel();
@@ -75,12 +85,22 @@ namespace CodeFramework.ViewControllers
         protected void RenderList<T>(IEnumerable<T> items, Func<T, Element> select, Action moreTask)
         {
             var sec = new Section();
-            foreach (var item in items)
-            {
-                var element = select(item);
-                if (element != null)
-                    sec.Add(element);
-            }
+			if (items != null)
+			{
+				foreach (var item in items)
+				{
+					try
+					{
+						var element = select(item);
+						if (element != null)
+							sec.Add(element);
+					}
+					catch (Exception e)
+					{
+						e.Report();
+					}
+				}
+			}
 
             RenderSections(new [] { sec }, moreTask);
         }
@@ -92,16 +112,27 @@ namespace CodeFramework.ViewControllers
 
         protected void RenderGroupedItems<T>(IEnumerable<IGrouping<string, T>> items, Func<T, Element> select, Action moreTask)
         {
-            var sections = new List<Section>(items.Count());
-            foreach (var grp in items)
-            {
-				var sec = CreateSection(grp.Key);
-                foreach (var element in grp.Select(select).Where(element => element != null))
-                    sec.Add(element);
+            var sections = new List<Section>();
 
-                if (sec.Elements.Count > 0)
-                    sections.Add(sec);
-            }
+			if (items != null)
+			{
+				foreach (var grp in items)
+				{
+					try
+					{
+						var sec = CreateSection(grp.Key);
+						foreach (var element in grp.Select(select).Where(element => element != null))
+							sec.Add(element);
+
+						if (sec.Elements.Count > 0)
+							sections.Add(sec);
+					}
+					catch (Exception e)
+					{
+						e.Report();
+					}
+				}
+			}
 
             RenderSections(sections, moreTask);
         }
@@ -134,9 +165,6 @@ namespace CodeFramework.ViewControllers
             }
 
             Root = root;
-
-            if (TableView.TableFooterView != null)
-                TableView.TableFooterView.Hidden = false;
         }
 
 		protected void ShowFilterController(FilterViewController filter)

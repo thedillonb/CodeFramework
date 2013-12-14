@@ -33,7 +33,7 @@ namespace CodeFramework.Core.ViewModels
 					}
 					catch (Exception e)
 					{
-						Console.WriteLine("I had trouble: " + e.Message + " : " + e.StackTrace);
+						ReportError(e);
 					}
 					finally
 					{

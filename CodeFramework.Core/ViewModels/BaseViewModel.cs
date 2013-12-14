@@ -53,14 +53,7 @@ namespace CodeFramework.Core.ViewModels
         protected void ReportError(Exception e)
         {
 			Messenger.Publish(new ErrorMessage(this) { Error = e });
-			//GetService<IErrorReporter>().ReportError(e);
-        }
-
-        protected void ReportError(string message, Exception e)
-        {
-			var newException = new Exception(message, e);
-			Messenger.Publish(new ErrorMessage(this) { Error = newException });
-			//GetService<IErrorReporter>().ReportError(newException);
+			e.Report();
         }
     }
 }
