@@ -15,7 +15,7 @@ namespace System.Threading.Tasks
                 }
                 catch (Exception e)
                 {
-						//Mvx.Resolve<IErrorReporter>().ReportError("FireAndForget failed", e);
+						e.Report();
                 }
             });
 

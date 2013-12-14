@@ -42,7 +42,7 @@ namespace CodeFramework.ViewControllers
             {
 				try
 				{
-	                IEnumerable<TElement> items = viewModel.Items;
+					IEnumerable<TElement> items = viewModel.Items;
 	                var filterFn = viewModel.FilteringFunction;
 	                if (filterFn != null)
 	                    items = filterFn(items);
@@ -57,9 +57,9 @@ namespace CodeFramework.ViewControllers
 	                    groupedItems = groupingFn(items);
 
 	                if (groupedItems == null)
-	                    RenderList(items, element, viewModel.MoreItems);
+						RenderList(items, element, viewModel.MoreItems);
 	                else
-	                    RenderGroupedItems(groupedItems, element, viewModel.MoreItems);
+						RenderGroupedItems(groupedItems, element, viewModel.MoreItems);
 				}
 				catch (Exception e)
 				{
@@ -73,10 +73,7 @@ namespace CodeFramework.ViewControllers
 
             //The CollectionViewModel binds all of the collection events from the observablecollection + more
             //So just listen to it.
-			viewModel.CollectionChanged += (sender, e) =>
-			{
-				InvokeOnMainThread(() => updateDel());
-			};
+			viewModel.CollectionChanged += (sender, e) => InvokeOnMainThread(() => updateDel());
 
 			if (activateNow)
 				updateDel();
@@ -87,7 +84,7 @@ namespace CodeFramework.ViewControllers
             var sec = new Section();
 			if (items != null)
 			{
-				foreach (var item in items)
+				foreach (var item in items.ToList())
 				{
 					try
 					{
@@ -116,7 +113,7 @@ namespace CodeFramework.ViewControllers
 
 			if (items != null)
 			{
-				foreach (var grp in items)
+				foreach (var grp in items.ToList())
 				{
 					try
 					{
