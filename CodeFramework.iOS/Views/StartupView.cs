@@ -4,10 +4,12 @@ using MonoTouch;
 using MonoTouch.UIKit;
 using CodeFramework.Core.ViewModels;
 using CodeFramework.iOS.Utils;
+using Cirrious.MvvmCross.Plugins.Messenger;
+using CodeFramework.iOS.ViewControllers;
 
 namespace CodeFramework.iOS.Views
 {
-    public class StartupView : MvxViewController
+	public class StartupView : ViewModelDrivenViewController
     {
         private UIImageView _imgView;
         private UIImage _img;

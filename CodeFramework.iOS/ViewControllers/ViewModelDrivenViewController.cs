@@ -70,43 +70,6 @@ namespace CodeFramework.iOS.ViewControllers
 				});
 			}
         }
-//
-//        private void StartLoading()
-//        {
-//            if (_loadingHud != null)
-//                return;
-//
-//            //Make sure the Toolbar is disabled too
-//            if (this.ToolbarItems != null)
-//            {
-//                foreach (var t in this.ToolbarItems)
-//                    t.Enabled = false;
-//            }
-//
-//            _loadingHud = new MBProgressHUD.MTMBProgressHUD(this.View) {
-//                Mode = MBProgressHUD.MBProgressHUDMode.Indeterminate, 
-//                LabelText = "Loading..."
-//            };
-//
-//            this.View.AddSubview(_loadingHud);
-//            _loadingHud.Show(true);
-//        }
-//
-//        private void EndLoading()
-//        {
-//            if (_loadingHud == null)
-//                return;
-//
-//            _loadingHud.Hide(true);
-//            _loadingHud.RemoveFromSuperview();
-//
-//            //Enable all the toolbar items
-//            if (this.ToolbarItems != null)
-//            {
-//                foreach (var t in this.ToolbarItems)
-//                    t.Enabled = true;
-//            }
-//        }
 
         /// <summary>
         /// Initializes a new instance of the class.

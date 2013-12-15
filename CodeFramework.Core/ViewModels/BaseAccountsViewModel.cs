@@ -12,7 +12,6 @@ namespace CodeFramework.Core.ViewModels
         private readonly CustomObservableCollection<IAccount> _accounts = new CustomObservableCollection<IAccount>();
         private readonly IAccountsService _accountsService;
 		private bool _isLoggingIn;
-		private Exception _error;
 
 		public bool IsLoggingIn
 		{
@@ -21,16 +20,6 @@ namespace CodeFramework.Core.ViewModels
 			{
 				_isLoggingIn = value;
 				RaisePropertyChanged(() => IsLoggingIn);
-			}
-		}
-
-		public Exception Error
-		{
-			get { return _error; }
-			protected set
-			{
-				_error = value;
-				RaisePropertyChanged(() => Error);
 			}
 		}
 
