@@ -55,8 +55,8 @@ namespace CodeFramework.iOS.Elements
                 base.LayoutSubviews();
                 ImageView.Frame = new System.Drawing.RectangleF(6, 6, 32, 32);
 				TextLabel.Frame = new System.Drawing.RectangleF(48, TextLabel.Frame.Y, TextLabel.Frame.Width, TextLabel.Frame.Height);
-                //if (DetailTextLabel != null)
-                //    DetailTextLabel.Frame = new System.Drawing.RectangleF(42, DetailTextLabel.Frame.Y, DetailTextLabel.Frame.Width, DetailTextLabel.Frame.Height);
+                if (DetailTextLabel != null)
+					DetailTextLabel.Frame = new System.Drawing.RectangleF(48, DetailTextLabel.Frame.Y, DetailTextLabel.Frame.Width, DetailTextLabel.Frame.Height);
             }
         }
     }
