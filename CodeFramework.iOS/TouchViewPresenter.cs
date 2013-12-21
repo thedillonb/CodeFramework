@@ -56,6 +56,7 @@ namespace CodeFramework.iOS
                 _slideoutController = new SlideoutNavigationViewController();
 				_slideoutController.MenuViewLeft = uiView;
 				uiView.NavigationController.NavigationBar.Translucent = false;
+				uiView.NavigationController.NavigationBar.BarTintColor = UIColor.FromRGB(50, 50, 50);
 				Transition(_slideoutController, UIViewAnimationTransition.FlipFromLeft);
             }
             else
