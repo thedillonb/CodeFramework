@@ -84,6 +84,7 @@
     <Compile Include="Elements\WebElement.cs" />
     <Compile Include="Views\App\DefaultStartupView.cs" />
     <Compile Include="Services\AnalyticsService.cs" />
+    <Compile Include="Services\UIThreadService.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
