@@ -13,6 +13,7 @@ namespace CodeFramework.Core.Services
 				Debugger.Break();
 			}
 
+			Debug.WriteLine(e.Message + " - " + e.StackTrace);
 			Mvx.Resolve<IAnalyticsService>().LogException(e);
 		}
     }
