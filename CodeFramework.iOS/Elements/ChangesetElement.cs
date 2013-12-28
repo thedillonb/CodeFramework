@@ -1,5 +1,4 @@
 using CodeFramework.iOS.Views;
-using CodeFramework.Views;
 using MonoTouch.Dialog;
 
 namespace CodeFramework.Elements

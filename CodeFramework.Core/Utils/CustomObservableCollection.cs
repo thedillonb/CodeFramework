@@ -31,8 +31,9 @@ namespace CodeFramework.Core.Utils
             if (collection == null) 
                 throw new ArgumentNullException("collection");
 
-            bool added = false;
-            foreach (T item in collection)
+            var added = false;
+            var enumerable = collection as IList<T> ?? collection.ToList();
+            foreach (var item in enumerable)
             {
                 this.Items.Add(item);
                 added = true;
@@ -42,7 +43,7 @@ namespace CodeFramework.Core.Utils
             {
                 this.OnPropertyChanged(new PropertyChangedEventArgs("Count"));
                 this.OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
-                this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, collection.ToList()));
+                this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, enumerable.ToList()));
                 // Cannot use NotifyCollectionChangedAction.Add, because Constructor supports only the 'Reset' action.
             }
         }
@@ -52,23 +53,21 @@ namespace CodeFramework.Core.Utils
             if (collection == null) 
                 throw new ArgumentNullException("collection");
 
-            bool removed = false;
-            foreach (T item in collection)
-                if (this.Items.Remove(item))
-                    removed = true;
+            var removed = false;
+            var enumerable = collection as T[] ?? collection.ToArray();
+            foreach (var item in enumerable.Where(item => this.Items.Remove(item)))
+                removed = true;
 
-            if (removed)
-            {
-                this.OnPropertyChanged(new PropertyChangedEventArgs("Count"));
-                this.OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
-                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, collection.ToList()));
-                // Cannot use NotifyCollectionChangedAction.Remove, because Constructor supports only the 'Reset' action.
-            }
+            if (!removed) return;
+            this.OnPropertyChanged(new PropertyChangedEventArgs("Count"));
+            this.OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, enumerable.ToList()));
+            // Cannot use NotifyCollectionChangedAction.Remove, because Constructor supports only the 'Reset' action.
         }
 
         public virtual void Reset(T item)
         {
-            this.Reset(new List<T>() { item });
+            this.Reset(new List<T> { item });
         }
 
         public virtual void Reset(IEnumerable<T> collection)

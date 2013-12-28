@@ -1,7 +1,4 @@
-using System;
 using System.Runtime.Serialization;
-using Cirrious.CrossCore;
-using CodeFramework.Core.Services;
 using SQLite;
 
 namespace CodeFramework.Core.Data
@@ -52,10 +49,7 @@ namespace CodeFramework.Core.Data
                 var d = new DataContractSerializer(o.GetType());
                 d.WriteObject(stream, o);
                 stream.Position = 0;
-                using (var sr = new System.IO.StreamReader(stream))
-                {
-                    RawData = sr.ReadToEnd();
-                }
+                RawData = new System.IO.StreamReader(stream).ReadToEnd();
             }
         }
     }

@@ -1,6 +1,5 @@
 using Cirrious.CrossCore;
 using CodeFramework.Core.Services;
-using MonoTouch.UIKit;
 
 namespace CodeFramework.Core.ViewModels
 {

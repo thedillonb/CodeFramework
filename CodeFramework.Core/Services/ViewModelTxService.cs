@@ -1,6 +1,3 @@
-using System;
-using Cirrious.CrossCore;
-
 namespace CodeFramework.Core.Services
 {
 	public class ViewModelTxService : IViewModelTxService

@@ -3,7 +3,6 @@ using Cirrious.MvvmCross.ViewModels;
 using CodeFramework.Core.Data;
 using CodeFramework.Core.Services;
 using CodeFramework.Core.Utils;
-using System;
 
 namespace CodeFramework.Core.ViewModels
 {

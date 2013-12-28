@@ -1,6 +1,3 @@
-using System;
-using CodeFramework.Core.ViewModels;
-
 namespace CodeFramework.Core.ViewModels
 {
 	public class WebBrowserViewModel : BaseViewModel

@@ -1,5 +1,4 @@
-using System;
-using System.Threading.Tasks;
+using System.Linq;
 using System.Windows.Input;
 using Cirrious.MvvmCross.ViewModels;
 
@@ -7,7 +6,7 @@ namespace CodeFramework.Core.ViewModels
 {
 	public abstract class FileSourceViewModel : LoadableViewModel
     {
-		private static string[] BinaryMIMEs = new string[] 
+		private static readonly string[] BinaryMIMEs = new string[] 
 		{ 
 			"image/", "video/", "audio/", "model/", "application/pdf", "application/zip", "application/gzip"
 		};
@@ -71,13 +70,7 @@ namespace CodeFramework.Core.ViewModels
 		protected static bool IsBinary(string mime)
 		{
 			var lowerMime = mime.ToLower();
-			foreach (var m in BinaryMIMEs)
-			{
-				if (lowerMime.StartsWith(m))
-					return true;
-			}
-
-			return false;
+		    return BinaryMIMEs.Any(lowerMime.StartsWith);
 		}
     }
 }

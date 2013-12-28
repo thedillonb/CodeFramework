@@ -7,7 +7,7 @@ using SQLite;
 
 namespace CodeFramework.Core.Data
 {
-    public abstract class Account : IAccount
+    public abstract class Account : IAccount, IDisposable
     {
         private SQLiteConnection _database;
         private AccountFilters _filters;
@@ -131,6 +131,11 @@ namespace CodeFramework.Core.Data
         public override string ToString()
         {
             return Username;
+        }
+
+        public void Dispose()
+        {
+            if (_database != null) _database.Dispose();
         }
 
         /// <summary>

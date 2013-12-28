@@ -24,21 +24,17 @@ namespace CodeFramework.iOS.Views
 
         public AccountsView() : base(true)
         {
-            Title = "Accounts";
-
-			NavigationItem.LeftBarButtonItem = null;
-			NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s, e) =>
-			{
-				ViewModel.AddAccountCommand.Execute(null);
-			});
         }
 
 		public override void ViewDidLoad()
 		{
+		    Title = "Accounts";
 			base.ViewDidLoad();
 
-			_hud = new Hud(View);
+            NavigationItem.LeftBarButtonItem = null;
+            NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s, e) => ViewModel.AddAccountCommand.Execute(null));
 
+			_hud = new Hud(View);
 			ViewModel.Bind(x => x.IsLoggingIn, x =>
 			{
 				if (x)

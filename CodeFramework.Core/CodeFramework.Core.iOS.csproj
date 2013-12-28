@@ -85,7 +85,6 @@
     <Reference Include="System.Windows" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="monotouch" />
     <Reference Include="Cirrious.CrossCore">
       <HintPath>..\lib\iOS\Cirrious.CrossCore.dll</HintPath>
     </Reference>
@@ -97,8 +96,5 @@
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Messages\" />
-    <Folder Include="ViewModels\App\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
