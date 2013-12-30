@@ -78,6 +78,8 @@
     <Compile Include="Services\ErrorService.cs" />
     <Compile Include="Utils\ExceptionExtensions.cs" />
     <Compile Include="Services\IUIThreadService.cs" />
+    <Compile Include="Utils\CrashReporting.cs" />
+    <Compile Include="Services\IHttpClientService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -94,6 +96,7 @@
     <Reference Include="Cirrious.MvvmCross.Plugins.Messenger">
       <HintPath>..\lib\iOS\Cirrious.MvvmCross.Plugins.Messenger.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup />

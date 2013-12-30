@@ -50,9 +50,22 @@ namespace CodeFramework.Core.ViewModels
             return Mvx.Resolve<TService>();
         }
 
+		/// <summary>
+		/// Displays the exception to the view
+		/// </summary>
+		/// <param name="e">E.</param>
+		protected void DisplayException(Exception e)
+		{
+			Messenger.Publish(new ErrorMessage(this) { Error = e });
+		}
+
+		/// <summary>
+		/// Reports the error by displaying it and reporting it to analytics
+		/// </summary>
+		/// <param name="e">E.</param>
         protected void ReportError(Exception e)
         {
-			Messenger.Publish(new ErrorMessage(this) { Error = e });
+			DisplayException(e);
 			e.Report();
         }
     }
