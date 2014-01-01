@@ -86,6 +86,7 @@
     <Compile Include="Services\UIThreadService.cs" />
     <Compile Include="Services\HttpClientService.cs" />
     <Compile Include="Bindings\UISegmentControlBinding.cs" />
+    <Compile Include="Services\ShareService.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />

@@ -83,6 +83,7 @@
     <Compile Include="Services\JsonSerializationService.cs" />
     <Compile Include="Services\IMarkdownService.cs" />
     <Compile Include="Utils\RepositoryIdentifier.cs" />
+    <Compile Include="Services\IShareService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

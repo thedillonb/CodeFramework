@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Windows.Input;
 using Cirrious.MvvmCross.ViewModels;
+using CodeFramework.Core.Services;
 
 namespace CodeFramework.Core.ViewModels
 {
@@ -49,6 +50,14 @@ namespace CodeFramework.Core.ViewModels
 		public ICommand GoToHtmlUrlCommand
 		{
 			get { return new MvxCommand(() => ShowViewModel<WebBrowserViewModel>(new WebBrowserViewModel.NavObject { Url = HtmlUrl }), () => !string.IsNullOrEmpty(HtmlUrl)); }
+		}
+
+		public ICommand ShareCommand
+		{
+			get
+			{
+				return new MvxCommand(() => GetService<IShareService>().ShareUrl(HtmlUrl), () => !string.IsNullOrEmpty(HtmlUrl));
+			}
 		}
 
 		protected string CreateContentFile()
