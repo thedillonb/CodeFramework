@@ -7,7 +7,7 @@ namespace CodeFramework.iOS.Services
     {
 		public HttpClient Create()
 		{
-			return new HttpClient(new ModernHttpClient.AFNetworkHandler());
+			return new HttpClient(); //new ModernHttpClient.AFNetworkHandler()
 		}
     }
 }
