@@ -99,16 +99,16 @@ function setComments(comments) {
 
     for (var i = 0; i < comments.length; i++) {
         var comment = comments[i];
-        var $comment = $("<tr data-id='" + comment.Id + "' class='comment'><td colspan='3'><div class='inner'><header><img src='" + comment.Avatar + "' />" + comment.User + "</header><div class='content'>" + comment.Content + "</div></div></td></tr>");
+        var $comment = $("<tr data-id='" + comment.id + "' class='comment'><td colspan='3'><div class='inner'><header><img src='" + comment.avatar + "' />" + comment.user + "</header><div class='content'>" + comment.content + "</div></div></td></tr>");
         
-        if (comment['LineTo'] != null) {
-            $("tr[data-to='" + comment.LineTo + "']").after($comment);
+        if (comment['line_to'] != null) {
+            $("tr[data-to='" + comment.line_to + "']").after($comment);
         }
-        else if (comment['LineFrom'] != null) {
-            $("tr[data-from='" + comment.LineFrom + "']").after($comment);
+        else if (comment['line_from'] != null) {
+            $("tr[data-from='" + comment.line_from + "']").after($comment);
         }
-        else if (comment['Parent'] != null) {
-            $("tr[data-id='" + comment.Parent + "']").after($comment);
+        else if (comment['parent'] != null) {
+            $("tr[data-id='" + comment.parent + "']").after($comment);
         }
     }
 }

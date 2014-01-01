@@ -86,6 +86,7 @@
     <Compile Include="Services\AnalyticsService.cs" />
     <Compile Include="Services\UIThreadService.cs" />
     <Compile Include="Services\HttpClientService.cs" />
+    <Compile Include="Bindings\UISegmentControlBinding.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
@@ -153,6 +154,7 @@
     <Folder Include="SourceBrowser\css\" />
     <Folder Include="Diff\" />
     <Folder Include="Views\App\" />
+    <Folder Include="Bindings\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SourceBrowser\index.html" />
