@@ -1,6 +1,6 @@
 using System;
-using CodeFramework.iOS.Utils;
 using MonoTouch.UIKit;
+using MonoTouch.Dialog;
 
 namespace CodeFramework.iOS.Views
 {
