@@ -45,9 +45,11 @@ namespace CodeFramework.Core.Cache
         {
             try
             {
-				var io = System.IO.File.ReadAllText(Path);
-				var jsonSerializer = Cirrious.CrossCore.Mvx.Resolve<CodeFramework.Core.Services.IJsonSerializationService>();
-				return jsonSerializer.Deserialize<T>(io);
+				using (var io = System.IO.File.OpenRead(Path))
+				{
+					var s = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+					return (T)s.Deserialize(io);
+				}
             }
             catch
             {
@@ -57,9 +59,11 @@ namespace CodeFramework.Core.Cache
 
         public void SaveResult(object data)
         {
-			var jsonSerializer = Cirrious.CrossCore.Mvx.Resolve<CodeFramework.Core.Services.IJsonSerializationService>();
-			var a = jsonSerializer.Serialize(data);
-			System.IO.File.WriteAllText(Path, a);
+			using (var io = System.IO.File.OpenWrite(Path))
+            {
+                var s = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                s.Serialize(io, data);
+            }
         }
     }
 }

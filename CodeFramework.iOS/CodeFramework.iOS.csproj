@@ -118,7 +118,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
-    <Reference Include="System.Web.Services" />
     <Reference Include="Cirrious.MvvmCross.Plugins.Messenger">
       <HintPath>..\lib\iOS\Cirrious.MvvmCross.Plugins.Messenger.dll</HintPath>
     </Reference>
@@ -135,6 +134,7 @@
     <Reference Include="ModernHttpClient.iOS">
       <HintPath>..\lib\iOS\ModernHttpClient.iOS.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Services" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeFramework.Core\CodeFramework.Core.iOS.csproj">

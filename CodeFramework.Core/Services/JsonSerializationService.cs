@@ -1,25 +1,36 @@
 using CodeFramework.Core.Services;
+using CodeFramework.Core.Utils;
 
 namespace CodeFramework.Core.Services
 {
 	public class JsonSerializationService : IJsonSerializationService
     {
+		class UnderscoreMappingResolver : Newtonsoft.Json.Serialization.DefaultContractResolver 
+		{
+			protected override string ResolvePropertyName(string propertyName)
+			{
+				return propertyName.ToRubyCase();
+			}
+		}
+
+		private static readonly Newtonsoft.Json.JsonSerializerSettings _settings;
+
 		static JsonSerializationService()
 		{
-			ServiceStack.Text.JsConfig.EmitLowercaseUnderscoreNames = true;
-			ServiceStack.Text.JsConfig.PropertyConvention = ServiceStack.Text.JsonPropertyConvention.Lenient;
-			ServiceStack.Text.JsConfig.ConvertObjectTypesIntoStringDictionary = true;
-			ServiceStack.Text.JsConfig.IncludeNullValues = true;
+			_settings = new Newtonsoft.Json.JsonSerializerSettings()
+			{ 
+				ContractResolver = new UnderscoreMappingResolver()
+			};
 		}
 
 		public T Deserialize<T>(string data)
 		{
-			return ServiceStack.Text.JsonSerializer.DeserializeFromString<T>(data);
+			return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data, _settings);
 		}
 
 		public string Serialize(object data)
 		{
-			return ServiceStack.Text.JsonSerializer.SerializeToString(data);
+			return Newtonsoft.Json.JsonConvert.SerializeObject(data, _settings);
 		}
     }
 }
