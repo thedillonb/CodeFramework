@@ -80,7 +80,7 @@ namespace CodeFramework.ViewControllers
 				updateDel();
         }
 
-		protected void RenderList<T>(IEnumerable<T> items, Func<T, Element> select, Task moreTask)
+		protected void RenderList<T>(IEnumerable<T> items, Func<T, Element> select, Action moreAction)
         {
             var sec = new Section();
 			if (items != null)
@@ -100,7 +100,7 @@ namespace CodeFramework.ViewControllers
 				}
 			}
 
-            RenderSections(new [] { sec }, moreTask);
+            RenderSections(new [] { sec }, moreAction);
         }
 
 		protected virtual Section CreateSection(string text)
@@ -108,7 +108,7 @@ namespace CodeFramework.ViewControllers
 			return new Section(text);
 		}
 
-		protected void RenderGroupedItems<T>(IEnumerable<IGrouping<string, T>> items, Func<T, Element> select, Task moreTask)
+		protected void RenderGroupedItems<T>(IEnumerable<IGrouping<string, T>> items, Func<T, Element> select, Action moreAction)
         {
             var sections = new List<Section>();
 
@@ -132,10 +132,10 @@ namespace CodeFramework.ViewControllers
 				}
 			}
 
-            RenderSections(sections, moreTask);
+            RenderSections(sections, moreAction);
         }
 
-		private void RenderSections(IEnumerable<Section> sections, Task moreTask)
+		private void RenderSections(IEnumerable<Section> sections, Action moreAction)
         {
             var root = new RootElement(Title) { UnevenRows = Root.UnevenRows };
 
@@ -148,7 +148,7 @@ namespace CodeFramework.ViewControllers
             if (elements == 0)
                 root.Add(new Section { new NoItemsElement(NoItemsText) });
 
-            if (moreTask != null)
+            if (moreAction != null)
             {
 				var loadMore = new PaginateElement("Load More".t(), "Loading...".t()) { AutoLoadOnVisible = true };
 				root.Add(new Section { loadMore });
@@ -156,8 +156,7 @@ namespace CodeFramework.ViewControllers
 				{
 					try
 					{
-						moreTask.Start();
-						await this.DoWorkNoHudAsync(() => moreTask);
+						await this.DoWorkNoHudAsync(() => Task.Run(moreAction));
 						if (loadMore.GetImmediateRootElement() != null)
 						{
 							var section = loadMore.Parent as Section;
