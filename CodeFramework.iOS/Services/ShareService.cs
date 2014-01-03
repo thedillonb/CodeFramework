@@ -18,7 +18,7 @@ namespace CodeFramework.iOS.Services
 
 		public void ShareUrl(string url)
 		{
-			var item = new NSUrl(url);
+			var item = new NSUrl(new Uri(url).AbsoluteUri);
 			var activityItems = new NSObject[] { item };
 			UIActivity[] applicationActivities = null;
 			var activityController = new UIActivityViewController (activityItems, applicationActivities);

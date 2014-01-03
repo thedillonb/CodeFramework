@@ -75,6 +75,14 @@ namespace CodeFramework.iOS
             }
         }
 
+		public override bool PresentModalViewController(UIViewController viewController, bool animated)
+		{
+			if (_window.RootViewController == null)
+				return false;
+			_window.RootViewController.PresentViewController(viewController, true, null);
+			return true;
+		}
+
 		private void Transition(UIViewController controller, UIViewAnimationTransition animation)
 		{
 			UIView.BeginAnimations("view_presenter_transition");
