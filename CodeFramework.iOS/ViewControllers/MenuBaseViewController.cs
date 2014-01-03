@@ -54,15 +54,6 @@ namespace CodeFramework.iOS.ViewControllers
 		/// </summary>
 		protected abstract void CreateMenuRoot();
 
-        /// <summary>
-        /// A silly helper to avoid writing out the pushview line
-        /// </summary>
-        /// <param name="controller">Controller.</param>
-        protected void NavPush(UIViewController controller)
-        {
-            NavigationController.PushViewController(controller, false);
-        }
-
         private void UpdateProfilePicture()
         {
             var size = new SizeF(32, 32);
