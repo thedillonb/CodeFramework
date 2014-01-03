@@ -48,6 +48,7 @@ namespace CodeFramework.iOS
                 _generalNavigationController = new UINavigationController(uiView);
 //				_generalNavigationController.NavigationBar.BarTintColor = Theme.CurrentTheme.AccountsNavigationBarTint;
 				_generalNavigationController.NavigationBar.Translucent = false;
+				_generalNavigationController.Toolbar.Translucent = false;
 
 				Transition(_generalNavigationController, UIViewAnimationTransition.FlipFromRight);
             }
@@ -56,6 +57,7 @@ namespace CodeFramework.iOS
                 _slideoutController = new SlideoutNavigationViewController();
 				_slideoutController.MenuViewLeft = uiView;
 				uiView.NavigationController.NavigationBar.Translucent = false;
+				uiView.NavigationController.Toolbar.Translucent = false;
 				uiView.NavigationController.NavigationBar.BarTintColor = UIColor.FromRGB(50, 50, 50);
 				Transition(_slideoutController, UIViewAnimationTransition.FlipFromLeft);
             }
@@ -67,6 +69,7 @@ namespace CodeFramework.iOS
                     _generalNavigationController = _slideoutController.TopView.NavigationController;
 					//_generalNavigationController.NavigationBar.BarTintColor = Theme.CurrentTheme.ApplicationNavigationBarTint;
 					_generalNavigationController.NavigationBar.Translucent = false;
+					_generalNavigationController.Toolbar.Translucent = false;
 				}
                 else
                 {
