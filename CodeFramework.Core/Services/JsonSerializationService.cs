@@ -19,7 +19,8 @@ namespace CodeFramework.Core.Services
 		{
 			_settings = new Newtonsoft.Json.JsonSerializerSettings()
 			{ 
-				ContractResolver = new UnderscoreMappingResolver()
+				ContractResolver = new UnderscoreMappingResolver(),
+				NullValueHandling = Newtonsoft.Json.NullValueHandling.Include,
 			};
 		}
 
