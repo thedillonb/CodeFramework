@@ -6,9 +6,9 @@ namespace CodeFramework.iOS.Views
 {
     public class AddRemoveView : UIView
     {
-        public uint? Added { get; set; }
+        public int? Added { get; set; }
 
-        public uint? Removed { get; set; }
+        public int? Removed { get; set; }
 
         public AddRemoveView()
         {

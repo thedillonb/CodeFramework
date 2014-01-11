@@ -38,7 +38,15 @@ namespace CodeFramework.iOS
             if (uiView == null)
                 throw new InvalidOperationException("Asking to show a view which is not a UIViewController!");
 
-            if (uiView is StartupView)
+			if (uiView is IMvxModalTouchView)
+			{
+				var modalNavigationController = new UINavigationController(uiView);
+				modalNavigationController.NavigationBar.Translucent = false;
+				modalNavigationController.Toolbar.Translucent = false;
+				uiView.NavigationItem.LeftBarButtonItem = new UIBarButtonItem(Theme.CurrentTheme.CancelButton, UIBarButtonItemStyle.Plain, (s, e) => modalNavigationController.DismissViewController(true, null));
+				PresentModalViewController(modalNavigationController, true);
+			}
+			else if (uiView is StartupView)
             {
                 _window.RootViewController = uiView;
             }

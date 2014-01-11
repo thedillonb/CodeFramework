@@ -11,8 +11,8 @@ namespace CodeFramework.iOS.Elements
 	public class RepositoryElement : Element, IElementSizing, IColorizeBackground, IImageUpdated
 	{       
 		private readonly string _name;
-		private readonly uint _followers;
-		private readonly uint _forks;
+		private readonly int _followers;
+		private readonly int _forks;
 		private readonly string _description;
 		private readonly string _owner;
         private UIImage _image;
@@ -22,7 +22,7 @@ namespace CodeFramework.iOS.Elements
 
 		public bool ShowOwner { get; set; }
 
-		public RepositoryElement(string name, uint followers, uint forks, string description, string owner, Uri imageUri = null, UIImage image = null)
+		public RepositoryElement(string name, int followers, int forks, string description, string owner, Uri imageUri = null, UIImage image = null)
 			: base(null)
 		{
 			_name = name;

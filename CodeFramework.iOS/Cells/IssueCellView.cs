@@ -44,7 +44,7 @@ namespace CodeFramework.iOS.Cells
         {
         }
 
-        public void Bind(string title, string status, string priority, string assigned, DateTime lastUpdated, string id, string kind)
+		public void Bind(string title, string status, string priority, string assigned, DateTimeOffset lastUpdated, string id, string kind)
         {
             Caption.Text = title;
             Label1.Text = status;

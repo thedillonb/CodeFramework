@@ -12,7 +12,7 @@ using CodeFramework.iOS.Utils;
 
 namespace CodeFramework.iOS.Views
 {
-	public class AccountsView : ViewModelDrivenViewController
+	public class AccountsView : ViewModelDrivenDialogViewController
     {
 		private IHud _hud;
 

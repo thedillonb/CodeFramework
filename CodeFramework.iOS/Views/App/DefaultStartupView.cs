@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace CodeFramework.iOS.Views.App
 {
-	public class DefaultStartupView : ViewModelCollectionDrivenViewController
+	public class DefaultStartupView : ViewModelCollectionDrivenDialogViewController
     {
 		public DefaultStartupView()
         {

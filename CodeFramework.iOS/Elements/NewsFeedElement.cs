@@ -65,7 +65,7 @@ namespace CodeFramework.iOS.Elements
             }
         }
 
-		public NewsFeedElement(string name, string imageUrl, DateTime time, IEnumerable<TextBlock> headerBlocks, IEnumerable<TextBlock> bodyBlocks, UIImage littleImage, Action tapped)
+		public NewsFeedElement(string name, string imageUrl, DateTimeOffset time, IEnumerable<TextBlock> headerBlocks, IEnumerable<TextBlock> bodyBlocks, UIImage littleImage, Action tapped)
 			: base(null)
         {
 			_name = name;

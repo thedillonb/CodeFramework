@@ -7,15 +7,12 @@ using CodeFramework.iOS.ViewControllers;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 using MonoTouch;
-using System.Collections.Specialized;
 using System.Collections.Generic;
-using Cirrious.CrossCore;
-using CodeFramework.Core.Services;
 using System.Threading.Tasks;
 
 namespace CodeFramework.ViewControllers
 {
-	public abstract class ViewModelCollectionDrivenViewController : ViewModelDrivenViewController
+	public abstract class ViewModelCollectionDrivenDialogViewController : ViewModelDrivenDialogViewController
     {
         public string NoItemsText { get; set; }
 
@@ -23,7 +20,7 @@ namespace CodeFramework.ViewControllers
         /// Initializes a new instance of the class.
         /// </summary>
         /// <param name='push'>True if navigation controller should push, false if otherwise</param>
-		protected ViewModelCollectionDrivenViewController(bool push = true)
+		protected ViewModelCollectionDrivenDialogViewController(bool push = true)
             : base(push)
         {
             NoItemsText = "No Items".t();

@@ -9,7 +9,7 @@ using CodeFramework.iOS.ViewControllers;
 
 namespace CodeFramework.iOS.Views
 {
-	public class StartupView : ViewModelDrivenViewController
+	public class StartupView : ViewModelDrivenDialogViewController
     {
         private UIImageView _imgView;
         private UIImage _img;

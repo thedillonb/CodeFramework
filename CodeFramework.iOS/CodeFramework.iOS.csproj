@@ -64,8 +64,6 @@
     <Compile Include="ViewControllers\MenuBaseViewController.cs" />
     <Compile Include="ViewControllers\MultipleChoiceViewController.cs" />
     <Compile Include="ViewControllers\SlideoutNavigationViewController.cs" />
-    <Compile Include="ViewControllers\ViewModelCollectionDrivenViewController.cs" />
-    <Compile Include="ViewControllers\ViewModelDrivenViewController.cs" />
     <Compile Include="Views\AddRemoveView.cs" />
     <Compile Include="Views\HeaderView.cs" />
     <Compile Include="Views\MenuSectionView.cs" />
@@ -87,6 +85,10 @@
     <Compile Include="Services\HttpClientService.cs" />
     <Compile Include="Bindings\UISegmentControlBinding.cs" />
     <Compile Include="Services\ShareService.cs" />
+    <Compile Include="ViewControllers\ViewModelCollectionDrivenDialogViewController.cs" />
+    <Compile Include="ViewControllers\ViewModelDrivenDialogViewController.cs" />
+    <Compile Include="ViewControllers\ViewModelDrivenViewController.cs" />
+    <Compile Include="ViewControllers\LiteComposer.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />

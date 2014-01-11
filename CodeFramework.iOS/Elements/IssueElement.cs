@@ -18,9 +18,9 @@ namespace CodeFramework.Elements
         public string Status { get; set; }
         public string Priority { get; set; }
         public string Kind { get; set; }
-        public DateTime LastUpdated { get; set; }
+        public DateTimeOffset LastUpdated { get; set; }
 
-        public IssueElement(string id, string title, string assigned, string status, string priority, string kind, DateTime lastUpdated) 
+		public IssueElement(string id, string title, string assigned, string status, string priority, string kind, DateTimeOffset lastUpdated) 
             : base(null)
         {
             if (string.IsNullOrEmpty(assigned))
