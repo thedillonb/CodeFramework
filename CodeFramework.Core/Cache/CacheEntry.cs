@@ -41,29 +41,31 @@ namespace CodeFramework.Core.Cache
             }
         }
 
-        public T LoadResult<T>() where T : new()
+        public byte[] LoadResult()
         {
             try
             {
-				using (var io = System.IO.File.OpenRead(Path))
-				{
-					var s = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-					return (T)s.Deserialize(io);
-				}
+                return System.IO.File.ReadAllBytes(Path);
+//				using (var io = System.IO.File.OpenRead(Path))
+//				{
+//					var s = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+//					return (T)s.Deserialize(io);
+//				}
             }
-            catch
+            catch (System.Exception e)
             {
-                return default(T);
+                return null;
             }
         }
 
-        public void SaveResult(object data)
+        public void SaveResult(byte[] data)
         {
-			using (var io = System.IO.File.OpenWrite(Path))
-            {
-                var s = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                s.Serialize(io, data);
-            }
+            System.IO.File.WriteAllBytes(Path, data);
+//			using (var io = System.IO.File.OpenWrite(Path))
+//            {
+//                var s = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+//                s.Serialize(io, data);
+//            }
         }
     }
 }

@@ -1,4 +1,3 @@
-using System.Runtime.Serialization;
 using SQLite;
 
 namespace CodeFramework.Core.Data
@@ -23,14 +22,8 @@ namespace CodeFramework.Core.Data
         {
             try
             {
-                using (var stream = new System.IO.MemoryStream())
-                {
-                    var buffer = System.Text.Encoding.UTF8.GetBytes(RawData);
-                    stream.Write(buffer, 0, buffer.Length);
-                    stream.Position = 0;
-                    var d = new DataContractSerializer(typeof(T));
-                    return (T)d.ReadObject(stream);
-                }
+                var serializer = Cirrious.CrossCore.Mvx.Resolve<CodeFramework.Core.Services.IJsonSerializationService>();
+                return serializer.Deserialize<T>(RawData);
             }
             catch
             {
@@ -44,13 +37,8 @@ namespace CodeFramework.Core.Data
         /// <param name="o">O.</param>
         public void SetData(object o)
         {
-            using (var stream = new System.IO.MemoryStream())
-            {
-                var d = new DataContractSerializer(o.GetType());
-                d.WriteObject(stream, o);
-                stream.Position = 0;
-                RawData = new System.IO.StreamReader(stream).ReadToEnd();
-            }
+            var serializer = Cirrious.CrossCore.Mvx.Resolve<CodeFramework.Core.Services.IJsonSerializationService>();
+            RawData = serializer.Serialize(o);
         }
     }
 }

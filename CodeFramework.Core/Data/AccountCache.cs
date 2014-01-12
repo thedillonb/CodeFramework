@@ -45,21 +45,21 @@ namespace CodeFramework.Core.Data
             }
         }
 
-        public T Get<T>(string query) where T : new()
+        public byte[] Get(string query)
         {
             var cacheEntry = GetEntry(query);
 
             try
             {
-                return cacheEntry.LoadResult<T>();
+                return cacheEntry.LoadResult();
             }
             catch (Exception)
             {
-                return default(T);
+                return null;
             }
         }
 
-        public void Set(string query, object content, string cacheTag = null)
+        public void Set(string query, byte[] content, string cacheTag = null)
         {
             lock (_lock)
             {

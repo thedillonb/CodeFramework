@@ -9,7 +9,8 @@ namespace CodeFramework.iOS.ViewControllers
 	{
 		readonly ComposerView _composerView;
 		internal UIBarButtonItem SendItem;
-		public Action<string> ReturnAction;
+
+        public event EventHandler<string> ReturnAction;
 
 		public bool EnableSendButton
 		{
@@ -98,8 +99,9 @@ namespace CodeFramework.iOS.ViewControllers
 		void PostCallback ()
 		{
 			SendItem.Enabled = false;
-			if (ReturnAction != null)
-				ReturnAction(Text);
+            var handler = ReturnAction;
+            if (handler != null)
+                handler(this, Text);
 		}
 
 		void KeyboardWillShow (NSNotification notification)

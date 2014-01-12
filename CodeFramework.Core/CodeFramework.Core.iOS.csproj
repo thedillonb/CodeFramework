@@ -104,8 +104,6 @@
       <HintPath>..\lib\iOS\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Services" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup />
