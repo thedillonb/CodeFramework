@@ -80,11 +80,9 @@
     <Compile Include="Services\IUIThreadService.cs" />
     <Compile Include="Utils\CrashReporting.cs" />
     <Compile Include="Services\IHttpClientService.cs" />
-    <Compile Include="Services\JsonSerializationService.cs" />
     <Compile Include="Services\IMarkdownService.cs" />
     <Compile Include="Utils\RepositoryIdentifier.cs" />
     <Compile Include="Services\IShareService.cs" />
-    <Compile Include="Utils\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -100,9 +98,6 @@
       <HintPath>..\lib\iOS\Cirrious.MvvmCross.Plugins.Messenger.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\lib\iOS\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Services" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
