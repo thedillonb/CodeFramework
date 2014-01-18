@@ -7,6 +7,7 @@ using CodeFramework.iOS.ViewControllers;
 using CodeFramework.iOS.Views;
 using MonoTouch.UIKit;
 using CodeFramework.Core;
+using MonoTouch.SlideoutNavigation;
 
 namespace CodeFramework.iOS
 {
@@ -14,7 +15,7 @@ namespace CodeFramework.iOS
     {
         private readonly UIWindow _window;
         private UINavigationController _generalNavigationController;
-        private SlideoutNavigationViewController _slideoutController;
+		private SlideoutNavigationController _slideoutController;
 
         public TouchViewPresenter(UIWindow window)
         {
@@ -54,7 +55,6 @@ namespace CodeFramework.iOS
             {
                 _slideoutController = null;
                 _generalNavigationController = new UINavigationController(uiView);
-//				_generalNavigationController.NavigationBar.BarTintColor = Theme.CurrentTheme.AccountsNavigationBarTint;
 				_generalNavigationController.NavigationBar.Translucent = false;
 				_generalNavigationController.Toolbar.Translucent = false;
 
@@ -62,8 +62,8 @@ namespace CodeFramework.iOS
             }
 			else if (uiView is MenuBaseViewController)
             {
-                _slideoutController = new SlideoutNavigationViewController();
-				_slideoutController.MenuViewLeft = uiView;
+				_slideoutController = new SimpleSlideoutNavigationController();
+				_slideoutController.MenuViewController = new MenuNavigationController(uiView, _slideoutController);
 				uiView.NavigationController.NavigationBar.Translucent = false;
 				uiView.NavigationController.Toolbar.Translucent = false;
 				uiView.NavigationController.NavigationBar.BarTintColor = UIColor.FromRGB(50, 50, 50);
@@ -73,8 +73,11 @@ namespace CodeFramework.iOS
             {
                 if (request.PresentationValues != null && request.PresentationValues.ContainsKey(PresentationValues.SlideoutRootPresentation))
                 {
-                    _slideoutController.SelectView(uiView);
-                    _generalNavigationController = _slideoutController.TopView.NavigationController;
+					var mainNavigationController = new MainNavigationController(uiView, _slideoutController, new UIBarButtonItem(Theme.CurrentTheme.ThreeLinesButton, UIBarButtonItemStyle.Plain, (s, e) => _slideoutController.Open(true)));
+					_generalNavigationController = mainNavigationController;
+					_slideoutController.SetMainViewController(mainNavigationController, true);
+
+
 					//_generalNavigationController.NavigationBar.BarTintColor = Theme.CurrentTheme.ApplicationNavigationBarTint;
 					_generalNavigationController.NavigationBar.Translucent = false;
 					_generalNavigationController.Toolbar.Translucent = false;
