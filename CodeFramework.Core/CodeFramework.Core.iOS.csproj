@@ -80,7 +80,6 @@
     <Compile Include="Services\IUIThreadService.cs" />
     <Compile Include="Utils\CrashReporting.cs" />
     <Compile Include="Services\IHttpClientService.cs" />
-    <Compile Include="Services\IMarkdownService.cs" />
     <Compile Include="Utils\RepositoryIdentifier.cs" />
     <Compile Include="Services\IShareService.cs" />
     <Compile Include="Services\JsonSerializationService.cs" />

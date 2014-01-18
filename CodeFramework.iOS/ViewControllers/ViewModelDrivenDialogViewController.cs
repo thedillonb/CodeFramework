@@ -126,8 +126,12 @@ namespace CodeFramework.iOS.ViewControllers
 		{
 			base.ViewWillDisappear(animated);
 			ViewWillDisappearCalled.Raise(this, animated);
-			_errorToken.Dispose();
-			_errorToken = null;
+
+			if (_errorToken != null)
+			{
+				_errorToken.Dispose();
+				_errorToken = null;
+			}
 		}
 
 		public object DataContext
