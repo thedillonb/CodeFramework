@@ -120,6 +120,8 @@ namespace CodeFramework.Core.ViewModels
 
         public IEnumerator<TItem> GetEnumerator()
         {
+            if (SortingFunction != null)
+                return SortingFunction(Items).GetEnumerator();
             return Items.GetEnumerator();
         }
 
