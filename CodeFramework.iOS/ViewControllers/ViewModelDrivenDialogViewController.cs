@@ -5,12 +5,8 @@ using Cirrious.MvvmCross.Binding.BindingContext;
 using Cirrious.MvvmCross.Touch.Views;
 using Cirrious.MvvmCross.ViewModels;
 using CodeFramework.Core.ViewModels;
-using CodeFramework.iOS.Views;
 using CodeFramework.ViewControllers;
 using MonoTouch.UIKit;
-using Cirrious.MvvmCross.Plugins.Messenger;
-using Cirrious.CrossCore;
-using CodeFramework.Core.Messages;
 
 namespace CodeFramework.iOS.ViewControllers
 {
@@ -18,7 +14,6 @@ namespace CodeFramework.iOS.ViewControllers
     {
 		private UIRefreshControl _refreshControl;
 		private bool _manualRefresh;
-		private MvxSubscriptionToken _errorToken;
 		
         public override void ViewDidLoad()
         {
@@ -97,7 +92,6 @@ namespace CodeFramework.iOS.ViewControllers
         {
             base.ViewWillAppear(animated);
 			ViewWillAppearCalled.Raise(this, animated);
-			_errorToken = Mvx.Resolve<IMvxMessenger>().SubscribeOnMainThread<ErrorMessage>(OnErrorMessage);
 
 			if (!_isLoaded)
 			{
@@ -107,13 +101,6 @@ namespace CodeFramework.iOS.ViewControllers
 				_isLoaded = true;
 			}
         }
-
-		private void OnErrorMessage(ErrorMessage msg)
-		{
-			if (msg.Sender != ViewModel)
-				return;
-			MonoTouch.Utilities.ShowAlert("Error", msg.Error.Message);
-		}
 
 		public override float GetHeightForFooter(MonoTouch.UIKit.UITableView tableView, int section)
 		{
@@ -126,12 +113,6 @@ namespace CodeFramework.iOS.ViewControllers
 		{
 			base.ViewWillDisappear(animated);
 			ViewWillDisappearCalled.Raise(this, animated);
-
-			if (_errorToken != null)
-			{
-				_errorToken.Dispose();
-				_errorToken = null;
-			}
 		}
 
 		public object DataContext

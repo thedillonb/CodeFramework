@@ -3,7 +3,6 @@ using Cirrious.CrossCore;
 using Cirrious.MvvmCross.ViewModels;
 using CodeFramework.Core.Services;
 using Cirrious.MvvmCross.Plugins.Messenger;
-using CodeFramework.Core.Messages;
 using System.Windows.Input;
 
 namespace CodeFramework.Core.ViewModels
@@ -56,7 +55,7 @@ namespace CodeFramework.Core.ViewModels
 		/// <param name="e">E.</param>
 		protected void DisplayException(Exception e)
 		{
-			Messenger.Publish(new ErrorMessage(this) { Error = e });
+            GetService<IAlertDialogService>().Alert("Error", e.Message);
 		}
 
 		/// <summary>

@@ -1,16 +1,12 @@
 using Cirrious.MvvmCross.Touch.Views;
-using Cirrious.MvvmCross.Plugins.Messenger;
 using CodeFramework.iOS.Utils;
 using CodeFramework.Core.ViewModels;
-using Cirrious.CrossCore;
-using CodeFramework.Core.Messages;
 using MonoTouch.UIKit;
 
 namespace CodeFramework.iOS.ViewControllers
 {
 	public class ViewModelDrivenViewController : MvxViewController
     {
-		private MvxSubscriptionToken _errorToken;
 		private Hud _hud;
 
 		public override void ViewDidLoad()
@@ -57,7 +53,6 @@ namespace CodeFramework.iOS.ViewControllers
 		public override void ViewWillAppear(bool animated)
 		{
 			base.ViewWillAppear(animated);
-			_errorToken = Mvx.Resolve<IMvxMessenger>().SubscribeOnMainThread<ErrorMessage>(OnErrorMessage);
 
 			if (!_isLoaded)
 			{
@@ -66,20 +61,6 @@ namespace CodeFramework.iOS.ViewControllers
 					loadableViewModel.LoadCommand.Execute(false);
 				_isLoaded = true;
 			}
-		}
-
-		private void OnErrorMessage(ErrorMessage msg)
-		{
-			if (msg.Sender != ViewModel)
-				return;
-			MonoTouch.Utilities.ShowAlert("Error", msg.Error.Message);
-		}
-
-		public override void ViewWillDisappear(bool animated)
-		{
-			base.ViewWillDisappear(animated);
-			_errorToken.Dispose();
-			_errorToken = null;
 		}
     }
 }

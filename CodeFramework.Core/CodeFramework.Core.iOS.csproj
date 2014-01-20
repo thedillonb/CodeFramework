@@ -69,7 +69,6 @@
     <Compile Include="Services\ViewModelTxService.cs" />
     <Compile Include="Services\IJsonSerializationService.cs" />
     <Compile Include="ViewModels\BaseStartupViewModel.cs" />
-    <Compile Include="Messages\ErrorMessage.cs" />
     <Compile Include="Utils\DefaultStartupViewCommand.cs" />
     <Compile Include="ViewModels\App\BaseMenuViewModel.cs" />
     <Compile Include="ViewModels\App\BaseDefaultStartupViewModel.cs" />
