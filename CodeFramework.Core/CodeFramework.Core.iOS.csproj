@@ -85,6 +85,7 @@
     <Compile Include="Services\JsonSerializationService.cs" />
     <Compile Include="Utils\SimpleJson.cs" />
     <Compile Include="Utils\StringExtensions.cs" />
+    <Compile Include="Services\IAlertDialogService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

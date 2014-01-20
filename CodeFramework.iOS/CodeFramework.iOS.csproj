@@ -88,6 +88,7 @@
     <Compile Include="ViewControllers\ViewModelDrivenDialogViewController.cs" />
     <Compile Include="ViewControllers\ViewModelDrivenViewController.cs" />
     <Compile Include="ViewControllers\LiteComposer.cs" />
+    <Compile Include="Services\AlertDialogService.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
