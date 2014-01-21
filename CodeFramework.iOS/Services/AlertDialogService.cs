@@ -19,6 +19,25 @@ namespace CodeFramework.iOS.Services
         {
             MonoTouch.Utilities.ShowAlert(title, message, dismissed);
         }
+
+        public void PromptTextBox(string title, string message, string defaultValue, string okTitle, Action<string> action)
+        {
+            var alert = new UIAlertView();
+            alert.Title = title;
+            alert.Message = message;
+            alert.AlertViewStyle = UIAlertViewStyle.PlainTextInput;
+            var cancelButton = alert.AddButton("Cancel".t());
+            var okButton = alert.AddButton(okTitle);
+            alert.CancelButtonIndex = cancelButton;
+            alert.DismissWithClickedButtonIndex(cancelButton, true);
+            alert.GetTextField(0).Text = defaultValue;
+            alert.Clicked += (s, e) =>
+            {
+                if (e.ButtonIndex == okButton)
+                    action(alert.GetTextField(0).Text);
+            };
+            alert.Show();
+        }
     }
 }
 
