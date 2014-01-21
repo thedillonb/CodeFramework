@@ -9,8 +9,8 @@ namespace CodeFramework.iOS.Services
         public void PromptYesNo(string title, string message, Action<bool> action)
         {
             var alert = new UIAlertView {Title = title, Message = message};
-            alert.CancelButtonIndex = alert.AddButton("Cancel");
-            var ok = alert.AddButton("Delete");
+            alert.CancelButtonIndex = alert.AddButton("No");
+            var ok = alert.AddButton("Yes");
             alert.Clicked += (sender, e) => action(e.ButtonIndex == ok);
             alert.Show();
         }
