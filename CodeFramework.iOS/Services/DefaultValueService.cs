@@ -10,6 +10,8 @@ namespace CodeFramework.iOS.Services
         {
             if (typeof(T) == typeof(int))
                 return (T)(object)Utilities.Defaults.IntForKey(key);
+            if (typeof(T) == typeof(bool))
+                return (T)(object)Utilities.Defaults.BoolForKey(key);
             throw new Exception("Key does not exist in Default database.");
         }
 
@@ -41,7 +43,9 @@ namespace CodeFramework.iOS.Services
             if (value == null)
                 Utilities.Defaults.RemoveObject(key);
             else if (value is int)
-                Utilities.Defaults.SetInt((int) value, key);
+                Utilities.Defaults.SetInt((int)value, key);
+            else if (value is bool)
+                Utilities.Defaults.SetBool((bool)value, key);
             Utilities.Defaults.Synchronize();
         }
     }
