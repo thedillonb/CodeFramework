@@ -1,27 +1,33 @@
 using System;
 using CodeFramework.Core.Services;
 using MonoTouch.UIKit;
+using System.Threading.Tasks;
 
 namespace CodeFramework.iOS.Services
 {
     public class AlertDialogService : IAlertDialogService
     {
-        public void PromptYesNo(string title, string message, Action<bool> action)
+        public Task<bool> PromptYesNo(string title, string message)
         {
+            var tcs = new TaskCompletionSource<bool>();
             var alert = new UIAlertView {Title = title, Message = message};
             alert.CancelButtonIndex = alert.AddButton("No");
             var ok = alert.AddButton("Yes");
-            alert.Clicked += (sender, e) => action(e.ButtonIndex == ok);
+            alert.Clicked += (sender, e) => tcs.SetResult(e.ButtonIndex == ok);
             alert.Show();
+            return tcs.Task;
         }
 
-        public void Alert(string title, string message, Action dismissed = null)
+        public Task Alert(string title, string message)
         {
-            MonoTouch.Utilities.ShowAlert(title, message, dismissed);
+            var tcs = new TaskCompletionSource<object>();
+            MonoTouch.Utilities.ShowAlert(title, message, () => tcs.SetResult(null));
+            return tcs.Task;
         }
 
-        public void PromptTextBox(string title, string message, string defaultValue, string okTitle, Action<string> action)
+        public Task<string> PromptTextBox(string title, string message, string defaultValue, string okTitle)
         {
+            var tcs = new TaskCompletionSource<string>();
             var alert = new UIAlertView();
             alert.Title = title;
             alert.Message = message;
@@ -34,9 +40,11 @@ namespace CodeFramework.iOS.Services
             alert.Clicked += (s, e) =>
             {
                 if (e.ButtonIndex == okButton)
-                    action(alert.GetTextField(0).Text);
+                    tcs.SetResult(alert.GetTextField(0).Text);
+                tcs.SetCanceled();
             };
             alert.Show();
+            return tcs.Task;
         }
     }
 }

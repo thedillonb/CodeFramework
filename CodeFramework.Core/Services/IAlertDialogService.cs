@@ -1,14 +1,15 @@
 using System;
+using System.Threading.Tasks;
 
 namespace CodeFramework.Core.Services
 {
     public interface IAlertDialogService
     {
-        void PromptYesNo(string title, string message, Action<bool> action);
+        Task<bool> PromptYesNo(string title, string message);
 
-        void Alert(string title, string message, Action dismissed = null);
+        Task Alert(string title, string message);
 
-        void PromptTextBox(string title, string message, string defaultValue, string okTitle, Action<string> action);
+        Task<string> PromptTextBox(string title, string message, string defaultValue, string okTitle);
     }
 }
 
