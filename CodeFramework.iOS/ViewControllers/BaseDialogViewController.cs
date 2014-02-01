@@ -39,7 +39,11 @@ namespace CodeFramework.ViewControllers
 
 		protected new class SizingSource : DialogViewController.SizingSource
 		{
-			public SizingSource (DialogViewController controller) : base (controller) {}
+            private readonly BaseDialogViewController _parent;
+            public SizingSource (BaseDialogViewController controller) : base (controller)
+            {
+                _parent = controller;
+            }
 
 			public override float GetHeightForFooter (UITableView tableView, int sectionIdx)
 			{
@@ -48,12 +52,26 @@ namespace CodeFramework.ViewControllers
 					return 3;
 				return base.GetHeightForFooter(tableView, sectionIdx);
 			}
+
+            public override void Scrolled(UIScrollView scrollView)
+            {
+                base.Scrolled(scrollView);
+                _parent.ScrollViewDidScroll(scrollView);
+            }
 
 		}
 
+        protected virtual void ScrollViewDidScroll(UIScrollView scrollView)
+        {
+        }
+
 		protected new class Source : DialogViewController.Source
 		{
-			public Source (DialogViewController controller) : base (controller) {}
+            private readonly BaseDialogViewController _parent;
+            public Source (BaseDialogViewController controller) : base (controller) 
+            {
+                _parent = controller;
+            }
 
 			public override float GetHeightForFooter (UITableView tableView, int sectionIdx)
 			{
@@ -62,6 +80,12 @@ namespace CodeFramework.ViewControllers
 					return 3;
 				return base.GetHeightForFooter(tableView, sectionIdx);
 			}
+
+            public override void Scrolled(UIScrollView scrollView)
+            {
+                base.Scrolled(scrollView);
+                _parent.ScrollViewDidScroll(scrollView);
+            }
 		}
     }
 }

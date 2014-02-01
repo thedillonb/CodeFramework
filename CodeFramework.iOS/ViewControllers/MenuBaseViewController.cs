@@ -3,6 +3,7 @@ using CodeFramework.Views;
 using MonoTouch.Dialog;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using MonoTouch.CoreAnimation;
 
 namespace CodeFramework.iOS.ViewControllers
 {
@@ -14,6 +15,7 @@ namespace CodeFramework.iOS.ViewControllers
         protected MenuBaseViewController()
             : base(false)
         {
+            EdgesForExtendedLayout = UIRectEdge.None;
             Style = UITableViewStyle.Plain;
             Autorotate = true;
 			_title = new UILabel(new RectangleF(0, 40, 320, 40));
@@ -77,9 +79,25 @@ namespace CodeFramework.iOS.ViewControllers
             base.ViewDidLoad();
 
             //Add some nice looking colors and effects
-            TableView.SeparatorColor = UIColor.FromRGB(14, 14, 14);
+            //TableView.SeparatorColor = UIColor.FromRGB(14, 14, 14);
             TableView.TableFooterView = new UIView(new RectangleF(0, 0, View.Bounds.Width, 0));
-            TableView.BackgroundColor = UIColor.FromRGB(34, 34, 34);
+
+            var menuBackground = Theme.CurrentTheme.MenuBackground;
+
+            if (menuBackground != null)
+            {
+                var view = new UIImageView(Theme.CurrentTheme.MenuBackground);
+                view.Frame = this.ParentViewController.View.Frame;
+                this.ParentViewController.View.InsertSubview(view, 0);
+                this.TableView.BackgroundColor = UIColor.Clear;
+            }
+            else
+            {
+                TableView.BackgroundColor = UIColor.FromRGB(34, 34, 34);
+            }
+
+            TableView.SeparatorStyle = UITableViewCellSeparatorStyle.None;
+            TableView.RowHeight = 54f;
 
             //Prevent the scroll to top on this view
             this.TableView.ScrollsToTop = false;
@@ -98,17 +116,105 @@ namespace CodeFramework.iOS.ViewControllers
             UpdateProfilePicture();
         }
 
+        protected override void ScrollViewDidScroll(UIScrollView scrollView)
+        {
+            var sectionHeaderHeight = 37f;
+            if (scrollView.ContentOffset.Y <= sectionHeaderHeight && scrollView.ContentOffset.Y >= 0)
+                scrollView.ContentInset = new UIEdgeInsets(-scrollView.ContentOffset.Y, 0, 0, 0);
+            else if (scrollView.ContentOffset.Y >= sectionHeaderHeight)
+                scrollView.ContentInset = new UIEdgeInsets(-sectionHeaderHeight, 0, 0, 0);
+        }
+
+//        protected override void ScrollViewDidScroll(UIScrollView scrollView)
+//        {
+//            foreach (var cell in TableView.VisibleCells)
+//            {
+//                var hiddenFrameHeight = scrollView.ContentOffset.Y + 27 - cell.Frame.Y;
+//                if (hiddenFrameHeight >= 0 || hiddenFrameHeight <= cell.Frame.Size.Height) {
+//                    //[cell maskCellFromTop:hiddenFrameHeight];
+//
+//                    cell.Layer.Mask = VisibilityMaskWithLocation(hiddenFrameHeight / cell.Frame.Size.Height, cell.Bounds);
+//                    cell.Layer.MasksToBounds = true;
+//                }
+//            }
+//        }
+//
+//        private static CAGradientLayer VisibilityMaskWithLocation(float location, RectangleF bounds)
+//        {
+//            var mask = new CAGradientLayer();
+//            mask.Frame = bounds;
+//            mask.Colors = new [] { UIColor.FromWhiteAlpha(1, 0).CGColor, UIColor.FromWhiteAlpha(1, 1).CGColor };
+//            mask.Locations = new NSNumber[] { NSNumber.FromFloat(location), NSNumber.FromFloat(location) };
+//            return mask;
+//        }
+
+
+
+        public class MenuSectionView : UIView
+        {
+            public MenuSectionView(string caption)
+                : base(new RectangleF(0, 0, 320, 37))
+            {
+                //var background = new UIImageView(Theme.CurrentTheme.MenuSectionBackground);
+                //background.Frame = this.Frame; 
+
+                this.BackgroundColor = UIColor.Clear;
+
+                var label = new UILabel(); 
+                label.BackgroundColor = UIColor.Clear;
+                label.Opaque = false; 
+                label.TextColor = UIColor.FromRGB(186, 186, 186);
+                label.Font =  UIFont.BoldSystemFontOfSize(12f);
+                label.Frame = new RectangleF(32, 13, 200, 23); 
+                label.Text = " " + caption; 
+//            label.ShadowColor = UIColor.FromRGB(0, 0, 0); 
+//            label.ShadowOffset = new SizeF(0, -1); 
+
+                var underline = new UIView();
+                underline.BackgroundColor = UIColor.FromRGBA(186, 186, 186, 186);
+                underline.Frame = new RectangleF(0, 36, 320, 1);
+
+                //this.AddSubview(background); 
+                this.AddSubview(underline);
+                this.AddSubview(label); 
+            }
+//
+//            public void MaskCellFromTop(float margin)
+//            {
+//                this.Layer.Mask = VisibilityMaskWithLocation(margin/this.Frame.Size.Height);
+//                this.Layer.MasksToBounds = true;
+//            }
+
+        
+
+//            - (void)maskCellFromTop:(CGFloat)margin {
+//                self.layer.mask = [self visibilityMaskWithLocation:margin/self.frame.size.height];
+//                self.layer.masksToBounds = YES;
+//            }
+//
+//            - (CAGradientLayer *)visibilityMaskWithLocation:(CGFloat)location {
+//                CAGradientLayer *mask = [CAGradientLayer layer];
+//                mask.frame = self.bounds;
+//                mask.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithWhite:1 alpha:0] CGColor], (id)[[UIColor colorWithWhite:1 alpha:1] CGColor], nil];
+//                mask.locations = [NSArray arrayWithObjects:[NSNumber numberWithFloat:location], [NSNumber numberWithFloat:location], nil];
+//                return mask;
+//            }
+        }
+
         protected class MenuElement : StyledStringElement
         {
             public int NotificationNumber { get; set; }
 
+            private static UIColor PrimaryColor = UIColor.FromRGB(233, 233, 233);
+
             public MenuElement(string title, NSAction tapped, UIImage image)
-                : base(title, tapped)
+                : base(" " + title, tapped)
             {
                 BackgroundColor = UIColor.Clear;
-                TextColor = UIColor.FromRGB(213, 213, 213);
+                TextColor = PrimaryColor;
                 DetailColor = UIColor.White;
                 Image = image;
+                Accessory = UITableViewCellAccessory.None;
             }
 
             //We want everything to be the same size as far as images go.
@@ -148,6 +254,7 @@ namespace CodeFramework.iOS.ViewControllers
                         var center = ImageView.Center;
                         ImageView.Frame = new RectangleF(0, 0, ImageSize, ImageSize);
                         ImageView.Center = new PointF(ImageSize, center.Y);
+                        ImageView.TintColor = MenuElement.PrimaryColor;
 
                         if (TextLabel != null)
                         {
