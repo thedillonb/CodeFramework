@@ -219,7 +219,7 @@ namespace CodeFramework.iOS.ViewControllers
                 BackgroundColor = UIColor.Clear;
                 TextColor = PrimaryColor;
                 DetailColor = UIColor.White;
-                Image = image;
+                Image = image.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
                 Accessory = UITableViewCellAccessory.None;
             }
 
