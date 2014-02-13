@@ -41,7 +41,8 @@ namespace CodeFramework.iOS.Services
             {
                 if (e.ButtonIndex == okButton)
                     tcs.SetResult(alert.GetTextField(0).Text);
-                tcs.SetCanceled();
+                else
+                    tcs.SetCanceled();
             };
             alert.Show();
             return tcs.Task;
