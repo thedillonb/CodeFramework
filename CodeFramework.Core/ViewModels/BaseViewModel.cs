@@ -4,6 +4,7 @@ using Cirrious.MvvmCross.ViewModels;
 using CodeFramework.Core.Services;
 using Cirrious.MvvmCross.Plugins.Messenger;
 using System.Windows.Input;
+using CodeFramework.Core.Messages;
 
 namespace CodeFramework.Core.ViewModels
 {
@@ -66,6 +67,7 @@ namespace CodeFramework.Core.ViewModels
         {
 			DisplayException(e);
 			e.Report();
+            Messenger.Publish(new ErrorMessage(this, e));
         }
     }
 }

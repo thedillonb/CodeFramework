@@ -85,6 +85,8 @@
     <Compile Include="Utils\SimpleJson.cs" />
     <Compile Include="Utils\StringExtensions.cs" />
     <Compile Include="Services\IAlertDialogService.cs" />
+    <Compile Include="Messages\ErrorMessage.cs" />
+    <Compile Include="Messages\CancelationMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -104,4 +106,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Messages\" />
+  </ItemGroup>
 </Project>

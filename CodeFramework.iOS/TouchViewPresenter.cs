@@ -16,6 +16,7 @@ namespace CodeFramework.iOS
         private readonly UIWindow _window;
         private UINavigationController _generalNavigationController;
         private SlideoutNavigationController _slideoutController;
+        private IMvxModalTouchView _currentModal;
 
         public TouchViewPresenter(UIWindow window)
         {
@@ -27,6 +28,12 @@ namespace CodeFramework.iOS
             var closeHint = hint as MvxClosePresentationHint;
             if (closeHint != null)
             {
+                if (_currentModal != null)
+                {
+                    ((UIViewController)_currentModal).DismissViewController(true, null);
+                    return;
+                }
+
                 for (int i = _generalNavigationController.ViewControllers.Length - 1; i >= 1; i--)
                 {
                     var vc = _generalNavigationController.ViewControllers[i];
@@ -54,10 +61,17 @@ namespace CodeFramework.iOS
 
             if (uiView is IMvxModalTouchView)
             {
+                _currentModal = (IMvxModalTouchView)uiView;
                 var modalNavigationController = new UINavigationController(uiView);
                 modalNavigationController.NavigationBar.Translucent = false;
                 modalNavigationController.Toolbar.Translucent = false;
-                uiView.NavigationItem.LeftBarButtonItem = new UIBarButtonItem(Theme.CurrentTheme.CancelButton, UIBarButtonItemStyle.Plain, (s, e) => modalNavigationController.DismissViewController(true, null));
+                uiView.NavigationItem.LeftBarButtonItem = new UIBarButtonItem(Theme.CurrentTheme.CancelButton, UIBarButtonItemStyle.Plain, (s, e) =>
+                {
+                    var vm = ((IMvxModalTouchView)uiView).ViewModel;
+                    Mvx.Resolve<Cirrious.MvvmCross.Plugins.Messenger.IMvxMessenger>().Publish(new CodeFramework.Core.Messages.CancelationMessage(vm));
+                    modalNavigationController.DismissViewController(true, null);
+                    _currentModal = null;
+                });
                 PresentModalViewController(modalNavigationController, true);
             }
             else if (uiView is StartupView)
