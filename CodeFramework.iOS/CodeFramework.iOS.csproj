@@ -88,6 +88,7 @@
     <Compile Include="ViewControllers\ViewModelDrivenViewController.cs" />
     <Compile Include="ViewControllers\LiteComposer.cs" />
     <Compile Include="Services\AlertDialogService.cs" />
+    <Compile Include="XCallback\XCallbackQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
@@ -158,6 +159,7 @@
     <Folder Include="Diff\" />
     <Folder Include="Views\App\" />
     <Folder Include="Bindings\" />
+    <Folder Include="XCallback\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SourceBrowser\index.html" />
