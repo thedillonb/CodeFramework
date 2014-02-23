@@ -8,7 +8,7 @@ namespace CodeFramework.iOS.ViewControllers
     {
         private readonly object _obj;
         
-        protected void OnValueSelected(System.Reflection.FieldInfo field)
+        protected void OnValueSelected(System.Reflection.PropertyInfo field)
         {
             var r = Root[0].Elements.Find(x => x.Caption.Equals(field.Name));
             if (r == null)
@@ -28,7 +28,7 @@ namespace CodeFramework.iOS.ViewControllers
             Style = UITableViewStyle.Grouped;
 
             var sec = new Section();
-            var fields = obj.GetType().GetFields();
+            var fields = obj.GetType().GetProperties();
             foreach (var s in fields)
             {
                 var copy = s;
