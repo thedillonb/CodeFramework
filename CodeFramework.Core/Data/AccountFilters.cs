@@ -46,6 +46,19 @@ namespace CodeFramework.Core.Data
         }
 
         /// <summary>
+        /// Gets a filter by it's primary id
+        /// </summary>
+        /// <returns>The filter.</returns>
+        /// <param name="key">Identifier.</param>
+        public Filter GetFilter(string key)
+        {
+            lock (_sqLiteConnection)
+            {
+                return _sqLiteConnection.Find<Filter>(x => x.Type == key);
+            }
+        }
+
+        /// <summary>
         /// Adds the filter
         /// </summary>
         /// <param name="key">Key.</param>
@@ -71,6 +84,18 @@ namespace CodeFramework.Core.Data
             lock (_sqLiteConnection)
             {
                 _sqLiteConnection.Delete(new Filter { Id = id });
+            }
+        }
+
+        /// <summary>
+        /// Updates the filter
+        /// </summary>
+        /// <param name="filter">Filter.</param>
+        public void UpdateFilter(Filter filter)
+        {
+            lock (_sqLiteConnection)
+            {
+                _sqLiteConnection.Update(filter);
             }
         }
 
