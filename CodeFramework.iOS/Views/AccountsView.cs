@@ -140,6 +140,9 @@ namespace CodeFramework.iOS.Views
 
             public override void CommitEditingStyle(UITableView tableView, UITableViewCellEditingStyle editingStyle, MonoTouch.Foundation.NSIndexPath indexPath)
             {
+                if (indexPath == null)
+                    return;
+
                 switch (editingStyle)
                 {
                     case UITableViewCellEditingStyle.Delete:
