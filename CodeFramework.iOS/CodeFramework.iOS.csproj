@@ -126,9 +126,6 @@
     <Reference Include="BTProgressHUD">
       <HintPath>..\lib\iOS\BTProgressHUD.dll</HintPath>
     </Reference>
-    <Reference Include="GoogleAnalytics.iOS">
-      <HintPath>..\lib\iOS\GoogleAnalytics.iOS.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="AFNetworking">
       <HintPath>..\lib\iOS\AFNetworking.dll</HintPath>
@@ -137,6 +134,12 @@
       <HintPath>..\lib\iOS\ModernHttpClient.iOS.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Services" />
+    <Reference Include="Parse.iOS">
+      <HintPath>..\lib\iOS\Parse.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\lib\iOS\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeFramework.Core\CodeFramework.Core.iOS.csproj">
