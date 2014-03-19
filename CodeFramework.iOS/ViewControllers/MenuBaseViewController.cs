@@ -206,13 +206,7 @@ namespace CodeFramework.iOS.ViewControllers
             public int NotificationNumber { get; set; }
 
             private static UIColor PrimaryColor = UIColor.FromRGB(233, 233, 233);
-//
-//            public MenuElement(string title, NSAction tapped, string image)
-//                : this(title, tapped, null)
-//            {
-//                ImageUri = new System.Uri(image);
-//            }
-//
+
             public MenuElement(string title, NSAction tapped, UIImage image)
                 : base(" " + title, tapped)
             {
@@ -244,11 +238,11 @@ namespace CodeFramework.iOS.ViewControllers
 //                    TextLabel.ShadowOffset = new SizeF(0, -1); 
                     SelectedBackgroundView = new UIView { BackgroundColor = UIColor.FromRGB(25, 25, 25) };
 
-                    _numberView = new UILabel { BackgroundColor = UIColor.FromRGBA(0.5f, 0.5f, 0.5f, 0.15f) };
+                    _numberView = new UILabel { BackgroundColor = UIColor.FromRGB(54, 54, 54) };
                     _numberView.Layer.MasksToBounds = true;
                     _numberView.Layer.CornerRadius = 5f;
                     _numberView.TextAlignment = UITextAlignment.Center;
-                    _numberView.TextColor = PrimaryColor;
+                    _numberView.TextColor = UIColor.White;
                     _numberView.Font = UIFont.SystemFontOfSize(12f);
                 }
 
@@ -273,7 +267,7 @@ namespace CodeFramework.iOS.ViewControllers
 
                     if (NotificationNumber > 0)
                     {
-                        _numberView.Frame = new RectangleF(ContentView.Bounds.Width - 44, 15, 34, 22f);
+                        _numberView.Frame = new RectangleF(ContentView.Bounds.Width - 44, 11, 34, 22f);
                         _numberView.Text = NotificationNumber.ToString();
                         AddSubview(_numberView);
                     }
