@@ -90,18 +90,10 @@ namespace CodeFramework.iOS
             else if (uiView is MenuBaseViewController)
             {
                 _slideoutController = new SimpleSlideoutNavigationController();
-
-                var menuNavController = new MenuNavigationController(uiView, _slideoutController);
-                menuNavController.NavigationBar.SetBackgroundImage(new UIImage(), UIBarMetrics.Default);
-                menuNavController.NavigationBar.ShadowImage = new UIImage();
-                menuNavController.NavigationBar.Translucent = true;
-                menuNavController.View.BackgroundColor = UIColor.Clear;
-                _slideoutController.MenuViewController = menuNavController;
-
-
-//                uiView.NavigationController.NavigationBar.Translucent = false;
-//                uiView.NavigationController.Toolbar.Translucent = false;
-//                uiView.NavigationController.NavigationBar.BarTintColor = UIColor.FromRGB(50, 50, 50);
+                _slideoutController.MenuViewController = new MenuNavigationController(uiView, _slideoutController);
+                uiView.NavigationController.NavigationBar.Translucent = false;
+                uiView.NavigationController.Toolbar.Translucent = false;
+                uiView.NavigationController.NavigationBar.BarTintColor = UIColor.FromRGB(50, 50, 50);
                 Transition(_slideoutController, UIViewAnimationTransition.FlipFromLeft);
             }
             else

@@ -65,6 +65,7 @@
     <Compile Include="ViewControllers\MultipleChoiceViewController.cs" />
     <Compile Include="Views\AddRemoveView.cs" />
     <Compile Include="Views\HeaderView.cs" />
+    <Compile Include="Views\MenuSectionView.cs" />
     <Compile Include="Views\ProfileButton.cs" />
     <Compile Include="Views\TableViewSectionView.cs" />
     <Compile Include="Views\ToolbarButton.cs" />

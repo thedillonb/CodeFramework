@@ -37,7 +37,6 @@ namespace CodeFramework.iOS
         UIColor MainSubtitleColor { get; }
         UIColor MainTextColor { get; }
         UIColor ViewBackgroundColor { get; }
-        UIImage MenuBackground { get; }
 
         UIColor WebButtonTint { get; }
 
