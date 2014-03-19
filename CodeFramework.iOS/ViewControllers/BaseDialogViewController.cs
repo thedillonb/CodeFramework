@@ -18,7 +18,7 @@ namespace CodeFramework.ViewControllers
 			SearchPlaceholder = "Search";
 			//AutoHideSearch = true;
             Style = UITableViewStyle.Grouped;
-            NavigationItem.BackBarButtonItem = new UIBarButtonItem();
+            NavigationItem.BackBarButtonItem = new UIBarButtonItem() { Title = "" };
         }
 
         public override void ViewDidLoad()
