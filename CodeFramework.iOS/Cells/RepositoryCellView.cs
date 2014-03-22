@@ -1,6 +1,5 @@
 using System;
 using Cirrious.MvvmCross.Binding.Touch.Views;
-using CodeFramework.iOS.Views;
 using MonoTouch.Foundation;
 using MonoTouch.ObjCRuntime;
 using MonoTouch.UIKit;
@@ -11,6 +10,17 @@ namespace CodeFramework.iOS.Cells
     {
         public static bool RoundImages = true;
 
+        public static UIFont CaptionFont
+        {
+            get { return UIFont.BoldSystemFontOfSize(15f * Theme.CurrentTheme.FontSizeRatio); }
+        }
+
+        public static UIFont DescriptionFont
+        {
+            get { return UIFont.SystemFontOfSize(13f * Theme.CurrentTheme.FontSizeRatio); }
+        }
+
+
         public static RepositoryCellView Create()
         {
             var cell = new RepositoryCellView();
@@ -20,7 +30,11 @@ namespace CodeFramework.iOS.Cells
             if (cell != null)
             {
                 cell.Caption.TextColor = Theme.CurrentTheme.MainTitleColor;
+                cell.Caption.Font = CaptionFont;
+
                 cell.Description.TextColor = Theme.CurrentTheme.MainTextColor;
+                cell.Description.Font = DescriptionFont;
+
                 cell.Image1.Image = Theme.CurrentTheme.RepositoryCellFollowers;
                 cell.Image3.Image = Theme.CurrentTheme.RepositoryCellForks;
                 cell.UserImage.Image = Theme.CurrentTheme.RepositoryCellUser;

@@ -123,12 +123,6 @@ namespace CodeFramework.iOS.ViewControllers
             set { _composerView.Text = value; }
         }
 
-        public string ActionButtonText 
-        {
-            get { return _navItem.RightBarButtonItem.Title; }
-            set { _navItem.RightBarButtonItem.Title = value; }
-        }
-
 		public void CloseComposer ()
 		{
 			SendItem.Enabled = true;

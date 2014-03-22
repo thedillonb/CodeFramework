@@ -18,6 +18,8 @@ namespace CodeFramework.iOS.Views
         private string _title;
         private string _subtitle;
         private UIImage _image;
+        private readonly UIFont _titleFont, _subtitleFont;
+        private readonly float _yPad;
 
         static HeaderView ()
         {
@@ -74,6 +76,15 @@ namespace CodeFramework.iOS.Views
             ShadowImage = true;
             BackgroundColor = UIColor.Clear;
 			SeperatorColor = UIColor.FromRGB(199, 199, 204);
+            _titleFont = TitleFont.WithSize(TitleFont.PointSize * Theme.CurrentTheme.FontSizeRatio);
+            _subtitleFont = SubtitleFont.WithSize(SubtitleFont.PointSize * Theme.CurrentTheme.FontSizeRatio);
+            _yPad = YPad;
+
+            if (Theme.CurrentTheme.FontSizeRatio > 1.0f)
+            {
+                _yPad -= ((Theme.CurrentTheme.FontSizeRatio * 1.2f * YPad) - YPad);
+            }
+
 //            Layer.MasksToBounds = false;
 //            Layer.ShadowColor = UIColor.Gray.CGColor;
 //            Layer.ShadowOpacity = 0.4f;
@@ -90,7 +101,7 @@ namespace CodeFramework.iOS.Views
             base.Draw(rect);
 
             var context = UIGraphics.GetCurrentContext();
-            float titleY = string.IsNullOrWhiteSpace(Subtitle) ? rect.Height / 2 - TitleFont.LineHeight / 2 : YPad;
+            float titleY = string.IsNullOrWhiteSpace(Subtitle) ? rect.Height / 2 - _titleFont.LineHeight / 2 : _yPad;
             float contentWidth = rect.Width - XPad * 2;
             var midx = rect.Width/2;
 
@@ -104,20 +115,6 @@ namespace CodeFramework.iOS.Views
                 var width = Image.Size.Width > 36 ? 36 : Image.Size.Width;
                 var top = rect.Height / 2 - height / 2;
                 var left = rect.Width - XPad - width;
-
-//                if (ShadowImage)
-//                {
-//                    context.SaveState();
-//                    context.SetFillColor(UIColor.White.CGColor);
-//                    context.TranslateCTM(left, top);
-//                    context.SetLineWidth(1.0f);
-//                    context.SetShadowWithColor(new SizeF(0, 0), 5, UIColor.LightGray.CGColor);
-//                    context.AddPath(GraphicsUtil.MakeRoundedPath(width, 4));
-//                    context.FillPath();
-//                    context.RestoreState();
-//                }
-//
-
                 Image.Draw(new RectangleF(left, top, width, height));
                 contentWidth -= (width + XPad * 2); 
             }
@@ -128,8 +125,8 @@ namespace CodeFramework.iOS.Views
                 Theme.CurrentTheme.MainTitleColor.SetColor();
                 DrawString(
                         Title,
-                        new RectangleF(XPad, titleY, contentWidth, TitleFont.LineHeight),
-                        TitleFont,
+                        new RectangleF(XPad, titleY, contentWidth, _titleFont.LineHeight),
+                        _titleFont,
                         UILineBreakMode.TailTruncation
                 );
             }
@@ -139,8 +136,8 @@ namespace CodeFramework.iOS.Views
                 Theme.CurrentTheme.MainSubtitleColor.SetColor();
                 DrawString(
                     Subtitle,
-                    new RectangleF(XPad, YPad + TitleFont.LineHeight + 2f, contentWidth, SubtitleFont.LineHeight),
-                    SubtitleFont,
+                    new RectangleF(XPad, _yPad + _titleFont.LineHeight + 2f, contentWidth, _subtitleFont.LineHeight),
+                    _subtitleFont,
                     UILineBreakMode.TailTruncation
                 );
             }

@@ -29,6 +29,14 @@ namespace CodeFramework.iOS.Cells
                 cell.Image3.Image = Theme.CurrentTheme.IssueCellImage3;
                 cell.Image4.Image = Theme.CurrentTheme.IssueCellImage4;
 				cell.SeparatorInset = new UIEdgeInsets(0, 0, 0, 0);
+
+                cell.Caption.Font = cell.Caption.Font.WithSize(cell.Caption.Font.PointSize * Theme.CurrentTheme.FontSizeRatio);
+                cell.Number.Font = cell.Number.Font.WithSize(cell.Number.Font.PointSize * Theme.CurrentTheme.FontSizeRatio);
+                cell.Label1.Font = cell.Label1.Font.WithSize(cell.Label1.Font.PointSize * Theme.CurrentTheme.FontSizeRatio);
+                cell.Label2.Font = cell.Label2.Font.WithSize(cell.Label2.Font.PointSize * Theme.CurrentTheme.FontSizeRatio);
+                cell.Label3.Font = cell.Label3.Font.WithSize(cell.Label3.Font.PointSize * Theme.CurrentTheme.FontSizeRatio);
+                cell.Label4.Font = cell.Label4.Font.WithSize(cell.Label4.Font.PointSize * Theme.CurrentTheme.FontSizeRatio);
+                cell.IssueType.Font = cell.IssueType.Font.WithSize(cell.IssueType.Font.PointSize * Theme.CurrentTheme.FontSizeRatio);
             }
 
             //Create the icons

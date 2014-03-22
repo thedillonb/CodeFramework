@@ -34,7 +34,7 @@ namespace CodeFramework.iOS.Views
             _lbl = new UILabel();
             _lbl.Text = text;
             _lbl.TextColor = UIColor.FromRGB(140, 140, 140);
-            _lbl.Font = UIFont.BoldSystemFontOfSize(14f);
+            _lbl.Font = UIFont.BoldSystemFontOfSize(14f * Theme.CurrentTheme.FontSizeRatio);
             _lbl.BackgroundColor = UIColor.Clear;
             _lbl.ShadowColor = UIColor.FromRGBA(255, 255, 255, 225);
             _lbl.ShadowOffset = new SizeF(0, 1);

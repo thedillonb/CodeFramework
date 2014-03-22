@@ -1,4 +1,3 @@
-using CodeFramework.iOS;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 
@@ -18,7 +17,7 @@ namespace CodeFramework.ViewControllers
 			SearchPlaceholder = "Search";
 			//AutoHideSearch = true;
             Style = UITableViewStyle.Grouped;
-            NavigationItem.BackBarButtonItem = new UIBarButtonItem() { Title = "" };
+            NavigationItem.BackBarButtonItem = new UIBarButtonItem { Title = "" };
         }
 
         public override void ViewDidLoad()

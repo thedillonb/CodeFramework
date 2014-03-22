@@ -44,5 +44,7 @@ namespace CodeFramework.iOS
 		UIColor SlideoutNavigationBarTint { get; }
 		UIColor ApplicationNavigationBarTint { get; }
 
+
+        float FontSizeRatio { get; }
     }
 }
