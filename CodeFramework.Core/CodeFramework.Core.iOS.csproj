@@ -87,6 +87,8 @@
     <Compile Include="Services\IAlertDialogService.cs" />
     <Compile Include="Messages\ErrorMessage.cs" />
     <Compile Include="Messages\CancelationMessage.cs" />
+    <Compile Include="Services\IJsonHttpClientService.cs" />
+    <Compile Include="Services\JsonHttpClientService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

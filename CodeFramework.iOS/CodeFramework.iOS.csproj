@@ -90,6 +90,7 @@
     <Compile Include="ViewControllers\LiteComposer.cs" />
     <Compile Include="Services\AlertDialogService.cs" />
     <Compile Include="XCallback\XCallbackQuery.cs" />
+    <Compile Include="Utils\PickerAlert.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
