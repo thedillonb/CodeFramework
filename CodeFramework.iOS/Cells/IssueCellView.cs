@@ -28,7 +28,7 @@ namespace CodeFramework.iOS.Cells
                 cell.Image2.Image = Theme.CurrentTheme.IssueCellImage2;
                 cell.Image3.Image = Theme.CurrentTheme.IssueCellImage3;
                 cell.Image4.Image = Theme.CurrentTheme.IssueCellImage4;
-				cell.SeparatorInset = new UIEdgeInsets(0, 0, 0, 0);
+                cell.SeparatorInset = new UIEdgeInsets(0, 0, 0, 0);
 
                 cell.Caption.Font = cell.Caption.Font.WithSize(cell.Caption.Font.PointSize * Theme.CurrentTheme.FontSizeRatio);
                 cell.Number.Font = cell.Number.Font.WithSize(cell.Number.Font.PointSize * Theme.CurrentTheme.FontSizeRatio);
@@ -52,7 +52,7 @@ namespace CodeFramework.iOS.Cells
         {
         }
 
-		public void Bind(string title, string status, string priority, string assigned, DateTimeOffset lastUpdated, string id, string kind)
+        public void Bind(string title, string status, string priority, string assigned, DateTimeOffset lastUpdated, string id, string kind)
         {
             Caption.Text = title;
             Label1.Text = status;
