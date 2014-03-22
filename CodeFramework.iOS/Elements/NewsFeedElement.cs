@@ -15,7 +15,6 @@ namespace CodeFramework.iOS.Elements
         private readonly string _name;
         private readonly string _time;
         private readonly Uri _imageUri;
-        private UIImage _image;
         private readonly UIImage _actionImage;
         private readonly int _bodyBlocks;
         private readonly Action _tapped;
@@ -69,7 +68,7 @@ namespace CodeFramework.iOS.Elements
             : base(null)
         {
             _name = name;
-            _imageUri = new Uri(imageUrl);
+            Uri.TryCreate(imageUrl, UriKind.Absolute, out _imageUri);
             _time = time.ToDaysAgo();
             _actionImage = littleImage;
             _tapped = tapped;
@@ -226,12 +225,13 @@ namespace CodeFramework.iOS.Elements
             if (c == null)
                 return;
 
-            if (_image == null && _imageUri != null)
-                _image = ImageLoader.DefaultRequestImage(_imageUri, this);
+            UIImage image = null;
+            if (_imageUri != null)
+                image = ImageLoader.DefaultRequestImage(_imageUri, this);
 
             var isHeaderMultilined = IsHeaderMultilined(tableView);
             c.SetHeaderAlignment(!isHeaderMultilined);
-            c.Set(_name, _image, _time, _actionImage, _attributedHeader, _attributedBody, _headerLinkDelegate, _bodyLinkDelegate, _headerLinks, _bodyLinks);
+            c.Set(_name, image, _time, _actionImage, _attributedHeader, _attributedBody, _headerLinkDelegate, _bodyLinkDelegate, _headerLinks, _bodyLinks);
         }
 
         #region IImageUpdated implementation
@@ -241,7 +241,6 @@ namespace CodeFramework.iOS.Elements
             var img = ImageLoader.DefaultRequestImage(uri, this);
             if (img == null)
                 return;
-            _image = img;
 
             if (uri == null)
                 return;

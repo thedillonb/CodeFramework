@@ -10,8 +10,15 @@ namespace CodeFramework.iOS.Views
 
 			base.ViewDidLoad();
 			var vm = (CodeFramework.Core.ViewModels.WebBrowserViewModel)ViewModel;
-			if (!string.IsNullOrEmpty(vm.Url))
-				Web.LoadRequest(new MonoTouch.Foundation.NSUrlRequest(new MonoTouch.Foundation.NSUrl(vm.Url)));
+            try
+            {
+    			if (!string.IsNullOrEmpty(vm.Url))
+    				Web.LoadRequest(new MonoTouch.Foundation.NSUrlRequest(new MonoTouch.Foundation.NSUrl(vm.Url)));
+            }
+            catch (Exception e)
+            {
+                MonoTouch.Utilities.ShowAlert("Unable to process request!", e.Message);
+            }
 		}
     }
 }

@@ -3,15 +3,15 @@ namespace System.Threading.Tasks
 {
     public static class FireAndForgetTask
     {
-		public static void FireAndForget(this Task task)
-		{
-			task.ContinueWith(t =>
-			{
-				var aggException = t.Exception.Flatten();
-				foreach(var exception in aggException.InnerExceptions)
-					exception.Report();
-			}, TaskContinuationOptions.OnlyOnFaulted);
-		}
+        public static void FireAndForget(this Task task)
+        {
+            task.ContinueWith(t =>
+            {
+                var aggException = t.Exception.Flatten();
+                foreach(var exception in aggException.InnerExceptions)
+                    System.Diagnostics.Debug.WriteLine("Fire and Forget failed: " + exception.Message + " - " + exception.StackTrace);
+            }, TaskContinuationOptions.OnlyOnFaulted);
+        }
     }
 }
 
