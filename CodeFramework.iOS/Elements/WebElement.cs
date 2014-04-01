@@ -126,12 +126,18 @@ namespace CodeFramework.iOS.Elements
         {
             if (request.Url.AbsoluteString.StartsWith("app://resize"))
             {
-                var size = webView.EvaluateJavascript("size();");
-                if (size != null)
-                    float.TryParse(size, out _height);
+                try
+                {
+                    var size = webView.EvaluateJavascript("size();");
+                    if (size != null)
+                        float.TryParse(size, out _height);
 
-                if (GetImmediateRootElement() != null)
-                    GetImmediateRootElement().Reload(this, UITableViewRowAnimation.None);
+                    if (GetImmediateRootElement() != null)
+                        GetImmediateRootElement().Reload(this, UITableViewRowAnimation.None);
+                }
+                catch 
+                {
+                }
                 return false;
             }
 
