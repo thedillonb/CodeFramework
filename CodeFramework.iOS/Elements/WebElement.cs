@@ -31,7 +31,10 @@ namespace CodeFramework.iOS.Elements
         {
             if (request.Url.AbsoluteString.StartsWith("app://resize"))
             {
-                _height = float.Parse(webView.EvaluateJavascript("size();"));
+                var size = webView.EvaluateJavascript("size();");
+                if (size != null)
+                    float.TryParse(size, out _height);
+
                 if (GetImmediateRootElement() != null)
                     GetImmediateRootElement().Reload(this, UITableViewRowAnimation.None);
                 return false;
@@ -123,7 +126,10 @@ namespace CodeFramework.iOS.Elements
         {
             if (request.Url.AbsoluteString.StartsWith("app://resize"))
             {
-                _height = float.Parse(webView.EvaluateJavascript("size();"));
+                var size = webView.EvaluateJavascript("size();");
+                if (size != null)
+                    float.TryParse(size, out _height);
+
                 if (GetImmediateRootElement() != null)
                     GetImmediateRootElement().Reload(this, UITableViewRowAnimation.None);
                 return false;
@@ -177,8 +183,10 @@ namespace CodeFramework.iOS.Elements
             }  
 
             webView.Frame = new RectangleF(0, 0, cell.ContentView.Frame.Width, cell.ContentView.Frame.Height);
+            webView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth;
             webView.RemoveFromSuperview();
             cell.ContentView.AddSubview (webView);
+            cell.ContentView.AutosizesSubviews = true;
             cell.SeparatorInset = new UIEdgeInsets(0, 0, 0, 0);
             return cell;
         }

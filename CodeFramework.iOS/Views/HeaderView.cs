@@ -66,18 +66,22 @@ namespace CodeFramework.iOS.Views
             }
         }
 
-        public bool ShadowImage { get; set; }
-
 		public UIColor SeperatorColor { get; set; }
         
 		public HeaderView()
 			: base(new RectangleF(0, 0, 0, 60f))
         {
-            ShadowImage = true;
             BackgroundColor = UIColor.Clear;
 			SeperatorColor = UIColor.FromRGB(199, 199, 204);
+
             _titleFont = TitleFont.WithSize(TitleFont.PointSize * Theme.CurrentTheme.FontSizeRatio);
+            if (_titleFont == null)
+                _titleFont = TitleFont;
+
             _subtitleFont = SubtitleFont.WithSize(SubtitleFont.PointSize * Theme.CurrentTheme.FontSizeRatio);
+            if (_subtitleFont == null)
+                _subtitleFont = SubtitleFont;
+
             _yPad = YPad;
 
             if (Theme.CurrentTheme.FontSizeRatio > 1.0f)
