@@ -6,19 +6,19 @@ using CodeFramework.Core.Services;
 
 namespace CodeFramework.Core.ViewModels
 {
-	public abstract class BaseStartupViewModel : BaseViewModel
+    public abstract class BaseStartupViewModel : BaseViewModel
     {
-		private bool _isLoggingIn;
+        private bool _isLoggingIn;
 
-		public bool IsLoggingIn
-		{
-			get { return _isLoggingIn; }
-			protected set
-			{
-				_isLoggingIn = value;
-				RaisePropertyChanged(() => IsLoggingIn);
-			}
-		}
+        public bool IsLoggingIn
+        {
+            get { return _isLoggingIn; }
+            protected set
+            {
+                _isLoggingIn = value;
+                RaisePropertyChanged(() => IsLoggingIn);
+            }
+        }
 
         public ICommand StartupCommand
         {
@@ -28,7 +28,7 @@ namespace CodeFramework.Core.ViewModels
         /// <summary>
         /// Execute startup code
         /// </summary>
-		protected abstract void Startup();
+        protected abstract void Startup();
 
         /// <summary>
         /// Gets the default account. If there is not one assigned it will pick the first in the account list.
@@ -37,7 +37,7 @@ namespace CodeFramework.Core.ViewModels
         /// <returns>The default account.</returns>
         protected IAccount GetDefaultAccount()
         {
-            var accounts = Mvx.Resolve<IAccountsService>();
+            var accounts = GetService<IAccountsService>();
             return accounts.GetDefault();
         }
     }

@@ -8,19 +8,19 @@ namespace CodeFramework.Core.ViewModels
 {
     public abstract class BaseAccountsViewModel : BaseViewModel
     {
-        private readonly CustomObservableCollection<IAccount> _accounts = new CustomObservableCollection<IAccount>();
         private readonly IAccountsService _accountsService;
-		private bool _isLoggingIn;
+        private readonly CustomObservableCollection<IAccount> _accounts = new CustomObservableCollection<IAccount>();
+        private bool _isLoggingIn;
 
-		public bool IsLoggingIn
-		{
-			get { return _isLoggingIn; }
-			protected set
-			{
-				_isLoggingIn = value;
-				RaisePropertyChanged(() => IsLoggingIn);
-			}
-		}
+        public bool IsLoggingIn
+        {
+            get { return _isLoggingIn; }
+            protected set
+            {
+                _isLoggingIn = value;
+                RaisePropertyChanged(() => IsLoggingIn);
+            }
+        }
 
         public CustomObservableCollection<IAccount> Accounts
         {
