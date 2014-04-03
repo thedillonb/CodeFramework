@@ -1,49 +1,19 @@
-// Composer.cs:
-//    Views and ViewControllers for composing messages
-//
-// Copyright 2010 Miguel de Icaza
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-//
-
 using System;
 using System.Drawing;
 using CodeFramework.iOS.Views;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using System.Collections.Generic;
 
 namespace CodeFramework.iOS.ViewControllers
 {
-	
-	/// <summary>
-	///   Composer is a singleton that is shared through the lifetime of the app,
-	///   the public methods in this class reset the values of the composer on 
-	///   each invocation.
-	/// </summary>
 	public class Composer : UIViewController
 	{
-	    readonly ComposerView _composerView;
-	    readonly UINavigationBar _navigationBar;
-	    readonly UINavigationItem _navItem;
-		internal UIBarButtonItem SendItem;
+        protected UIBarButtonItem SendItem;
 		UIViewController _previousController;
         public Action<string> ReturnAction;
+        protected readonly UITextView TextView;
+        protected UIView ScrollingToolbarView;
 
         public bool EnableSendButton
         {
@@ -51,76 +21,52 @@ namespace CodeFramework.iOS.ViewControllers
             set { SendItem.Enabled = value; }
         }
 
-        private class ComposerView : UIView 
-        {
-            internal readonly UITextView TextView;
-            
-            public ComposerView (RectangleF bounds) : base (bounds)
-            {
-                TextView = new UITextView (RectangleF.Empty) {
-                    Font = UIFont.SystemFontOfSize (18),
-                };
-                
-                // Work around an Apple bug in the UITextView that crashes
-                if (MonoTouch.ObjCRuntime.Runtime.Arch == MonoTouch.ObjCRuntime.Arch.SIMULATOR)
-                    TextView.AutocorrectionType = UITextAutocorrectionType.No;
-
-                AddSubview (TextView);
-            }
-
-            
-            internal void Reset (string text)
-            {
-                TextView.Text = text;
-            }
-            
-            public override void LayoutSubviews ()
-            {
-                Resize (Bounds);
-            }
-            
-            void Resize (RectangleF bounds)
-            {
-                TextView.Frame = new RectangleF (0, 0, bounds.Width, bounds.Height);
-            }
-            
-            public string Text { 
-                get {
-                    return TextView.Text;
-                }
-                set {
-                    TextView.Text = value;
-                }
-            }
-        }
-		
 		public Composer () : base (null, null)
 		{
             Title = "New Comment".t();
 			EdgesForExtendedLayout = UIRectEdge.None;
-			// Navigation Bar
-			_navigationBar = new UINavigationBar(new RectangleF(0, 0, UIScreen.MainScreen.Bounds.Width, 64))
-		                         {AutoresizingMask = UIViewAutoresizing.FlexibleWidth, AutosizesSubviews = true};
-		    _navItem = new UINavigationItem ("");
 
 			var close = new UIBarButtonItem (Theme.CurrentTheme.CancelButton, UIBarButtonItemStyle.Plain, (s, e) => CloseComposer());
-			_navItem.LeftBarButtonItem = close;
+            NavigationItem.LeftBarButtonItem = close;
 			SendItem = new UIBarButtonItem (Theme.CurrentTheme.SaveButton, UIBarButtonItemStyle.Plain, (s, e) => PostCallback());
-			_navItem.RightBarButtonItem = SendItem;
+            NavigationItem.RightBarButtonItem = SendItem;
 
-			_navigationBar.PushNavigationItem (_navItem, false);
-			
-			// Composer
-			_composerView = new ComposerView (ComputeComposerSize (RectangleF.Empty));
-			
-			View.AddSubview (_composerView);
-			View.AddSubview (_navigationBar);
+            TextView = new UITextView(ComputeComposerSize(RectangleF.Empty));
+            TextView.Font = UIFont.SystemFontOfSize(18);
+            TextView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth;
+
+            // Work around an Apple bug in the UITextView that crashes
+            if (MonoTouch.ObjCRuntime.Runtime.Arch == MonoTouch.ObjCRuntime.Arch.SIMULATOR)
+                TextView.AutocorrectionType = UITextAutocorrectionType.No;
+
+            View.AddSubview (TextView);
 		}
+
+        public static UIButton CreateAccessoryButton(string title, Action action)
+        {
+            var btn = new UIButton(UIButtonType.System);
+            btn.SetTitle(title, UIControlState.Normal);
+            btn.BackgroundColor = UIColor.White;
+            btn.Layer.CornerRadius = 5f;
+            btn.Layer.ShadowOffset = new SizeF(0, 0);
+            btn.Layer.ShadowOpacity = 0.4f;
+            btn.Layer.ShadowColor = UIColor.Black.CGColor;
+            btn.Layer.ShadowRadius = 1f;
+            btn.TouchUpInside += (object sender, System.EventArgs e) => action();
+            return btn;
+        }
+
+        public void SetAccesoryButtons(IEnumerable<UIButton> buttons)
+        {
+            ScrollingToolbarView = new ScrollingToolbarView(new RectangleF(0, 0, View.Bounds.Width, 40f), buttons);
+            ScrollingToolbarView.BackgroundColor = UIColor.White;
+            TextView.InputAccessoryView = ScrollingToolbarView;
+        }
 
         public string Text
         {
-            get { return _composerView.Text; }
-            set { _composerView.Text = value; }
+            get { return TextView.Text; }
+            set { TextView.Text = value; }
         }
 
 		public void CloseComposer ()
@@ -141,22 +87,19 @@ namespace CodeFramework.iOS.ViewControllers
 		    var nsValue = notification.UserInfo.ObjectForKey (UIKeyboard.BoundsUserInfoKey) as NSValue;
 		    if (nsValue == null) return;
 		    var kbdBounds = nsValue.RectangleFValue;
-		    _composerView.Frame = ComputeComposerSize (kbdBounds);
+            UIView.Animate(1.0f, 0, UIViewAnimationOptions.CurveEaseIn, () => TextView.Frame = ComputeComposerSize (kbdBounds), null);
 		}
+
+        void KeyboardWillHide (NSNotification notification)
+        {
+            TextView.Frame = ComputeComposerSize(new RectangleF(0, 0, 0, 0));
+        }
 
 	    RectangleF ComputeComposerSize (RectangleF kbdBounds)
 		{
 			var view = View.Bounds;
-			var nav = _navigationBar.Bounds;
-
-			return new RectangleF (0, nav.Height, view.Width, view.Height-kbdBounds.Height-nav.Height);
+            return new RectangleF (0, 0, view.Width, view.Height-kbdBounds.Height);
 		}
-       
-        public override void ViewWillLayoutSubviews()
-        {
-            base.ViewWillLayoutSubviews();
-			_navigationBar.Frame = new RectangleF (0, 0, View.Bounds.Width, 64);
-        }
 
         [Obsolete]
         public override bool ShouldAutorotateToInterfaceOrientation(UIInterfaceOrientation toInterfaceOrientation)
@@ -168,7 +111,8 @@ namespace CodeFramework.iOS.ViewControllers
         {
             base.ViewWillAppear (animated);
             NSNotificationCenter.DefaultCenter.AddObserver (new NSString("UIKeyboardWillShowNotification"), KeyboardWillShow);
-            _composerView.TextView.BecomeFirstResponder ();
+            NSNotificationCenter.DefaultCenter.AddObserver (new NSString("UIKeyboardWillHideNotification"), KeyboardWillHide);
+            TextView.BecomeFirstResponder ();
         }
 
         public override void ViewWillDisappear(bool animated)
@@ -179,11 +123,12 @@ namespace CodeFramework.iOS.ViewControllers
 		
 		public void NewComment (UIViewController parent, Action<string> action)
 		{
-            _navItem.Title = Title;
+            Title = Title;
             ReturnAction = action;
             _previousController = parent;
-            _composerView.TextView.BecomeFirstResponder ();
-            parent.PresentViewController(this, true, null);
+            TextView.BecomeFirstResponder ();
+            var nav = new UINavigationController(this);
+            parent.PresentViewController(nav, true, null);
 		}
 	}
 }

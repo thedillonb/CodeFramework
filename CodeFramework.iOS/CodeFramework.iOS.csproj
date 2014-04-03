@@ -91,6 +91,7 @@
     <Compile Include="Services\AlertDialogService.cs" />
     <Compile Include="XCallback\XCallbackQuery.cs" />
     <Compile Include="Utils\PickerAlert.cs" />
+    <Compile Include="Views\ScrollingToolbarView.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
