@@ -7,10 +7,13 @@ namespace System.Threading.Tasks
         {
             task.ContinueWith(t =>
             {
-                var aggException = t.Exception.Flatten();
-                foreach(var exception in aggException.InnerExceptions)
-                    System.Diagnostics.Debug.WriteLine("Fire and Forget failed: " + exception.Message + " - " + exception.StackTrace);
-            }, TaskContinuationOptions.OnlyOnFaulted);
+                if (t.IsFaulted)
+                {
+                    var aggException = t.Exception.Flatten();
+                    foreach(var exception in aggException.InnerExceptions)
+                        System.Diagnostics.Debug.WriteLine("Fire and Forget failed: " + exception.Message + " - " + exception.StackTrace);
+                }
+            });
         }
     }
 }

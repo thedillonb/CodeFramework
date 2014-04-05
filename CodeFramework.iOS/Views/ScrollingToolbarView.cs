@@ -1,15 +1,21 @@
 ﻿using MonoTouch.UIKit;
 using System.Drawing;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CodeFramework.iOS.Views
 {
     public class ScrollingToolbarView : UIView
     {
-        private const float PADDING = 10f;
+        private readonly static float XPADDING;
+        private readonly static float XOFFSET;
         private readonly UIScrollView _scrollView;
         private readonly IEnumerable<UIButton> _buttons;
+
+        static ScrollingToolbarView()
+        {
+            XPADDING = UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone ? 10 : 15f;
+            XOFFSET = UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone ? 5 : 10;
+        }
 
         public ScrollingToolbarView(RectangleF rect, IEnumerable<UIButton> buttons)
             : base(rect)
@@ -27,7 +33,7 @@ namespace CodeFramework.iOS.Views
 
             var line = new UIView(new RectangleF(0, 0, rect.Width, 0.5f));
             line.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleBottomMargin;
-            line.BackgroundColor = UIColor.LightGray;
+            line.BackgroundColor = UIColor.DarkGray;
             Add(line);
 
             foreach (var button in buttons)
@@ -43,21 +49,31 @@ namespace CodeFramework.iOS.Views
             foreach (var button in _buttons)
                 button.SizeToFit();
 
-            float left = 0;
+            float left = -6f;
             foreach (var button in _buttons)
             {
                 var frame = button.Frame;
-                frame.X = PADDING + left;
-                frame.Y = (this.Bounds.Height - button.Frame.Height) / 2;
+                frame.X = XPADDING + left;
+                frame.Y = 5f;
+                frame.Height = Bounds.Height - 10f;
 
-                var title = button.Title(UIControlState.Normal);
-                if (title != null && title.Length > 3)
-                    frame.Width = frame.Width + 10f;
+                if (frame.Width < frame.Height)
+                {
+                    if (frame.Height - frame.Width < XOFFSET)
+                        frame.Width = frame.Height + XPADDING;
+                    else
+                        frame.Width = frame.Height;
+                }
+                else
+                {
+                    frame.Width = frame.Width + XPADDING;
+                }
+
                 button.Frame = frame;
                 left = button.Frame.Right;
             }
 
-            _scrollView.ContentSize = new SizeF(left + PADDING, this.Frame.Height);
+            _scrollView.ContentSize = new SizeF(left + XPADDING, this.Frame.Height);
         }
     }
 }
