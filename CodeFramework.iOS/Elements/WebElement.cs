@@ -8,108 +8,22 @@ namespace CodeFramework.iOS.Elements
 {
     public class WebElement : Element, IElementSizing
     {
-        private readonly UIWebView webView = null;
+        protected readonly UIWebView WebView = null;
         private float _height;
-        readonly NSString key;
-        private bool _isLoaded = false;
         private string _value;
+        private bool _isLoaded = false;
+        protected readonly NSString Key;
+        private readonly bool _rawContentLoad;
+
+        public Action<float> HeightChanged;
+
 
         public Action<string> UrlRequested;
 
-        public string Value
+        public float Height
         {
-            get { return _value; }
-            set
-            {
-                _value = value;
-                if (_isLoaded)
-                    LoadContent(value);
-            }
+            get { return _height; }
         }
-
-        private bool ShouldStartLoad (NSUrlRequest request, UIWebViewNavigationType navigationType)
-        {
-            if (request.Url.AbsoluteString.StartsWith("app://resize"))
-            {
-                var size = webView.EvaluateJavascript("size();");
-                if (size != null)
-                    float.TryParse(size, out _height);
-
-                if (GetImmediateRootElement() != null)
-                    GetImmediateRootElement().Reload(this, UITableViewRowAnimation.None);
-                return false;
-            }
-
-            if (!request.Url.AbsoluteString.StartsWith("file://"))
-            {
-                if (UrlRequested != null)
-                    UrlRequested(request.Url.AbsoluteString);
-                return false;
-            }
-
-            return true;
-        }
-
-        private void LoadContent(string content)
-        {
-            content = System.Web.HttpUtility.JavaScriptStringEncode(content);
-            webView.EvaluateJavascript("ins('" + content + "');");
-        }
-
-        public WebElement (string content) : base (string.Empty)
-        {
-            key = new NSString("rbhtml_row");
-            webView = new UIWebView();
-            webView.ScrollView.ScrollEnabled = false;
-            webView.ScrollView.Bounces = false;
-            webView.ShouldStartLoad = (w, r, n) => ShouldStartLoad(r, n);
-            webView.LoadFinished += (sender, e) => {
-                if (!string.IsNullOrEmpty(_value))
-                    LoadContent(_value);
-                _isLoaded = true;
-            };
-
-            webView.LoadHtmlString(content, new NSUrl(""));
-
-        }
-
-        protected override NSString CellKey {
-            get {
-                return key;
-            }
-        }
-
-        public override UITableViewCell GetCell (UITableView tv)
-        {
-            var cell = tv.DequeueReusableCell (CellKey);
-            if (cell == null){
-                cell = new UITableViewCell (UITableViewCellStyle.Default, CellKey);
-                cell.SelectionStyle = UITableViewCellSelectionStyle.None;
-                webView.AutoresizingMask = UIViewAutoresizing.All;
-            }  
-
-            webView.Frame = new RectangleF(0, 0, cell.ContentView.Frame.Width, cell.ContentView.Frame.Height);
-            webView.RemoveFromSuperview();
-            cell.ContentView.AddSubview (webView);
-            cell.SeparatorInset = new UIEdgeInsets(0, 0, 0, 0);
-            return cell;
-        }
-
-        public float GetHeight (UITableView tableView, NSIndexPath indexPath){
-            return _height;
-        }
-
-    }
-
-    public class WebElement2 : Element, IElementSizing
-    {
-        private readonly UIWebView webView = null;
-        private float _height;
-        readonly NSString key;
-        private bool _isLoaded = false;
-        private string _value;
-
-        public Action<string> UrlRequested;
 
         public string Value
         {
@@ -128,16 +42,17 @@ namespace CodeFramework.iOS.Elements
             {
                 try
                 {
-                    var size = webView.EvaluateJavascript("size();");
+                    var size = WebView.EvaluateJavascript("size();");
                     if (size != null)
                         float.TryParse(size, out _height);
 
-                    if (GetImmediateRootElement() != null)
-                        GetImmediateRootElement().Reload(this, UITableViewRowAnimation.None);
+                    if (HeightChanged != null)
+                        HeightChanged(_height);
                 }
-                catch 
+                catch
                 {
                 }
+
                 return false;
             }
 
@@ -151,32 +66,49 @@ namespace CodeFramework.iOS.Elements
             return true;
         }
 
-        private void LoadContent(string content)
+        public WebElement (string content, string cellKey, bool rawContentLoad) 
+            : base (string.Empty)
         {
-            webView.EvaluateJavascript("var a = " + content + "; ins(a);");
-        }
-
-        public WebElement2 (string content) : base (string.Empty)
-        {
-            key = new NSString("webelement2");
-            webView = new UIWebView();
-            webView.ScrollView.ScrollEnabled = false;
-            webView.ScrollView.Bounces = false;
-            webView.ShouldStartLoad = (w, r, n) => ShouldStartLoad(r, n);
-            webView.LoadFinished += (sender, e) => {
+            Key = new NSString(cellKey);
+            _rawContentLoad = rawContentLoad;
+            WebView = new UIWebView();
+            WebView.ScrollView.ScrollEnabled = false;
+            WebView.ScrollView.Bounces = false;
+            WebView.ShouldStartLoad = (w, r, n) => ShouldStartLoad(r, n);
+            WebView.LoadFinished += (sender, e) => {
                 if (!string.IsNullOrEmpty(_value))
                     LoadContent(_value);
                 _isLoaded = true;
             };
 
-            webView.LoadHtmlString(content, new NSUrl(""));
-
+            WebView.LoadHtmlString(content, new NSUrl(""));
+            HeightChanged = (x) => {
+                if (GetImmediateRootElement() != null)
+                    GetImmediateRootElement().Reload(this, UITableViewRowAnimation.Fade);
+            };
         }
 
-        protected override NSString CellKey {
-            get {
-                return key;
+        private void LoadContent(string content)
+        {
+            if (_rawContentLoad)
+            {
+                WebView.EvaluateJavascript("var a = " + content + "; ins(a);");
             }
+            else
+            {
+                content = System.Web.HttpUtility.JavaScriptStringEncode(content);
+                WebView.EvaluateJavascript("ins('" + content + "');");
+            }
+        }
+
+        protected override NSString CellKey 
+        {
+            get { return Key; }
+        }
+
+        public float GetHeight (UITableView tableView, NSIndexPath indexPath)
+        {
+            return _height;
         }
 
         public override UITableViewCell GetCell (UITableView tv)
@@ -185,22 +117,17 @@ namespace CodeFramework.iOS.Elements
             if (cell == null){
                 cell = new UITableViewCell (UITableViewCellStyle.Default, CellKey);
                 cell.SelectionStyle = UITableViewCellSelectionStyle.None;
-                webView.AutoresizingMask = UIViewAutoresizing.All;
+                WebView.AutoresizingMask = UIViewAutoresizing.All;
             }  
 
-            webView.Frame = new RectangleF(0, 0, cell.ContentView.Frame.Width, cell.ContentView.Frame.Height);
-            webView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth;
-            webView.RemoveFromSuperview();
-            cell.ContentView.AddSubview (webView);
+            WebView.Frame = new RectangleF(0, 0, cell.ContentView.Frame.Width, cell.ContentView.Frame.Height);
+            WebView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth;
+            WebView.RemoveFromSuperview();
+            cell.ContentView.AddSubview (WebView);
             cell.ContentView.AutosizesSubviews = true;
             cell.SeparatorInset = new UIEdgeInsets(0, 0, 0, 0);
             return cell;
         }
-
-        public float GetHeight (UITableView tableView, NSIndexPath indexPath){
-            return _height;
-        }
-
     }
 }
 

@@ -23,7 +23,7 @@ namespace CodeFramework.iOS
 
         public static UIFont BodyFont
         {
-            get { return UIFont.SystemFontOfSize(12f * Theme.CurrentTheme.FontSizeRatio); }
+            get { return UIFont.SystemFontOfSize(13f * Theme.CurrentTheme.FontSizeRatio); }
         }
 
         public class Link
