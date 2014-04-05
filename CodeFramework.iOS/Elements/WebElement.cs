@@ -124,6 +124,7 @@ namespace CodeFramework.iOS.Elements
             WebView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth;
             WebView.RemoveFromSuperview();
             cell.ContentView.AddSubview (WebView);
+            cell.ContentView.Layer.MasksToBounds = true;
             cell.ContentView.AutosizesSubviews = true;
             cell.SeparatorInset = new UIEdgeInsets(0, 0, 0, 0);
             return cell;
