@@ -92,6 +92,7 @@
     <Compile Include="XCallback\XCallbackQuery.cs" />
     <Compile Include="Utils\PickerAlert.cs" />
     <Compile Include="Views\ScrollingToolbarView.cs" />
+    <Compile Include="Services\EnvironmentService.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
@@ -137,12 +138,6 @@
       <HintPath>..\lib\iOS\ModernHttpClient.iOS.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Services" />
-    <Reference Include="Parse.iOS">
-      <HintPath>..\lib\iOS\Parse.iOS.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\lib\iOS\Newtonsoft.Json.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeFramework.Core\CodeFramework.Core.iOS.csproj">

@@ -7,8 +7,6 @@ namespace CodeFramework.Core.Services
 		bool Enabled { get; set; }
 
 		void Init(string tracker, string name);
-
-		void LogException(Exception e);
     }
 }
 
