@@ -101,8 +101,9 @@ namespace CodeFramework.Core.Services
                 System.IO.File.Delete(CrashReportFile);
                 SendRequest(_jsonSerialization.Deserialize<SentryRequest>(fileData));
             }
-            catch
+            catch (Exception e)
             {
+                Debug.WriteLine("Unable to deserialize sentry request after crash: " + e.Message);
             }
         }
 
@@ -124,11 +125,19 @@ namespace CodeFramework.Core.Services
             req.Headers.Add("X-Sentry-Auth", header);
             var requestData = _jsonSerialization.Serialize(request);
             req.Content = new StringContent(requestData, Encoding.UTF8, "application/json");
-            _httpClient.SendAsync(req);
+            _httpClient.SendAsync(req).ContinueWith(t =>
+            {
+                if (t.Status != System.Threading.Tasks.TaskStatus.RanToCompletion)
+                    Debug.WriteLine("Unable to send sentry analytic");
+            });
         }
 
         private class SentryRequest
         {
+            public SentryRequest()
+            {
+            }
+
             public SentryRequest(Exception exception)
             {
                 Platform = "csharp";
@@ -172,6 +181,10 @@ namespace CodeFramework.Core.Services
 
             public class SentryException
             {
+                public SentryException()
+                {
+                }
+
                 public SentryException(Exception exception)
                 {
                     if (exception == null)
@@ -193,12 +206,16 @@ namespace CodeFramework.Core.Services
 
                 public class SentryStacktrace
                 {
+                    public SentryStacktrace()
+                    {
+                    }
+
                     public SentryStacktrace(Exception exception)
                     {
                         if (exception == null)
                             return;
 
-                        StackTrace trace = new StackTrace(exception, true);
+                        var trace = new StackTrace(exception, true);
                         var frames = trace.GetFrames();
 
                         if (frames == null)
@@ -218,6 +235,10 @@ namespace CodeFramework.Core.Services
 
                     public class SentryStackFrames
                     {
+                        public SentryStackFrames()
+                        {
+                        }
+
                         public SentryStackFrames(StackFrame frame)
                         {
                             if (frame == null)
