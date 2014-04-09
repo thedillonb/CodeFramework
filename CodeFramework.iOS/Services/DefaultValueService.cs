@@ -17,24 +17,24 @@ namespace CodeFramework.iOS.Services
 
         public bool TryGet<T>(string key, out T value)
         {
-			try
-			{
-				value = Get<T>(key);
-				return true;
-			}
-			catch
-			{
-				value = default(T);
-				return false;
-			}
+            try
+            {
+                value = Get<T>(key);
+                return true;
+            }
+            catch
+            {
+                value = default(T);
+                return false;
+            }
 
-//			var val = Utilities.Defaults.ValueForKey(new MonoTouch.Foundation.NSString(key));
+//            var val = Utilities.Defaults.ValueForKey(new MonoTouch.Foundation.NSString(key));
 //            if (val == null)
 //            {
 //                value = default(T);
 //                return false;
 //            }
-//			value = Get<T>(key);
+//            value = Get<T>(key);
 //            return true;
         }
 
