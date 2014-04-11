@@ -2,6 +2,7 @@ using System;
 using System.Windows.Input;
 using Cirrious.MvvmCross.ViewModels;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace CodeFramework.Core.ViewModels
 {
@@ -21,6 +22,29 @@ namespace CodeFramework.Core.ViewModels
 			set { _isLoading = value; RaisePropertyChanged(() => IsLoading); }
 		}
 
+        private async Task LoadResource(bool forceCacheInvalidation)
+        {
+            var retry = false;
+            while (true)
+            {
+                if (retry)
+                    await Task.Delay(100);
+
+                try
+                {
+                    await Load(forceCacheInvalidation);
+                    return;
+                }
+                catch (WebException)
+                {
+                    if (!retry)
+                        retry = true;
+                    else
+                        throw;
+                }
+            }
+        }
+
 		protected LoadableViewModel()
 		{
 			_loadCommand = new MvxCommand<bool?>(async forceCacheInvalidation =>
@@ -28,7 +52,7 @@ namespace CodeFramework.Core.ViewModels
 				try
 				{
 					IsLoading = true;
-					await Load(forceCacheInvalidation ?? false);
+                    await LoadResource(forceCacheInvalidation ?? false);
 				}
                 catch (OperationCanceledException e)
                 {

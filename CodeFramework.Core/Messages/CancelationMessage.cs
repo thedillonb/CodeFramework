@@ -1,5 +1,4 @@
-﻿using System;
-using Cirrious.MvvmCross.Plugins.Messenger;
+﻿using Cirrious.MvvmCross.Plugins.Messenger;
 
 namespace CodeFramework.Core.Messages
 {

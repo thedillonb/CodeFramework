@@ -20,7 +20,20 @@ namespace CodeFramework.iOS.Services
         {
             get
             {
-                return string.Format("{0}.{1}", NSBundle.MainBundle.InfoDictionary["CFBundleShortVersionString"], NSBundle.MainBundle.InfoDictionary["CFBundleVersion"].ToString());
+                string shortVersion = string.Empty;
+                string bundleVersion = string.Empty;
+
+                try
+                {
+                    shortVersion = NSBundle.MainBundle.InfoDictionary["CFBundleShortVersionString"].ToString();
+                } catch { }
+
+                try
+                {
+                    bundleVersion = NSBundle.MainBundle.InfoDictionary["CFBundleVersion"].ToString();
+                } catch { }
+       
+                return string.IsNullOrEmpty(bundleVersion) ? shortVersion : string.Format("{0} ({1})", shortVersion, bundleVersion);
             }
         }
 
