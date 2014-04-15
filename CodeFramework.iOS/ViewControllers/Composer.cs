@@ -144,8 +144,17 @@ namespace CodeFramework.iOS.ViewControllers
 		void PostCallback ()
 		{
 			SendItem.Enabled = false;
-            if (ReturnAction != null)
-                ReturnAction(Text);
+            TextView.ResignFirstResponder();
+
+            try
+            {
+                if (ReturnAction != null)
+                    ReturnAction(Text);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message + " - " + e.StackTrace);
+            }
 		}
 		
 		void KeyboardWillShow (NSNotification notification)
