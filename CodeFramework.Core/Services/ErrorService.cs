@@ -81,7 +81,7 @@ namespace CodeFramework.Core.Services
                         SendRequest(request);
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     Debug.WriteLine("Unable to report exception: " + exception.Message);
                 }

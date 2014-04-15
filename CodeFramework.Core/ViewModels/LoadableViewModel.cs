@@ -52,28 +52,30 @@ namespace CodeFramework.Core.ViewModels
 
         protected LoadableViewModel()
         {
-            _loadCommand = new MvxCommand<bool?>(async forceCacheInvalidation =>
+            _loadCommand = new MvxCommand<bool?>(x => HandleLoadCommand(x), _ => !IsLoading);
+        }
+
+        private async Task HandleLoadCommand(bool? forceCacheInvalidation)
+        {
+            try
             {
-                try
-                {
-                    IsLoading = true;
-                    await ExecuteLoadResource(forceCacheInvalidation ?? false);
-                }
-                catch (OperationCanceledException e)
-                {
-                    // The operation was canceled... Don't worry
-                    System.Diagnostics.Debug.WriteLine("The operation was canceled: " + e.Message);
-                }
-                catch (Exception e)
-                {
-                    DisplayAlert("The request to load this item did not complete successfuly! " + e.Message);
-                    ReportException(e);
-                }
-                finally
-                {
-                    IsLoading = false;
-                }
-            }, _ => !IsLoading);
+                IsLoading = true;
+                await ExecuteLoadResource(forceCacheInvalidation ?? false);
+            }
+            catch (OperationCanceledException e)
+            {
+                // The operation was canceled... Don't worry
+                System.Diagnostics.Debug.WriteLine("The operation was canceled: " + e.Message);
+            }
+            catch (Exception e)
+            {
+                DisplayAlert("The request to load this item did not complete successfuly! " + e.Message);
+                ReportException(e);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
         }
 
         protected abstract Task Load(bool forceCacheInvalidation);
