@@ -6,21 +6,21 @@ using System.Net;
 
 namespace CodeFramework.Core.ViewModels
 {
-	public abstract class LoadableViewModel : BaseViewModel
-	{
-		private readonly ICommand _loadCommand;
-		private bool _isLoading;
+    public abstract class LoadableViewModel : BaseViewModel
+    {
+        private readonly ICommand _loadCommand;
+        private bool _isLoading;
 
-		public ICommand LoadCommand
-		{
-			get { return _loadCommand; }
-		}
+        public ICommand LoadCommand
+        {
+            get { return _loadCommand; }
+        }
 
-		public bool IsLoading
-		{
-			get { return _isLoading; }
-			set { _isLoading = value; RaisePropertyChanged(() => IsLoading); }
-		}
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set { _isLoading = value; RaisePropertyChanged(() => IsLoading); }
+        }
 
         private async Task LoadResource(bool forceCacheInvalidation)
         {
@@ -45,33 +45,38 @@ namespace CodeFramework.Core.ViewModels
             }
         }
 
-		protected LoadableViewModel()
-		{
-			_loadCommand = new MvxCommand<bool?>(async forceCacheInvalidation =>
-			{
-				try
-				{
-					IsLoading = true;
-                    await LoadResource(forceCacheInvalidation ?? false);
-				}
+        protected virtual Task ExecuteLoadResource(bool forceCacheInvalidation)
+        {
+            return LoadResource(forceCacheInvalidation);
+        }
+
+        protected LoadableViewModel()
+        {
+            _loadCommand = new MvxCommand<bool?>(async forceCacheInvalidation =>
+            {
+                try
+                {
+                    IsLoading = true;
+                    await ExecuteLoadResource(forceCacheInvalidation ?? false);
+                }
                 catch (OperationCanceledException e)
                 {
                     // The operation was canceled... Don't worry
                     System.Diagnostics.Debug.WriteLine("The operation was canceled: " + e.Message);
                 }
-				catch (Exception e)
-				{
-                    DisplayAlert("The request to load this item did not complete successfuly! You may try refreshing to resolve the issue.");
+                catch (Exception e)
+                {
+                    DisplayAlert("The request to load this item did not complete successfuly! " + e.Message);
                     ReportException(e);
-				}
-				finally
-				{
-					IsLoading = false;
-				}
-			}, _ => !IsLoading);
-		}
+                }
+                finally
+                {
+                    IsLoading = false;
+                }
+            }, _ => !IsLoading);
+        }
 
-		protected abstract Task Load(bool forceCacheInvalidation);
-	}
+        protected abstract Task Load(bool forceCacheInvalidation);
+    }
 }
 
