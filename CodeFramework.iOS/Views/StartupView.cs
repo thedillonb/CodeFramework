@@ -1,48 +1,32 @@
 using System;
-using Cirrious.MvvmCross.Touch.Views;
 using MonoTouch;
 using MonoTouch.UIKit;
 using CodeFramework.Core.ViewModels;
-using CodeFramework.iOS.Utils;
-using Cirrious.MvvmCross.Plugins.Messenger;
 using CodeFramework.iOS.ViewControllers;
+using MonoTouch.Dialog.Utilities;
 
 namespace CodeFramework.iOS.Views
 {
-	public class StartupView : ViewModelDrivenDialogViewController
+    public class StartupView : ViewModelDrivenDialogViewController, IImageUpdated
     {
+        const float imageSize = 128f;
+
         private UIImageView _imgView;
-        private UIImage _img;
-		private IHud _hud;
+        private UILabel _statusLabel;
+        private UIActivityIndicatorView _activityView;
+        private UIStatusBarStyle _previousStatusbarStyle;
 
         public override void ViewWillLayoutSubviews()
         {
             base.ViewWillLayoutSubviews();
 
+            _imgView.Frame = new System.Drawing.RectangleF(View.Bounds.Width / 2 - imageSize / 2, View.Bounds.Height / 2 - imageSize / 2 - 30f, imageSize, imageSize);
+            _statusLabel.Frame = new System.Drawing.RectangleF(0, _imgView.Frame.Bottom + 10f, View.Bounds.Width, 15f);
+            _activityView.Center = new System.Drawing.PointF(View.Bounds.Width / 2, _statusLabel.Frame.Bottom + 16f + 16F);
+
             try
             {
-                if (_imgView != null)
-                    _imgView.Frame = this.View.Bounds;
-
-                if (_img != null)
-                    _img.Dispose();
-                _img = null;
-
-                //Load the background image
-                if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone)
-                {
-                    _img = UIImageHelper.FromFileAuto(Utilities.IsTall ? "Default-568h" : "Default");
-                }
-                else
-                {
-                    if (UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.Portrait || UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.PortraitUpsideDown)
-                        _img = UIImageHelper.FromFileAuto("Default-Portrait");
-                    else
-                        _img = UIImageHelper.FromFileAuto("Default-Landscape");
-                }
-
-                if (_img != null && _imgView != null)
-                    _imgView.Image = _img;
+                View.BackgroundColor = MonoTouch.Utilities.CreateRepeatingBackground();
             }
             catch (Exception e)
             {
@@ -54,22 +38,79 @@ namespace CodeFramework.iOS.Views
         {
             base.ViewDidLoad();
             View.AutosizesSubviews = true;
-            _imgView = new UIImageView {AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight};
-			_hud = new Hud(View);
+
+            _imgView = new UIImageView();
+            _imgView.Layer.CornerRadius = imageSize / 2;
+            _imgView.Layer.MasksToBounds = true;
             Add(_imgView);
 
+            _statusLabel = new UILabel();
+            _statusLabel.TextAlignment = UITextAlignment.Center;
+            _statusLabel.Font = UIFont.FromName("HelveticaNeue", 13f);
+            _statusLabel.TextColor = UIColor.FromWhiteAlpha(0.34f, 1f);
+            Add(_statusLabel);
+
+            _activityView = new UIActivityIndicatorView() { HidesWhenStopped = true };
+            _activityView.Color = UIColor.FromRGB(0.33f, 0.33f, 0.33f);
+            Add(_activityView);
+           
 			var vm = (BaseStartupViewModel)ViewModel;
 			vm.Bind(x => x.IsLoggingIn, x =>
+			{
+				if (x)
 				{
-					if (x)
-					{
-						_hud.Show("Logging in...");
-					}
-					else
-					{
-						_hud.Hide();
-					}
-				});
+                    _activityView.StartAnimating();
+				}
+				else
+				{
+                    _activityView.StopAnimating();
+				}
+			});
+
+            vm.Bind(x => x.ImageUrl, UpdatedImage);
+            vm.Bind(x => x.Status, x => _statusLabel.Text = x);
+
+        }
+
+        public void UpdatedImage(Uri uri)
+        {
+            if (uri == null)
+            {
+                AssignUnknownUserImage();
+            }
+            else
+            {
+                var img = ImageLoader.DefaultRequestImage(uri, this);
+                if (img == null)
+                {
+                    AssignUnknownUserImage();
+                }
+                else
+                {
+                    UIView.Transition(_imgView, 0.50f, UIViewAnimationOptions.TransitionCrossDissolve, () => _imgView.Image = img, null);
+                }
+            }
+        }
+
+        private void AssignUnknownUserImage()
+        {
+            var img = Theme.CurrentTheme.LoginUserUnknown.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
+            _imgView.Image = img;
+            _imgView.TintColor = UIColor.FromWhiteAlpha(0.34f, 1f);
+        }
+
+
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+            _previousStatusbarStyle = UIApplication.SharedApplication.StatusBarStyle;
+            UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.Default, false);
+        }
+
+        public override void ViewWillDisappear(bool animated)
+        {
+            base.ViewWillDisappear(animated);
+            UIApplication.SharedApplication.SetStatusBarStyle(_previousStatusbarStyle, true);
         }
 
 		public override void ViewDidAppear(bool animated)
@@ -82,6 +123,11 @@ namespace CodeFramework.iOS.Views
         public override bool ShouldAutorotate()
         {
             return true;
+        }
+
+        public override UIStatusBarStyle PreferredStatusBarStyle()
+        {
+            return UIStatusBarStyle.Default;
         }
 
         public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations()

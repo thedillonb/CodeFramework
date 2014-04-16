@@ -3,12 +3,15 @@ using Cirrious.CrossCore;
 using Cirrious.MvvmCross.ViewModels;
 using CodeFramework.Core.Data;
 using CodeFramework.Core.Services;
+using System;
 
 namespace CodeFramework.Core.ViewModels
 {
     public abstract class BaseStartupViewModel : BaseViewModel
     {
         private bool _isLoggingIn;
+        private string _status;
+        private Uri _imageUrl;
 
         public bool IsLoggingIn
         {
@@ -17,6 +20,26 @@ namespace CodeFramework.Core.ViewModels
             {
                 _isLoggingIn = value;
                 RaisePropertyChanged(() => IsLoggingIn);
+            }
+        }
+
+        public string Status
+        {
+            get { return _status; }
+            protected set
+            {
+                _status = value;
+                RaisePropertyChanged(() => Status);
+            }
+        }
+
+        public Uri ImageUrl
+        {
+            get { return _imageUrl; }
+            protected set
+            {
+                _imageUrl = value;
+                RaisePropertyChanged(() => ImageUrl);
             }
         }
 

@@ -150,12 +150,14 @@ namespace MonoTouch
             if (bgImage == null)
                 return null;
 
-            UIGraphics.BeginImageContext(new System.Drawing.SizeF(40f, bgImage.Size.Height));
+            var size = new System.Drawing.SizeF(40f, bgImage.Size.Height);
+            UIGraphics.BeginImageContext(size);
             var ctx = UIGraphics.GetCurrentContext();
             ctx.TranslateCTM (0, bgImage.Size.Height);
             ctx.ScaleCTM (1f, -1f);
 
             ctx.DrawImage(new System.Drawing.RectangleF(-10, 0, bgImage.Size.Width, bgImage.Size.Height), bgImage.CGImage);
+            ctx.ClipToRect(new System.Drawing.RectangleF(0, 0, size.Width, size.Height));
 
             var img = UIGraphics.GetImageFromCurrentImageContext();
             UIGraphics.EndImageContext();

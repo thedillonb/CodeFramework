@@ -24,6 +24,8 @@ namespace CodeFramework.iOS
 
         UIImage AnonymousUserImage { get; }
 
+        UIImage LoginUserUnknown { get; }
+
         UIImage IssueCellImage1 { get; }
         UIImage IssueCellImage2 { get; }
         UIImage IssueCellImage3 { get; }
