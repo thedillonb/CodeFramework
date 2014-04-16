@@ -13,6 +13,7 @@ namespace CodeFramework.iOS.ViewControllers
     public abstract class ViewModelDrivenDialogViewController : BaseDialogViewController, IMvxTouchView, IMvxEventSourceViewController
     {
         private UIRefreshControl _refreshControl;
+        private bool _manualRefreshRequested;
   
         public override void ViewDidLoad()
         {
@@ -27,39 +28,35 @@ namespace CodeFramework.iOS.ViewControllers
                 _refreshControl.ValueChanged += HandleRefreshRequested;
                 loadableViewModel.Bind(x => x.IsLoading, x =>
                 {
-                        if (x)
-                        {
-                            MonoTouch.Utilities.PushNetworkActive();
-                            _refreshControl.BeginRefreshing();
-                            this.BeginInvokeOnMainThread(() => TableView.SetContentOffset(new System.Drawing.PointF(0, -_refreshControl.Frame.Height), true));
+                    if (x)
+                    {
+                        MonoTouch.Utilities.PushNetworkActive();
+                        _refreshControl.BeginRefreshing();
 
-                            if (ToolbarItems != null)
-                            {
-                                foreach (var t in ToolbarItems)
-                                    t.Enabled = false;
-                            }
-                        }
-                        else
-                        {
-                            MonoTouch.Utilities.PopNetworkActive();
-                            _refreshControl.EndRefreshing();
-                            BeginInvokeOnMainThread(() => 
-                                UIView.Animate(0.25, 0.0, UIViewAnimationOptions.BeginFromCurrentState, 
-                                () => TableView.ContentOffset = new System.Drawing.PointF(0, 0), null));
+                        if (!_manualRefreshRequested)
+                            TableView.SetContentOffset(new System.Drawing.PointF(0, -_refreshControl.Frame.Height), true);
 
-                            if (ToolbarItems != null)
-                            {
-                                foreach (var t in ToolbarItems)
-                                    t.Enabled = true;
-                            }
-//
-//                            var hideSearch = EnableSearch && AutoHideSearch;
-//                            var newY = hideSearch ? 44 : 0;
-//                            _refreshControl.EndRefreshing();
-//                            if (TableView.ContentOffset.Y != newY)
-//                            {
-//                            }
+                        if (ToolbarItems != null)
+                        {
+                            foreach (var t in ToolbarItems)
+                                t.Enabled = false;
                         }
+                    }
+                    else
+                    {
+                        MonoTouch.Utilities.PopNetworkActive();
+
+                        // Stupid bug...
+                        BeginInvokeOnMainThread(_refreshControl.EndRefreshing);
+
+                        if (ToolbarItems != null)
+                        {
+                            foreach (var t in ToolbarItems)
+                                t.Enabled = true;
+                        }
+
+                        _manualRefreshRequested = false;
+                    }
                 });
             }
         }
@@ -80,6 +77,7 @@ namespace CodeFramework.iOS.ViewControllers
             var loadableViewModel = ViewModel as LoadableViewModel;
             if (loadableViewModel != null)
             {
+                _manualRefreshRequested = true;
                 loadableViewModel.LoadCommand.Execute(true);
             }
         }
