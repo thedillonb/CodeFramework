@@ -84,8 +84,7 @@ namespace CodeFramework.iOS
                 _generalNavigationController = new UINavigationController(uiView);
                 _generalNavigationController.NavigationBar.Translucent = false;
                 _generalNavigationController.Toolbar.Translucent = false;
-
-                Transition(_generalNavigationController, UIViewAnimationTransition.FlipFromRight);
+                Transition(_generalNavigationController);
             }
             else if (uiView is MenuBaseViewController)
             {
@@ -94,7 +93,7 @@ namespace CodeFramework.iOS
                 uiView.NavigationController.NavigationBar.Translucent = false;
                 uiView.NavigationController.Toolbar.Translucent = false;
                 uiView.NavigationController.NavigationBar.BarTintColor = UIColor.FromRGB(50, 50, 50);
-                Transition(_slideoutController, UIViewAnimationTransition.FlipFromLeft);
+                Transition(_slideoutController);
             }
             else
             {
@@ -124,13 +123,16 @@ namespace CodeFramework.iOS
             return true;
         }
 
-        private void Transition(UIViewController controller, UIViewAnimationTransition animation)
+        private void Transition(UIViewController controller)
         {
-            UIView.BeginAnimations("view_presenter_transition");
+            // Quickly swap to get the right sizes for the views
+            var current = _window.RootViewController;
             _window.RootViewController = controller;
-            UIView.SetAnimationDuration(0.6);
-            UIView.SetAnimationTransition(animation, _window, false);
-            UIView.CommitAnimations();
+            _window.RootViewController = current;
+
+            UIView.Transition(_window.RootViewController.View, controller.View, 0.3f, 
+                UIViewAnimationOptions.TransitionCrossDissolve | UIViewAnimationOptions.AllowAnimatedContent, 
+                () => _window.RootViewController = controller);
         }
     }
 }

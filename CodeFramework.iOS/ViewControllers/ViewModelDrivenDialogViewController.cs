@@ -34,7 +34,10 @@ namespace CodeFramework.iOS.ViewControllers
                         _refreshControl.BeginRefreshing();
 
                         if (!_manualRefreshRequested)
-                            TableView.SetContentOffset(new System.Drawing.PointF(0, -_refreshControl.Frame.Height), true);
+                        {
+                            UIView.Animate(0.25, 0f, UIViewAnimationOptions.BeginFromCurrentState | UIViewAnimationOptions.CurveEaseOut,
+                                () => TableView.ContentOffset = new System.Drawing.PointF(0, -_refreshControl.Frame.Height), null);
+                        }
 
                         if (ToolbarItems != null)
                         {
@@ -47,7 +50,11 @@ namespace CodeFramework.iOS.ViewControllers
                         MonoTouch.Utilities.PopNetworkActive();
 
                         // Stupid bug...
-                        BeginInvokeOnMainThread(_refreshControl.EndRefreshing);
+                        BeginInvokeOnMainThread(() => {
+                            UIView.Animate(0.25, 0.0, UIViewAnimationOptions.BeginFromCurrentState | UIViewAnimationOptions.CurveEaseOut,
+                                () => TableView.ContentOffset = new System.Drawing.PointF(0, 0), null);
+                            _refreshControl.EndRefreshing(); 
+                        });
 
                         if (ToolbarItems != null)
                         {
