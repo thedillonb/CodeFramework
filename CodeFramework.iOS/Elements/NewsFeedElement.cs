@@ -12,7 +12,6 @@ namespace CodeFramework.iOS.Elements
 {
     public class NewsFeedElement : Element, IElementSizing, IColorizeBackground, IImageUpdated
     {
-        private readonly string _name;
         private readonly string _time;
         private readonly Uri _imageUri;
         private readonly UIImage _actionImage;
@@ -23,9 +22,6 @@ namespace CodeFramework.iOS.Elements
         private readonly NSMutableAttributedString _attributedBody;
         private readonly List<NewsCellView.Link> _headerLinks;
         private readonly List<NewsCellView.Link> _bodyLinks;
-
-        private readonly LinkDelegate _headerLinkDelegate;
-        private readonly LinkDelegate _bodyLinkDelegate;
 
         public static UIColor LinkColor = Theme.CurrentTheme.MainTitleColor;
         public static UIFont LinkFont = UIFont.BoldSystemFontOfSize(13f);
@@ -64,10 +60,9 @@ namespace CodeFramework.iOS.Elements
             }
         }
 
-        public NewsFeedElement(string name, string imageUrl, DateTimeOffset time, IEnumerable<TextBlock> headerBlocks, IEnumerable<TextBlock> bodyBlocks, UIImage littleImage, Action tapped)
+        public NewsFeedElement(string imageUrl, DateTimeOffset time, IEnumerable<TextBlock> headerBlocks, IEnumerable<TextBlock> bodyBlocks, UIImage littleImage, Action tapped)
             : base(null)
         {
-            _name = name;
             Uri.TryCreate(imageUrl, UriKind.Absolute, out _imageUri);
             _time = time.ToDaysAgo();
             _actionImage = littleImage;
@@ -81,9 +76,6 @@ namespace CodeFramework.iOS.Elements
             _attributedBody = body.Item1;
             _bodyLinks = body.Item2;
             _bodyBlocks = bodyBlocks.Count();
-
-            _headerLinkDelegate = new LinkDelegate(_headerLinks, this);
-            _bodyLinkDelegate = new LinkDelegate(_bodyLinks, this);
         }
 
         private Tuple<NSMutableAttributedString,List<NewsCellView.Link>> CreateAttributedStringFromBlocks(IEnumerable<TextBlock> blocks)
@@ -134,41 +126,6 @@ namespace CodeFramework.iOS.Elements
             return new Tuple<NSMutableAttributedString, List<NewsCellView.Link>>(attributedString, links);
         }
 
-        private class LinkDelegate : OHAttributedLabelDelegate
-        {
-            private readonly List<NewsCellView.Link> _links;
-            private readonly NewsFeedElement _parent;
-
-            public LinkDelegate(List<NewsCellView.Link> links, NewsFeedElement parent)
-            {
-                _links = links;
-                _parent = parent;
-            }
-
-            public override bool ShouldFollowLink (OHAttributedLabel sender, NSObject linkInfo)
-            {
-                var a = (NSUrl)MonoTouch.ObjCRuntime.Runtime.GetNSObject (MonoTouch.ObjCRuntime.Messaging.IntPtr_objc_msgSend(linkInfo.Handle, MonoTouch.ObjCRuntime.Selector.GetHandle ("URL")));
-                try
-                {
-                    if (a.AbsoluteString.StartsWith("http"))
-                    {
-                        if (_parent.WebLinkClicked != null)
-                            _parent.WebLinkClicked(a);
-                    }
-                    else
-                    {
-                        var id = Int32.Parse(a.AbsoluteString);
-                        _links[id].Callback();
-                    }
-                }
-                catch (Exception e)
-                {
-                    MonoTouch.Utilities.LogException("Unable to callback on OHAttributedLabel", e);
-                }
-                return false;
-            }
-        }
-
         private static float CharacterHeight 
         {
             get { return "A".MonoStringHeight(NewsCellView.BodyFont, 1000); }
@@ -190,13 +147,6 @@ namespace CodeFramework.iOS.Elements
             var descCalc = s + height;
             var ret = ((int)Math.Ceiling(descCalc)) + 1f + 8f;
             return ret;
-        }
-
-        private bool IsHeaderMultilined(UITableView tableView)
-        {
-            var rec = _attributedHeader.GetBoundingRect(new SizeF(tableView.Bounds.Width - 56, 10000), NSStringDrawingOptions.UsesLineFragmentOrigin | NSStringDrawingOptions.UsesFontLeading, null);
-            var height = rec.Height;
-            return height > CharacterHeight + 4f; // +4 due to weird buffer space
         }
 
         protected override NSString CellKey {
@@ -229,9 +179,7 @@ namespace CodeFramework.iOS.Elements
             if (_imageUri != null)
                 image = ImageLoader.DefaultRequestImage(_imageUri, this);
 
-            var isHeaderMultilined = IsHeaderMultilined(tableView);
-            c.SetHeaderAlignment(!isHeaderMultilined);
-            c.Set(_name, image, _time, _actionImage, _attributedHeader, _attributedBody, _headerLinkDelegate, _bodyLinkDelegate, _headerLinks, _bodyLinks);
+            c.Set(image, _time, _actionImage, _attributedHeader, _attributedBody, _headerLinks, _bodyLinks, WebLinkClicked);
         }
 
         #region IImageUpdated implementation

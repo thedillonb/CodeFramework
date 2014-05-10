@@ -96,6 +96,7 @@
     <Compile Include="TableViewCells\MilestoneTableViewCell.cs" />
     <Compile Include="Elements\MilestoneElement.cs" />
     <Compile Include="Elements\LabelElement.cs" />
+    <Compile Include="Views\UILabelWithLinks.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
@@ -121,9 +122,6 @@
     <Reference Include="Cirrious.MvvmCross.Touch">
       <HintPath>..\lib\iOS\Cirrious.MvvmCross.Touch.dll</HintPath>
     </Reference>
-    <Reference Include="OHAttributedLabel">
-      <HintPath>..\lib\iOS\OHAttributedLabel.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
@@ -141,6 +139,9 @@
       <HintPath>..\lib\iOS\ModernHttpClient.iOS.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Services" />
+    <Reference Include="MonoTouch.TTTAttributedLabel">
+      <HintPath>..\lib\iOS\MonoTouch.TTTAttributedLabel.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="lib\MonoTouch.SlideoutNavigation\MonoTouch.SlideoutNavigation\MonoTouch.SlideoutNavigation.csproj">

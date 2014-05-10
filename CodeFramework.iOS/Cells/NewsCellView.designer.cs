@@ -16,10 +16,10 @@ namespace CodeFramework.iOS
 		MonoTouch.UIKit.UIImageView ActionImage { get; set; }
 
 		[Outlet]
-		MonoTouch.UIKit.OHAttributedLabel Body { get; set; }
+        MonoTouch.TTTAttributedLabel.TTTAttributedLabel Body { get; set; }
 
 		[Outlet]
-		MonoTouch.UIKit.OHAttributedLabel Header { get; set; }
+        MonoTouch.TTTAttributedLabel.TTTAttributedLabel Header { get; set; }
 
 		[Outlet]
 		MonoTouch.UIKit.UIImageView Image { get; set; }
