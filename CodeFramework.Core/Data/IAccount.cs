@@ -1,9 +1,9 @@
-﻿namespace CodeFramework.Core.Data
-{
-    public interface IAccount
-    {
-        int Id { get; set; }
+﻿using Xamarin.Utilities.Core.Persistence;
 
+namespace CodeFramework.Core.Data
+{
+    public interface IAccount : IDatabaseItem<int>
+    {
         /// <summary>
         /// Gets or sets the username.
         /// </summary>

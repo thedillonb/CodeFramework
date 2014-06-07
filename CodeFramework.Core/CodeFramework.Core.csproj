@@ -80,5 +80,4 @@
       <Name>Xamarin.Utilities.Core.iOS</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
 </Project>

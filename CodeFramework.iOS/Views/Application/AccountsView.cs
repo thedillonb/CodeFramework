@@ -46,6 +46,12 @@ namespace CodeFramework.iOS.Views.Application
                 })));
         }
 
+	    public override void ViewWillAppear(bool animated)
+	    {
+	        base.ViewWillAppear(animated);
+	        ViewModel.LoadCommand.ExecuteIfCan();
+	    }
+
 	    public override Source CreateSizingSource(bool unevenRows)
         {
             return new DialogDeleteSource(this, x =>

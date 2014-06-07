@@ -8,7 +8,7 @@ using Xamarin.Utilities.Core.ViewModels;
 
 namespace CodeFramework.Core.ViewModels.Application
 {
-    public class AccountsViewModel : LoadableViewModel
+    public class AccountsViewModel : BaseViewModel
     {
         private bool _isLoggingIn;
         public bool IsLoggingIn
@@ -18,6 +18,8 @@ namespace CodeFramework.Core.ViewModels.Application
         }
 
         public ReactiveList<IAccount> Accounts { get; private set; }
+
+        public IReactiveCommand LoadCommand { get; private set; }
 
         public IReactiveCommand LoginCommand { get; private set; }
 
@@ -59,6 +61,7 @@ namespace CodeFramework.Core.ViewModels.Application
 //                ShowViewModel(vm);
 //            });
 
+            LoadCommand = new ReactiveCommand();
             LoadCommand.Subscribe(x => Accounts.Reset(accountsService));
         }
     }

@@ -20,17 +20,26 @@ namespace CodeFramework.Core.Data
         /// Gets or sets the username.
         /// </summary>
         /// <value>The username.</value>
+        [MaxLength(128)]
         public string Username { get; set; }
 
         /// <summary>
         /// Gets or sets the avatar URL.
         /// </summary>
         /// <value>The avatar URL.</value>
+        [MaxLength(256)]
         public string AvatarUrl { get; set; }
+
+        /// <summary>
+        /// The password or OAuth, whatever works
+        /// </summary>
+        [MaxLength(128)]
+        public string Password { get; set; }
 
         /// <summary>
         /// The domain for the account
         /// </summary>
+        [MaxLength(256)]
         public string Domain { get; set; }
 
         /// <summary>
@@ -144,7 +153,7 @@ namespace CodeFramework.Core.Data
             if (ReferenceEquals(this, obj))
                 return true;
             var act = obj as Account;
-            return act != null && this.Id.Equals(act.Id);
+            return act != null && Id.Equals(act.Id);
         }
 
         /// <summary>
@@ -156,7 +165,7 @@ namespace CodeFramework.Core.Data
         /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
-            return this.Id;
+            return Id;
         }
     }
 }
