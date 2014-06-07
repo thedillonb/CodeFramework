@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using CodeFramework.Core.ViewModels;
 using SQLite;
 
 namespace CodeFramework.Core.Data
@@ -21,7 +20,7 @@ namespace CodeFramework.Core.Data
         /// </summary>
         /// <returns>The filter.</returns>
         /// <param name="key">Key.</param>
-        public TFilter GetFilter<TFilter>(string key) where TFilter : FilterModel<TFilter>, new()
+        public TFilter GetFilter<TFilter>(string key) where TFilter : class, new()
         {
             Filter filter;
             lock (_sqLiteConnection)
@@ -40,7 +39,7 @@ namespace CodeFramework.Core.Data
         /// </summary>
         /// <returns>The filter.</returns>
         /// <param name="key">Key.</param>
-        public TFilter GetFilter<TFilter>(object key) where TFilter : FilterModel<TFilter>, new()
+        public TFilter GetFilter<TFilter>(object key) where TFilter : class, new()
         {
             return GetFilter<TFilter>(key.GetType().Name);
         }

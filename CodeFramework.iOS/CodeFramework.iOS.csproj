@@ -78,28 +78,19 @@
     <InterfaceDefinition Include="Cells\NewsCellView.xib" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="MonoTouch.TTTAttributedLabel, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\MonoTouch.TTTAttributedLabel.dll</HintPath>
+    </Reference>
     <Reference Include="ReactiveUI">
       <HintPath>..\lib\Xamarin.Utilities\lib\iOS\ReactiveUI.dll</HintPath>
     </Reference>
     <Reference Include="ReactiveUI.Cocoa">
       <HintPath>..\lib\Xamarin.Utilities\lib\iOS\ReactiveUI.Cocoa.dll</HintPath>
     </Reference>
-    <Reference Include="ReactiveUI.Events">
-      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\ReactiveUI.Events.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
-    <Reference Include="BTProgressHUD">
-      <HintPath>..\lib\iOS\BTProgressHUD.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http" />
-    <Reference Include="AFNetworking">
-      <HintPath>..\lib\iOS\AFNetworking.dll</HintPath>
-    </Reference>
-    <Reference Include="ModernHttpClient.iOS">
-      <HintPath>..\lib\iOS\ModernHttpClient.iOS.dll</HintPath>
-    </Reference>
     <Reference Include="System.Reactive.Core">
       <HintPath>..\lib\Xamarin.Utilities\lib\iOS\System.Reactive.Core.dll</HintPath>
     </Reference>
@@ -110,9 +101,6 @@
       <HintPath>..\lib\Xamarin.Utilities\lib\iOS\System.Reactive.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Services" />
-    <Reference Include="MonoTouch.TTTAttributedLabel">
-      <HintPath>..\lib\iOS\MonoTouch.TTTAttributedLabel.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\lib\Xamarin.Utilities\Xamarin.Utilities.Core\Xamarin.Utilities.Core.iOS.csproj">
@@ -122,10 +110,6 @@
     <ProjectReference Include="..\lib\Xamarin.Utilities\Xamarin.Utilities.iOS\Xamarin.Utilities.iOS.csproj">
       <Project>{5e7e39ca-0cce-41fe-a868-ee0e567e069e}</Project>
       <Name>Xamarin.Utilities.iOS</Name>
-    </ProjectReference>
-    <ProjectReference Include="lib\MonoTouch.SlideoutNavigation\MonoTouch.SlideoutNavigation\MonoTouch.SlideoutNavigation.csproj">
-      <Project>{6D7B9B53-CFEF-46BE-A608-14A4A1381CF6}</Project>
-      <Name>MonoTouch.SlideoutNavigation</Name>
     </ProjectReference>
     <ProjectReference Include="lib\MonoTouch.Dialog\MonoTouch.Dialog\MonoTouch.Dialog.csproj">
       <Project>{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}</Project>

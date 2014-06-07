@@ -47,9 +47,6 @@
     <Compile Include="Data\AccountPinnedRepositories.cs" />
     <Compile Include="Utils\FilterGroup.cs" />
     <Compile Include="ViewModels\Application\AccountsViewModel.cs" />
-    <Compile Include="ViewModels\FilterGroup.cs" />
-    <Compile Include="ViewModels\FilterModel.cs" />
-    <Compile Include="ViewModels\IFilterableViewModel.cs" />
     <Compile Include="ViewModels\FileSourceViewModel.cs" />
     <Compile Include="ViewModels\Application\StartupViewModel.cs" />
     <Compile Include="Utils\DefaultStartupViewCommand.cs" />
@@ -61,7 +58,6 @@
     <Compile Include="Messages\CancelationMessage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Monotouch" />
     <Reference Include="ReactiveUI">
       <HintPath>..\lib\Xamarin.Utilities\lib\iOS\ReactiveUI.dll</HintPath>
     </Reference>
@@ -75,7 +71,6 @@
     <Reference Include="System.Reactive.Linq">
       <HintPath>..\lib\Xamarin.Utilities\lib\iOS\System.Reactive.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
