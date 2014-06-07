@@ -6,7 +6,7 @@ using MonoTouch.UIKit;
 
 namespace CodeFramework.iOS.Elements
 {
-    public class ProfileElement : Element, IImageUpdated
+    public class ProfileElement : Element, IImageUpdated, IElementSizing
     {
         private readonly string _title, _subtitle;
 
@@ -78,6 +78,11 @@ namespace CodeFramework.iOS.Elements
             var cell = this.GetActiveCell() as ProfileTableViewCell;
             if (cell != null)
                 cell.ImageView.Image = ImageLoader.DefaultRequestImage(uri, this);
+        }
+
+        public float GetHeight(UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath)
+        {
+            return 74f;
         }
 
         private class ProfileTableViewCell : UITableViewCell

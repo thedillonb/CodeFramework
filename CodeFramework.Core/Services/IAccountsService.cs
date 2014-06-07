@@ -9,23 +9,12 @@ namespace CodeFramework.Core.Services
         /// <summary>
         /// Gets the active account
         /// </summary>
-        IAccount ActiveAccount { get; }
-
-        /// <summary>
-        /// Sets the active account
-        /// </summary>
-        /// <param name="account"></param>
-        void SetActiveAccount(IAccount account);
+        IAccount ActiveAccount { get; set; }
 
         /// <summary>
         /// Gets the default account
         /// </summary>
         IAccount GetDefault();
-
-        /// <summary>
-        /// Sets the default account
-        /// </summary>
-        void SetDefault(IAccount account);
 
         /// <summary>
         /// Insert the specified account.

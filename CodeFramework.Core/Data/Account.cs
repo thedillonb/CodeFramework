@@ -6,7 +6,7 @@ using SQLite;
 
 namespace CodeFramework.Core.Data
 {
-    public abstract class Account : IAccount, IDisposable
+    public class Account : IAccount, IDisposable
     {
         private SQLiteConnection _database;
         private AccountFilters _filters;
@@ -78,7 +78,8 @@ namespace CodeFramework.Core.Data
         {
             get
             {
-                var accountsDir = IoC.Resolve<IAccountPreferencesService>().AccountsDir;
+                var basePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "..");
+                var accountsDir = Path.Combine(basePath, "Documents/accounts");
                 return Path.Combine(accountsDir, Id.ToString(CultureInfo.InvariantCulture));
             }
         }

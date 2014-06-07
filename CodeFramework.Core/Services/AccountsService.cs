@@ -10,7 +10,7 @@ using Xamarin.Utilities.Core.Services;
 
 namespace CodeFramework.Core.Services
 {
-    public abstract class AccountsService<TAccount> : IAccountsService where TAccount : class, IAccount, new()
+    public class AccountsService : IAccountsService
     {
         private readonly Subject<IAccount> _accountSubject = new Subject<IAccount>();
         private readonly SQLiteConnection _userDatabase;
@@ -23,7 +23,20 @@ namespace CodeFramework.Core.Services
             get { return _activeAccount; }
             set
             {
+                if (value != null)
+                {
+                    var accountDir = CreateAccountDirectory(value);
+                    if (!Directory.Exists(accountDir))
+                        Directory.CreateDirectory(accountDir);
+                }
+
+                if (value == null)
+                    _defaults.Set("DEFAULT_ACCOUNT", null);
+                else
+                    _defaults.Set("DEFAULT_ACCOUNT", value.Id);
+
                 _activeAccount = value;
+
                 _accountSubject.OnNext(value);
             }
         }
@@ -33,17 +46,18 @@ namespace CodeFramework.Core.Services
             get { return _accountSubject; }
         }
 
-        protected AccountsService(IDefaultValueService defaults, IAccountPreferencesService accountPreferences)
+        public AccountsService(IDefaultValueService defaults)
         {
             _defaults = defaults;
-            _accountsPath = accountPreferences.AccountsDir;
+            var basePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "..");
+            _accountsPath = Path.Combine(basePath, "Documents/accounts");
 
             // Assure creation of the accounts path
             if (!Directory.Exists(_accountsPath))
                 Directory.CreateDirectory(_accountsPath);
 
             _userDatabase = new SQLiteConnection(Path.Combine(_accountsPath, "accounts.db"));
-            _userDatabase.CreateTable<TAccount>();
+            _userDatabase.CreateTable<Account>();
         }
 
         public IAccount GetDefault()
@@ -51,27 +65,7 @@ namespace CodeFramework.Core.Services
             int id;
 			return !_defaults.TryGet("DEFAULT_ACCOUNT", out id) ? null : Find(id);
         }
-
-        public void SetDefault(IAccount account)
-        {
-            if (account == null)
-                _defaults.Set("DEFAULT_ACCOUNT", null);
-            else
-                _defaults.Set("DEFAULT_ACCOUNT", account.Id);
-        }
-
-		public void SetActiveAccount(IAccount account)
-        {
-			if (account != null)
-			{
-				var accountDir = CreateAccountDirectory(account);
-				if (!Directory.Exists(accountDir))
-					Directory.CreateDirectory(accountDir);
-			}
-
-            ActiveAccount = account;
-        }
-
+            
         protected string CreateAccountDirectory(IAccount account)
         {
             return Path.Combine(_accountsPath, account.Id.ToString(CultureInfo.InvariantCulture));
@@ -115,7 +109,7 @@ namespace CodeFramework.Core.Services
         {
 			lock (_userDatabase)
 			{
-				var query = _userDatabase.Find<TAccount>(x => x.Id == id);
+                var query = _userDatabase.Find<Account>(x => x.Id == id);
 				return query;
 			}
         }
@@ -123,7 +117,7 @@ namespace CodeFramework.Core.Services
 
         public IEnumerator<IAccount> GetEnumerator()
         {
-            return _userDatabase.Table<TAccount>().GetEnumerator();
+            return _userDatabase.Table<Account>().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

@@ -5,6 +5,7 @@ using MonoTouch.UIKit;
 using ReactiveUI;
 using Xamarin.Utilities.Images;
 using Xamarin.Utilities.ViewControllers;
+using System.Reactive.Linq;
 
 namespace CodeFramework.iOS.Views.Application
 {
@@ -15,7 +16,11 @@ namespace CodeFramework.iOS.Views.Application
         private UIImageView _imgView;
         private UILabel _statusLabel;
         private UIActivityIndicatorView _activityView;
-        private UIStatusBarStyle _previousStatusbarStyle;
+
+        public StartupView()
+        {
+            ManualLoad = true;
+        }
 
         public override void ViewWillLayoutSubviews()
         {
@@ -43,27 +48,38 @@ namespace CodeFramework.iOS.Views.Application
             _imgView = new UIImageView();
             _imgView.Layer.CornerRadius = ImageSize / 2;
             _imgView.Layer.MasksToBounds = true;
+            _imgView.Alpha = 0;
             Add(_imgView);
 
             Add(_statusLabel = new UILabel
             {
                 TextAlignment = UITextAlignment.Center,
                 Font = UIFont.FromName("HelveticaNeue", 13f),
-                TextColor = UIColor.FromWhiteAlpha(0.34f, 1f)
+                TextColor = UIColor.FromWhiteAlpha(0.34f, 1f),
+                Alpha = 0
             });
 
             Add(_activityView = new UIActivityIndicatorView
             {
                 HidesWhenStopped = true,
-                Color = UIColor.FromRGB(0.33f, 0.33f, 0.33f)
+                Color = UIColor.FromRGB(0.33f, 0.33f, 0.33f),
+                Alpha = 0
             });
 
-            ViewModel.WhenAnyValue(x => x.IsLoggingIn).Subscribe(x =>
+            ViewModel.WhenAnyValue(x => x.IsLoggingIn).Skip(1).Subscribe(x =>
             {
                 if (x)
+                {
+                    UIView.Animate(0.1, 0, UIViewAnimationOptions.TransitionCrossDissolve, () =>
+                        _imgView.Alpha = _statusLabel.Alpha = _activityView.Alpha = 1, null);
                     _activityView.StartAnimating();
+                }
                 else
+                {
+                    UIView.Animate(0.1, 0, UIViewAnimationOptions.TransitionCrossDissolve, () =>
+                        _imgView.Alpha = _statusLabel.Alpha = _activityView.Alpha = 0, null);
                     _activityView.StopAnimating();
+                }
             });
 
             ViewModel.WhenAnyValue(x => x.ImageUrl).Subscribe(UpdatedImage);
@@ -85,7 +101,7 @@ namespace CodeFramework.iOS.Views.Application
                 }
                 else
                 {
-                    UIView.Transition(_imgView, 0.50f, UIViewAnimationOptions.TransitionCrossDissolve, () => _imgView.Image = img, null);
+                    UIView.Transition(_imgView, 0.35f, UIViewAnimationOptions.TransitionCrossDissolve, () => _imgView.Image = img, null);
                 }
             }
         }
@@ -101,14 +117,20 @@ namespace CodeFramework.iOS.Views.Application
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
-            _previousStatusbarStyle = UIApplication.SharedApplication.StatusBarStyle;
-            UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.Default, false);
+            UIApplication.SharedApplication.SetStatusBarHidden(true, UIStatusBarAnimation.Fade);
         }
 
         public override void ViewWillDisappear(bool animated)
         {
             base.ViewWillDisappear(animated);
-            UIApplication.SharedApplication.SetStatusBarStyle(_previousStatusbarStyle, true);
+            UIApplication.SharedApplication.SetStatusBarHidden(false, UIStatusBarAnimation.Fade);
+            UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.LightContent, true);
+        }
+
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+            ViewModel.LoadCommand.ExecuteIfCan();
         }
 
         public override bool ShouldAutorotate()

@@ -8,11 +8,10 @@ using Xamarin.Utilities.Core.ViewModels;
 
 namespace CodeFramework.Core.ViewModels.Application
 {
-    public abstract class StartupViewModel : LoadableViewModel
+    public class StartupViewModel : LoadableViewModel
     {
-        public static Func<IAccount, Task> AttemptLogin;
-
         protected readonly IAccountsService AccountsService;
+        protected readonly IAccountValidatorService AccountValidator;
 
         public IReactiveCommand GoToAccountsCommand { get; private set; }
 
@@ -43,15 +42,20 @@ namespace CodeFramework.Core.ViewModels.Application
             protected set { this.RaiseAndSetIfChanged(ref _imageUrl, value); }
         }
 
-        protected StartupViewModel(IAccountsService accountsService)
+        public StartupViewModel(IAccountsService accountsService, IAccountValidatorService accountValidator)
         {
             AccountsService = accountsService;
+            AccountValidator = accountValidator;
             GoToMainCommand = new ReactiveCommand();
             GoToAccountsCommand = new ReactiveCommand();
             GoToNewUserCommand = new ReactiveCommand();
             BecomeActiveWindowCommand = new ReactiveCommand();
 
             GoToAccountsCommand.Subscribe(_ => ShowViewModel(CreateViewModel<AccountsViewModel>()));
+
+            GoToNewUserCommand.Subscribe(_ => ShowViewModel(CreateViewModel(typeof(IAddAccountViewModel))));
+
+            GoToMainCommand.Subscribe(_ => ShowViewModel(CreateViewModel(typeof(IMainViewModel))));
 
             LoadCommand.RegisterAsyncTask(x => Load());
         }
@@ -87,13 +91,24 @@ namespace CodeFramework.Core.ViewModels.Application
             {
                 try
                 {
-                    await AttemptLogin(account);
-                    AccountsService.SetActiveAccount(account);
+                    Status = string.Format("Logging in {0}", account.Username);
+
+                    Uri avatarUri;
+                    if (Uri.TryCreate(account.AvatarUrl, UriKind.Absolute, out avatarUri))
+                        ImageUrl = avatarUri;
+
+                    IsLoggingIn = true;
+                    await AccountValidator.Validate(account);
+                    AccountsService.ActiveAccount = account;
                     GoToMainCommand.Execute(null);
                 }
                 catch
                 {
                     GoToAccountsCommand.ExecuteIfCan();
+                }
+                finally
+                {
+                    IsLoggingIn = false;
                 }
             }
         }

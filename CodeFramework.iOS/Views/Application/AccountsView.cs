@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using CodeFramework.Core.Data;
@@ -9,15 +8,21 @@ using MonoTouch.Dialog;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using ReactiveUI;
-using ReactiveUI.Cocoa;
 
 namespace CodeFramework.iOS.Views.Application
 {
-	public class AccountsView : ViewModelDialogView<AccountsViewModel>
+    public class AccountsView : ViewModelDialogView<AccountsViewModel>
 	{
+        public AccountsView()
+            : base(UITableViewStyle.Plain)
+        {
+        }
+
         public override void ViewDidLoad()
         {
-            NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s, e) => ViewModel.GoToAddAccountCommand.Execute(null));
+            NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add, (s, e) => ViewModel.GoToAddAccountCommand.ExecuteIfCan());
+            NavigationItem.LeftBarButtonItem = new UIBarButtonItem(Images.Cancel, UIBarButtonItemStyle.Plain, (s, e) => ViewModel.DismissCommand.ExecuteIfCan());
+
             TableView.RowHeight = 74f;
             TableView.SeparatorInset = new UIEdgeInsets(0, TableView.RowHeight, 0, 0);
 
@@ -36,7 +41,7 @@ namespace CodeFramework.iOS.Views.Application
                     var shortenedDomain = new Uri(x.Domain);
                     var element = new ProfileElement(x.Username, shortenedDomain.Host)
                     {
-                        Accessory = UITableViewCellAccessory.DisclosureIndicator,
+                        Accessory = Equals(ViewModel.ActiveAccount, x) ? UITableViewCellAccessory.Checkmark : UITableViewCellAccessory.None,
                         Tag = x,
                         Image = Images.LoginUserUnknown,
                         ImageUri = x.AvatarUrl
@@ -44,6 +49,10 @@ namespace CodeFramework.iOS.Views.Application
                     element.Tapped += () => ViewModel.LoginCommand.ExecuteIfCan(x);
                     return element;
                 })));
+
+            ViewModel.WhenAnyValue(x => x.ActiveAccount, x => x != null)
+                .Where(x => NavigationItem != null)
+                .Subscribe(x => NavigationItem.LeftBarButtonItem.Enabled = x);
         }
 
 	    public override void ViewWillAppear(bool animated)

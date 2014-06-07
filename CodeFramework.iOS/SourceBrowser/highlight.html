@@ -1,0 +1,16 @@
+﻿<html>
+<head>
+<link rel="stylesheet" href="styles/idea.css" />
+<script src="highlight.pack.js"></script>
+</head>
+<body>
+<pre><code id="code"></code></pre>
+<script type="text/javascript">
+	function render(txt) {
+		var codeElement = document.getElementById('code');
+		codeElement.innerHTML = txt;
+		hljs.highlightBlock(codeElement);
+	};
+</script>
+</body>
+</html>	

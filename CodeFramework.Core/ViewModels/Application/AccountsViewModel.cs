@@ -10,11 +10,23 @@ namespace CodeFramework.Core.ViewModels.Application
 {
     public class AccountsViewModel : BaseViewModel
     {
+        private readonly IAccountsService _accountsService;
+
         private bool _isLoggingIn;
         public bool IsLoggingIn
         {
             get { return _isLoggingIn; }
             protected set { this.RaiseAndSetIfChanged(ref _isLoggingIn, value); }
+        }
+
+        public IAccount ActiveAccount
+        {
+            get { return _accountsService.ActiveAccount; }
+            set
+            {
+                _accountsService.ActiveAccount = value;
+                this.RaisePropertyChanged();
+            }
         }
 
         public ReactiveList<IAccount> Accounts { get; private set; }
@@ -27,8 +39,9 @@ namespace CodeFramework.Core.ViewModels.Application
 
         public IReactiveCommand DeleteAccountCommand { get; private set; }
 
-        protected AccountsViewModel(IAccountsService accountsService)
+        public AccountsViewModel(IAccountsService accountsService)
         {
+            _accountsService = accountsService;
             Accounts = new ReactiveList<IAccount>(accountsService);
             LoginCommand = new ReactiveCommand();
             GoToAddAccountCommand = new ReactiveCommand();
@@ -37,7 +50,7 @@ namespace CodeFramework.Core.ViewModels.Application
             DeleteAccountCommand.OfType<IAccount>().Subscribe(x =>
             {
                 if (Equals(accountsService.ActiveAccount, x))
-                    accountsService.SetActiveAccount(null);
+                    ActiveAccount = null;
                 accountsService.Remove(x);
                 Accounts.Remove(x);
             });
@@ -48,18 +61,13 @@ namespace CodeFramework.Core.ViewModels.Application
                     DismissCommand.ExecuteIfCan();
                 else
                 {
-                    accountsService.SetActiveAccount(x);
+                    ActiveAccount = x;
                     MessageBus.Current.SendMessage(new LogoutMessage());
                     DismissCommand.ExecuteIfCan();
                 }
             });
 
-//            GoToAddAccountCommand.Subscribe(_ =>
-//            {
-//                var vm = CreateViewModel<LoginViewModel>();
-//                vm.WhenAnyValue(x => x.LoggedInAcconut).Skip(1).Subscribe(x => LoadCommand.ExecuteIfCan());
-//                ShowViewModel(vm);
-//            });
+            GoToAddAccountCommand.Subscribe(_ => ShowViewModel(CreateViewModel(typeof(IAddAccountViewModel))));
 
             LoadCommand = new ReactiveCommand();
             LoadCommand.Subscribe(x => Accounts.Reset(accountsService));

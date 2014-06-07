@@ -24,12 +24,13 @@ namespace CodeFramework.iOS.Views
             set { ViewModel = (TViewModel)value; }
         }
 
-        protected ViewModelDialogView(UITableViewStyle style = UITableViewStyle.Plain)
-            : base(style, null, true)
+        protected ViewModelDialogView(UITableViewStyle style = UITableViewStyle.Grouped)
+            : base(style, new RootElement(string.Empty), true)
         {
             SearchPlaceholder = "Search";
         }
 
+        private System.Drawing.PointF _lastContentOffset;
         public override void ViewDidLoad()
         {
             NavigationItem.BackBarButtonItem = new UIBarButtonItem { Title = string.Empty };
@@ -46,10 +47,11 @@ namespace CodeFramework.iOS.Views
                     _manualRefreshRequested = true;
                     loadableViewModel.LoadCommand.ExecuteIfCan();
                 };
-                loadableViewModel.LoadCommand.IsExecuting.Where(x => !x).Subscribe(x =>
+                loadableViewModel.LoadCommand.IsExecuting.Skip(1).Subscribe(x =>
                 {
                     if (x)
                     {
+                        _lastContentOffset = TableView.ContentOffset;
                         _refreshControl.BeginRefreshing();
 
                         if (!_manualRefreshRequested)
@@ -57,27 +59,15 @@ namespace CodeFramework.iOS.Views
                             UIView.Animate(0.25, 0f, UIViewAnimationOptions.BeginFromCurrentState | UIViewAnimationOptions.CurveEaseOut,
                                 () => TableView.ContentOffset = new System.Drawing.PointF(0, -_refreshControl.Frame.Height), null);
                         }
-
-                        if (ToolbarItems != null)
-                        {
-                            foreach (var t in ToolbarItems)
-                                t.Enabled = false;
-                        }
                     }
                     else
                     {
                         BeginInvokeOnMainThread(() =>
                         {
                             UIView.Animate(0.25, 0.0, UIViewAnimationOptions.BeginFromCurrentState | UIViewAnimationOptions.CurveEaseOut,
-                                () => TableView.ContentOffset = new System.Drawing.PointF(0, 0), null);
+                                () => TableView.ContentOffset = _lastContentOffset, null);
                             _refreshControl.EndRefreshing();
                         });
-
-                        if (ToolbarItems != null)
-                        {
-                            foreach (var t in ToolbarItems)
-                                t.Enabled = true;
-                        }
 
                         _manualRefreshRequested = false;
                     }

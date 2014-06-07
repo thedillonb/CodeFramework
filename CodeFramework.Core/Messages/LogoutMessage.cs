@@ -1,6 +1,6 @@
 namespace CodeFramework.Core.Messages
 {
-    class LogoutMessage
+    public class LogoutMessage
     {
     }
 }
