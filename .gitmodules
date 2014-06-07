@@ -7,3 +7,6 @@
 [submodule "CodeFramework.iOS/lib/MonoTouch.SlideoutNavigation"]
 	path = CodeFramework.iOS/lib/MonoTouch.SlideoutNavigation
 	url = https://thedillonb@github.com/thedillonb/MonoTouch.SlideoutNavigation.git
+[submodule "lib/Xamarin.Utilities"]
+	path = lib/Xamarin.Utilities
+	url = git@github.com:thedillonb/Xamarin.Utilities.git
