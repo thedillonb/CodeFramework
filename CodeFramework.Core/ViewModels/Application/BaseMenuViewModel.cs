@@ -3,17 +3,16 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using CodeFramework.Core.Data;
-using CodeFramework.Core.Utils;
 using CodeFramework.Core.Services;
+using CodeFramework.Core.Utils;
 using ReactiveUI;
 using Xamarin.Utilities.Core.ViewModels;
 
-namespace CodeFramework.Core.ViewModels.App
+namespace CodeFramework.Core.ViewModels.Application
 {
 	public abstract class BaseMenuViewModel : BaseViewModel
 	{
 	    protected readonly IAccountsService AccountsService;
-
 
 		public ICommand GoToDefaultTopView
 		{

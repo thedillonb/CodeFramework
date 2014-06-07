@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Reactive;
-using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using CodeFramework.Core.Data;
 using SQLite;

@@ -1,14 +1,15 @@
 using System;
 using System.Linq;
 using CodeFramework.iOS.Views;
+using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 
 namespace CodeFramework.iOS.ViewControllers
 {
-    public abstract class FilterViewController : BaseDialogViewController
+    public abstract class FilterViewController : DialogViewController
     {
         protected FilterViewController()
-            : base(true)
+            : base(null, true)
         {
             Style = UITableViewStyle.Grouped;
             Title = "Filter & Sort";
@@ -60,7 +61,7 @@ namespace CodeFramework.iOS.ViewControllers
 
             element.Tapped += () =>
             {
-                var ctrl = new BaseDialogViewController(true);
+                var ctrl = new DialogViewController(new RootElement(title), true);
                 ctrl.Title = title;
                 ctrl.Style = MonoTouch.UIKit.UITableViewStyle.Grouped;
 
@@ -124,8 +125,8 @@ namespace CodeFramework.iOS.ViewControllers
             }
             var str = sb.ToString();
             if (str.EndsWith(", "))
-                return trueCounter == fields.Length ? "Any".t() : str.Substring(0, str.Length - 2);
-            return "None".t();
+                return trueCounter == fields.Length ? "Any" : str.Substring(0, str.Length - 2);
+            return "None";
         }
     }
 }

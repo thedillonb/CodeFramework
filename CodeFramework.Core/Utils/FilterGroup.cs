@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using CodeFramework.Core.ViewModels;
 
 namespace CodeFramework.Core.Utils
 {
@@ -20,7 +19,29 @@ namespace CodeFramework.Core.Utils
                 return (IGrouping<string, TElement>)new FilterGroup<TElement>(text, x.ToList());
             }).ToList();
         }
+    }
 
+    public class FilterGroup<TElement> : IGrouping<string, TElement>
+    {
+        readonly List<TElement> _elements;
+
+        public FilterGroup(string key, List<TElement> elements)
+        {
+            Key = key;
+            _elements = elements;
+        }
+
+        public IEnumerator<TElement> GetEnumerator()
+        {
+            return this._elements.GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public string Key { get; private set; }
     }
 }
 

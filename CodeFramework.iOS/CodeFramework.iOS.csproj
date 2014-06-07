@@ -46,12 +46,12 @@
     <Compile Include="Elements\NewsFeedElement.cs" />
     <Compile Include="Elements\ProfileElement.cs" />
     <Compile Include="Elements\RepositoryElement.cs" />
+    <Compile Include="Elements\MenuElement.cs" />
     <Compile Include="Elements\UserElement.cs" />
     <Compile Include="Images\Images.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountPreferencesService.cs" />
     <Compile Include="Theme.cs" />
-    <Compile Include="Utils\ViewControllerExtensions.cs" />
     <Compile Include="Views\Application\AccountsView.cs" />
     <Compile Include="ViewControllers\FilterViewController.cs" />
     <Compile Include="ViewControllers\MenuBaseViewController.cs" />
