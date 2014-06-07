@@ -1,5 +1,5 @@
 using System.Drawing;
-using CodeFramework.Views;
+using CodeFramework.iOS.ViewComponents;
 using MonoTouch.Dialog;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;

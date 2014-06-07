@@ -1,5 +1,4 @@
-using Cirrious.CrossCore;
-using CodeFramework.Core.Services;
+using Xamarin.Utilities.Core.Services;
 
 namespace System
 {
@@ -7,15 +6,15 @@ namespace System
     {
 		public static void Report(this Exception e)
 		{
-			var service = Mvx.Resolve<IErrorService>();
+			var service = IoC.Resolve<IErrorService>();
 			if (service != null)
 				service.ReportError(e);
 		}
 
-        [System.Diagnostics.Conditional("DEBUG")]
+        [Diagnostics.Conditional("DEBUG")]
         public static void Dump(this Exception e)
         {
-            System.Diagnostics.Debug.WriteLine(e.Message + " - " + e.StackTrace);
+            Diagnostics.Debug.WriteLine(e.Message + " - " + e.StackTrace);
         }
     }
 }

@@ -1,12 +1,11 @@
 using System;
-using Cirrious.MvvmCross.Binding.Touch.Views;
 using MonoTouch.Foundation;
 using MonoTouch.ObjCRuntime;
 using MonoTouch.UIKit;
 
 namespace CodeFramework.iOS.Cells
 {
-    public partial class RepositoryCellView : MvxTableViewCell
+    public partial class RepositoryCellView : UITableViewCell
     {
         public static bool RoundImages = true;
 
@@ -71,7 +70,7 @@ namespace CodeFramework.iOS.Cells
 
             var frame = Description.Frame;
             frame.Y = 29f;
-            frame.Height = this.Bounds.Height - frame.Y - 16f - 12f;
+            frame.Height = Bounds.Height - frame.Y - 16f - 12f;
             Description.Frame = frame;
 
             RepoName.Hidden = repoOwner == null;

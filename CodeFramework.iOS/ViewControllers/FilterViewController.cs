@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using CodeFramework.iOS.Views;
-using CodeFramework.ViewControllers;
 using MonoTouch.UIKit;
 
 namespace CodeFramework.iOS.ViewControllers
@@ -12,7 +11,7 @@ namespace CodeFramework.iOS.ViewControllers
             : base(true)
         {
             Style = UITableViewStyle.Grouped;
-            Title = "Filter & Sort".t();
+            Title = "Filter & Sort";
 			NavigationItem.LeftBarButtonItem = new UIBarButtonItem(Theme.CurrentTheme.CancelButton, UIBarButtonItemStyle.Plain, (s, e) => DismissViewController(true, null));
 			NavigationItem.RightBarButtonItem = new UIBarButtonItem(Theme.CurrentTheme.SaveButton, UIBarButtonItemStyle.Plain, (s, e) => {
                 ApplyButtonPressed();

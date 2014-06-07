@@ -1,4 +1,5 @@
 using SQLite;
+using Xamarin.Utilities.Core.Services;
 
 namespace CodeFramework.Core.Data
 {
@@ -22,7 +23,7 @@ namespace CodeFramework.Core.Data
         {
             try
             {
-                var serializer = Cirrious.CrossCore.Mvx.Resolve<CodeFramework.Core.Services.IJsonSerializationService>();
+                var serializer = IoC.Resolve<IJsonSerializationService>();
                 return serializer.Deserialize<T>(RawData);
             }
             catch
@@ -37,7 +38,7 @@ namespace CodeFramework.Core.Data
         /// <param name="o">O.</param>
         public void SetData(object o)
         {
-            var serializer = Cirrious.CrossCore.Mvx.Resolve<CodeFramework.Core.Services.IJsonSerializationService>();
+            var serializer = IoC.Resolve<IJsonSerializationService>();
             RawData = serializer.Serialize(o);
         }
     }

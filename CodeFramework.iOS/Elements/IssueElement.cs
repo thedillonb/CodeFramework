@@ -53,7 +53,7 @@ namespace CodeFramework.Elements
         public override UITableViewCell GetCell (UITableView tv)
         {
             var cell = tv.DequeueReusableCell(CellKey) as IssueCellView ?? IssueCellView.Create();
-            cell.Bind(Title, Status, Priority, Assigned, LastUpdated, Id, Kind);
+            cell.Bind(Title, Status, Priority, Assigned, LastUpdated.ToDaysAgo(), Id, Kind);
             return cell;
         }
 

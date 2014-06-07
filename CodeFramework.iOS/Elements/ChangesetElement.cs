@@ -1,3 +1,4 @@
+using CodeFramework.iOS.ViewComponents;
 using CodeFramework.iOS.Views;
 using MonoTouch.Dialog;
 

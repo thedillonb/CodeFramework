@@ -1,10 +1,9 @@
-using CodeFramework.ViewControllers;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 
 namespace CodeFramework.iOS.ViewControllers
 {
-    public class MultipleChoiceViewController : BaseDialogViewController
+    public class MultipleChoiceViewController : DialogViewController
     {
         private readonly object _obj;
         
@@ -21,10 +20,9 @@ namespace CodeFramework.iOS.ViewControllers
         }
         
         public MultipleChoiceViewController(string title, object obj)
-            : base (true)
+            : base (UITableViewStyle.Grouped, new RootElement(title), true)
         {
             _obj = obj;
-            Title = title;
             Style = UITableViewStyle.Grouped;
 
             var sec = new Section();

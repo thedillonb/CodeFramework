@@ -17,6 +17,11 @@
         string AvatarUrl { get; set; }
 
         /// <summary>
+        /// The domain this user belongs to
+        /// </summary>
+        string Domain { get; set; }
+
+        /// <summary>
         /// Gets the filters
         /// </summary>
         AccountFilters Filters { get; }

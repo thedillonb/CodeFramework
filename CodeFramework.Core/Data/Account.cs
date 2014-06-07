@@ -1,7 +1,6 @@
 using System;
 using System.Globalization;
 using System.IO;
-using Cirrious.CrossCore;
 using CodeFramework.Core.Services;
 using SQLite;
 
@@ -12,7 +11,6 @@ namespace CodeFramework.Core.Data
         private SQLiteConnection _database;
         private AccountFilters _filters;
         private AccountPinnedRepositories _pinnedRepositories;
-        private AccountCache _cache;
 
         [PrimaryKey]
         [AutoIncrement]
@@ -30,7 +28,12 @@ namespace CodeFramework.Core.Data
         /// <value>The avatar URL.</value>
         public string AvatarUrl { get; set; }
 
-		/// <summary>
+        /// <summary>
+        /// The domain for the account
+        /// </summary>
+        public string Domain { get; set; }
+
+        /// <summary>
 		/// Gets or sets the name of the startup view when the account is loaded
 		/// </summary>
 		/// <value>The startup view.</value>
@@ -66,7 +69,7 @@ namespace CodeFramework.Core.Data
         {
             get
             {
-                var accountsDir = Mvx.Resolve<IAccountPreferencesService>().AccountsDir;
+                var accountsDir = IoC.Resolve<IAccountPreferencesService>().AccountsDir;
                 return Path.Combine(accountsDir, Id.ToString(CultureInfo.InvariantCulture));
             }
         }
@@ -86,15 +89,6 @@ namespace CodeFramework.Core.Data
             get
             {
                 return _pinnedRepositories ?? (_pinnedRepositories = new AccountPinnedRepositories(Database));
-            }
-        }
-
-        [Ignore]
-        public AccountCache Cache
-        {
-            get
-            {
-                return _cache ?? (_cache = new AccountCache(Database, Mvx.Resolve<IAccountPreferencesService>().CacheDir));
             }
         }
 
@@ -119,7 +113,6 @@ namespace CodeFramework.Core.Data
         {
             if (!Directory.Exists(AccountDirectory))
                 return;
-            Cache.DeleteAll();
             Directory.Delete(AccountDirectory, true);
         }
         

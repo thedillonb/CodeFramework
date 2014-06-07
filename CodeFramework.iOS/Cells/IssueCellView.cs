@@ -52,13 +52,13 @@ namespace CodeFramework.iOS.Cells
         {
         }
 
-        public void Bind(string title, string status, string priority, string assigned, DateTimeOffset lastUpdated, string id, string kind)
+        public void Bind(string title, string status, string priority, string assigned, string lastUpdated, string id, string kind)
         {
             Caption.Text = title;
             Label1.Text = status;
             Label2.Text = priority;
             Label3.Text = assigned;
-            Label4.Text = lastUpdated.ToDaysAgo();
+            Label4.Text = lastUpdated;
             Number.Text = "#" + id;
             IssueType.Text = kind;
 

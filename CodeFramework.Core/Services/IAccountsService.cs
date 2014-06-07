@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Reactive.Linq;
 using CodeFramework.Core.Data;
 
 namespace CodeFramework.Core.Services
@@ -50,5 +52,10 @@ namespace CodeFramework.Core.Services
         /// Find the specified account via it's username
         /// </summary>
         IAccount Find(int id);
+
+        /// <summary>
+        /// An observable sequence of account changing events
+        /// </summary>
+        IObservable<IAccount> ActiveAccountChanged { get; }
     }
 }

@@ -44,59 +44,33 @@
     <Compile Include="Elements\CommentElement.cs" />
     <Compile Include="Elements\IssueElement.cs" />
     <Compile Include="Elements\NewsFeedElement.cs" />
+    <Compile Include="Elements\ProfileElement.cs" />
     <Compile Include="Elements\RepositoryElement.cs" />
     <Compile Include="Elements\UserElement.cs" />
+    <Compile Include="Images\Images.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountPreferencesService.cs" />
-    <Compile Include="Services\DefaultValueService.cs" />
     <Compile Include="Theme.cs" />
-    <Compile Include="TouchViewPresenter.cs" />
-    <Compile Include="Utils\Translate.cs" />
-    <Compile Include="Utils\UIImageExtensions.cs" />
-    <Compile Include="Utils\Util.cs" />
     <Compile Include="Utils\ViewControllerExtensions.cs" />
-    <Compile Include="Views\AccountsView.cs" />
-    <Compile Include="ViewControllers\BaseDialogViewController.cs" />
-    <Compile Include="ViewControllers\Composer.cs" />
+    <Compile Include="Views\Application\AccountsView.cs" />
     <Compile Include="ViewControllers\FilterViewController.cs" />
     <Compile Include="ViewControllers\MenuBaseViewController.cs" />
     <Compile Include="ViewControllers\MultipleChoiceViewController.cs" />
-    <Compile Include="Views\AddRemoveView.cs" />
-    <Compile Include="Views\HeaderView.cs" />
-    <Compile Include="Views\MenuSectionView.cs" />
-    <Compile Include="Views\ProfileButton.cs" />
-    <Compile Include="Views\TableViewSectionView.cs" />
-    <Compile Include="Views\ToolbarButton.cs" />
-    <Compile Include="Views\WebView.cs" />
-    <Compile Include="Views\WebBrowserView.cs" />
+    <Compile Include="ViewComponents\AddRemoveView.cs" />
+    <Compile Include="ViewComponents\HeaderView.cs" />
+    <Compile Include="ViewComponents\MenuSectionView.cs" />
+    <Compile Include="ViewComponents\ProfileButton.cs" />
+    <Compile Include="ViewComponents\TableViewSectionView.cs" />
+    <Compile Include="ViewComponents\ToolbarButton.cs" />
     <Compile Include="Cells\NewsCellView.cs" />
     <Compile Include="Cells\NewsCellView.designer.cs">
       <DependentUpon>NewsCellView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\StartupView.cs" />
-    <Compile Include="Utils\Hud.cs" />
+    <Compile Include="Views\Application\StartupView.cs" />
     <Compile Include="Elements\WebElement.cs" />
-    <Compile Include="Views\App\DefaultStartupView.cs" />
-    <Compile Include="Services\AnalyticsService.cs" />
-    <Compile Include="Services\UIThreadService.cs" />
-    <Compile Include="Services\HttpClientService.cs" />
-    <Compile Include="Bindings\UISegmentControlBinding.cs" />
-    <Compile Include="Services\ShareService.cs" />
-    <Compile Include="ViewControllers\ViewModelCollectionDrivenDialogViewController.cs" />
-    <Compile Include="ViewControllers\ViewModelDrivenDialogViewController.cs" />
-    <Compile Include="ViewControllers\ViewModelDrivenViewController.cs" />
-    <Compile Include="ViewControllers\LiteComposer.cs" />
-    <Compile Include="Services\AlertDialogService.cs" />
-    <Compile Include="XCallback\XCallbackQuery.cs" />
-    <Compile Include="Utils\PickerAlert.cs" />
-    <Compile Include="Views\ScrollingToolbarView.cs" />
-    <Compile Include="Services\EnvironmentService.cs" />
-    <Compile Include="Views\MilestoneView.cs" />
-    <Compile Include="Views\ProgressBarView.cs" />
-    <Compile Include="TableViewCells\MilestoneTableViewCell.cs" />
-    <Compile Include="Elements\MilestoneElement.cs" />
-    <Compile Include="Elements\LabelElement.cs" />
-    <Compile Include="Views\UILabelWithLinks.cs" />
+    <Compile Include="Views\Application\DefaultStartupView.cs" />
+    <Compile Include="Views\ViewModelCollectionView.cs" />
+    <Compile Include="Views\ViewModelDialogView.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
@@ -104,30 +78,18 @@
     <InterfaceDefinition Include="Cells\NewsCellView.xib" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Cirrious.CrossCore">
-      <HintPath>..\lib\iOS\Cirrious.CrossCore.dll</HintPath>
+    <Reference Include="ReactiveUI">
+      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\ReactiveUI.dll</HintPath>
     </Reference>
-    <Reference Include="Cirrious.CrossCore.Touch">
-      <HintPath>..\lib\iOS\Cirrious.CrossCore.Touch.dll</HintPath>
+    <Reference Include="ReactiveUI.Cocoa">
+      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\ReactiveUI.Cocoa.dll</HintPath>
     </Reference>
-    <Reference Include="Cirrious.MvvmCross">
-      <HintPath>..\lib\iOS\Cirrious.MvvmCross.dll</HintPath>
-    </Reference>
-    <Reference Include="Cirrious.MvvmCross.Binding">
-      <HintPath>..\lib\iOS\Cirrious.MvvmCross.Binding.dll</HintPath>
-    </Reference>
-    <Reference Include="Cirrious.MvvmCross.Binding.Touch">
-      <HintPath>..\lib\iOS\Cirrious.MvvmCross.Binding.Touch.dll</HintPath>
-    </Reference>
-    <Reference Include="Cirrious.MvvmCross.Touch">
-      <HintPath>..\lib\iOS\Cirrious.MvvmCross.Touch.dll</HintPath>
+    <Reference Include="ReactiveUI.Events">
+      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\ReactiveUI.Events.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
-    <Reference Include="Cirrious.MvvmCross.Plugins.Messenger">
-      <HintPath>..\lib\iOS\Cirrious.MvvmCross.Plugins.Messenger.dll</HintPath>
-    </Reference>
     <Reference Include="BTProgressHUD">
       <HintPath>..\lib\iOS\BTProgressHUD.dll</HintPath>
     </Reference>
@@ -138,12 +100,29 @@
     <Reference Include="ModernHttpClient.iOS">
       <HintPath>..\lib\iOS\ModernHttpClient.iOS.dll</HintPath>
     </Reference>
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\System.Reactive.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Services" />
     <Reference Include="MonoTouch.TTTAttributedLabel">
       <HintPath>..\lib\iOS\MonoTouch.TTTAttributedLabel.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\lib\Xamarin.Utilities\Xamarin.Utilities.Core\Xamarin.Utilities.Core.iOS.csproj">
+      <Project>{ebba1bd0-8430-4cc1-b636-b89c505c7d1c}</Project>
+      <Name>Xamarin.Utilities.Core.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\lib\Xamarin.Utilities\Xamarin.Utilities.iOS\Xamarin.Utilities.iOS.csproj">
+      <Project>{5e7e39ca-0cce-41fe-a868-ee0e567e069e}</Project>
+      <Name>Xamarin.Utilities.iOS</Name>
+    </ProjectReference>
     <ProjectReference Include="lib\MonoTouch.SlideoutNavigation\MonoTouch.SlideoutNavigation\MonoTouch.SlideoutNavigation.csproj">
       <Project>{6D7B9B53-CFEF-46BE-A608-14A4A1381CF6}</Project>
       <Name>MonoTouch.SlideoutNavigation</Name>
@@ -158,16 +137,10 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="SourceBrowser\" />
-    <Folder Include="SourceBrowser\css\" />
-    <Folder Include="Diff\" />
-    <Folder Include="Views\App\" />
-    <Folder Include="Bindings\" />
-    <Folder Include="XCallback\" />
-    <Folder Include="TableViewCells\" />
-  </ItemGroup>
-  <ItemGroup>
+    <BundleResource Include="Images\login_user_unknown.png" />
+    <BundleResource Include="Images\login_user_unknown%402x.png" />
     <Content Include="SourceBrowser\index.html" />
     <Content Include="SourceBrowser\file-loader.js" />
     <Content Include="SourceBrowser\highlight.pack.js" />

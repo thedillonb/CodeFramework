@@ -1,14 +1,12 @@
 ﻿using System;
-using Cirrious.MvvmCross.Plugins.Messenger;
 
 namespace CodeFramework.Core.Messages
 {
-    public class ErrorMessage : MvxMessage
+    public class ErrorMessage
     {
         public Exception Error { get; private set; }
 
-        public ErrorMessage(object sender, Exception error) 
-            : base(sender)
+        public ErrorMessage(Exception error) 
         {
             Error = error;
         }
