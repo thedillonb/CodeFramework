@@ -78,10 +78,6 @@
     <InterfaceDefinition Include="Cells\NewsCellView.xib" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MonoTouch.TTTAttributedLabel, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\MonoTouch.TTTAttributedLabel.dll</HintPath>
-    </Reference>
     <Reference Include="ReactiveUI">
       <HintPath>..\lib\Xamarin.Utilities\lib\iOS\ReactiveUI.dll</HintPath>
     </Reference>
@@ -101,6 +97,9 @@
       <HintPath>..\lib\Xamarin.Utilities\lib\iOS\System.Reactive.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Services" />
+    <Reference Include="MonoTouch.TTTAttributedLabel">
+      <HintPath>lib\MonoTouch.TTTAttributedLabel.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="lib\MonoTouch.Dialog\MonoTouch.Dialog\MonoTouch.Dialog.csproj">
@@ -110,6 +109,14 @@
     <ProjectReference Include="..\CodeFramework.Core\CodeFramework.Core.csproj">
       <Project>{C99FE7E3-0985-48F1-9EBB-91680A795F0F}</Project>
       <Name>CodeFramework.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\lib\Xamarin.Utilities\Xamarin.Utilities.Core\Xamarin.Utilities.Core.iOS.csproj">
+      <Project>{EBBA1BD0-8430-4CC1-B636-B89C505C7D1C}</Project>
+      <Name>Xamarin.Utilities.Core.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\lib\Xamarin.Utilities\Xamarin.Utilities.iOS\Xamarin.Utilities.iOS.csproj">
+      <Project>{5E7E39CA-0CCE-41FE-A868-EE0E567E069E}</Project>
+      <Name>Xamarin.Utilities.iOS</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
