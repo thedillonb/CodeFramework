@@ -56,8 +56,11 @@ namespace CodeFramework.iOS.Views
 
                         if (!_manualRefreshRequested)
                         {
-                            UIView.Animate(0.25, 0f, UIViewAnimationOptions.BeginFromCurrentState | UIViewAnimationOptions.CurveEaseOut,
-                                () => TableView.ContentOffset = new System.Drawing.PointF(0, -_refreshControl.Frame.Height), null);
+                            BeginInvokeOnMainThread(() =>
+                            {
+                                UIView.Animate(0.25, 0f, UIViewAnimationOptions.BeginFromCurrentState | UIViewAnimationOptions.CurveEaseOut,
+                                    () => TableView.ContentOffset = new System.Drawing.PointF(0, -_refreshControl.Frame.Height + _lastContentOffset.Y), null);
+                            });
                         }
                     }
                     else
