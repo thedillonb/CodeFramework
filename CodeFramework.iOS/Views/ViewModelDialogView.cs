@@ -24,9 +24,10 @@ namespace CodeFramework.iOS.Views
             set { ViewModel = (TViewModel)value; }
         }
 
-        protected ViewModelDialogView(UITableViewStyle style = UITableViewStyle.Grouped)
-            : base(style, new RootElement(string.Empty), true)
+        protected ViewModelDialogView(UITableViewStyle style = UITableViewStyle.Grouped, string title = null)
+            : base(style, new RootElement(title ?? string.Empty), true)
         {
+            Title = title ?? string.Empty;
             SearchPlaceholder = "Search";
         }
 

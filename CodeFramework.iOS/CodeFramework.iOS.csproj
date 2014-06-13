@@ -71,6 +71,9 @@
     <Compile Include="Views\ViewModelCollectionView.cs" />
     <Compile Include="Views\ViewModelDialogView.cs" />
     <Compile Include="ViewComponents\ImageAndTitleHeaderView.cs" />
+    <Compile Include="SourceBrowser\SyntaxHighlighterView.cs">
+      <DependentUpon>SyntaxHighlighterView.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
@@ -136,7 +139,6 @@
     <BundleResource Include="Images\back%402x.png" />
     <BundleResource Include="Images\three_lines.png" />
     <BundleResource Include="Images\three_lines%402x.png" />
-    <BundleResource Include="SourceBrowser\highlight.html" />
     <BundleResource Include="SourceBrowser\highlight.pack.js" />
     <BundleResource Include="SourceBrowser\styles\arta.css" />
     <BundleResource Include="SourceBrowser\styles\ascetic.css" />
@@ -188,5 +190,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SourceBrowser\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SourceBrowser\SyntaxHighlighterView.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>SyntaxHighlighterView.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 </Project>

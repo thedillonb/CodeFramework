@@ -16,7 +16,8 @@ namespace CodeFramework.iOS.Views
         /// <summary>
         /// Initializes a new instance of the class.
         /// </summary>
-        protected ViewModelCollectionView()
+        protected ViewModelCollectionView(string title = null)
+            : base(title: title)
         {
             NoItemsText = "No Items";
             Style = UITableViewStyle.Plain;
