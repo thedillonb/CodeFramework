@@ -56,12 +56,14 @@
     <Compile Include="ViewModels\Application\IAddAccountViewModel.cs" />
     <Compile Include="Services\IAccountValidatorService.cs" />
     <Compile Include="ViewModels\Application\IMainViewModel.cs" />
+    <Compile Include="Services\IMarkdownService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
     <Reference Include="ReactiveUI">
       <HintPath>..\lib\Xamarin.Utilities\lib\iOS\ReactiveUI.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
     <Reference Include="System.Reactive.Core">
       <HintPath>..\lib\Xamarin.Utilities\lib\iOS\System.Reactive.Core.dll</HintPath>
     </Reference>
@@ -71,7 +73,6 @@
     <Reference Include="System.Reactive.Linq">
       <HintPath>..\lib\Xamarin.Utilities\lib\iOS\System.Reactive.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="System.Core" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
