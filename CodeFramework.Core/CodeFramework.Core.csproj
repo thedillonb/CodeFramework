@@ -32,13 +32,13 @@
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Data\Account.cs" />
+    <Compile Include="Data\BaseAccount.cs" />
     <Compile Include="Data\Filter.cs" />
     <Compile Include="Data\IAccount.cs" />
     <Compile Include="Data\PinnedRepository.cs" />
     <Compile Include="Messages\LogoutMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\AccountsService.cs" />
+    <Compile Include="Services\BaseAccountsService.cs" />
     <Compile Include="Data\AccountFilters.cs" />
     <Compile Include="Services\IAccountsService.cs" />
     <Compile Include="Data\AccountPinnedRepositories.cs" />

@@ -3,17 +3,18 @@ using System.Linq;
 using CodeFramework.iOS.Views;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
+using ReactiveUI;
 
 namespace CodeFramework.iOS.ViewControllers
 {
-    public abstract class FilterViewController : DialogViewController
+    public abstract class FilterViewController<TViewModel> : ViewModelDialogView<TViewModel> where TViewModel : ReactiveObject
     {
         protected FilterViewController()
-            : base(null, true)
         {
             Style = UITableViewStyle.Grouped;
             Title = "Filter & Sort";
-			NavigationItem.LeftBarButtonItem = new UIBarButtonItem(Theme.CurrentTheme.CancelButton, UIBarButtonItemStyle.Plain, (s, e) => DismissViewController(true, null));
+			NavigationItem.LeftBarButtonItem = new UIBarButtonItem(Theme.CurrentTheme.CancelButton, UIBarButtonItemStyle.Plain, (s, e) => 
+                DismissViewController(true, null));
 			NavigationItem.RightBarButtonItem = new UIBarButtonItem(Theme.CurrentTheme.SaveButton, UIBarButtonItemStyle.Plain, (s, e) => {
                 ApplyButtonPressed();
                 DismissViewController(true, null); 

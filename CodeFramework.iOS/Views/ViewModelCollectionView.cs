@@ -29,10 +29,8 @@ namespace CodeFramework.iOS.Views
             observableCollection.Subscribe(x => x.Changed.Subscribe(_ =>
             {
                 IEnumerable<T> items = x;
-                if (x.FilterFunc != null)
-                    items = items.Where(x.FilterFunc);
                 if (x.OrderFunc != null)
-                    items = items.OrderBy(x.OrderFunc);
+                    items = x.OrderFunc(items);
                 if (x.GroupFunc != null)
                 {
                     RenderGroupedItems(items.GroupBy(x.GroupFunc), element, x.MoreTask);
@@ -116,7 +114,7 @@ namespace CodeFramework.iOS.Views
             {
                 var loadMore = new PaginateElement("Load More", "Loading...") { AutoLoadOnVisible = true };
                 root.Add(new Section { loadMore });
-                loadMore.Tapped += async (obj) =>
+                loadMore.Tapped += async obj =>
                 {
                     try
                     {

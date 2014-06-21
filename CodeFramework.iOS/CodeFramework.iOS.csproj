@@ -49,6 +49,7 @@
     <Compile Include="Elements\MenuElement.cs" />
     <Compile Include="Elements\UserElement.cs" />
     <Compile Include="Images\Images.cs" />
+    <Compile Include="Services\MarkdownService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Theme.cs" />
     <Compile Include="Views\Application\AccountsView.cs" />
@@ -192,10 +193,7 @@
     <BundleResource Include="SourceBrowser\styles\zenburn.css" />
     <Content Include="Markdown\marked.js" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SourceBrowser\" />
-    <Folder Include="Markdown\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="SourceBrowser\SyntaxHighlighterView.cshtml">
       <Generator>RazorTemplatePreprocessor</Generator>

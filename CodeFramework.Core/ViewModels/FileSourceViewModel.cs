@@ -26,17 +26,9 @@ namespace CodeFramework.Core.ViewModels
 			protected set { this.RaiseAndSetIfChanged(ref _contentPath, value); }
 		}
 
-		public string Title
-		{
-			get;
-			protected set;
-		}
+		public string Title { get; set; }
 
-		public string HtmlUrl
-		{
-			get;
-			protected set;
-		}
+		public string HtmlUrl { get; set; }
 //
 //		public IReactiveCommand GoToHtmlUrlCommand
 //		{
