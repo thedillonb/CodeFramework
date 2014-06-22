@@ -44,7 +44,6 @@
     <Compile Include="Data\AccountPinnedRepositories.cs" />
     <Compile Include="Utils\FilterGroup.cs" />
     <Compile Include="ViewModels\Application\AccountsViewModel.cs" />
-    <Compile Include="ViewModels\FileSourceViewModel.cs" />
     <Compile Include="ViewModels\Application\StartupViewModel.cs" />
     <Compile Include="Utils\DefaultStartupViewCommand.cs" />
     <Compile Include="ViewModels\Application\BaseMenuViewModel.cs" />
@@ -57,6 +56,7 @@
     <Compile Include="Services\IAccountValidatorService.cs" />
     <Compile Include="ViewModels\Application\IMainViewModel.cs" />
     <Compile Include="Services\IMarkdownService.cs" />
+    <Compile Include="ViewModels\Source\FileSourceViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -80,5 +80,8 @@
       <Project>{EBBA1BD0-8430-4CC1-B636-B89C505C7D1C}</Project>
       <Name>Xamarin.Utilities.Core.iOS</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\Source\" />
   </ItemGroup>
 </Project>

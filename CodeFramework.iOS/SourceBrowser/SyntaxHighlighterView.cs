@@ -24,7 +24,7 @@ public partial class SyntaxHighlighterView : SyntaxHighlighterViewBase
 #line hidden
 
 #line 1 "SyntaxHighlighterView.cshtml"
-public string Model { get; set; }
+public SourceBrowserModel Model { get; set; }
 
 #line default
 #line hidden
@@ -36,8 +36,17 @@ WriteLiteral("<html>\n<head>\n<link");
 
 WriteLiteral(" rel=\"stylesheet\"");
 
-WriteLiteral(" href=\"SourceBrowser/styles/idea.css\"");
+WriteAttribute ("href", " href=\"", "\""
+, Tuple.Create<string,object,bool> ("", "SourceBrowser/styles/", true)
 
+#line 4 "SyntaxHighlighterView.cshtml"
+            , Tuple.Create<string,object,bool> ("", Model.Theme
+
+#line default
+#line hidden
+, false)
+, Tuple.Create<string,object,bool> ("", ".css", true)
+);
 WriteLiteral(" />\n<script");
 
 WriteLiteral(" src=\"SourceBrowser/highlight.pack.js\"");
@@ -51,12 +60,12 @@ WriteLiteral(">");
 
 
 #line 10 "SyntaxHighlighterView.cshtml"
-           Write(Model);
+           Write(Model.Content);
 
 
 #line default
 #line hidden
-WriteLiteral("</code>\n</pre>\n</body>\n</html>\t");
+WriteLiteral("</code>\n</pre>\n</body>\n</html> ");
 
 }
 }

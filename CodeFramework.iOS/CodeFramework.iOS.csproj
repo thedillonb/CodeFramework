@@ -78,6 +78,8 @@
     <Compile Include="Markdown\MarkdownView.cs">
       <DependentUpon>MarkdownView.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Source\FileSourceView.cs" />
+    <Compile Include="SourceBrowser\SourceBrowserModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
@@ -203,5 +205,8 @@
       <Generator>RazorTemplatePreprocessor</Generator>
       <LastGenOutput>MarkdownView.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Source\" />
   </ItemGroup>
 </Project>

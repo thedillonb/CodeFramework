@@ -26,23 +26,32 @@ namespace CodeFramework.iOS.Views
 
         protected void Bind<T>(IObservable<ReactiveCollection<T>> observableCollection, Func<T, Element> element)
         {
-            observableCollection.Subscribe(x => x.Changed.Subscribe(_ =>
+            observableCollection.Subscribe(x =>
             {
-                IEnumerable<T> items = x;
-                if (x.OrderFunc != null)
-                    items = x.OrderFunc(items);
-                if (x.GroupFunc != null)
+                if (x == null)
                 {
-                    RenderGroupedItems(items.GroupBy(x.GroupFunc), element, x.MoreTask);
                 }
                 else
                 {
-                    RenderList(items, element, x.MoreTask);
+                    x.Changed.Subscribe(_ =>
+                    {
+                        IEnumerable<T> items = x;
+                        if (x.OrderFunc != null)
+                            items = x.OrderFunc(items);
+                        if (x.GroupFunc != null)
+                        {
+                            RenderGroupedItems(items.GroupBy(x.GroupFunc), element, x.MoreTask);
+                        }
+                        else
+                        {
+                            RenderList(items, element, x.MoreTask);
+                        }
+                    });
                 }
-            }));
+            });
         }
 
-        protected void RenderList<T>(IEnumerable<T> items, Func<T, Element> select, Task moreAction)
+        protected void RenderList<T>(IEnumerable<T> items, Func<T, Element> select, Func<Task> moreAction)
         {
             var sec = new Section();
             if (items != null)
@@ -70,7 +79,7 @@ namespace CodeFramework.iOS.Views
             return new Section(text);
         }
 
-        protected void RenderGroupedItems<T>(IEnumerable<IGrouping<object, T>> items, Func<T, Element> select, Task moreAction)
+        protected void RenderGroupedItems<T>(IEnumerable<IGrouping<object, T>> items, Func<T, Element> select, Func<Task> moreAction)
         {
             var sections = new List<Section>();
 
@@ -97,7 +106,7 @@ namespace CodeFramework.iOS.Views
             RenderSections(sections, moreAction);
         }
 
-        private void RenderSections(IEnumerable<Section> sections, Task moreAction)
+        private void RenderSections(IEnumerable<Section> sections, Func<Task> moreAction)
         {
             var root = new RootElement(Title) { UnevenRows = Root.UnevenRows };
 
@@ -118,12 +127,7 @@ namespace CodeFramework.iOS.Views
                 {
                     try
                     {
-                        await moreAction;
-                        if (loadMore.GetImmediateRootElement() != null)
-                        {
-                            var section = loadMore.Parent as Section;
-                            Root.Remove(section, UITableViewRowAnimation.Fade);
-                        }
+                        await moreAction();
                     }
                     catch (Exception e)
                     {

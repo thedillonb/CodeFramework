@@ -1,13 +1,13 @@
-﻿@model string
+﻿@model SourceBrowserModel
 <html>
 <head>
-<link rel="stylesheet" href="SourceBrowser/styles/idea.css" />
+<link rel="stylesheet" href="SourceBrowser/styles/@(Model.Theme).css" />
 <script src="SourceBrowser/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
 <pre>
-<code id="code">@Model</code>
+<code id="code">@Model.Content</code>
 </pre>
 </body>
-</html>	
+</html> 
