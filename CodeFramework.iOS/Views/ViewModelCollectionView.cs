@@ -19,7 +19,11 @@ namespace CodeFramework.iOS.Views
         protected ViewModelCollectionView(string title = null)
             : base(title: title)
         {
-            NoItemsText = "No Items";
+            if (title != null)
+                NoItemsText = string.Format("No {0}", title);
+            else
+                NoItemsText = "No Items";
+
             Style = UITableViewStyle.Plain;
             EnableSearch = true;
         }

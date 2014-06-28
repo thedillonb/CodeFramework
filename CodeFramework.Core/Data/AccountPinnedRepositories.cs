@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using SQLite;
+using System;
 
 namespace CodeFramework.Core.Data
 {
@@ -22,9 +23,13 @@ namespace CodeFramework.Core.Data
         /// <param name="slug">Slug.</param>
         /// <param name="name">Name.</param>
         /// <param name="imageUri">Image URI.</param>
-        public void AddPinnedRepository(string owner, string slug, string name, string imageUri)
+        public void AddPinnedRepository(string owner, string slug, string name, Uri imageUri)
         {
-            var resource = new PinnedRepository { Owner = owner, Slug = slug, Name = name, ImageUri = imageUri };
+            string imageUrl = null;
+            if (imageUri != null)
+                imageUrl = imageUri.AbsoluteUri;
+
+            var resource = new PinnedRepository { Owner = owner, Slug = slug, Name = name, ImageUri = imageUrl };
             lock (_sqLiteConnection)
             {
                 _sqLiteConnection.Insert(resource);

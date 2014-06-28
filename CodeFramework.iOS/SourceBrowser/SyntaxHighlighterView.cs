@@ -51,15 +51,25 @@ WriteLiteral(" />\n<script");
 
 WriteLiteral(" src=\"SourceBrowser/highlight.pack.js\"");
 
-WriteLiteral("></script>\n<script>hljs.initHighlightingOnLoad();</script>\n</head>\n<body>\n<pre>\n<" +
-"code");
+WriteLiteral(@"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<style>
+html { height: 100%; width: 100%; }
+body { margin: 0; min-height: 100%; min-width: 100%; }
+body > pre { margin: 0; min-width: 100%; min-height: 100%; }
+.hljs { display: inline-block !important; min-width: 100%; min-height: 100%; box-sizing: border-box; }
+</style>
+</head>
+<body>
+<pre>
+<code");
 
 WriteLiteral(" id=\"code\"");
 
 WriteLiteral(">");
 
 
-#line 10 "SyntaxHighlighterView.cshtml"
+#line 16 "SyntaxHighlighterView.cshtml"
            Write(Model.Content);
 
 

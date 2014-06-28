@@ -1,19 +1,37 @@
-using System.Linq;
+using System;
+using System.Reactive.Linq;
 using ReactiveUI;
 using Xamarin.Utilities.Core.ViewModels;
-using System.Collections.Generic;
 
 namespace CodeFramework.Core.ViewModels.Source
 {
-	public abstract class FileSourceViewModel : LoadableViewModel
+    public class FileSourceItemViewModel
     {
-		private static readonly string[] BinaryMIMEs =
-		{ 
-		    "image/", "video/", "audio/", "model/", "application/pdf", "application/zip", "application/gzip"
-		};
+        public string FilePath { get; set; }
+        public bool IsBinary { get; set; }
+    }
 
-        private SourceItemViewModel _source;
-        public SourceItemViewModel SourceItem
+    public interface IFileSourceViewModel : IBaseViewModel
+    {
+        FileSourceItemViewModel SourceItem { get; }
+
+        string Theme { get; set; }
+
+        IReactiveCommand NextItemCommand { get; }
+
+        IReactiveCommand PreviousItemCommand { get; }
+    }
+
+    public abstract class FileSourceViewModel<TFileModel> : LoadableViewModel, IFileSourceViewModel
+    {
+        private readonly TFileModel[] _items;
+
+        public string Title { get; set; }
+
+        public string HtmlUrl { get; set; }
+
+        private FileSourceItemViewModel _source;
+        public FileSourceItemViewModel SourceItem
 		{
             get { return _source; }
             protected set { this.RaiseAndSetIfChanged(ref _source, value); }
@@ -25,16 +43,50 @@ namespace CodeFramework.Core.ViewModels.Source
             get { return _theme; }
             set { this.RaiseAndSetIfChanged(ref _theme, value); }
         }
-            
-		public string Title { get; set; }
 
-		public string HtmlUrl { get; set; }
+        private int _currentItemIndex;
+        public int CurrentItemIndex
+        {
+            get { return _currentItemIndex; }
+            set { this.RaiseAndSetIfChanged(ref _currentItemIndex, value); }
+        }
 
-		protected static bool IsBinary(string mime)
-		{
-			var lowerMime = mime.ToLower();
-		    return BinaryMIMEs.Any(lowerMime.StartsWith);
-		}
+        ObservableAsPropertyHelper<TFileModel> _currentItem;
+        public TFileModel CurrentItem
+        {
+            get { return _currentItem.Value; }
+        }
+
+        public IReactiveCommand NextItemCommand { get; private set; }
+
+        public IReactiveCommand PreviousItemCommand { get; private set; }
+
+        protected FileSourceViewModel(NavObject navObject)
+        {
+            _items = navObject.Items;
+            _currentItemIndex = navObject.CurrentItemIndex;
+
+            var hasNextItems = this.WhenAnyValue(y => y.CurrentItemIndex, y => _items != null && _items.Length > 1 && y < (_items.Length - 1));
+            NextItemCommand = new ReactiveCommand(
+                this.LoadCommand.CanExecuteObservable.CombineLatest(
+                    hasNextItems, (canLoad, hasNext) => canLoad && hasNext)
+                .DistinctUntilChanged()
+                .StartWith(false));
+            NextItemCommand.Subscribe(x => CurrentItemIndex += 1);
+
+            var hasPreviousItems = this.WhenAnyValue(y => y.CurrentItemIndex, y => _items != null && _items.Length > 1 && y > 0);
+            PreviousItemCommand = new ReactiveCommand(
+                this.LoadCommand.CanExecuteObservable.CombineLatest(
+                    hasPreviousItems, (canLoad, hasPrevious) => canLoad && hasPrevious)
+                .DistinctUntilChanged()
+                .StartWith(false));
+            PreviousItemCommand.Subscribe(x => CurrentItemIndex -= 1);
+
+            this.WhenAnyValue(x => x.CurrentItemIndex)
+                .Where(x => _items != null && x < _items.Length)
+                .Select(x => _items[x])
+                .ToProperty(this, r => r.CurrentItem, out _currentItem, scheduler: System.Reactive.Concurrency.Scheduler.Immediate);
+        }
 
         protected static string CreatePlainContentFile(string data, string filename)
         {
@@ -43,10 +95,10 @@ namespace CodeFramework.Core.ViewModels.Source
             return filepath;
         }
 
-        public class SourceItemViewModel
+        public class NavObject
         {
-            public string FilePath { get; set; }
-            public bool IsBinary { get; set; }
+            public int CurrentItemIndex { get; set; }
+            public TFileModel[] Items { get; set; }
         }
     }
 }

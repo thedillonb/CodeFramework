@@ -6,18 +6,39 @@ using System.Reactive.Linq;
 using CodeFramework.iOS.SourceBrowser;
 using Xamarin.Utilities.Views;
 using System.Linq;
+using MonoTouch.UIKit;
 
 namespace CodeFramework.iOS.Views.Source
 {
-    public abstract class FileSourceView<TViewModel> : WebView<TViewModel> where TViewModel : FileSourceViewModel
+    public abstract class FileSourceView<TViewModel> : WebView<TViewModel> where TViewModel : class, IFileSourceViewModel
     {
-        protected FileSourceView()
-        {
-        }
+        private bool _fullScreen;
+        private UITapGestureRecognizer _tapGesture;
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+
+            _tapGesture = new UITapGestureRecognizer();
+            _tapGesture.ShouldReceiveTouch = (r, t) => t.TapCount == 1;
+            _tapGesture.ShouldRecognizeSimultaneously = (a, b) => true;
+            _tapGesture.ShouldRequireFailureOf = (a, b) =>
+            {
+                var targetTap = b as UITapGestureRecognizer;
+                if (targetTap != null)
+                {
+                    return targetTap.NumberOfTapsRequired == 2;
+                }
+                return false;
+            };
+            Web.AddGestureRecognizer(_tapGesture);
+            _tapGesture.AddTarget(() =>
+            {
+                _fullScreen = !_fullScreen;
+                UIApplication.SharedApplication.SetStatusBarHidden(_fullScreen, UIStatusBarAnimation.Slide);
+                NavigationController.SetNavigationBarHidden(_fullScreen, true);
+                NavigationController.SetToolbarHidden(_fullScreen, true);
+            });
 
             ViewModel.WhenAnyValue(x => x.Theme, x => new { Theme = x, ViewModel.SourceItem })
                 .Skip(1)
@@ -37,6 +58,30 @@ namespace CodeFramework.iOS.Views.Source
                         LoadContent(x.FilePath);
                     }
                 });
+
+            ViewModel.WhenAnyObservable(x => x.NextItemCommand.CanExecuteObservable, x => x.PreviousItemCommand.CanExecuteObservable)
+                .Where(x => x)
+                .Subscribe(_ =>
+                {
+                    var previousButton = new UIBarButtonItem(Xamarin.Utilities.Images.Images.BackChevron, 
+                        UIBarButtonItemStyle.Plain, (s, e) => ViewModel.PreviousItemCommand.ExecuteIfCan());
+                    previousButton.EnableIfExecutable(ViewModel.PreviousItemCommand.CanExecuteObservable);
+
+                    var nextButton = new UIBarButtonItem(Xamarin.Utilities.Images.Images.ForwardChevron, 
+                        UIBarButtonItemStyle.Plain, (s, e) => ViewModel.NextItemCommand.ExecuteIfCan());
+                    nextButton.EnableIfExecutable(ViewModel.NextItemCommand.CanExecuteObservable);
+
+                    ToolbarItems = new []
+                    {
+                        new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
+                        previousButton,
+                        new UIBarButtonItem(UIBarButtonSystemItem.FixedSpace) { Width = 80f },
+                        nextButton,
+                        new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
+                    };
+
+                    NavigationController.SetToolbarHidden(false, true);
+                });
         }
 
         private new void LoadContent(string filePath)
@@ -51,7 +96,8 @@ namespace CodeFramework.iOS.Views.Source
                 }
             };
 
-            base.LoadContent(razorView.GenerateString());
+            var html = razorView.GenerateString();
+            base.LoadContent(html);
         }
 
         protected void ShowThemePicker()
