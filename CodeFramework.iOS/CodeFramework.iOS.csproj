@@ -80,6 +80,8 @@
     </Compile>
     <Compile Include="Views\Source\FileSourceView.cs" />
     <Compile Include="SourceBrowser\SourceBrowserModel.cs" />
+    <Compile Include="ViewComponents\SlideUpTitleView.cs" />
+    <Compile Include="Views\ViewModelPrettyDialogView.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
@@ -143,8 +145,6 @@
     <BundleResource Include="Images\cancel.png" />
     <BundleResource Include="Images\back.png" />
     <BundleResource Include="Images\back%402x.png" />
-    <BundleResource Include="Images\three_lines.png" />
-    <BundleResource Include="Images\three_lines%402x.png" />
     <BundleResource Include="SourceBrowser\highlight.pack.js" />
     <BundleResource Include="SourceBrowser\styles\arta.css" />
     <BundleResource Include="SourceBrowser\styles\ascetic.css" />

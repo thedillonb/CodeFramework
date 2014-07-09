@@ -123,6 +123,11 @@ namespace CodeStash.iOS.Views
             set { _imageView.TintColor = value; }
         }
 
+        public UILabel CaptionLabel
+        {
+            get { return _label; }
+        }
+
         public ImageAndTitleHeaderView()
             : base(new RectangleF(0, 0, 320f, 100f))
         {
