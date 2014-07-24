@@ -67,11 +67,7 @@
       <DependentUpon>NewsCellView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Application\StartupView.cs" />
-    <Compile Include="Elements\WebElement.cs" />
     <Compile Include="Views\Application\DefaultStartupView.cs" />
-    <Compile Include="Views\ViewModelCollectionView.cs" />
-    <Compile Include="Views\ViewModelDialogView.cs" />
-    <Compile Include="ViewComponents\ImageAndTitleHeaderView.cs" />
     <Compile Include="SourceBrowser\SyntaxHighlighterView.cs">
       <DependentUpon>SyntaxHighlighterView.cshtml</DependentUpon>
     </Compile>
@@ -80,8 +76,6 @@
     </Compile>
     <Compile Include="Views\Source\FileSourceView.cs" />
     <Compile Include="SourceBrowser\SourceBrowserModel.cs" />
-    <Compile Include="ViewComponents\SlideUpTitleView.cs" />
-    <Compile Include="Views\ViewModelPrettyDialogView.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
@@ -96,27 +90,23 @@
     <Reference Include="MonoTouch.TTTAttributedLabel">
       <HintPath>lib\MonoTouch.TTTAttributedLabel.dll</HintPath>
     </Reference>
-    <Reference Include="ReactiveUI.Cocoa">
-      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\ReactiveUI.Cocoa.dll</HintPath>
-    </Reference>
     <Reference Include="ReactiveUI">
       <HintPath>..\lib\Xamarin.Utilities\lib\iOS\ReactiveUI.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Core">
-      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\System.Reactive.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive.Linq">
-      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\System.Reactive.Linq.dll</HintPath>
+      <HintPath>..\lib\Xamarin.Utilities\lib\Common\System.Reactive.Core.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Interfaces">
-      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\System.Reactive.Interfaces.dll</HintPath>
+      <HintPath>..\lib\Xamarin.Utilities\lib\Common\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\lib\Xamarin.Utilities\lib\Common\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Splat">
+      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\Splat.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="lib\MonoTouch.Dialog\MonoTouch.Dialog\MonoTouch.Dialog.csproj">
-      <Project>{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}</Project>
-      <Name>MonoTouch.Dialog</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CodeFramework.Core\CodeFramework.Core.csproj">
       <Project>{C99FE7E3-0985-48F1-9EBB-91680A795F0F}</Project>
       <Name>CodeFramework.Core</Name>

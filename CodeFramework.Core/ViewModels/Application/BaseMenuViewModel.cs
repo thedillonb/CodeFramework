@@ -47,14 +47,14 @@ namespace CodeFramework.Core.ViewModels.Application
 			}
 		}
 
-		public IReactiveCommand DeletePinnedRepositoryCommand { get; private set; }
+        public IReactiveCommand<object> DeletePinnedRepositoryCommand { get; private set; }
 
         public IReactiveList<PinnedRepository> PinnedRepositories { get; private set; }
 
         protected BaseMenuViewModel(IAccountsService accountsService)
         {
             AccountsService = accountsService;
-            DeletePinnedRepositoryCommand = new ReactiveCommand();
+            DeletePinnedRepositoryCommand = ReactiveCommand.Create();
             PinnedRepositories = new ReactiveList<PinnedRepository>(AccountsService.ActiveAccount.PinnnedRepositories);
 
             DeletePinnedRepositoryCommand.OfType<PinnedRepository>()

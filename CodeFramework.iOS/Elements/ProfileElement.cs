@@ -1,8 +1,9 @@
 using System;
 using System.Drawing;
-using MonoTouch.Dialog;
-using MonoTouch.Dialog.Utilities;
 using MonoTouch.UIKit;
+using Xamarin.Utilities.DialogElements;
+using Xamarin.Utilities.Images;
+using MonoTouch.Foundation;
 
 namespace CodeFramework.iOS.Elements
 {
@@ -46,7 +47,6 @@ namespace CodeFramework.iOS.Elements
         public object Tag { get; set; }
 
         public ProfileElement(string title, string subtitle)
-            : base(string.Empty)
         {
             _title = title;
             _subtitle = subtitle;
@@ -54,10 +54,7 @@ namespace CodeFramework.iOS.Elements
 
         public override UITableViewCell GetCell(UITableView tv)
         {
-            var cell = tv.DequeueReusableCell("profile_element") as ProfileTableViewCell;
-            if (cell == null)
-                cell = new ProfileTableViewCell();
-
+            var cell = tv.DequeueReusableCell(ProfileTableViewCell.Key) as ProfileTableViewCell ?? new ProfileTableViewCell();
             cell.Accessory = Accessory;
             cell.ImageView.Image = Image;
             cell.TitleLabel.Text = _title;
@@ -65,33 +62,38 @@ namespace CodeFramework.iOS.Elements
             return cell;
         }
 
-        public override void Selected(DialogViewController dvc, UITableView tableView, MonoTouch.Foundation.NSIndexPath path)
+        public override void Selected(UITableView tableView, NSIndexPath path)
         {
             var handler = Tapped;
             if (handler != null)
                 handler();
-            tableView.DeselectRow(path, true);
+            base.Selected(tableView, path);
         }
 
         public void UpdatedImage(Uri uri)
         {
-            var cell = this.GetActiveCell() as ProfileTableViewCell;
+            var cell = GetActiveCell() as ProfileTableViewCell;
             if (cell != null)
+            {
                 cell.ImageView.Image = ImageLoader.DefaultRequestImage(uri, this);
+                cell.ImageView.SetNeedsDisplay();
+            }
         }
 
-        public float GetHeight(UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath)
+        public float GetHeight(UITableView tableView, NSIndexPath indexPath)
         {
             return 74f;
         }
 
         private class ProfileTableViewCell : UITableViewCell
         {
+            public static NSString Key = new NSString("ProfileCell");
             public new readonly UIImageView ImageView;
             public readonly UILabel TitleLabel;
             public readonly UILabel SubtitleLabel;
 
             public ProfileTableViewCell()
+                : base(UITableViewCellStyle.Default, Key)
             {
                 ImageView = new UIImageView();
                 ImageView.ContentMode = UIViewContentMode.ScaleAspectFit;

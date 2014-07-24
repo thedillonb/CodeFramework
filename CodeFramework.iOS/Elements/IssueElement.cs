@@ -3,6 +3,7 @@ using CodeFramework.iOS.Cells;
 using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
+using Xamarin.Utilities.DialogElements;
 
 namespace CodeFramework.Elements
 {
@@ -21,7 +22,6 @@ namespace CodeFramework.Elements
         public DateTimeOffset LastUpdated { get; set; }
 
 		public IssueElement(string id, string title, string assigned, string status, string priority, string kind, DateTimeOffset lastUpdated) 
-            : base(null)
         {
             if (string.IsNullOrEmpty(assigned))
                 assigned = "unassigned";
@@ -41,30 +41,22 @@ namespace CodeFramework.Elements
             return 69f;
         }
 
-        protected override NSString CellKey {
-            get {
-                return new NSString("IssueCellView");
-            }
-        }
-
         public event NSAction Tapped;
-
 
         public override UITableViewCell GetCell (UITableView tv)
         {
-            var cell = tv.DequeueReusableCell(CellKey) as IssueCellView ?? IssueCellView.Create();
+            var cell = tv.DequeueReusableCell(IssueCellView.Key) as IssueCellView ?? IssueCellView.Create();
             cell.Bind(Title, Status, Priority, Assigned, LastUpdated.ToDaysAgo(), Id, Kind);
             return cell;
         }
 
 
 
-        public override void Selected(DialogViewController dvc, UITableView tableView, NSIndexPath path)
+        public override void Selected(UITableView tableView, NSIndexPath path)
         {
-            base.Selected(dvc, tableView, path);
+            base.Selected(tableView, path);
             if (Tapped != null)
                 Tapped();
-            tableView.DeselectRow (path, true);
         }
 
         void IColorizeBackground.WillDisplay(UITableView tableView, UITableViewCell cell, NSIndexPath indexPath)

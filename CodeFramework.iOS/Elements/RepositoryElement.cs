@@ -1,13 +1,12 @@
 using System;
 using CodeFramework.iOS.Cells;
-using MonoTouch.Dialog;
-using MonoTouch.Dialog.Utilities;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using Xamarin.Utilities.DialogElements;
+using Xamarin.Utilities.Images;
 
 namespace CodeFramework.iOS.Elements
 {
-    
     public class RepositoryElement : Element, IElementSizing, IColorizeBackground, IImageUpdated
     {       
         private readonly string _name;
@@ -23,7 +22,6 @@ namespace CodeFramework.iOS.Elements
         public bool ShowOwner { get; set; }
 
         public RepositoryElement(string name, int followers, int forks, string description, string owner, Uri imageUri = null, UIImage image = null)
-            : base(null)
         {
             _name = name;
             _followers = followers;
@@ -43,18 +41,12 @@ namespace CodeFramework.iOS.Elements
             return 52f + descriptionHeight;
         }
         
-        protected override NSString CellKey {
-            get {
-                return new NSString("RepositoryCellView");
-            }
-        }
-        
         
         public event NSAction Tapped;
         
         public override UITableViewCell GetCell (UITableView tv)
         {
-            var cell = tv.DequeueReusableCell(CellKey) as RepositoryCellView ?? RepositoryCellView.Create();
+            var cell = tv.DequeueReusableCell(RepositoryCellView.Key) as RepositoryCellView ?? RepositoryCellView.Create();
             return cell;
         }
         
@@ -63,12 +55,11 @@ namespace CodeFramework.iOS.Elements
             return _name.ToLower().Contains(text.ToLower());
         }
         
-        public override void Selected(DialogViewController dvc, UITableView tableView, NSIndexPath path)
+        public override void Selected(UITableView tableView, NSIndexPath path)
         {
-            base.Selected(dvc, tableView, path);
+            base.Selected(tableView, path);
             if (Tapped != null)
                 Tapped();
-            tableView.DeselectRow (path, true);
         }
         
         void IColorizeBackground.WillDisplay(UITableView tableView, UITableViewCell cell, NSIndexPath indexPath)
@@ -82,8 +73,6 @@ namespace CodeFramework.iOS.Elements
             c.Bind(_name, _followers.ToString(), _forks.ToString(), _description, ShowOwner ? _owner : null, _image);
         }
 
-        #region IImageUpdated implementation
-
         public void UpdatedImage(Uri uri)
         {
             var img = ImageLoader.DefaultRequestImage(uri, this);
@@ -96,13 +85,11 @@ namespace CodeFramework.iOS.Elements
 
             if (uri == null)
                 return;
-            var root = GetImmediateRootElement ();
+            var root = GetRootElement ();
             if (root == null || root.TableView == null)
                 return;
             root.TableView.ReloadRows (new [] { IndexPath }, UITableViewRowAnimation.None);
         }
-
-        #endregion
     }
 }
 

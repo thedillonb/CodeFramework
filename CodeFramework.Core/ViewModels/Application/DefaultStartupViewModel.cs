@@ -13,7 +13,7 @@ namespace CodeFramework.Core.ViewModels.Application
     {
 		protected readonly IAccountsService AccountsService;
 
-        public ReactiveCollection<string> StartupViews { get; private set; } 
+        public IReadOnlyReactiveList<string> StartupViews { get; private set; } 
 
 		private string _selectedStartupView;
 		public string SelectedStartupView
@@ -24,7 +24,6 @@ namespace CodeFramework.Core.ViewModels.Application
 
 		protected DefaultStartupViewModel(IAccountsService accountsService, Type menuViewModelType)
 		{
-            StartupViews = new ReactiveCollection<string>();
 			AccountsService = accountsService;
 
             SelectedStartupView = AccountsService.ActiveAccount.DefaultStartupView;
@@ -35,10 +34,10 @@ namespace CodeFramework.Core.ViewModels.Application
 		        DismissCommand.ExecuteIfCan();
 		    });
 
-            StartupViews.Reset(from p in menuViewModelType.GetProperties()
-                        let attr = p.GetCustomAttributes(typeof(PotentialStartupViewAttribute), true)
-                        where attr.Length == 1 && attr[0] is PotentialStartupViewAttribute
-                        select ((PotentialStartupViewAttribute)attr[0]).Name);
+            StartupViews = new ReactiveCollection<string>(from p in menuViewModelType.GetProperties()
+                let attr = p.GetCustomAttributes(typeof(PotentialStartupViewAttribute), true)
+                where attr.Length == 1 && attr[0] is PotentialStartupViewAttribute
+                select ((PotentialStartupViewAttribute)attr[0]).Name);
 		}
     }
 }

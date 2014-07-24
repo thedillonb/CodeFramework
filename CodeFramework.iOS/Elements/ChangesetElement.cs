@@ -1,6 +1,5 @@
 using CodeFramework.iOS.ViewComponents;
-using CodeFramework.iOS.Views;
-using MonoTouch.Dialog;
+using Xamarin.Utilities.DialogElements;
 
 namespace CodeFramework.Elements
 {

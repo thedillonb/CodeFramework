@@ -1,20 +1,20 @@
 using System.Drawing;
 using CodeFramework.iOS.ViewComponents;
-using CodeFramework.iOS.Views;
 using MonoTouch.UIKit;
 using ReactiveUI;
+using Xamarin.Utilities.ViewControllers;
+using Xamarin.Utilities.Core.ViewModels;
 
 namespace CodeFramework.iOS.ViewControllers
 {
-	public abstract class MenuBaseViewController<TViewModel> : ViewModelDialogView<TViewModel> where TViewModel : ReactiveObject
+    public abstract class MenuBaseViewController<TViewModel> : ViewModelDialogViewController<TViewModel> where TViewModel : class, IBaseViewModel
 	{
         readonly ProfileButton _profileButton;
         readonly UILabel _title;
 
         protected MenuBaseViewController()
+            : base(style: UITableViewStyle.Plain)
         {
-            Style = UITableViewStyle.Plain;
-            Autorotate = true;
 			_title = new UILabel(new RectangleF(0, 40, 320, 40));
             _title.TextAlignment = UITextAlignment.Left;
             _title.BackgroundColor = UIColor.Clear;

@@ -9,6 +9,10 @@ namespace CodeFramework.iOS.Cells
 {
     public partial class IssueCellView : UITableViewCell
     {
+        public static NSString Key = new NSString("IssueCellView");
+
+        public override string ReuseIdentifier { get { return Key; } }
+
         public static IssueCellView Create()
         {
             var cell = new IssueCellView();

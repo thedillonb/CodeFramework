@@ -1,6 +1,5 @@
 using System;
 using CodeFramework.Core.ViewModels.Application;
-using MonoTouch.Dialog.Utilities;
 using MonoTouch.UIKit;
 using ReactiveUI;
 using Xamarin.Utilities.Images;

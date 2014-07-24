@@ -8,18 +8,20 @@ using Xamarin.Utilities.Core.ViewModels;
 
 namespace CodeFramework.Core.ViewModels.Application
 {
-    public class StartupViewModel : LoadableViewModel
+    public class StartupViewModel : BaseViewModel, ILoadableViewModel
     {
         protected readonly IAccountsService AccountsService;
         protected readonly IAccountValidatorService AccountValidator;
 
-        public IReactiveCommand GoToAccountsCommand { get; private set; }
+        public IReactiveCommand<object> GoToAccountsCommand { get; private set; }
 
-        public IReactiveCommand GoToNewUserCommand { get; private set; }
+        public IReactiveCommand<object> GoToNewUserCommand { get; private set; }
 
-        public IReactiveCommand GoToMainCommand { get; private set; }
+        public IReactiveCommand<object> GoToMainCommand { get; private set; }
 
-        public IReactiveCommand BecomeActiveWindowCommand { get; private set; }
+        public IReactiveCommand<object> BecomeActiveWindowCommand { get; private set; }
+
+        public IReactiveCommand LoadCommand { get; private set; }
 
         private bool _isLoggingIn;
         public bool IsLoggingIn
@@ -46,10 +48,10 @@ namespace CodeFramework.Core.ViewModels.Application
         {
             AccountsService = accountsService;
             AccountValidator = accountValidator;
-            GoToMainCommand = new ReactiveCommand();
-            GoToAccountsCommand = new ReactiveCommand();
-            GoToNewUserCommand = new ReactiveCommand();
-            BecomeActiveWindowCommand = new ReactiveCommand();
+            GoToMainCommand = ReactiveCommand.Create();
+            GoToAccountsCommand = ReactiveCommand.Create();
+            GoToNewUserCommand = ReactiveCommand.Create();
+            BecomeActiveWindowCommand = ReactiveCommand.Create();
 
             GoToAccountsCommand.Subscribe(_ => ShowViewModel(CreateViewModel<AccountsViewModel>()));
 
@@ -57,7 +59,7 @@ namespace CodeFramework.Core.ViewModels.Application
 
             GoToMainCommand.Subscribe(_ => ShowViewModel(CreateViewModel(typeof(IMainViewModel))));
 
-            LoadCommand.RegisterAsyncTask(x => Load());
+            LoadCommand = ReactiveCommand.CreateAsyncTask(x => Load());
         }
 
         /// <summary>

@@ -7,6 +7,7 @@ namespace CodeFramework.iOS.Cells
 {
     public partial class RepositoryCellView : UITableViewCell
     {
+        public static NSString Key = new NSString("RepositoryCellView");
         public static bool RoundImages = true;
 
         public static UIFont CaptionFont
@@ -19,6 +20,7 @@ namespace CodeFramework.iOS.Cells
             get { return UIFont.SystemFontOfSize(13f * Theme.CurrentTheme.FontSizeRatio); }
         }
 
+        public override string ReuseIdentifier { get { return Key; } }
 
         public static RepositoryCellView Create()
         {

@@ -1,17 +1,17 @@
 using System;
 using System.Linq;
-using CodeFramework.iOS.Views;
-using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 using ReactiveUI;
+using Xamarin.Utilities.ViewControllers;
+using Xamarin.Utilities.DialogElements;
+using Xamarin.Utilities.Core.ViewModels;
 
 namespace CodeFramework.iOS.ViewControllers
 {
-    public abstract class FilterViewController<TViewModel> : ViewModelDialogView<TViewModel> where TViewModel : ReactiveObject
+    public abstract class FilterViewController<TViewModel> : ViewModelDialogViewController<TViewModel> where TViewModel : class, IBaseViewModel
     {
         protected FilterViewController()
         {
-            Style = UITableViewStyle.Grouped;
             Title = "Filter & Sort";
 			NavigationItem.LeftBarButtonItem = new UIBarButtonItem(Theme.CurrentTheme.CancelButton, UIBarButtonItemStyle.Plain, (s, e) => 
                 DismissViewController(true, null));
@@ -34,7 +34,7 @@ namespace CodeFramework.iOS.ViewControllers
             TableView.ReloadData();
         }
 
-        public class EnumChoiceElement<T> : MonoTouch.Dialog.StyledStringElement where T : struct, IConvertible
+        public class EnumChoiceElement<T> : StyledStringElement where T : struct, IConvertible
         {
             private T _value;
 
@@ -62,14 +62,13 @@ namespace CodeFramework.iOS.ViewControllers
 
             element.Tapped += () =>
             {
-                var ctrl = new DialogViewController(new RootElement(title), true);
+                var ctrl = new ViewModelDialogViewController<BaseViewModel>();
                 ctrl.Title = title;
-                ctrl.Style = MonoTouch.UIKit.UITableViewStyle.Grouped;
 
-                var sec = new MonoTouch.Dialog.Section();
+                var sec = new Section();
                 foreach (var x in System.Enum.GetValues(typeof(T)).Cast<System.Enum>())
                 {
-                    sec.Add(new MonoTouch.Dialog.StyledStringElement(x.Description(), () => { 
+                    sec.Add(new StyledStringElement(x.Description(), () => { 
                         element.Value = (T)Enum.ToObject(typeof(T), x); 
                         NavigationController.PopViewControllerAnimated(true);
                     }) { 
@@ -77,14 +76,14 @@ namespace CodeFramework.iOS.ViewControllers
                             MonoTouch.UIKit.UITableViewCellAccessory.Checkmark : MonoTouch.UIKit.UITableViewCellAccessory.None 
                     });
                 }
-                ctrl.Root = new MonoTouch.Dialog.RootElement(title) { sec };
+                ctrl.Root.Reset(sec);
                 NavigationController.PushViewController(ctrl, true);
             };
             
             return element;
         }
 
-        public class MultipleChoiceElement<T> : MonoTouch.Dialog.StyledStringElement
+        public class MultipleChoiceElement<T> : StyledStringElement
         {
             public T Obj;
             public MultipleChoiceElement(string title, T obj)
@@ -95,20 +94,20 @@ namespace CodeFramework.iOS.ViewControllers
             }
         }
 
-        protected MultipleChoiceElement<T> CreateMultipleChoiceElement<T>(string title, T o)
-        {
-            var element = new MultipleChoiceElement<T>(title, o);
-            element.Tapped += () =>
-            {
-                var en = new MultipleChoiceViewController(element.Caption, o);
-                en.ViewDisappearing += (sender, e) => {
-                    element.Value = CreateCaptionForMultipleChoice(o);
-                };
-                NavigationController.PushViewController(en, true);
-            };
-
-            return element;
-        }
+//        protected MultipleChoiceElement<T> CreateMultipleChoiceElement<T>(string title, T o)
+//        {
+//            var element = new MultipleChoiceElement<T>(title, o);
+//            element.Tapped += () =>
+//            {
+//                var en = new MultipleChoiceViewController(element.Caption, o);
+//                en.ViewDisappearing += (sender, e) => {
+//                    element.Value = CreateCaptionForMultipleChoice(o);
+//                };
+//                NavigationController.PushViewController(en, true);
+//            };
+//
+//            return element;
+//        }
 
         private static string CreateCaptionForMultipleChoice<T>(T o)
         {

@@ -8,14 +8,17 @@ using MonoTouch.Dialog;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using ReactiveUI;
+using Xamarin.Utilities.DialogElements;
+using Xamarin.Utilities.ViewControllers;
 
 namespace CodeFramework.iOS.Views.Application
 {
-    public class AccountsView : ViewModelDialogView<AccountsViewModel>
+    public class AccountsView : ViewModelDialogViewController<AccountsViewModel>
 	{
         public AccountsView()
-            : base(UITableViewStyle.Plain)
+            : base(style: UITableViewStyle.Plain)
         {
+            Title = "Accounts";
         }
 
         public override void ViewDidLoad()
@@ -29,10 +32,10 @@ namespace CodeFramework.iOS.Views.Application
             base.ViewDidLoad();
 
             var sec = new Section();
-            Root = new RootElement("Accounts") { sec };
+            Root.Reset(sec);
 
             ViewModel.Accounts.ItemsRemoved.Where(x => Root != null && Root.Count > 0).Subscribe(x => 
-                sec.Elements.OfType<ProfileElement>().Where(e => Equals(e.Tag, x)).ToList().ForEach(e => sec.Remove(e)));
+                sec.OfType<ProfileElement>().Where(e => Equals(e.Tag, x)).ToList().ForEach(e => sec.Remove(e)));
 
             ViewModel.Accounts.Changed
                 .Where(x => x.Action != System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
@@ -50,17 +53,12 @@ namespace CodeFramework.iOS.Views.Application
                     return element;
                 })));
 
-            ViewModel.WhenAnyValue(x => x.ActiveAccount, x => x != null)
+            ViewModel.WhenAnyValue(x => x.ActiveAccount)
+                .Select(x => x != null)
                 .Where(x => NavigationItem != null)
                 .Subscribe(x => NavigationItem.LeftBarButtonItem.Enabled = x);
         }
-
-	    public override void ViewWillAppear(bool animated)
-	    {
-	        base.ViewWillAppear(animated);
-	        ViewModel.LoadCommand.ExecuteIfCan();
-	    }
-
+	 
 	    public override Source CreateSizingSource(bool unevenRows)
         {
             return new DialogDeleteSource(this, x =>
@@ -79,7 +77,7 @@ namespace CodeFramework.iOS.Views.Application
         {
             private readonly Action<Element> _deleteAction;
 
-            public DialogDeleteSource(DialogViewController container, Action<Element> deleteAction)
+            public DialogDeleteSource(ViewModelDialogViewController<AccountsViewModel> container, Action<Element> deleteAction)
                 : base(container)
             {
                 _deleteAction = deleteAction;

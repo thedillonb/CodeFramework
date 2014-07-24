@@ -40,7 +40,8 @@ namespace CodeFramework.iOS.Views.Source
                 NavigationController.SetToolbarHidden(_fullScreen, true);
             });
 
-            ViewModel.WhenAnyValue(x => x.Theme, x => new { Theme = x, ViewModel.SourceItem })
+            ViewModel.WhenAnyValue(x => x.Theme)
+                .Select(x => new { Theme = x, ViewModel.SourceItem })
                 .Skip(1)
                 .Where(x => x != null && x.SourceItem != null && !x.SourceItem.IsBinary)
                 .Subscribe(x => LoadContent(x.SourceItem.FilePath));

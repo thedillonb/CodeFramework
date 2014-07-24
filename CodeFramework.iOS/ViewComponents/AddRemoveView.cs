@@ -32,11 +32,11 @@ namespace CodeFramework.iOS.ViewComponents
             var context = UIGraphics.GetCurrentContext();
             context.SaveState();
             context.SetFillColor(UIColor.FromRGB(204, 255, 204).CGColor);
-            context.AddPath(GraphicsUtil.MakeRoundedRectPath(addedRect, 5));
+            context.AddPath(Xamarin.Utilities.Graphics.GraphicsUtils.MakeRoundedRectPath(addedRect, 5));
             context.FillPath();
 
             context.SetFillColor(UIColor.FromRGB(255, 221, 221).CGColor);
-            context.AddPath(GraphicsUtil.MakeRoundedRectPath(removedRect, 5));
+            context.AddPath(Xamarin.Utilities.Graphics.GraphicsUtils.MakeRoundedRectPath(removedRect, 5));
             context.FillPath();
 
             context.RestoreState();

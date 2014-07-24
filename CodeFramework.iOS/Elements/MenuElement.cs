@@ -1,7 +1,7 @@
 using System.Drawing;
-using MonoTouch.Dialog;
-using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using Xamarin.Utilities.DialogElements;
+using System;
 
 namespace CodeFramework.iOS.Elements
 {
@@ -9,7 +9,7 @@ namespace CodeFramework.iOS.Elements
     {
         public int NotificationNumber { get; set; }
 
-        public MenuElement(string title, NSAction tapped, UIImage image)
+        public MenuElement(string title, Action tapped, UIImage image)
             : base(title, tapped)
         {
             BackgroundColor = UIColor.Clear;

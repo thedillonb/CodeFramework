@@ -31,21 +31,19 @@ namespace CodeFramework.Core.ViewModels.Application
 
         public ReactiveList<IAccount> Accounts { get; private set; }
 
-        public IReactiveCommand LoadCommand { get; private set; }
+        public IReactiveCommand<object> LoginCommand { get; private set; }
 
-        public IReactiveCommand LoginCommand { get; private set; }
+        public IReactiveCommand<object> GoToAddAccountCommand { get; private set; }
 
-        public IReactiveCommand GoToAddAccountCommand { get; private set; }
-
-        public IReactiveCommand DeleteAccountCommand { get; private set; }
+        public IReactiveCommand<object> DeleteAccountCommand { get; private set; }
 
         public AccountsViewModel(IAccountsService accountsService)
         {
             _accountsService = accountsService;
             Accounts = new ReactiveList<IAccount>(accountsService);
-            LoginCommand = new ReactiveCommand();
-            GoToAddAccountCommand = new ReactiveCommand();
-            DeleteAccountCommand = new ReactiveCommand();
+            LoginCommand = ReactiveCommand.Create();
+            GoToAddAccountCommand = ReactiveCommand.Create();
+            DeleteAccountCommand = ReactiveCommand.Create();
 
             DeleteAccountCommand.OfType<IAccount>().Subscribe(x =>
             {
@@ -69,8 +67,10 @@ namespace CodeFramework.Core.ViewModels.Application
 
             GoToAddAccountCommand.Subscribe(_ => ShowViewModel(CreateViewModel(typeof(IAddAccountViewModel))));
 
-            LoadCommand = new ReactiveCommand();
-            LoadCommand.Subscribe(x => Accounts.Reset(accountsService));
+            this.WhenActivated(d =>
+            {
+                Accounts.Reset(accountsService);
+            });
         }
     }
 }

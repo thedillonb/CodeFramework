@@ -66,9 +66,9 @@ namespace CodeFramework.Core.Services
         public IAccount GetDefault()
         {
             int id;
-			return !_defaults.TryGet("DEFAULT_ACCOUNT", out id) ? null : Find(id);
+            return !_defaults.TryGet("DEFAULT_ACCOUNT", out id) ? null : Find(id);
         }
-            
+
         protected string CreateAccountDirectory(IAccount account)
         {
             return Path.Combine(_accountsPath, account.Id.ToString(CultureInfo.InvariantCulture));
@@ -76,18 +76,18 @@ namespace CodeFramework.Core.Services
 
         public void Insert(IAccount account)
         {
-			lock (_userDatabase)
-			{
-				_userDatabase.Insert(account);
-			}
+            lock (_userDatabase)
+            {
+                _userDatabase.Insert(account);
+            }
         }
 
         public void Remove(IAccount account)
         {
-			lock (_userDatabase)
-			{
-				_userDatabase.Delete(account);
-			}
+            lock (_userDatabase)
+            {
+                _userDatabase.Delete(account);
+            }
             var accountDir = CreateAccountDirectory(account);
 
             if (!Directory.Exists(accountDir))
@@ -97,24 +97,24 @@ namespace CodeFramework.Core.Services
 
         public void Update(IAccount account)
         {
-			lock (_userDatabase)
-			{
-				_userDatabase.Update(account);
-			}
+            lock (_userDatabase)
+            {
+                _userDatabase.Update(account);
+            }
         }
 
         public bool Exists(IAccount account)
         {
-			return Find(account.Id) != null;
+            return Find(account.Id) != null;
         }
 
         public IAccount Find(int id)
         {
-			lock (_userDatabase)
-			{
+            lock (_userDatabase)
+            {
                 var query = _userDatabase.Find<TAccount>(x => x.Id == id);
-				return query;
-			}
+                return query;
+            }
         }
 
 

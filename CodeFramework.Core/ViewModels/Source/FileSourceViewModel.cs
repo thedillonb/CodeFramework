@@ -17,12 +17,12 @@ namespace CodeFramework.Core.ViewModels.Source
 
         string Theme { get; set; }
 
-        IReactiveCommand NextItemCommand { get; }
+        IReactiveCommand<object> NextItemCommand { get; }
 
-        IReactiveCommand PreviousItemCommand { get; }
+        IReactiveCommand<object> PreviousItemCommand { get; }
     }
 
-    public abstract class FileSourceViewModel<TFileModel> : LoadableViewModel, IFileSourceViewModel
+    public abstract class FileSourceViewModel<TFileModel> : BaseViewModel, ILoadableViewModel, IFileSourceViewModel
     {
         private readonly TFileModel[] _items;
 
@@ -57,9 +57,11 @@ namespace CodeFramework.Core.ViewModels.Source
             get { return _currentItem.Value; }
         }
 
-        public IReactiveCommand NextItemCommand { get; private set; }
+        public IReactiveCommand<object> NextItemCommand { get; private set; }
 
-        public IReactiveCommand PreviousItemCommand { get; private set; }
+        public IReactiveCommand<object> PreviousItemCommand { get; private set; }
+
+        public IReactiveCommand LoadCommand { get; private set; }
 
         protected FileSourceViewModel(NavObject navObject)
         {
@@ -67,7 +69,7 @@ namespace CodeFramework.Core.ViewModels.Source
             _currentItemIndex = navObject.CurrentItemIndex;
 
             var hasNextItems = this.WhenAnyValue(y => y.CurrentItemIndex, y => _items != null && _items.Length > 1 && y < (_items.Length - 1));
-            NextItemCommand = new ReactiveCommand(
+            NextItemCommand = ReactiveCommand.Create(
                 this.LoadCommand.CanExecuteObservable.CombineLatest(
                     hasNextItems, (canLoad, hasNext) => canLoad && hasNext)
                 .DistinctUntilChanged()
@@ -75,7 +77,7 @@ namespace CodeFramework.Core.ViewModels.Source
             NextItemCommand.Subscribe(x => CurrentItemIndex += 1);
 
             var hasPreviousItems = this.WhenAnyValue(y => y.CurrentItemIndex, y => _items != null && _items.Length > 1 && y > 0);
-            PreviousItemCommand = new ReactiveCommand(
+            PreviousItemCommand = ReactiveCommand.Create(
                 this.LoadCommand.CanExecuteObservable.CombineLatest(
                     hasPreviousItems, (canLoad, hasPrevious) => canLoad && hasPrevious)
                 .DistinctUntilChanged()

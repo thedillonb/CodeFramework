@@ -1,7 +1,7 @@
 using System;
 using System.Drawing;
-using MonoTouch.Dialog.Utilities;
 using MonoTouch.UIKit;
+using Xamarin.Utilities.Images;
 
 namespace CodeFramework.iOS.ViewComponents
 {

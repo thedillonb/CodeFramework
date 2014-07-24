@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using MonoTouch.CoreGraphics;
-using MonoTouch.Dialog;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using MonoTouch.Dialog.Utilities;
+using Xamarin.Utilities.DialogElements;
+using Xamarin.Utilities.Images;
 
 namespace CodeFramework.iOS.Elements
 {
@@ -61,7 +60,6 @@ namespace CodeFramework.iOS.Elements
         }
 
         public NewsFeedElement(string imageUrl, DateTimeOffset time, IEnumerable<TextBlock> headerBlocks, IEnumerable<TextBlock> bodyBlocks, UIImage littleImage, Action tapped)
-            : base(null)
         {
             Uri.TryCreate(imageUrl, UriKind.Absolute, out _imageUri);
             _time = time.ToDaysAgo();
@@ -149,21 +147,15 @@ namespace CodeFramework.iOS.Elements
             return ret;
         }
 
-        protected override NSString CellKey {
-            get {
-                return new NSString("NewsCellView");
-            }
-        }
-
         public override UITableViewCell GetCell (UITableView tv)
         {
-            var cell = tv.DequeueReusableCell(CellKey) as NewsCellView ?? NewsCellView.Create();
+            var cell = tv.DequeueReusableCell(NewsCellView.Key) as NewsCellView ?? NewsCellView.Create();
             return cell;
         }
 
-        public override void Selected(DialogViewController dvc, UITableView tableView, NSIndexPath path)
+        public override void Selected(UITableView tableView, NSIndexPath path)
         {
-            base.Selected(dvc, tableView, path);
+            base.Selected(tableView, path);
             if (_tapped != null)
                 _tapped();
             tableView.DeselectRow (path, true);
@@ -182,8 +174,6 @@ namespace CodeFramework.iOS.Elements
             c.Set(image, _time, _actionImage, _attributedHeader, _attributedBody, _headerLinks, _bodyLinks, WebLinkClicked);
         }
 
-        #region IImageUpdated implementation
-
         public void UpdatedImage(Uri uri)
         {
             var img = ImageLoader.DefaultRequestImage(uri, this);
@@ -192,12 +182,10 @@ namespace CodeFramework.iOS.Elements
 
             if (uri == null)
                 return;
-            var root = GetImmediateRootElement ();
+            var root = this.GetRootElement ();
             if (root == null || root.TableView == null)
                 return;
             root.TableView.ReloadRows (new [] { IndexPath }, UITableViewRowAnimation.None);
         }
-
-        #endregion
     }
 }
