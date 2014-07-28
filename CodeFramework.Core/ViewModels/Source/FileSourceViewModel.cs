@@ -24,11 +24,17 @@ namespace CodeFramework.Core.ViewModels.Source
 
     public abstract class FileSourceViewModel<TFileModel> : BaseViewModel, ILoadableViewModel, IFileSourceViewModel
     {
-        private readonly TFileModel[] _items;
 
         public string Title { get; set; }
 
         public string HtmlUrl { get; set; }
+
+        private TFileModel[] _items;
+        public TFileModel[] Items
+        {
+            get { return _items; }
+            protected set { this.RaiseAndSetIfChanged(ref _items, value); }
+        }
 
         private FileSourceItemViewModel _source;
         public FileSourceItemViewModel SourceItem
@@ -61,14 +67,22 @@ namespace CodeFramework.Core.ViewModels.Source
 
         public IReactiveCommand<object> PreviousItemCommand { get; private set; }
 
-        public IReactiveCommand LoadCommand { get; private set; }
+        public abstract IReactiveCommand LoadCommand { get; }
 
-        protected FileSourceViewModel(NavObject navObject)
+        protected FileSourceViewModel()
         {
-            _items = navObject.Items;
-            _currentItemIndex = navObject.CurrentItemIndex;
+            this.WhenAnyValue(x => x.CurrentItemIndex)
+                .Where(x => Items != null && x < Items.Length)
+                .Select(x => Items[x])
+                .ToProperty(this, r => r.CurrentItem, out _currentItem, scheduler: System.Reactive.Concurrency.Scheduler.Immediate);
+        }
 
-            var hasNextItems = this.WhenAnyValue(y => y.CurrentItemIndex, y => _items != null && _items.Length > 1 && y < (_items.Length - 1));
+        protected void SetupRx()
+        {
+            var hasNextItems = 
+                this.WhenAnyValue(y => y.CurrentItemIndex, x => x.Items)
+                    .Select(x => x.Item2 != null && x.Item2.Length > 1 && x.Item1 < (x.Item2.Length - 1));
+
             NextItemCommand = ReactiveCommand.Create(
                 this.LoadCommand.CanExecuteObservable.CombineLatest(
                     hasNextItems, (canLoad, hasNext) => canLoad && hasNext)
@@ -76,18 +90,16 @@ namespace CodeFramework.Core.ViewModels.Source
                 .StartWith(false));
             NextItemCommand.Subscribe(x => CurrentItemIndex += 1);
 
-            var hasPreviousItems = this.WhenAnyValue(y => y.CurrentItemIndex, y => _items != null && _items.Length > 1 && y > 0);
+            var hasPreviousItems = 
+                this.WhenAnyValue(y => y.CurrentItemIndex, x => x.Items)
+                    .Select(x => x.Item2 != null && x.Item2.Length > 1 && x.Item1 > 0);
+
             PreviousItemCommand = ReactiveCommand.Create(
                 this.LoadCommand.CanExecuteObservable.CombineLatest(
                     hasPreviousItems, (canLoad, hasPrevious) => canLoad && hasPrevious)
                 .DistinctUntilChanged()
                 .StartWith(false));
             PreviousItemCommand.Subscribe(x => CurrentItemIndex -= 1);
-
-            this.WhenAnyValue(x => x.CurrentItemIndex)
-                .Where(x => _items != null && x < _items.Length)
-                .Select(x => _items[x])
-                .ToProperty(this, r => r.CurrentItem, out _currentItem, scheduler: System.Reactive.Concurrency.Scheduler.Immediate);
         }
 
         protected static string CreatePlainContentFile(string data, string filename)
@@ -95,12 +107,6 @@ namespace CodeFramework.Core.ViewModels.Source
             var filepath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), filename);
             System.IO.File.WriteAllText(filepath, data, System.Text.Encoding.UTF8);
             return filepath;
-        }
-
-        public class NavObject
-        {
-            public int CurrentItemIndex { get; set; }
-            public TFileModel[] Items { get; set; }
         }
     }
 }
