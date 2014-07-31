@@ -7,7 +7,7 @@ using Xamarin.Utilities.Images;
 
 namespace CodeFramework.iOS.Elements
 {
-    public class RepositoryElement : Element, IElementSizing, IColorizeBackground, IImageUpdated
+    public class RepositoryElement : Element, IElementSizing, IImageUpdated
     {       
         private readonly string _name;
         private readonly int _followers;
@@ -41,54 +41,30 @@ namespace CodeFramework.iOS.Elements
             return 52f + descriptionHeight;
         }
         
-        
         public event NSAction Tapped;
         
         public override UITableViewCell GetCell (UITableView tv)
         {
             var cell = tv.DequeueReusableCell(RepositoryCellView.Key) as RepositoryCellView ?? RepositoryCellView.Create();
+            if (_image == null && _imageUri != null)
+                _image = ImageLoader.DefaultRequestImage(_imageUri, this);
+            cell.Bind(_name, _followers.ToString(), _forks.ToString(), _description, ShowOwner ? _owner : null, _image);
             return cell;
         }
-        
-        public override bool Matches(string text)
-        {
-            return _name.ToLower().Contains(text.ToLower());
-        }
-        
+
         public override void Selected(UITableView tableView, NSIndexPath path)
         {
             base.Selected(tableView, path);
             if (Tapped != null)
                 Tapped();
         }
-        
-        void IColorizeBackground.WillDisplay(UITableView tableView, UITableViewCell cell, NSIndexPath indexPath)
-        {
-            var c = cell as RepositoryCellView;
-            if (c == null)
-                return;
-
-            if (_image == null && _imageUri != null)
-                _image = ImageLoader.DefaultRequestImage(_imageUri, this);
-            c.Bind(_name, _followers.ToString(), _forks.ToString(), _description, ShowOwner ? _owner : null, _image);
-        }
 
         public void UpdatedImage(Uri uri)
         {
             var img = ImageLoader.DefaultRequestImage(uri, this);
-            if (img == null)
-            {
-                Console.WriteLine("DefaultRequestImage returned a null image");
-                return;
-            }
-            _image = img;
-
-            if (uri == null)
-                return;
-            var root = GetRootElement ();
-            if (root == null || root.TableView == null)
-                return;
-            root.TableView.ReloadRows (new [] { IndexPath }, UITableViewRowAnimation.None);
+            var activeCell = GetActiveCell() as RepositoryCellView;
+            if (activeCell != null && img != null)
+                activeCell.RepositoryImage = img;
         }
     }
 }

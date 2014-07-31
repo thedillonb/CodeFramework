@@ -1,5 +1,4 @@
 using System;
-using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 
 namespace CodeFramework.iOS.ViewComponents

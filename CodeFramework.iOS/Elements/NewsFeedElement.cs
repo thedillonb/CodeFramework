@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using MonoTouch.CoreGraphics;
+using MonoTouch.Dialog;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Xamarin.Utilities.DialogElements;
@@ -174,6 +176,8 @@ namespace CodeFramework.iOS.Elements
             c.Set(image, _time, _actionImage, _attributedHeader, _attributedBody, _headerLinks, _bodyLinks, WebLinkClicked);
         }
 
+        #region IImageUpdated implementation
+
         public void UpdatedImage(Uri uri)
         {
             var img = ImageLoader.DefaultRequestImage(uri, this);
@@ -187,5 +191,7 @@ namespace CodeFramework.iOS.Elements
                 return;
             root.TableView.ReloadRows (new [] { IndexPath }, UITableViewRowAnimation.None);
         }
+
+        #endregion
     }
 }

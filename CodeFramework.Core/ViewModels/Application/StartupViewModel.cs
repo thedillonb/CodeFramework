@@ -19,7 +19,7 @@ namespace CodeFramework.Core.ViewModels.Application
 
         public IReactiveCommand<object> GoToMainCommand { get; private set; }
 
-        public IReactiveCommand<object> BecomeActiveWindowCommand { get; private set; }
+        public IReactiveCommand BecomeActiveWindowCommand { get; private set; }
 
         public IReactiveCommand LoadCommand { get; private set; }
 
@@ -48,6 +48,7 @@ namespace CodeFramework.Core.ViewModels.Application
         {
             AccountsService = accountsService;
             AccountValidator = accountValidator;
+
             GoToMainCommand = ReactiveCommand.Create();
             GoToAccountsCommand = ReactiveCommand.Create();
             GoToNewUserCommand = ReactiveCommand.Create();

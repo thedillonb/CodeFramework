@@ -47,7 +47,7 @@ namespace CodeFramework.Core.ViewModels.Application
 			}
 		}
 
-        public IReactiveCommand<object> DeletePinnedRepositoryCommand { get; private set; }
+		public IReactiveCommand<object> DeletePinnedRepositoryCommand { get; private set; }
 
         public IReactiveList<PinnedRepository> PinnedRepositories { get; private set; }
 

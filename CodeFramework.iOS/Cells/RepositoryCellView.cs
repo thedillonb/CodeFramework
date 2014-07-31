@@ -51,6 +51,11 @@ namespace CodeFramework.iOS.Cells
             return cell;
         }
 
+        public UIImage RepositoryImage
+        {
+            get { return BigImage.Image; }
+            set { BigImage.Image = value; }
+        }
 
         public RepositoryCellView()
         {

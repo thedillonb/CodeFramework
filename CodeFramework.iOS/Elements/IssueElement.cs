@@ -1,6 +1,5 @@
 using System;
 using CodeFramework.iOS.Cells;
-using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using Xamarin.Utilities.DialogElements;

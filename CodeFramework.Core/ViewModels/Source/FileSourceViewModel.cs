@@ -24,16 +24,13 @@ namespace CodeFramework.Core.ViewModels.Source
 
     public abstract class FileSourceViewModel<TFileModel> : BaseViewModel, ILoadableViewModel, IFileSourceViewModel
     {
-
         public string Title { get; set; }
-
-        public string HtmlUrl { get; set; }
 
         private TFileModel[] _items;
         public TFileModel[] Items
         {
             get { return _items; }
-            protected set { this.RaiseAndSetIfChanged(ref _items, value); }
+            set { this.RaiseAndSetIfChanged(ref _items, value); }
         }
 
         private FileSourceItemViewModel _source;
