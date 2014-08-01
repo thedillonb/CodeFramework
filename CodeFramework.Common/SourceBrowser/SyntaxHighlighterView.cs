@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CodeFramework.Common.SourceBrowser
+namespace CodeFramework.SourceBrowser
 {
 using System;
 using System.Collections.Generic;

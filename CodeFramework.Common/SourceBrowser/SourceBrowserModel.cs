@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CodeFramework.iOS.SourceBrowser
+namespace CodeFramework.SourceBrowser
 {
     public class SourceBrowserModel
     {

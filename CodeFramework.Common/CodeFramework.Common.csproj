@@ -8,8 +8,8 @@
     <ProjectGuid>{6E1C9E25-915A-4454-8BBD-61E6918BFCF1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CodeFramework.Common</RootNamespace>
-    <AssemblyName>CodeFramework.Common</AssemblyName>
+    <RootNamespace>CodeFramework</RootNamespace>
+    <AssemblyName>CodeFramework</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>

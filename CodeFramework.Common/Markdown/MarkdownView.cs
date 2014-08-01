@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CodeFramework.Common.Markdown
+namespace CodeFramework.Markdown
 {
 using System;
 using System.Collections.Generic;

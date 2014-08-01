@@ -110,6 +110,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CodeFramework.Common\CodeFramework.Common.csproj">
+      <Project>{6e1c9e25-915a-4454-8bbd-61e6918bfcf1}</Project>
+      <Name>CodeFramework.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeFramework.Core\CodeFramework.Core.csproj">
       <Project>{268171be-a003-4047-beb7-390c74a07b7f}</Project>
       <Name>CodeFramework.Core</Name>
