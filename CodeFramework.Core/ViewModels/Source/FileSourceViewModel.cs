@@ -98,13 +98,6 @@ namespace CodeFramework.Core.ViewModels.Source
                 .StartWith(false));
             PreviousItemCommand.Subscribe(x => CurrentItemIndex -= 1);
         }
-
-        protected static string CreatePlainContentFile(string data, string filename)
-        {
-            var filepath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), filename);
-            System.IO.File.WriteAllText(filepath, data, System.Text.Encoding.UTF8);
-            return filepath;
-        }
     }
 }
 

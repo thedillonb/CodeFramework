@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Reflection;
 using CodeFramework.Core.Services;
 using CodeFramework.Core.Utils;
 using ReactiveUI;
@@ -34,9 +35,9 @@ namespace CodeFramework.Core.ViewModels.Application
 		        DismissCommand.ExecuteIfCan();
 		    });
 
-            StartupViews = new ReactiveCollection<string>(from p in menuViewModelType.GetProperties()
-                let attr = p.GetCustomAttributes(typeof(PotentialStartupViewAttribute), true)
-                where attr.Length == 1 && attr[0] is PotentialStartupViewAttribute
+            StartupViews = new ReactiveCollection<string>(from p in menuViewModelType.GetRuntimeProperties()
+                let attr = p.GetCustomAttributes(typeof(PotentialStartupViewAttribute), true).ToList()
+                where attr.Count == 1 && attr[0] is PotentialStartupViewAttribute
                 select ((PotentialStartupViewAttribute)attr[0]).Name);
 		}
     }

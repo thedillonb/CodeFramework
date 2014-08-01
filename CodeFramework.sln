@@ -1,9 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeFramework.Core.iOS", "CodeFramework.Core\CodeFramework.Core.iOS.csproj", "{C99FE7E3-0985-48F1-9EBB-91680A795F0F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeFramework.iOS", "CodeFramework.iOS\CodeFramework.iOS.csproj", "{2698B412-26A3-4269-AA01-AC3BC79A0F14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeFramework.Core", "CodeFramework.Core\CodeFramework.Core.csproj", "{268171BE-A003-4047-BEB7-390C74A07B7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Utilities.Core", "lib\Xamarin.Utilities\Xamarin.Utilities.Core\Xamarin.Utilities.Core.csproj", "{0CA8CC58-18FA-4F91-9E47-CAE155CE3965}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{E22CFC37-608B-4C90-9EB0-EF3A83E1A216}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Utilities.iOS", "lib\Xamarin.Utilities\Xamarin.Utilities.iOS\Xamarin.Utilities.iOS.csproj", "{5E7E39CA-0CCE-41FE-A868-EE0E567E069E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeFramework.Android", "CodeFramework.Android\CodeFramework.Android.csproj", "{20D25235-5C9C-4F93-8227-A0322D1230D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeFramework.Common", "CodeFramework.Common\CodeFramework.Common.csproj", "{6E1C9E25-915A-4454-8BBD-61E6918BFCF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,16 +21,36 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C99FE7E3-0985-48F1-9EBB-91680A795F0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C99FE7E3-0985-48F1-9EBB-91680A795F0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C99FE7E3-0985-48F1-9EBB-91680A795F0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C99FE7E3-0985-48F1-9EBB-91680A795F0F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2698B412-26A3-4269-AA01-AC3BC79A0F14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2698B412-26A3-4269-AA01-AC3BC79A0F14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2698B412-26A3-4269-AA01-AC3BC79A0F14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2698B412-26A3-4269-AA01-AC3BC79A0F14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{268171BE-A003-4047-BEB7-390C74A07B7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{268171BE-A003-4047-BEB7-390C74A07B7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{268171BE-A003-4047-BEB7-390C74A07B7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{268171BE-A003-4047-BEB7-390C74A07B7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CA8CC58-18FA-4F91-9E47-CAE155CE3965}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CA8CC58-18FA-4F91-9E47-CAE155CE3965}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CA8CC58-18FA-4F91-9E47-CAE155CE3965}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CA8CC58-18FA-4F91-9E47-CAE155CE3965}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E7E39CA-0CCE-41FE-A868-EE0E567E069E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E7E39CA-0CCE-41FE-A868-EE0E567E069E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E7E39CA-0CCE-41FE-A868-EE0E567E069E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E7E39CA-0CCE-41FE-A868-EE0E567E069E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20D25235-5C9C-4F93-8227-A0322D1230D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20D25235-5C9C-4F93-8227-A0322D1230D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20D25235-5C9C-4F93-8227-A0322D1230D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20D25235-5C9C-4F93-8227-A0322D1230D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E1C9E25-915A-4454-8BBD-61E6918BFCF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E1C9E25-915A-4454-8BBD-61E6918BFCF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E1C9E25-915A-4454-8BBD-61E6918BFCF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E1C9E25-915A-4454-8BBD-61E6918BFCF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0CA8CC58-18FA-4F91-9E47-CAE155CE3965} = {E22CFC37-608B-4C90-9EB0-EF3A83E1A216}
+		{5E7E39CA-0CCE-41FE-A868-EE0E567E069E} = {E22CFC37-608B-4C90-9EB0-EF3A83E1A216}
 	EndGlobalSection
 EndGlobal

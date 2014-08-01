@@ -22,12 +22,22 @@ function diff(base_text, new_text) {
     });
 }
 
+function loadFileAsPatch(path) {
+	$.get(path, function(data) {
+		patch(data);
+	});
+}
+
+function escapeHtml(data) {
+	return $('<div/>').text(data).html(); 
+}
+
 function patch(p) {
 	var $body = $('body');
 	var $table = $("<table class='diff inlinediff'></table>");
 
 	function createRow(x, y, type, line, lineNum) {
-		$table.append("<tr data-to='" + lineNum + "' data-x='" + x + "' data-y='" + y + "'><th>" + x + "</th><th>" + y + "</th><td class='" + type + "'>" + line + "</td></tr>");
+		$table.append("<tr data-to='" + lineNum + "' data-x='" + x + "' data-y='" + y + "'><th>" + x + "</th><th>" + y + "</th><td class='" + type + "'>" + escapeHtml(line) + "</td></tr>");
 	};
 	
 	var lines = p.split("\n");
@@ -69,30 +79,38 @@ function patch(p) {
 }
 
 function invokeNative(functionName, args) {
-    var iframe = document.createElement('IFRAME');
-    iframe.setAttribute('src', 'app://' + functionName + '#' + JSON.stringify(args));
-    document.documentElement.appendChild(iframe);
-    iframe.parentNode.removeChild(iframe);
-    iframe = null;  
+    try
+    {
+	    var iframe = document.createElement('IFRAME');
+	    iframe.setAttribute('src', 'app://' + functionName + '#' + JSON.stringify(args));
+	    document.body.appendChild(iframe);
+	    iframe.parentNode.removeChild(iframe);
+	    iframe = null;  
+    }
+    catch (err)
+    {
+    	alert(err.message);
+    }
 }
 
-function addComments(comments) {
+function setComments(comments) {
+
+    $('tr.comment').remove();
+
     for (var i = 0; i < comments.length; i++) {
         var comment = comments[i];
-        var $comment = $("<tr data-id='" + comment.Id + "' class='comment'><td colspan='3'><div class='inner'><header><img src='" + comment.Avatar + "' />" + comment.User + "</header><div class='content'>" + comment.Content + "</div></div></td></tr>");
+        var $comment = $("<tr data-id='" + comment.id + "' class='comment'><td colspan='3'><div class='inner'><header><img src='" + comment.avatar + "' />" + comment.user + "</header><div class='content'>" + comment.content + "</div></div></td></tr>");
         
-        if (comment['LineTo'] != null) {
-            $("tr[data-to='" + comment.LineTo + "']").after($comment);
+        if (comment['line_to'] != null) {
+            $("tr[data-to='" + comment.line_to + "']").after($comment);
         }
-        else if (comment['LineFrom'] != null) {
-            $("tr[data-from='" + comment.LineFrom + "']").after($comment);
+        else if (comment['line_from'] != null) {
+            $("tr[data-from='" + comment.line_from + "']").after($comment);
         }
-        else if (comment['Parent'] != null) {
-            $("tr[data-id='" + comment.Parent + "']").after($comment);
+        else if (comment['parent'] != null) {
+            $("tr[data-id='" + comment.parent + "']").after($comment);
         }
     }
 }
 
-$(function() {
-    invokeNative("ready");
-});
+window.onload = function() { document.location.href = 'app://ready'};

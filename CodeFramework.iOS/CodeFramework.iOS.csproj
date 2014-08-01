@@ -68,14 +68,7 @@
     </Compile>
     <Compile Include="Views\Application\StartupView.cs" />
     <Compile Include="Views\Application\DefaultStartupView.cs" />
-    <Compile Include="SourceBrowser\SyntaxHighlighterView.cs">
-      <DependentUpon>SyntaxHighlighterView.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Markdown\MarkdownView.cs">
-      <DependentUpon>MarkdownView.cshtml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Source\FileSourceView.cs" />
-    <Compile Include="SourceBrowser\SourceBrowserModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Cells\IssueCellView.xib" />
@@ -83,6 +76,16 @@
     <InterfaceDefinition Include="Cells\NewsCellView.xib" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Akavache, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\Akavache.dll</HintPath>
+    </Reference>
+    <Reference Include="Akavache.Mobile">
+      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\Akavache.Mobile.dll</HintPath>
+    </Reference>
+    <Reference Include="Akavache.Sqlite3">
+      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\Akavache.Sqlite3.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
@@ -108,12 +111,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeFramework.Core\CodeFramework.Core.csproj">
-      <Project>{C99FE7E3-0985-48F1-9EBB-91680A795F0F}</Project>
+      <Project>{268171be-a003-4047-beb7-390c74a07b7f}</Project>
       <Name>CodeFramework.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\lib\Xamarin.Utilities\Xamarin.Utilities.Core\Xamarin.Utilities.Core.iOS.csproj">
-      <Project>{EBBA1BD0-8430-4CC1-B636-B89C505C7D1C}</Project>
-      <Name>Xamarin.Utilities.Core.iOS</Name>
+    <ProjectReference Include="..\lib\Xamarin.Utilities\Xamarin.Utilities.Core\Xamarin.Utilities.Core.csproj">
+      <Project>{0ca8cc58-18fa-4f91-9e47-cae155ce3965}</Project>
+      <Name>Xamarin.Utilities.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\lib\Xamarin.Utilities\Xamarin.Utilities.iOS\Xamarin.Utilities.iOS.csproj">
       <Project>{5E7E39CA-0CCE-41FE-A868-EE0E567E069E}</Project>
@@ -125,78 +128,11 @@
   <ItemGroup>
     <BundleResource Include="Images\login_user_unknown.png" />
     <BundleResource Include="Images\login_user_unknown%402x.png" />
-    <Content Include="Diff\diffindex.html" />
-    <Content Include="Diff\jquery.min.js" />
-    <Content Include="Diff\app.js" />
-    <Content Include="Diff\difflib.js" />
-    <Content Include="Diff\diffview.css" />
-    <Content Include="Diff\diffview.js" />
     <BundleResource Include="Images\cancel%402x.png" />
     <BundleResource Include="Images\cancel.png" />
     <BundleResource Include="Images\back.png" />
     <BundleResource Include="Images\back%402x.png" />
-    <BundleResource Include="SourceBrowser\highlight.pack.js" />
-    <BundleResource Include="SourceBrowser\styles\arta.css" />
-    <BundleResource Include="SourceBrowser\styles\ascetic.css" />
-    <BundleResource Include="SourceBrowser\styles\atelier-dune.dark.css" />
-    <BundleResource Include="SourceBrowser\styles\atelier-dune.light.css" />
-    <BundleResource Include="SourceBrowser\styles\atelier-forest.dark.css" />
-    <BundleResource Include="SourceBrowser\styles\atelier-forest.light.css" />
-    <BundleResource Include="SourceBrowser\styles\atelier-heath.dark.css" />
-    <BundleResource Include="SourceBrowser\styles\atelier-heath.light.css" />
-    <BundleResource Include="SourceBrowser\styles\atelier-lakeside.dark.css" />
-    <BundleResource Include="SourceBrowser\styles\atelier-lakeside.light.css" />
-    <BundleResource Include="SourceBrowser\styles\atelier-seaside.dark.css" />
-    <BundleResource Include="SourceBrowser\styles\atelier-seaside.light.css" />
-    <BundleResource Include="SourceBrowser\styles\brown_paper.css" />
-    <BundleResource Include="SourceBrowser\styles\brown_papersq.png" />
-    <BundleResource Include="SourceBrowser\styles\dark.css" />
-    <BundleResource Include="SourceBrowser\styles\default.css" />
-    <BundleResource Include="SourceBrowser\styles\docco.css" />
-    <BundleResource Include="SourceBrowser\styles\far.css" />
-    <BundleResource Include="SourceBrowser\styles\foundation.css" />
-    <BundleResource Include="SourceBrowser\styles\github.css" />
-    <BundleResource Include="SourceBrowser\styles\googlecode.css" />
-    <BundleResource Include="SourceBrowser\styles\idea.css" />
-    <BundleResource Include="SourceBrowser\styles\ir_black.css" />
-    <BundleResource Include="SourceBrowser\styles\magula.css" />
-    <BundleResource Include="SourceBrowser\styles\mono-blue.css" />
-    <BundleResource Include="SourceBrowser\styles\monokai.css" />
-    <BundleResource Include="SourceBrowser\styles\monokai_sublime.css" />
-    <BundleResource Include="SourceBrowser\styles\obsidian.css" />
-    <BundleResource Include="SourceBrowser\styles\paraiso.dark.css" />
-    <BundleResource Include="SourceBrowser\styles\paraiso.light.css" />
-    <BundleResource Include="SourceBrowser\styles\pojoaque.css" />
-    <BundleResource Include="SourceBrowser\styles\pojoaque.jpg" />
-    <BundleResource Include="SourceBrowser\styles\railscasts.css" />
-    <BundleResource Include="SourceBrowser\styles\rainbow.css" />
-    <BundleResource Include="SourceBrowser\styles\school_book.css" />
-    <BundleResource Include="SourceBrowser\styles\school_book.png" />
-    <BundleResource Include="SourceBrowser\styles\solarized_dark.css" />
-    <BundleResource Include="SourceBrowser\styles\solarized_light.css" />
-    <BundleResource Include="SourceBrowser\styles\sunburst.css" />
-    <BundleResource Include="SourceBrowser\styles\tomorrow.css" />
-    <BundleResource Include="SourceBrowser\styles\tomorrow-night.css" />
-    <BundleResource Include="SourceBrowser\styles\tomorrow-night-blue.css" />
-    <BundleResource Include="SourceBrowser\styles\tomorrow-night-bright.css" />
-    <BundleResource Include="SourceBrowser\styles\tomorrow-night-eighties.css" />
-    <BundleResource Include="SourceBrowser\styles\vs.css" />
-    <BundleResource Include="SourceBrowser\styles\xcode.css" />
-    <BundleResource Include="SourceBrowser\styles\zenburn.css" />
-    <Content Include="Markdown\marked.js" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <None Include="SourceBrowser\SyntaxHighlighterView.cshtml">
-      <Generator>RazorTemplatePreprocessor</Generator>
-      <LastGenOutput>SyntaxHighlighterView.cs</LastGenOutput>
-    </None>
-    <None Include="Markdown\MarkdownView.cshtml">
-      <Generator>RazorTemplatePreprocessor</Generator>
-      <LastGenOutput>MarkdownView.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Source\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

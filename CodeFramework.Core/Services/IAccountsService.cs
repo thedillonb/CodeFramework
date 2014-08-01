@@ -39,7 +39,7 @@ namespace CodeFramework.Core.Services
         /// <summary>
         /// Find the specified account via it's username
         /// </summary>
-        IAccount Find(int id);
+        IAccount Find(string domain, string username);
 
         /// <summary>
         /// An observable sequence of account changing events

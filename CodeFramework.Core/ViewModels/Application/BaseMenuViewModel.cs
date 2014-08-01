@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Reflection;
 using System.Windows.Input;
 using CodeFramework.Core.Data;
 using CodeFramework.Core.Services;
@@ -21,9 +22,9 @@ namespace CodeFramework.Core.ViewModels.Application
                 var startupViewName = AccountsService.ActiveAccount.DefaultStartupView;
 				if (!string.IsNullOrEmpty(startupViewName))
 				{
-					var props = from p in GetType().GetProperties()
-	                            let attr = p.GetCustomAttributes(typeof(PotentialStartupViewAttribute), true)
-	                            where attr.Length == 1
+					var props = from p in GetType().GetRuntimeProperties()
+	                            let attr = p.GetCustomAttributes(typeof(PotentialStartupViewAttribute), true).ToList()
+	                            where attr.Count == 1
 	                            select new { Property = p, Attribute = attr[0] as PotentialStartupViewAttribute};
 
 					foreach (var p in props)
@@ -34,9 +35,9 @@ namespace CodeFramework.Core.ViewModels.Application
 				}
 
 				//Oh no... Look for the last resort DefaultStartupViewAttribute
-				var deprop = (from p in GetType().GetProperties()
-				              let attr = p.GetCustomAttributes(typeof(DefaultStartupViewAttribute), true)
-				              where attr.Length == 1
+				var deprop = (from p in GetType().GetRuntimeProperties()
+				              let attr = p.GetCustomAttributes(typeof(DefaultStartupViewAttribute), true).ToList()
+				              where attr.Count == 1
 							  select new { Property = p, Attribute = attr[0] as DefaultStartupViewAttribute }).FirstOrDefault();
 
 				//That shouldn't happen...
@@ -60,7 +61,8 @@ namespace CodeFramework.Core.ViewModels.Application
             DeletePinnedRepositoryCommand.OfType<PinnedRepository>()
                 .Subscribe(x =>
                 {
-                    AccountsService.ActiveAccount.PinnnedRepositories.RemovePinnedRepository(x.Id);
+                    AccountsService.ActiveAccount.PinnnedRepositories.Remove(x);
+                    AccountsService.Update(AccountsService.ActiveAccount);
                     PinnedRepositories.Remove(x);
                 });
         }

@@ -65,12 +65,9 @@ namespace CodeFramework.Core.ViewModels.Application
                 }
             });
 
-            GoToAddAccountCommand.Subscribe(_ => ShowViewModel(CreateViewModel(typeof(IAddAccountViewModel))));
+            GoToAddAccountCommand.Subscribe(_ => ShowViewModel(CreateViewModel<IAddAccountViewModel>()));
 
-            this.WhenActivated(d =>
-            {
-                Accounts.Reset(accountsService);
-            });
+            this.WhenActivated(d => Accounts.Reset(accountsService));
         }
     }
 }

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
+using System.Linq;
+using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using Akavache;
 using CodeFramework.Core.Data;
-using SQLite;
 using Xamarin.Utilities.Core.Services;
 
 namespace CodeFramework.Core.Services
@@ -13,9 +13,7 @@ namespace CodeFramework.Core.Services
     public abstract class BaseAccountsService<TAccount> : IAccountsService where TAccount : IAccount, new()
     {
         private readonly Subject<IAccount> _accountSubject = new Subject<IAccount>();
-        private readonly SQLiteConnection _userDatabase;
         private readonly IDefaultValueService _defaults;
-        private readonly string _accountsPath;
         private IAccount _activeAccount;
 
         public IAccount ActiveAccount
@@ -25,21 +23,8 @@ namespace CodeFramework.Core.Services
             {
                 if (value != null && !(value is TAccount))
                     throw new InvalidOperationException("Set Active Account object is not of correct type");
-
-                if (value != null)
-                {
-                    var accountDir = CreateAccountDirectory(value);
-                    if (!Directory.Exists(accountDir))
-                        Directory.CreateDirectory(accountDir);
-                }
-
-                if (value == null)
-                    _defaults.Set("DEFAULT_ACCOUNT", null);
-                else
-                    _defaults.Set("DEFAULT_ACCOUNT", value.Id);
-
+                _defaults.Set("DEFAULT_ACCOUNT", value == null ? null : value.Key);
                 _activeAccount = value;
-
                 _accountSubject.OnNext(value);
             }
         }
@@ -52,75 +37,50 @@ namespace CodeFramework.Core.Services
         protected BaseAccountsService(IDefaultValueService defaults)
         {
             _defaults = defaults;
-            var basePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "..");
-            _accountsPath = Path.Combine(basePath, "Documents/accounts");
-
-            // Assure creation of the accounts path
-            if (!Directory.Exists(_accountsPath))
-                Directory.CreateDirectory(_accountsPath);
-
-            _userDatabase = new SQLiteConnection(Path.Combine(_accountsPath, "accounts.db"));
-            _userDatabase.CreateTable<TAccount>();
         }
 
         public IAccount GetDefault()
         {
-            int id;
+            string id;
             return !_defaults.TryGet("DEFAULT_ACCOUNT", out id) ? null : Find(id);
-        }
-
-        protected string CreateAccountDirectory(IAccount account)
-        {
-            return Path.Combine(_accountsPath, account.Id.ToString(CultureInfo.InvariantCulture));
         }
 
         public void Insert(IAccount account)
         {
-            lock (_userDatabase)
-            {
-                _userDatabase.Insert(account);
-            }
+            BlobCache.UserAccount.InsertObject("user_" + account.Key, account).Wait();
         }
 
         public void Remove(IAccount account)
         {
-            lock (_userDatabase)
-            {
-                _userDatabase.Delete(account);
-            }
-            var accountDir = CreateAccountDirectory(account);
-
-            if (!Directory.Exists(accountDir))
-                return;
-            Directory.Delete(accountDir, true);
+            BlobCache.UserAccount.Invalidate("user_" + account.Key).Wait();
         }
 
         public void Update(IAccount account)
         {
-            lock (_userDatabase)
-            {
-                _userDatabase.Update(account);
-            }
+            Insert(account);
         }
 
         public bool Exists(IAccount account)
         {
-            return Find(account.Id) != null;
+            return Find(account.Domain, account.Username) != null;
         }
 
-        public IAccount Find(int id)
+        public IAccount Find(string domain, string username)
         {
-            lock (_userDatabase)
-            {
-                var query = _userDatabase.Find<TAccount>(x => x.Id == id);
-                return query;
-            }
+            return Find("user_" + domain + username);
         }
 
+        public IAccount Find(string key)
+        {
+            return BlobCache.UserAccount.GetObjectAsync<TAccount>("user_" + key).Wait();
+        }
 
         public IEnumerator<IAccount> GetEnumerator()
         {
-            return (IEnumerator<IAccount>)_userDatabase.Table<TAccount>().GetEnumerator();
+            return BlobCache.UserAccount.GetAllKeys()
+                .Where(x => x.StartsWith("user_"))
+                .Select(k => BlobCache.UserAccount.GetObjectAsync<TAccount>(k).Wait())
+                .Select(dummy => (IAccount) dummy).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

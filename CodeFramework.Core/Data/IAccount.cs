@@ -1,9 +1,14 @@
-﻿using Xamarin.Utilities.Core.Persistence;
+﻿using System.Collections.Generic;
 
 namespace CodeFramework.Core.Data
 {
-    public interface IAccount : IDatabaseItem<int>
+    public interface IAccount
     {
+        /// <summary>
+        /// A unique key for this account
+        /// </summary>
+        string Key { get; set; }
+
         /// <summary>
         /// Gets or sets the username.
         /// </summary>
@@ -30,13 +35,13 @@ namespace CodeFramework.Core.Data
         /// <summary>
         /// Gets the filters
         /// </summary>
-        AccountFilters Filters { get; }
+        Dictionary<string, object> Filters { get; }
 
 		/// <summary>
 		/// Gets the pinned repositories
 		/// </summary>
 		/// <value>The pinnned repositories.</value>
-		AccountPinnedRepositories PinnnedRepositories { get; }
+        List<PinnedRepository> PinnnedRepositories { get; }
 
 		/// <summary>
 		/// Gets or sets the default startup view.

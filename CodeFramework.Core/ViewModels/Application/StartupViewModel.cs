@@ -56,9 +56,9 @@ namespace CodeFramework.Core.ViewModels.Application
 
             GoToAccountsCommand.Subscribe(_ => ShowViewModel(CreateViewModel<AccountsViewModel>()));
 
-            GoToNewUserCommand.Subscribe(_ => ShowViewModel(CreateViewModel(typeof(IAddAccountViewModel))));
+            GoToNewUserCommand.Subscribe(_ => ShowViewModel(CreateViewModel<IAddAccountViewModel>()));
 
-            GoToMainCommand.Subscribe(_ => ShowViewModel(CreateViewModel(typeof(IMainViewModel))));
+            GoToMainCommand.Subscribe(_ => ShowViewModel(CreateViewModel<IMainViewModel>()));
 
             LoadCommand = ReactiveCommand.CreateAsyncTask(x => Load());
         }
