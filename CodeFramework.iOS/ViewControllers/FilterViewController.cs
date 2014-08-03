@@ -62,11 +62,9 @@ namespace CodeFramework.iOS.ViewControllers
 
             element.Tapped += () =>
             {
-                var ctrl = new ViewModelDialogViewController<BaseViewModel>();
-                ctrl.Title = title;
-
+                var ctrl = new DialogViewController {Title = title};
                 var sec = new Section();
-                foreach (var x in System.Enum.GetValues(typeof(T)).Cast<System.Enum>())
+                foreach (var x in Enum.GetValues(typeof(T)).Cast<System.Enum>())
                 {
                     sec.Add(new StyledStringElement(x.Description(), () => { 
                         element.Value = (T)Enum.ToObject(typeof(T), x); 

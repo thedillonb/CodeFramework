@@ -5,7 +5,6 @@ using System.Reflection;
 using CodeFramework.Core.Services;
 using CodeFramework.Core.Utils;
 using ReactiveUI;
-using Xamarin.Utilities.Core.ReactiveAddons;
 using Xamarin.Utilities.Core.ViewModels;
 
 namespace CodeFramework.Core.ViewModels.Application
@@ -35,7 +34,7 @@ namespace CodeFramework.Core.ViewModels.Application
 		        DismissCommand.ExecuteIfCan();
 		    });
 
-            StartupViews = new ReactiveCollection<string>(from p in menuViewModelType.GetRuntimeProperties()
+            StartupViews = new ReactiveList<string>(from p in menuViewModelType.GetRuntimeProperties()
                 let attr = p.GetCustomAttributes(typeof(PotentialStartupViewAttribute), true).ToList()
                 where attr.Count == 1 && attr[0] is PotentialStartupViewAttribute
                 select ((PotentialStartupViewAttribute)attr[0]).Name);

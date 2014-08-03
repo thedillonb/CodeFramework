@@ -57,7 +57,6 @@
     <Compile Include="ViewControllers\MenuBaseViewController.cs" />
     <Compile Include="ViewControllers\MultipleChoiceViewController.cs" />
     <Compile Include="ViewComponents\AddRemoveView.cs" />
-    <Compile Include="ViewComponents\HeaderView.cs" />
     <Compile Include="ViewComponents\MenuSectionView.cs" />
     <Compile Include="ViewComponents\ProfileButton.cs" />
     <Compile Include="ViewComponents\TableViewSectionView.cs" />
@@ -76,16 +75,6 @@
     <InterfaceDefinition Include="Cells\NewsCellView.xib" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Akavache, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\Akavache.dll</HintPath>
-    </Reference>
-    <Reference Include="Akavache.Mobile">
-      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\Akavache.Mobile.dll</HintPath>
-    </Reference>
-    <Reference Include="Akavache.Sqlite3">
-      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\Akavache.Sqlite3.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
@@ -114,13 +103,13 @@
       <Project>{6e1c9e25-915a-4454-8bbd-61e6918bfcf1}</Project>
       <Name>CodeFramework.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CodeFramework.Core\CodeFramework.Core.csproj">
-      <Project>{268171be-a003-4047-beb7-390c74a07b7f}</Project>
-      <Name>CodeFramework.Core</Name>
+    <ProjectReference Include="..\CodeFramework.Core\CodeFramework.Core.iOS.csproj">
+      <Project>{60a19d9d-b902-4942-abd5-0fb3a19ca3e5}</Project>
+      <Name>CodeFramework.Core.iOS</Name>
     </ProjectReference>
-    <ProjectReference Include="..\lib\Xamarin.Utilities\Xamarin.Utilities.Core\Xamarin.Utilities.Core.csproj">
-      <Project>{0ca8cc58-18fa-4f91-9e47-cae155ce3965}</Project>
-      <Name>Xamarin.Utilities.Core</Name>
+    <ProjectReference Include="..\lib\Xamarin.Utilities\Xamarin.Utilities.Core\Xamarin.Utilities.Core.iOS.csproj">
+      <Project>{fdf746eb-46c2-4b70-80ac-07b542140836}</Project>
+      <Name>Xamarin.Utilities.Core.iOS</Name>
     </ProjectReference>
     <ProjectReference Include="..\lib\Xamarin.Utilities\Xamarin.Utilities.iOS\Xamarin.Utilities.iOS.csproj">
       <Project>{5E7E39CA-0CCE-41FE-A868-EE0E567E069E}</Project>

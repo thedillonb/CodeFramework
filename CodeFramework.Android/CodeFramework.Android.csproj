@@ -34,15 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Akavache">
-      <HintPath>..\lib\Xamarin.Utilities\lib\Android\Akavache.dll</HintPath>
-    </Reference>
-    <Reference Include="Akavache.Mobile">
-      <HintPath>..\lib\Xamarin.Utilities\lib\Android\Akavache.Mobile.dll</HintPath>
-    </Reference>
-    <Reference Include="Akavache.Sqlite3">
-      <HintPath>..\lib\Xamarin.Utilities\lib\Android\Akavache.Sqlite3.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="ReactiveUI">
@@ -80,13 +71,9 @@
     <AndroidResource Include="Resources\Values\Strings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CodeFramework.Core\CodeFramework.Core.csproj">
-      <Project>{268171be-a003-4047-beb7-390c74a07b7f}</Project>
-      <Name>CodeFramework.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\lib\Xamarin.Utilities\Xamarin.Utilities.Core\Xamarin.Utilities.Core.csproj">
-      <Project>{0ca8cc58-18fa-4f91-9e47-cae155ce3965}</Project>
-      <Name>Xamarin.Utilities.Core</Name>
+    <ProjectReference Include="..\CodeFramework.Core\CodeFramework.Core.Android.csproj">
+      <Project>{cfc1635c-7681-4850-85e0-d4401e005679}</Project>
+      <Name>CodeFramework.Core.Android</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

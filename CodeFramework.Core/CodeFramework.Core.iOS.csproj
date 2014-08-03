@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{60A19D9D-B902-4942-ABD5-0FB3A19CA3E5}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>CodeFramework.Core</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>CodeFramework.Core</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Data\IAccount.cs" />
+    <Compile Include="Data\PinnedRepository.cs" />
+    <Compile Include="Messages\CancelationMessage.cs" />
+    <Compile Include="Messages\ErrorMessage.cs" />
+    <Compile Include="Messages\LogoutMessage.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BaseAccountsService.cs" />
+    <Compile Include="Services\IAccountsService.cs" />
+    <Compile Include="Services\IAccountValidatorService.cs" />
+    <Compile Include="Services\IMarkdownService.cs" />
+    <Compile Include="Utils\DefaultStartupViewCommand.cs" />
+    <Compile Include="Utils\ExceptionExtensions.cs" />
+    <Compile Include="Utils\FilterGroup.cs" />
+    <Compile Include="Utils\RepositoryIdentifier.cs" />
+    <Compile Include="ViewModels\Application\AccountsViewModel.cs" />
+    <Compile Include="ViewModels\Application\BaseMenuViewModel.cs" />
+    <Compile Include="ViewModels\Application\DefaultStartupViewModel.cs" />
+    <Compile Include="ViewModels\Application\IAddAccountViewModel.cs" />
+    <Compile Include="ViewModels\Application\IMainViewModel.cs" />
+    <Compile Include="ViewModels\Application\StartupViewModel.cs" />
+    <Compile Include="ViewModels\Source\FileSourceViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\lib\Xamarin.Utilities\Xamarin.Utilities.Core\Xamarin.Utilities.Core.iOS.csproj">
+      <Project>{fdf746eb-46c2-4b70-80ac-07b542140836}</Project>
+      <Name>Xamarin.Utilities.Core.iOS</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Akavache">
+      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\Akavache.dll</HintPath>
+    </Reference>
+    <Reference Include="Akavache.Mobile">
+      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\Akavache.Mobile.dll</HintPath>
+    </Reference>
+    <Reference Include="Akavache.Sqlite3">
+      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\Akavache.Sqlite3.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI">
+      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\ReactiveUI.dll</HintPath>
+    </Reference>
+    <Reference Include="Splat">
+      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\Splat.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices">
+      <HintPath>..\lib\Xamarin.Utilities\lib\iOS\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+</Project>
